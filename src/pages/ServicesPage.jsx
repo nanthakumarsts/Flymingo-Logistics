@@ -332,3 +332,5 @@ export const ServicesPage = ({ onOpenQuote }) => {
     </div>
   );
 };
+
+export default ServicesPage;
