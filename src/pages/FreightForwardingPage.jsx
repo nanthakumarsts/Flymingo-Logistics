@@ -4,6 +4,7 @@ import {
   Clock, Anchor, Globe, Boxes, Layers
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
+import { PageBanner } from '../components/PageBanner';
 
 export const FreightForwardingPage = ({ onOpenQuote }) => {
   const AIR_FEATURES = [
@@ -24,28 +25,7 @@ export const FreightForwardingPage = ({ onOpenQuote }) => {
 
   return (
     <div className="space-y-20 pb-20">
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-brand-blue-50/80 via-white to-slate-50 py-16 border-b border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <span className="inline-block px-3 py-1 rounded-full bg-brand-blue-50 text-brand-blue border border-brand-blue-100 text-xs font-bold uppercase tracking-widest">
-            Multimodal Global Freight
-          </span>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-            Freight Forwarding (Sea &amp; Air)
-          </h1>
-          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-            Seamless international ocean container shipping and expedited air cargo logistics backed by aggressive freight rate negotiation.
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={() => onOpenQuote('freight-forwarding')}
-              className="px-8 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-red/25 transition-all cursor-pointer"
-            >
-              Request Freight Rate
-            </button>
-          </div>
-        </div>
-      </section>
+      <PageBanner eyebrow="Multimodal global freight" title="Freight forwarding by sea & air" description="Seamless international ocean container shipping and expedited air cargo, backed by competitive freight rate negotiation." image="/assets/air cargo.jpg" action="Request freight rate" onAction={() => onOpenQuote('freight-forwarding')} />
 
       {/* Air Cargo Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -3,6 +3,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
+import { PageBanner } from '../components/PageBanner';
 
 export const InternationalCourierPage = ({ onOpenQuote }) => {
   const C2C_ITEMS = [
@@ -33,28 +34,7 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
 
   return (
     <div className="space-y-20 pb-20">
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-brand-blue-50/80 via-white to-slate-50 py-16 border-b border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <span className="inline-block px-3 py-1 rounded-full bg-brand-blue-50 text-brand-blue border border-brand-blue-100 text-xs font-bold uppercase tracking-widest">
-            Doorstep Express Service
-          </span>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-            Fast, Reliable &amp; Global Courier Delivery
-          </h1>
-          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-            Connecting families and businesses worldwide. B2B commercial dispatches, B2C e-commerce, and C2C personal packages delivered with speed and care.
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={() => onOpenQuote('international-courier')}
-              className="px-8 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-red/25 transition-all cursor-pointer"
-            >
-              Get Courier Fare Rate
-            </button>
-          </div>
-        </div>
-      </section>
+      <PageBanner eyebrow="Doorstep express service" title="Fast, reliable global courier delivery" description="B2B commercial dispatches, B2C e-commerce and C2C personal packages delivered worldwide with speed and care." image="/assets/international_courier_banner.jpg" action="Get courier fare rate" onAction={() => onOpenQuote('international-courier')} />
 
       {/* B2B & B2C Enterprise Features */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

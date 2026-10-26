@@ -4,6 +4,7 @@ import {
   Atom, Zap, FileCheck, ArrowRight, Skull, BatteryCharging
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
+import { PageBanner } from '../components/PageBanner';
 
 export const DangerousGoodsPage = ({ onOpenQuote }) => {
   const DG_CLASSES = [
@@ -20,29 +21,7 @@ export const DangerousGoodsPage = ({ onOpenQuote }) => {
 
   return (
     <div className="space-y-20 pb-20">
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-brand-blue-50/80 via-white to-slate-50 py-16 border-b border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold uppercase tracking-widest">
-            <AlertTriangle className="w-3.5 h-3.5 text-brand-red" />
-            <span>IATA &amp; IMDG Certified DG Compliance</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-            Expert Handling of Dangerous Goods (DG)
-          </h1>
-          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-            Comprehensive hazardous material transport across air and sea with UN-certified packaging, Dangerous Goods Declarations (DGD), and guaranteed carrier acceptance.
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={() => onOpenQuote('dg-shipping')}
-              className="px-8 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-red/25 transition-all cursor-pointer"
-            >
-              Consult DG Specialist
-            </button>
-          </div>
-        </div>
-      </section>
+      <PageBanner eyebrow="IATA & IMDG certified" title="Expert handling of dangerous goods" description="Hazardous cargo logistics across air and sea with UN-certified packaging, DGD documentation and carrier-ready compliance." image="/assets/certification.jpg" action="Consult DG specialist" onAction={() => onOpenQuote('dg-shipping')} />
 
       {/* DG Classes Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">

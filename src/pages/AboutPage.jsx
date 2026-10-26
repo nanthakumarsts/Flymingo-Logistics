@@ -57,94 +57,95 @@ export const AboutPage = ({ onOpenQuote }) => {
   return (
     <div className="space-y-20 pb-20">
       {/* ========================================================= */}
-      {/* 1. STYLISH EDITORIAL BANNER HERO                          */}
+      {/* 1. CINEMATIC MARITIME EDITORIAL BANNER HERO               */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-blue-50/90 via-white to-slate-50/60 border-b border-slate-200/90 pt-8 pb-16 lg:pb-20">
-        {/* Photographic Background Texture with Light Veil */}
+      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/15 pt-12 pb-16 lg:pt-16 lg:pb-20">
+        {/* Full-bleed Photographic Background Texture */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
             src="/assets/sea cargo.jpg" 
             alt="Flymingo Logistics Global Operations" 
-            className="w-full h-full object-cover object-center opacity-20 scale-105"
+            className="w-full h-full object-cover object-center opacity-40 scale-105 transition-transform duration-1000"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/80" />
-          {/* Micro Grid Overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#0056870a_1px,transparent_1px),linear-gradient(to_bottom,#0056870a_1px,transparent_1px)] bg-[size:3.5rem_3.5rem]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/90 to-brand-blue-dark/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark via-transparent to-brand-blue-dark/80" />
+          {/* Swiss Industrial Blueprint Grid */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+          <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-brand-red/20 blur-3xl" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-7">
           {/* Breadcrumb & Telemetry Tag */}
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-            <nav className="flex items-center gap-2 text-slate-500 font-medium">
-              <Link to="/" className="hover:text-brand-blue transition-colors">Home</Link>
-              <span className="text-slate-300">/</span>
-              <span className="text-brand-blue font-bold">About Us</span>
+            <nav className="flex items-center gap-2 text-white/70 font-medium">
+              <Link to="/" className="hover:text-white transition-colors">Home</Link>
+              <span className="text-white/40">/</span>
+              <span className="text-white font-bold">About Us</span>
             </nav>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 shadow-2xs font-mono text-[11px] text-slate-600">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>ESTABLISHED SOUTH INDIA &bull; MULTI-MODAL LOGISTICS</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>11°00'N 76°58'E — COIMBATORE HQ &bull; CHENNAI PORT HUB</span>
             </div>
           </div>
 
           {/* Banner Title & Subtext */}
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-block px-3 py-1 rounded-md bg-brand-blue-50 border border-brand-blue-100 text-brand-blue text-[11px] font-extrabold uppercase tracking-widest">
-              OUR MISSION &amp; HERITAGE
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-block px-3 py-1 rounded-md bg-brand-red/20 border border-brand-red/50 text-brand-red-light text-[11px] font-mono font-extrabold uppercase tracking-widest">
+              [ OUR MISSION &amp; HERITAGE // ESTABLISHED SOUTH INDIA ]
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
               We Are The Bridge Between You And Your Relations.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-blue-light to-brand-blue-dark">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-white to-brand-red-light">
                 Across Oceans &amp; Continents.
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal pt-1">
+            <p className="text-base sm:text-lg text-white/80 leading-relaxed font-normal pt-1 max-w-2xl">
               Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.
             </p>
           </div>
 
-          {/* Trust Highlights Strip */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-brand-blue-50 flex items-center justify-center flex-shrink-0">
-                <Globe className="w-5 h-5 text-brand-blue" />
+          {/* High-Contrast Trust Highlights Strip */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-3">
+            <div className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center flex-shrink-0">
+                <Globe className="w-5 h-5 text-sky-300" />
               </div>
               <div>
-                <div className="text-xs font-black text-slate-900">190+ Countries</div>
-                <div className="text-[11px] text-slate-500">Global Reach</div>
+                <div className="text-sm font-black text-white">190+ Countries</div>
+                <div className="text-[11px] text-white/70">Global Reach</div>
               </div>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-brand-red-50 flex items-center justify-center flex-shrink-0">
-                <Anchor className="w-5 h-5 text-brand-red" />
+            <div className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-brand-red/25 border border-brand-red/40 flex items-center justify-center flex-shrink-0">
+                <Anchor className="w-5 h-5 text-brand-red-light" />
               </div>
               <div>
-                <div className="text-xs font-black text-slate-900">10+ Major Ports</div>
-                <div className="text-[11px] text-slate-500">Berth Logistics</div>
+                <div className="text-sm font-black text-white">10+ Major Ports</div>
+                <div className="text-[11px] text-white/70">Berth Logistics</div>
               </div>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
-                <Clock className="w-5 h-5 text-emerald-600" />
+            <div className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center flex-shrink-0">
+                <Clock className="w-5 h-5 text-emerald-300" />
               </div>
               <div>
-                <div className="text-xs font-black text-slate-900">24/7 Operations</div>
-                <div className="text-[11px] text-slate-500">Continuous Support</div>
+                <div className="text-sm font-black text-white">24/7 Operations</div>
+                <div className="text-[11px] text-white/70">Continuous Support</div>
               </div>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center flex-shrink-0">
-                <ShieldCheck className="w-5 h-5 text-indigo-600" />
+            <div className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center flex-shrink-0">
+                <ShieldCheck className="w-5 h-5 text-purple-300" />
               </div>
               <div>
-                <div className="text-xs font-black text-slate-900">100% Licensed</div>
-                <div className="text-[11px] text-slate-500">Customs Brokerage</div>
+                <div className="text-sm font-black text-white">100% Licensed</div>
+                <div className="text-[11px] text-white/70">Customs Brokerage</div>
               </div>
             </div>
           </div>

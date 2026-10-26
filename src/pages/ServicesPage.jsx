@@ -116,70 +116,96 @@ export const ServicesPage = ({ onOpenQuote }) => {
   return (
     <div className="space-y-16 lg:space-y-20 pb-20">
       {/* ========================================================= */}
-      {/* 1. STYLISH EDITORIAL BANNER HERO                          */}
+      {/* 1. CINEMATIC MULTIMODAL TERMINAL BANNER HERO              */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-blue-50/90 via-white to-slate-50/60 border-b border-slate-200/90 pt-8 pb-16 lg:pb-20">
-        {/* Photographic Background Texture with Light Theme Veil */}
+      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/15 pt-12 pb-16 lg:pt-16 lg:pb-20">
+        {/* Photographic Background Texture with Deep Maritime Scrim */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
             src="/assets/international_courier_banner.jpg" 
-            alt="Flymingo Logistics Global Operations" 
-            className="w-full h-full object-cover object-center opacity-25 scale-105"
+            alt="Flymingo Logistics Global Multimodal Operations" 
+            className="w-full h-full object-cover object-center opacity-40 scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/60" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/80" />
-          {/* Micro Grid Overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#0056870a_1px,transparent_1px),linear-gradient(to_bottom,#0056870a_1px,transparent_1px)] bg-[size:3.5rem_3.5rem]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/90 to-brand-blue-dark/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark via-transparent to-brand-blue-dark/80" />
+          {/* Swiss Industrial Blueprint Grid */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+          <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-brand-red/20 blur-3xl" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-7">
           {/* Breadcrumb & Telemetry Tag */}
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-            <nav className="flex items-center gap-2 text-slate-500 font-medium">
-              <Link to="/" className="hover:text-brand-blue transition-colors">Home</Link>
-              <span className="text-slate-300">/</span>
-              <span className="text-brand-blue font-bold">Services Overview</span>
+            <nav className="flex items-center gap-2 text-white/70 font-medium">
+              <Link to="/" className="hover:text-white transition-colors">Home</Link>
+              <span className="text-white/40">/</span>
+              <span className="text-white font-bold">Services Overview</span>
             </nav>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 shadow-2xs font-mono text-[11px] text-slate-600">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>ACTIVE CORRIDORS: 190+ COUNTRIES &bull; 10+ SEAPORTS</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>ACTIVE CORRIDORS: 190+ COUNTRIES &bull; 10+ SEAPORTS &bull; 24/7 HOTLINE</span>
             </div>
           </div>
 
           {/* Banner Title & Subtext */}
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-block px-3 py-1 rounded-md bg-brand-blue-50 border border-brand-blue-100 text-brand-blue text-[11px] font-extrabold uppercase tracking-widest">
-              END-TO-END GLOBAL LOGISTICS
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-block px-3 py-1 rounded-md bg-brand-red/20 border border-brand-red/50 text-brand-red-light text-[11px] font-mono font-extrabold uppercase tracking-widest">
+              [ END-TO-END GLOBAL LOGISTICS // SIX STRATEGIC CHANNELS ]
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
               Six Proven Channels.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-blue-light to-brand-blue-dark">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-white to-brand-red-light">
                 Zero Cargo Gaps.
               </span>
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal pt-1">
+            <p className="text-base sm:text-lg text-white/80 leading-relaxed font-normal pt-1 max-w-2xl">
               From time-critical vessel spares delivery on-board at outer anchorage berths to worldwide express courier and heavy air/ocean freight forwarders, Flymingo Logistics handles every consignment with shipowner precision.
             </p>
           </div>
 
           {/* Banner Action Buttons */}
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+          <div className="flex flex-wrap items-center gap-3 pt-1">
             <button
               onClick={() => onOpenQuote()}
-              className="px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-xs font-extrabold uppercase tracking-wider shadow-md shadow-brand-red/25 hover:shadow-brand-red/40 transition-all hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
+              className="px-6 py-3.5 bg-gradient-to-r from-brand-red to-brand-red-dark text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-lg shadow-brand-red/40 hover:shadow-xl transition-all hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
             >
               <Calculator className="w-4 h-4" />
               <span>Request Instant Fare Quote</span>
             </button>
             <a
               href={`tel:${BRAND.primaryPhone}`}
-              className="px-5 py-3 bg-white border border-slate-300 hover:border-brand-blue text-slate-800 hover:text-brand-blue rounded-xl text-xs font-bold uppercase tracking-wider shadow-2xs transition-all hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
+              className="px-6 py-3.5 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-sm transition-all hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
             >
               <span>Speak To Logistics Desk</span>
             </a>
+          </div>
+
+          {/* Quick-Jump Service Channel Bar */}
+          <div className="pt-2 border-t border-white/15">
+            <div className="text-[11px] font-mono text-white/60 uppercase tracking-widest mb-2.5">
+              Direct Service Channels:
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { label: '01 Ship Spares', path: '/services/ship-spares-logistics' },
+                { label: '02 Freight Forwarding', path: '/services/freight-forwarding' },
+                { label: '03 Courier Express', path: '/services/international-courier' },
+                { label: '04 Customs Clearance', path: '/services/customs-clearance' },
+                { label: '05 Dangerous Goods', path: '/services/dangerous-goods-shipping' },
+                { label: '06 Relocations', path: '/services/international-relocation' },
+              ].map((svc) => (
+                <Link
+                  key={svc.label}
+                  to={svc.path}
+                  className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-mono font-bold text-white transition-all hover:-translate-y-0.5"
+                >
+                  {svc.label} &rarr;
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>

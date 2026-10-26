@@ -4,6 +4,7 @@ import {
   MapPin, Home, HelpCircle, PackageCheck, AlertCircle
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
+import { PageBanner } from '../components/PageBanner';
 
 export const InternationalRelocationPage = ({ onOpenQuote }) => {
   const STEPS = [
@@ -50,28 +51,7 @@ export const InternationalRelocationPage = ({ onOpenQuote }) => {
 
   return (
     <div className="space-y-20 pb-20">
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-brand-blue-50/80 via-white to-slate-50 py-16 border-b border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <span className="inline-block px-3 py-1 rounded-full bg-brand-blue-50 text-brand-blue border border-brand-blue-100 text-xs font-bold uppercase tracking-widest">
-            Packers &amp; Movers
-          </span>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-            International Relocation &amp; Moving Services
-          </h1>
-          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-            Stress-free overseas home moving with multi-layer export packaging, all-risk marine insurance, and Transfer of Residence customs duty exemptions.
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={() => onOpenQuote('international-relocation')}
-              className="px-8 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-red/25 transition-all cursor-pointer"
-            >
-              Request Relocation Survey
-            </button>
-          </div>
-        </div>
-      </section>
+      <PageBanner eyebrow="Packers & movers" title="International relocation & moving services" description="Stress-free overseas home moves with export-grade packing, all-risk marine insurance and Transfer of Residence customs support." image="/assets/movers.jpg" action="Request relocation survey" onAction={() => onOpenQuote('international-relocation')} />
 
       {/* 6 Step Moving Workflow */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">

@@ -4,6 +4,7 @@ import {
   MapPin, Clock, Award, Building, Landmark
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
+import { PageBanner } from '../components/PageBanner';
 
 export const CustomsClearancePage = ({ onOpenQuote }) => {
   const PILLARS = [
@@ -35,28 +36,7 @@ export const CustomsClearancePage = ({ onOpenQuote }) => {
 
   return (
     <div className="space-y-20 pb-20">
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-brand-blue-50/80 via-white to-slate-50 py-16 border-b border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <span className="inline-block px-3 py-1 rounded-full bg-brand-blue-50 text-brand-blue border border-brand-blue-100 text-xs font-bold uppercase tracking-widest">
-            Licensed Customs Brokerage
-          </span>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-            Import &amp; Export Customs Clearance
-          </h1>
-          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-            Experienced customs house brokerage team ensuring precise HS code classification, duty valuation, and rapid out-of-charge with zero port demurrage.
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={() => onOpenQuote('customs-clearance')}
-              className="px-8 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-red/25 transition-all cursor-pointer"
-            >
-              Consult Customs Broker
-            </button>
-          </div>
-        </div>
-      </section>
+      <PageBanner eyebrow="Licensed customs brokerage" title="Import & export customs clearance" description="Precise HS classification, duty valuation and rapid out-of-charge by an experienced customs house brokerage team." image="/assets/customs clearance.jpg" action="Consult customs broker" onAction={() => onOpenQuote('customs-clearance')} />
 
       {/* Main Content */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">

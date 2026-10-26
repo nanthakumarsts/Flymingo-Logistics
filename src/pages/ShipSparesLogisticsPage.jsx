@@ -3,6 +3,7 @@ import {
   Anchor, CheckCircle2, MapPin, Compass
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
+import { PageBanner } from '../components/PageBanner';
 
 export const ShipSparesLogisticsPage = ({ onOpenQuote }) => {
   const WORKFLOW = [
@@ -46,35 +47,7 @@ export const ShipSparesLogisticsPage = ({ onOpenQuote }) => {
 
   return (
     <div className="space-y-20 pb-20">
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-brand-blue-50/80 via-white to-slate-50 py-16 border-b border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue-50 text-brand-blue border border-brand-blue-100 text-xs font-bold uppercase tracking-widest">
-            <Anchor className="w-3.5 h-3.5 text-brand-red" />
-            <span>24/7 Maritime Technical Logistics</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-            Ship Spares Logistics &amp; On-Board Delivery
-          </h1>
-          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-            Delivering precision, driving process. Time-critical marine replacement parts cleared through customs and delivered directly to the ship's deck with zero port detention.
-          </p>
-          <div className="pt-2 flex flex-wrap justify-center gap-4">
-            <button
-              onClick={() => onOpenQuote('ship-spares')}
-              className="px-8 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-red/25 transition-all cursor-pointer"
-            >
-              Request Spares Delivery
-            </button>
-            <a
-              href={`tel:${BRAND.primaryPhone}`}
-              className="px-8 py-3.5 bg-white border border-slate-300 hover:border-brand-blue text-slate-800 hover:text-brand-blue rounded-xl text-sm font-bold shadow-sm transition-all"
-            >
-              Call 24/7 Port Hotline
-            </a>
-          </div>
-        </div>
-      </section>
+      <PageBanner eyebrow="24/7 maritime logistics" title="Ship spares & on-board delivery" description="Time-critical marine replacement parts cleared through customs and delivered direct to the vessel deck, without port detention." image="/assets/any size.jpg" action="Request spares delivery" onAction={() => onOpenQuote('ship-spares')} secondaryAction={<a href={`tel:${BRAND.primaryPhone}`} className="rounded-xl border border-white/40 bg-white/10 px-6 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white hover:text-brand-blue">Call 24/7 port hotline</a>} />
 
       {/* Integrated Import & Vessel Delivery Management */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">

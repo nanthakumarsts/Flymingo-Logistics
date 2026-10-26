@@ -23,80 +23,81 @@ export const ContactPage = () => {
   return (
     <div className="space-y-16 pb-20">
       {/* ========================================================= */}
-      {/* 1. STYLISH EDITORIAL BANNER HERO                          */}
+      {/* 1. CINEMATIC COMMUNICATIONS DISPATCH BANNER HERO          */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-blue-50/90 via-white to-slate-50/60 border-b border-slate-200/90 pt-8 pb-16 lg:pb-20">
-        {/* Photographic Background Texture with Light Veil */}
+      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/15 pt-12 pb-16 lg:pt-16 lg:pb-20">
+        {/* Photographic Background Texture with Deep Maritime Scrim */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
             src="/assets/communication.jpg" 
             alt="Flymingo Logistics Global Communications Desk" 
-            className="w-full h-full object-cover object-center opacity-20 scale-105"
+            className="w-full h-full object-cover object-center opacity-40 scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/80" />
-          {/* Micro Grid Overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#0056870a_1px,transparent_1px),linear-gradient(to_bottom,#0056870a_1px,transparent_1px)] bg-[size:3.5rem_3.5rem]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/90 to-brand-blue-dark/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark via-transparent to-brand-blue-dark/80" />
+          {/* Swiss Industrial Blueprint Grid */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+          <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-brand-red/20 blur-3xl" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-7">
           {/* Breadcrumb & Telemetry Tag */}
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-            <nav className="flex items-center gap-2 text-slate-500 font-medium">
-              <Link to="/" className="hover:text-brand-blue transition-colors">Home</Link>
-              <span className="text-slate-300">/</span>
-              <span className="text-brand-blue font-bold">Contact Us</span>
+            <nav className="flex items-center gap-2 text-white/70 font-medium">
+              <Link to="/" className="hover:text-white transition-colors">Home</Link>
+              <span className="text-white/40">/</span>
+              <span className="text-white font-bold">Contact Us</span>
             </nav>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 shadow-2xs font-mono text-[11px] text-slate-600">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>LIVE DESK ACTIVE &bull; COIMBATORE HQ &amp; CHENNAI PORT HUB</span>
             </div>
           </div>
 
           {/* Banner Title & Subtext */}
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-block px-3 py-1 rounded-md bg-brand-blue-50 border border-brand-blue-100 text-brand-blue text-[11px] font-extrabold uppercase tracking-widest">
-              24/7 CARGO ASSISTANCE &amp; DISPATCH
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-block px-3 py-1 rounded-md bg-brand-red/20 border border-brand-red/50 text-brand-red-light text-[11px] font-mono font-extrabold uppercase tracking-widest">
+              [ 24/7 CARGO ASSISTANCE &amp; DISPATCH // DIRECT HOTLINES ]
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08]">
-              Connect With Us For Seamless Cargo Clearance.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-blue-light to-brand-blue-dark">
-                Direct Lines &amp; Immediate Response.
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
+              Direct Lines.<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-white to-brand-red-light">
+                Immediate Logistics Response.
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal pt-1">
-              Reach our logistics coordinators directly for vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.
+            <p className="text-base sm:text-lg text-white/80 leading-relaxed font-normal pt-1 max-w-2xl">
+              Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.
             </p>
           </div>
 
           {/* Contact Fast-Response Quick Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-3">
             <a 
               href="tel:+919361693617" 
-              className="bg-white/80 hover:bg-white backdrop-blur-sm rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center gap-3 transition-all hover:border-brand-blue hover:shadow-sm group"
+              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-lg bg-brand-red-50 text-brand-red flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-xl bg-brand-red/25 border border-brand-red/40 text-brand-red-light flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                 <Phone className="w-5 h-5" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs font-black text-slate-900 truncate">Coimbatore HQ</div>
-                <div className="text-[11px] text-brand-blue font-bold">+91 93616 93617</div>
+                <div className="text-xs font-mono font-bold text-white/70 uppercase tracking-wider">Coimbatore HQ</div>
+                <div className="text-sm font-black text-white hover:text-sky-300 transition-colors">+91 93616 93617</div>
               </div>
             </a>
 
             <a 
               href="tel:+919444362340" 
-              className="bg-white/80 hover:bg-white backdrop-blur-sm rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center gap-3 transition-all hover:border-brand-blue hover:shadow-sm group"
+              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-lg bg-brand-blue-50 text-brand-blue flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-xl bg-sky-500/25 border border-sky-400/40 text-sky-300 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                 <Phone className="w-5 h-5" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs font-black text-slate-900 truncate">Chennai Port Hub</div>
-                <div className="text-[11px] text-brand-blue font-bold">+91 94443 62340</div>
+                <div className="text-xs font-mono font-bold text-white/70 uppercase tracking-wider">Chennai Port Hub</div>
+                <div className="text-sm font-black text-white hover:text-sky-300 transition-colors">+91 94443 62340</div>
               </div>
             </a>
 
@@ -104,27 +105,27 @@ export const ContactPage = () => {
               href={`https://wa.me/919361693617?text=${encodeURIComponent('Hello Flymingo Logistics, I need shipment assistance.')}`}
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-white/80 hover:bg-white backdrop-blur-sm rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center gap-3 transition-all hover:border-emerald-500 hover:shadow-sm group"
+              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/25 border border-emerald-400/40 text-emerald-300 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                 <MessageSquare className="w-5 h-5" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs font-black text-slate-900 truncate">WhatsApp Chat</div>
-                <div className="text-[11px] text-emerald-600 font-bold">Instant Reply</div>
+                <div className="text-xs font-mono font-bold text-white/70 uppercase tracking-wider">WhatsApp 24/7</div>
+                <div className="text-sm font-black text-emerald-300">Instant Chat Reply</div>
               </div>
             </a>
 
             <a 
               href="mailto:flymingologistics@gmail.com"
-              className="bg-white/80 hover:bg-white backdrop-blur-sm rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center gap-3 transition-all hover:border-brand-blue hover:shadow-sm group"
+              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-xl bg-white/15 border border-white/25 text-white flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                 <Mail className="w-5 h-5" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs font-black text-slate-900 truncate">Email Us</div>
-                <div className="text-[11px] text-slate-600 truncate font-medium">flymingologistics@gmail.com</div>
+                <div className="text-xs font-mono font-bold text-white/70 uppercase tracking-wider">Official Email</div>
+                <div className="text-xs font-bold text-white truncate">flymingologistics@gmail.com</div>
               </div>
             </a>
           </div>
