@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { BRAND, OFFICES, CORE_SERVICES } from '../data/siteData';
 
-export const Footer = ({ onOpenQuote, onOpenTracking }) => {
+export const Footer = ({ onOpenQuote }) => {
   return (
     <footer className="bg-slate-50 border-t border-slate-200 text-slate-700 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -32,12 +32,12 @@ export const Footer = ({ onOpenQuote, onOpenTracking }) => {
             >
               Get Instant Fare Quote
             </button>
-            <button
-              onClick={onOpenTracking}
+            <Link
+              to="/services"
               className="px-6 py-3 bg-white text-brand-blue hover:bg-slate-100 rounded-xl text-sm font-bold shadow-md transition-all cursor-pointer"
             >
-              Track Your Cargo
-            </button>
+              Explore All Services
+            </Link>
           </div>
 
           {/* Decorative watermark */}
@@ -134,9 +134,9 @@ export const Footer = ({ onOpenQuote, onOpenTracking }) => {
                 </button>
               </li>
               <li>
-                <button onClick={onOpenTracking} className="hover:text-brand-blue transition-colors text-left cursor-pointer">
-                  Track Live Shipment
-                </button>
+                <Link to="/services" className="hover:text-brand-blue transition-colors flex items-center gap-1">
+                  <span>Our 6 Core Services</span>
+                </Link>
               </li>
               <li>
                 <a href={BRAND.brochurePath} download className="hover:text-brand-red transition-colors flex items-center gap-1">

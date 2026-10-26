@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { BRAND, CORE_SERVICES } from '../data/siteData.js';
 
-export const Navbar = ({ onOpenQuote, onOpenTracking }) => {
+export const Navbar = ({ onOpenQuote }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const location = useLocation();
@@ -56,14 +56,6 @@ export const Navbar = ({ onOpenQuote, onOpenTracking }) => {
 
           {/* Quick utility actions */}
           <div className="flex items-center gap-3 ml-auto">
-            <button
-              onClick={onOpenTracking}
-              className="inline-flex items-center gap-1.5 text-slate-700 hover:text-brand-blue font-semibold cursor-pointer transition-colors px-2 py-0.5 rounded hover:bg-slate-200/50"
-            >
-              <Search className="w-3.5 h-3.5 text-brand-blue" />
-              <span>Track Cargo</span>
-            </button>
-            <span className="text-slate-300">|</span>
             <a
               href={BRAND.brochurePath}
               download
@@ -324,16 +316,6 @@ export const Navbar = ({ onOpenQuote, onOpenTracking }) => {
             >
               <Calculator className="w-4 h-4" />
               <span>Get Fare Rate Quote</span>
-            </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenTracking();
-              }}
-              className="w-full flex items-center justify-center gap-2 py-2.5 bg-slate-100 text-slate-800 font-semibold rounded-xl text-sm hover:bg-slate-200 cursor-pointer"
-            >
-              <Search className="w-4 h-4 text-brand-blue" />
-              <span>Track Shipment / AWB</span>
             </button>
             <a
               href={BRAND.brochurePath}

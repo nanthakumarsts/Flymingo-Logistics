@@ -106,22 +106,15 @@ const fieldCls =
   'focus:outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue transition';
 const labelCls = 'block text-sm font-medium text-slate-700 mb-1.5';
 
-export const HomePage = ({ onOpenQuote, onOpenTracking }) => {
-  const [activeTab, setActiveTab] = useState('quote');
+export const HomePage = ({ onOpenQuote }) => {
   const [heroFromCountry, setHeroFromCountry] = useState('India');
   const [heroToCountry, setHeroToCountry] = useState('United States');
   const [heroService, setHeroService] = useState('international-courier');
   const [heroWeight, setHeroWeight] = useState('10');
-  const [heroAwb, setHeroAwb] = useState('');
 
   const handleHeroQuoteSubmit = (e) => {
     e.preventDefault();
     onOpenQuote(heroService);
-  };
-
-  const handleHeroTrackSubmit = (e) => {
-    e.preventDefault();
-    onOpenTracking(heroAwb.trim() ? heroAwb : 'FLY-8924488');
   };
 
   return (
@@ -168,12 +161,12 @@ export const HomePage = ({ onOpenQuote, onOpenTracking }) => {
                 >
                   <Calculator className="w-4 h-4" /> Get fare rate
                 </button>
-                <button
-                  onClick={() => onOpenTracking()}
+                <Link
+                  to="/services"
                   className="px-6 py-3.5 bg-white border border-slate-200 hover:border-brand-blue text-brand-blue rounded-xl text-sm font-semibold transition cursor-pointer flex items-center gap-2"
                 >
-                  <Search className="w-4 h-4" /> Track shipment
-                </button>
+                  <Package className="w-4 h-4" /> Explore services
+                </Link>
                 <a href={BRAND.brochurePath} download
                   className="px-3 py-3.5 text-sm font-semibold text-slate-600 hover:text-brand-blue transition inline-flex items-center gap-1.5">
                   Download brochure <ArrowRight className="w-4 h-4" />
@@ -194,80 +187,50 @@ export const HomePage = ({ onOpenQuote, onOpenTracking }) => {
             <div className="lg:col-span-5 fm-hero-item" style={{ animationDelay: '.35s' }}>
               <div className="fm-float">
                 <div className="bg-white rounded-3xl shadow-xl shadow-brand-blue/10 border border-slate-100 p-6 sm:p-8">
-                  <div className="grid grid-cols-2 rounded-xl bg-slate-100 p-1 mb-6 text-sm font-semibold">
-                    {[['quote', 'Quick quote'], ['track', 'Live tracking']].map(([id, label]) => (
-                      <button
-                        key={id}
-                        onClick={() => setActiveTab(id)}
-                        className={`py-2.5 rounded-lg transition cursor-pointer ${
-                          activeTab === id ? 'bg-white text-brand-blue shadow-sm' : 'text-slate-500 hover:text-slate-800'
-                        }`}
-                      >
-                        {label}
-                      </button>
-                    ))}
+                  <div className="mb-5 pb-3 border-b border-slate-100 flex items-center justify-between">
+                    <div>
+                      <span className="text-xs font-bold uppercase tracking-wider text-brand-red">
+                        Fare Rate Calculator
+                      </span>
+                      <h3 className="text-lg font-bold text-slate-900">
+                        Cargo Request Quote
+                      </h3>
+                    </div>
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   </div>
 
-                  {activeTab === 'quote' ? (
-                    <form onSubmit={handleHeroQuoteSubmit} className="space-y-4">
+                  <form onSubmit={handleHeroQuoteSubmit} className="space-y-4">
+                    <div>
+                      <label className={labelCls}>Service</label>
+                      <select value={heroService} onChange={(e) => setHeroService(e.target.value)} className={fieldCls}>
+                        {CORE_SERVICES.map((s) => <option key={s.id} value={s.id}>{s.title}</option>)}
+                      </select>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className={labelCls}>Service</label>
-                        <select value={heroService} onChange={(e) => setHeroService(e.target.value)} className={fieldCls}>
-                          {CORE_SERVICES.map((s) => <option key={s.id} value={s.id}>{s.title}</option>)}
+                        <label className={labelCls}>From</label>
+                        <select value={heroFromCountry} onChange={(e) => setHeroFromCountry(e.target.value)} className={fieldCls}>
+                          {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
                         </select>
                       </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className={labelCls}>From</label>
-                          <select value={heroFromCountry} onChange={(e) => setHeroFromCountry(e.target.value)} className={fieldCls}>
-                            {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                          </select>
-                        </div>
-                        <div>
-                          <label className={labelCls}>To</label>
-                          <select value={heroToCountry} onChange={(e) => setHeroToCountry(e.target.value)} className={fieldCls}>
-                            {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                          </select>
-                        </div>
-                      </div>
                       <div>
-                        <label className={labelCls}>Cargo weight (kg)</label>
-                        <input type="number" min="1" value={heroWeight}
-                          onChange={(e) => setHeroWeight(e.target.value)} placeholder="e.g. 15" className={fieldCls} />
+                        <label className={labelCls}>To</label>
+                        <select value={heroToCountry} onChange={(e) => setHeroToCountry(e.target.value)} className={fieldCls}>
+                          {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                        </select>
                       </div>
-                      <button type="submit"
-                        className="w-full py-3.5 bg-brand-blue hover:bg-brand-blue-dark text-white rounded-xl text-sm font-semibold transition cursor-pointer flex items-center justify-center gap-2">
-                        Continue with full details <ArrowRight className="w-4 h-4" />
-                      </button>
-                      <p className="text-xs text-center text-slate-400">Instant quote. No credit card required.</p>
-                    </form>
-                  ) : (
-                    <form onSubmit={handleHeroTrackSubmit} className="space-y-4">
-                      <div>
-                        <label className={labelCls}>Air waybill / shipment number</label>
-                        <div className="relative">
-                          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                          <input type="text" value={heroAwb} onChange={(e) => setHeroAwb(e.target.value)}
-                            placeholder="e.g. FLY-8924488" className={`${fieldCls} pl-10 uppercase`} />
-                        </div>
-                      </div>
-                      <div className="text-sm text-slate-500 space-y-2">
-                        <span>Try a sample ID</span>
-                        <div className="flex flex-wrap gap-2">
-                          {[['FLY-8924488', 'Courier'], ['SPARE-55021', 'Ship spares']].map(([id, label]) => (
-                            <button key={id} type="button" onClick={() => setHeroAwb(id)}
-                              className="px-3 py-1.5 rounded-lg bg-brand-blue-50 text-brand-blue text-xs font-semibold hover:bg-brand-blue-100 transition cursor-pointer">
-                              {id} · {label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                      <button type="submit"
-                        className="w-full py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-sm font-semibold transition cursor-pointer flex items-center justify-center gap-2">
-                        <Search className="w-4 h-4" /> Track shipment
-                      </button>
-                    </form>
-                  )}
+                    </div>
+                    <div>
+                      <label className={labelCls}>Cargo weight (kg)</label>
+                      <input type="number" min="1" value={heroWeight}
+                        onChange={(e) => setHeroWeight(e.target.value)} placeholder="e.g. 15" className={fieldCls} />
+                    </div>
+                    <button type="submit"
+                      className="w-full py-3.5 bg-brand-blue hover:bg-brand-blue-dark text-white rounded-xl text-sm font-semibold transition cursor-pointer flex items-center justify-center gap-2">
+                      Continue with full details <ArrowRight className="w-4 h-4" />
+                    </button>
+                    <p className="text-xs text-center text-slate-400">Instant quote. Direct operational rates.</p>
+                  </form>
                 </div>
               </div>
             </div>
