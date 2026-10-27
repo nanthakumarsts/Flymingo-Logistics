@@ -209,7 +209,7 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
 
       {/* CTA Box */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-brand-blue to-brand-blue-dark rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div className="bg-brand-blue-dark rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-brand-blue/30">
           <div className="space-y-2 text-center md:text-left">
             <h2 className="text-2xl sm:text-3xl font-extrabold">Need an Express Pickup Today?</h2>
             <p className="text-xs sm:text-sm text-slate-200">

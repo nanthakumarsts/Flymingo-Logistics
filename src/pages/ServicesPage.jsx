@@ -118,7 +118,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
       {/* ========================================================= */}
       {/* 1. CINEMATIC MULTIMODAL TERMINAL BANNER HERO              */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/15 pt-12 pb-16 lg:pt-16 lg:pb-20">
+      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/15 py-10 sm:py-12 lg:py-14">
         {/* Photographic Background Texture with Deep Maritime Scrim */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
@@ -126,14 +126,10 @@ export const ServicesPage = ({ onOpenQuote }) => {
             alt="Flymingo Logistics Global Multimodal Operations" 
             className="w-full h-full object-cover object-center opacity-25 scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/98 via-brand-blue-dark/92 to-brand-blue-dark/80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark/95 via-transparent to-brand-blue-dark/85" />
-          {/* Swiss Industrial Blueprint Grid */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-          <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-brand-red/20 blur-3xl" />
+          <div className="absolute inset-0 bg-slate-950/75" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-7">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
           {/* Breadcrumb & Telemetry Tag */}
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
             <nav className="flex items-center gap-2 text-white/70 font-medium">
@@ -142,25 +138,25 @@ export const ServicesPage = ({ onOpenQuote }) => {
               <span className="text-white font-bold">Services Overview</span>
             </nav>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
               <span>ACTIVE CORRIDORS: 190+ COUNTRIES &bull; 10+ SEAPORTS &bull; 24/7 HOTLINE</span>
             </div>
           </div>
 
           {/* Banner Title & Subtext */}
-          <div className="max-w-3xl space-y-4">
+          <div className="max-w-3xl space-y-3">
             <div className="inline-block px-3 py-1 rounded-md bg-brand-red/20 border border-brand-red/50 text-brand-red-light text-[11px] font-mono font-extrabold uppercase tracking-widest">
               [ END-TO-END GLOBAL LOGISTICS // SIX STRATEGIC CHANNELS ]
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
               Six Proven Channels.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-white to-brand-red-light">
+              <span className="text-brand-red-light">
                 Zero Cargo Gaps.
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-white/80 leading-relaxed font-normal pt-1 max-w-2xl">
+            <p className="text-sm sm:text-base text-white/80 leading-relaxed font-normal pt-0.5 max-w-2xl">
               From time-critical vessel spares delivery on-board at outer anchorage berths to worldwide express courier and heavy air/ocean freight forwarders, Flymingo Logistics handles every consignment with shipowner precision.
             </p>
           </div>
@@ -169,7 +165,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
           <div className="flex flex-wrap items-center gap-3 pt-1">
             <button
               onClick={() => onOpenQuote()}
-              className="px-6 py-3.5 bg-gradient-to-r from-brand-red to-brand-red-dark text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-lg shadow-brand-red/40 hover:shadow-xl transition-all hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
+              className="px-6 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-md transition-all hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
             >
               <Calculator className="w-4 h-4" />
               <span>Request Instant Fare Quote</span>
@@ -266,7 +262,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
                       alt={service.title} 
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-slate-950/40" />
                     
                     {/* Floating Badge on Image */}
                     <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
@@ -334,7 +330,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
       {/* 4. BOTTOM ACTION STRIP                                    */}
       {/* ========================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-brand-blue via-brand-blue-dark to-slate-950 rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-brand-blue-dark rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-brand-blue/30">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-xs font-bold uppercase tracking-wider text-brand-red bg-white/10 px-3 py-1 rounded-full inline-block">
               Immediate Assistance

@@ -14,7 +14,7 @@ import {
 import HERO_SLIDES from '../data/heroSlides.json';
 
 /* Background photos. Swap any URL for your own file, e.g. '/images/process-bg.jpg' in /public.
-   If an image fails to load, the section falls back to the brand-blue gradient behind it. */
+   If an image fails to load, the section falls back to the dark brand blue behind it. */
 const IMG = {
   hero: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1920&q=70',
   process: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=70',
@@ -68,13 +68,6 @@ const css = `
 .fm-s3 { opacity: 0; animation: fm-slide-in .7s .30s cubic-bezier(.2,.7,.2,1) forwards; }
 .fm-s4 { opacity: 0; animation: fm-slide-in .7s .42s cubic-bezier(.2,.7,.2,1) forwards; }
 
-.fm-gradient-text {
-  color: #005687;
-}
-.fm-gradient-light {
-  color: #E8291F;
-}
-
 /* photo backgrounds: parallax on desktop, normal scroll on touch devices */
 .fm-parallax { background-image: var(--bg); background-size: cover; background-position: center; }
 @media (min-width: 1024px) { .fm-parallax { background-attachment: fixed; } }
@@ -87,15 +80,15 @@ const css = `
 .fm-scale { transform: scale(.94); }
 .fm-reveal.fm-in { opacity: 1; transform: none; }
 
-/* spotlight card: glow follows the cursor */
+/* spotlight card */
 .fm-spot { position: relative; isolation: isolate; }
 .fm-spot::before {
   content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1; opacity: 0;
-  background: radial-gradient(380px circle at var(--mx,50%) var(--my,50%), rgba(0,86,135,.10), transparent 60%);
+  background-color: rgba(0,86,135,.04);
   transition: opacity .3s;
 }
 .fm-spot:hover::before { opacity: 1; }
-.fm-spot-dark::before { background: radial-gradient(380px circle at var(--mx,50%) var(--my,50%), rgba(232,41,31,.22), transparent 60%); }
+.fm-spot-dark::before { background-color: rgba(232,41,31,.08); }
 
 /* animated accent line on cards */
 .fm-line { transform: scaleX(0); transform-origin: left; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
@@ -107,7 +100,7 @@ const css = `
 @media (prefers-reduced-motion: reduce) {
   .fm-hero-item, .fm-reveal, .fm-s1, .fm-s2, .fm-s3, .fm-s4 { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; filter: none !important; }
   .fm-wing { stroke-dashoffset: 0; animation: none; }
-  .fm-zoom, .fm-kb, .fm-bar, .fm-float, .fm-blob, .fm-gradient-text, .fm-gradient-light, .fm-ping::after, .fm-dash, .fm-spin, .fm-pulse { animation: none; }
+  .fm-zoom, .fm-kb, .fm-bar, .fm-float, .fm-blob, .fm-ping::after, .fm-dash, .fm-spin, .fm-pulse { animation: none; }
 }
 `;
 
@@ -229,7 +222,7 @@ export const HomePage = ({ onOpenQuote }) => {
       <style>{css}</style>
 
       {/* scroll progress */}
-      <div ref={barRef} className="fm-progress fixed top-0 left-0 right-0 h-[3px] z-[60] bg-gradient-to-r from-brand-red via-brand-red to-brand-blue" />
+      <div ref={barRef} className="fm-progress fixed top-0 left-0 right-0 h-[3px] z-[60] bg-brand-red" />
 
       {/* ============ HERO SLIDER ============ */}
       <section
@@ -257,9 +250,8 @@ export const HomePage = ({ onOpenQuote }) => {
           </div>
         ))}
 
-        {/* Professional corporate gradient overlays for crystal-clear readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/80 to-brand-blue-dark/45" aria-hidden="true" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark via-transparent to-brand-blue-dark/50" aria-hidden="true" />
+        {/* Professional corporate solid scrim overlay for crystal-clear readability */}
+        <div className="absolute inset-0 bg-brand-blue-dark/85" aria-hidden="true" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-14 sm:pt-6 sm:pb-16 lg:pt-6 lg:pb-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[370px]">
@@ -430,7 +422,7 @@ export const HomePage = ({ onOpenQuote }) => {
 
       {/* ============ CORE SERVICES ============ */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-brand-blue-50 to-white" aria-hidden="true" />
+        <div className="absolute inset-0 bg-slate-50/50" aria-hidden="true" />
         <div className="fm-blob absolute top-20 -left-24 w-80 h-80 rounded-full bg-brand-blue/10 blur-3xl pointer-events-none" aria-hidden="true" />
         <div className="fm-blob absolute bottom-10 -right-24 w-80 h-80 rounded-full bg-brand-red/10 blur-3xl pointer-events-none" style={{ animationDelay: '-7s' }} aria-hidden="true" />
 
@@ -456,7 +448,7 @@ export const HomePage = ({ onOpenQuote }) => {
                         className="w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-75 transition-all duration-500"
                         onError={(e) => { e.currentTarget.style.display = 'none'; }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent" />
+                      <div className="absolute inset-0 bg-slate-950/40" />
                       <span className="absolute right-4 top-3 text-3xl font-black text-white/20 leading-none select-none font-mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                       <div className="absolute left-6 bottom-4 flex items-center gap-3">
                         <div className="w-12 h-12 rounded-xl bg-brand-red text-white flex items-center justify-center shadow-lg shadow-brand-red/40 group-hover:scale-110 transition-all duration-300">
@@ -506,7 +498,7 @@ export const HomePage = ({ onOpenQuote }) => {
             aria-hidden="true"
             className="w-full h-full object-cover object-center opacity-30 scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#001426]/95 via-[#00223d]/88 to-[#001426]/95" />
+          <div className="absolute inset-0 bg-[#001426]/92" />
         </div>
         <Wave className="text-white" flip />
         <Wave className="text-white" />
@@ -527,7 +519,7 @@ export const HomePage = ({ onOpenQuote }) => {
 
           {/* vertical timeline, cards alternate left and right on desktop */}
           <ol className="relative max-w-5xl mx-auto list-none">
-            <span className="absolute left-5 lg:left-1/2 top-0 bottom-0 w-0.5 lg:-translate-x-1/2 bg-gradient-to-b from-brand-red via-white/50 to-white/10" aria-hidden="true" />
+            <span className="absolute left-5 lg:left-1/2 top-0 bottom-0 w-0.5 lg:-translate-x-1/2 bg-white/20" aria-hidden="true" />
             {SIX_WAYS_CARGO.map((item, idx) => {
               const left = idx % 2 === 0;
               return (
@@ -562,18 +554,18 @@ export const HomePage = ({ onOpenQuote }) => {
       {/* ============ PROMISE ============ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
         <Reveal variant="scale">
-          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#00223d] via-brand-blue to-brand-blue-dark text-white p-7 sm:p-12 lg:p-16 shadow-2xl shadow-brand-blue/30">
+          <div className="relative overflow-hidden rounded-[2rem] bg-brand-blue-dark border border-brand-blue/30 text-white p-7 sm:p-12 lg:p-16 shadow-2xl">
             <img
               src="/assets/service banner.jpg"
               alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity pointer-events-none"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/80 to-brand-blue/50" aria-hidden="true" />
+            <div className="absolute inset-0 bg-[#00172b]/85" aria-hidden="true" />
             <div className="fm-blob absolute -top-20 -left-16 w-72 h-72 rounded-full bg-brand-red/30 blur-3xl pointer-events-none" aria-hidden="true" />
             <div className="fm-blob absolute -bottom-24 right-10 w-72 h-72 rounded-full bg-white/10 blur-3xl pointer-events-none" style={{ animationDelay: '-8s' }} aria-hidden="true" />
             <Quote className="absolute -right-4 -bottom-6 w-56 h-56 text-white/5" />
-            <span className="absolute left-0 top-10 bottom-10 w-1.5 rounded-r-full bg-gradient-to-b from-brand-red to-transparent" aria-hidden="true" />
+            <span className="absolute left-0 top-10 bottom-10 w-1.5 rounded-r-full bg-brand-red" aria-hidden="true" />
 
             <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
               <div className="space-y-6">
@@ -610,7 +602,7 @@ export const HomePage = ({ onOpenQuote }) => {
               return (
                 <Reveal key={idx} delay={(idx % 3) * 70}>
                   <div className="group relative flex items-start gap-4 p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-brand-red/50 hover:shadow-xl hover:shadow-brand-red/5 hover:-translate-y-1 transition-all duration-300">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-blue-50 to-brand-blue-100 text-brand-blue flex items-center justify-center shrink-0 group-hover:from-brand-red group-hover:to-brand-red-dark group-hover:text-white transition-all duration-300 shadow-sm">
+                    <div className="w-12 h-12 rounded-xl bg-brand-blue-50 text-brand-blue flex items-center justify-center shrink-0 group-hover:bg-brand-red group-hover:text-white transition-all duration-300 shadow-sm">
                       <Icon className="w-6 h-6" />
                     </div>
                     <div className="min-w-0 flex-1">
@@ -638,7 +630,7 @@ export const HomePage = ({ onOpenQuote }) => {
             aria-hidden="true"
             className="w-full h-full object-cover object-center opacity-30 scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#001426]/95 via-[#00223d]/88 to-[#001426]/95" />
+          <div className="absolute inset-0 bg-[#001426]/92" />
         </div>
         <Wave className="text-slate-50" flip />
         <Wave className="text-slate-50" />
@@ -692,7 +684,7 @@ export const HomePage = ({ onOpenQuote }) => {
                     <blockquote className="text-slate-700 leading-relaxed text-sm">{t.quote}</blockquote>
                   </div>
                   <figcaption className="mt-6 pt-5 border-t border-slate-100 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-blue to-brand-blue-dark text-white font-bold flex items-center justify-center text-sm ring-2 ring-brand-red/30 ring-offset-2 flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-brand-blue text-white font-bold flex items-center justify-center text-sm ring-2 ring-brand-red/30 ring-offset-2 shrink-0">
                       {t.author.charAt(0)}
                     </div>
                     <div className="min-w-0">

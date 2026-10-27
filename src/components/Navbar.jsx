@@ -144,42 +144,45 @@ export const Navbar = ({ onOpenQuote }) => {
 
             {/* Dropdown Menu */}
             {servicesDropdownOpen && (
-              <div className="absolute top-full left-0 w-84 bg-white rounded-2xl shadow-xl border border-slate-200 p-2.5 space-y-1 z-50 animate-fade-in">
-                <div className="px-3 py-2 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest border-b border-slate-100 flex items-center justify-between">
+              <div className="absolute top-full left-0 w-[580px] sm:w-[620px] bg-white rounded-2xl shadow-2xl border border-slate-200 p-3 z-50 animate-fade-in">
+                <div className="px-3 py-1.5 mb-2 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest border-b border-slate-100 flex items-center justify-between">
                   <span>Our Core Capabilities</span>
+                  <span className="text-[10px] text-brand-blue font-bold">6 Dedicated Channels</span>
                 </div>
-                {CORE_SERVICES.map((s) => {
-                  const isCurrentService = location.pathname === s.path;
-                  return (
-                    <Link
-                      key={s.id}
-                      to={s.path}
-                      onClick={() => setServicesDropdownOpen(false)}
-                      className={`flex items-center justify-between p-2.5 rounded-xl group transition-all border-l-2 ${
-                        isCurrentService 
-                          ? 'bg-brand-blue-50/80 border-brand-red font-bold text-brand-blue' 
-                          : 'border-transparent hover:border-brand-blue hover:bg-slate-50 text-slate-700 hover:text-brand-blue'
-                      }`}
-                    >
-                      <div>
-                        <div className="text-xs font-bold">
-                          {s.title}
+                <div className="grid grid-cols-2 gap-2">
+                  {CORE_SERVICES.map((s) => {
+                    const isCurrentService = location.pathname === s.path;
+                    return (
+                      <Link
+                        key={s.id}
+                        to={s.path}
+                        onClick={() => setServicesDropdownOpen(false)}
+                        className={`flex items-start justify-between p-2.5 rounded-xl group transition-all border-l-2 ${
+                          isCurrentService 
+                            ? 'bg-brand-blue-50/80 border-brand-red font-bold text-brand-blue' 
+                            : 'border-transparent hover:border-brand-blue hover:bg-slate-50 text-slate-700 hover:text-brand-blue'
+                        }`}
+                      >
+                        <div className="min-w-0 pr-2">
+                          <div className="text-xs font-bold truncate">
+                            {s.title}
+                          </div>
+                          <div className="text-[11px] text-slate-500 font-normal line-clamp-1 mt-0.5">
+                            {s.shortDesc}
+                          </div>
                         </div>
-                        <div className="text-[11px] text-slate-500 font-normal line-clamp-1">
-                          {s.shortDesc}
-                        </div>
-                      </div>
-                      <span className="text-[9px] font-bold text-brand-blue bg-white px-2 py-0.5 rounded-md border border-brand-blue-100 shadow-2xs flex-shrink-0">
-                        {s.badge}
-                      </span>
-                    </Link>
-                  );
-                })}
-                <div className="pt-2 border-t border-slate-100">
+                        <span className="text-[9px] font-bold text-brand-blue bg-white px-1.5 py-0.5 rounded-md border border-brand-blue-100 shadow-2xs shrink-0">
+                          {s.badge}
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+                <div className="pt-2.5 mt-2 border-t border-slate-100">
                   <Link
                     to="/services"
                     onClick={() => setServicesDropdownOpen(false)}
-                    className="flex items-center justify-between px-3 py-2 rounded-xl bg-gradient-to-r from-brand-blue-50 to-slate-50 hover:from-brand-blue-100 hover:to-brand-blue-50 text-brand-blue text-xs font-bold transition-all border border-brand-blue-100/70"
+                    className="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 hover:bg-brand-blue-50 text-brand-blue text-xs font-bold transition-all border border-brand-blue-100/70"
                   >
                     <span>View All 6 Services Overview</span>
                     <ArrowRight className="w-3.5 h-3.5 text-brand-red" />

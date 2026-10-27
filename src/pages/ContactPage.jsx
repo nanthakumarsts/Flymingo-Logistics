@@ -25,7 +25,7 @@ export const ContactPage = () => {
       {/* ========================================================= */}
       {/* 1. CINEMATIC COMMUNICATIONS DISPATCH BANNER HERO          */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/15 pt-12 pb-16 lg:pt-16 lg:pb-20">
+      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/15 py-10 sm:py-12 lg:py-14">
         {/* Photographic Background Texture with Deep Maritime Scrim */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
@@ -33,14 +33,10 @@ export const ContactPage = () => {
             alt="Flymingo Logistics Global Communications Desk" 
             className="w-full h-full object-cover object-center opacity-25 scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/98 via-brand-blue-dark/92 to-brand-blue-dark/80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark/95 via-transparent to-brand-blue-dark/85" />
-          {/* Swiss Industrial Blueprint Grid */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-          <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-brand-red/20 blur-3xl" />
+          <div className="absolute inset-0 bg-slate-950/75" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-7">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
           {/* Breadcrumb & Telemetry Tag */}
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
             <nav className="flex items-center gap-2 text-white/70 font-medium">
@@ -49,54 +45,54 @@ export const ContactPage = () => {
               <span className="text-white font-bold">Contact Us</span>
             </nav>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
               <span>LIVE DESK ACTIVE &bull; COIMBATORE HQ &amp; CHENNAI PORT HUB</span>
             </div>
           </div>
 
           {/* Banner Title & Subtext */}
-          <div className="max-w-3xl space-y-4">
+          <div className="max-w-3xl space-y-3">
             <div className="inline-block px-3 py-1 rounded-md bg-brand-red/20 border border-brand-red/50 text-brand-red-light text-[11px] font-mono font-extrabold uppercase tracking-widest">
               [ 24/7 CARGO ASSISTANCE &amp; DISPATCH // DIRECT HOTLINES ]
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
               Direct Lines.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-white to-brand-red-light">
+              <span className="text-brand-red-light">
                 Immediate Logistics Response.
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-white/80 leading-relaxed font-normal pt-1 max-w-2xl">
+            <p className="text-sm sm:text-base text-white/80 leading-relaxed font-normal pt-0.5 max-w-2xl">
               Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.
             </p>
           </div>
 
           {/* Contact Fast-Response Quick Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-3">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
             <a 
               href={`tel:${BRAND.primaryPhone}`} 
-              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
+              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 shadow-sm transition-all flex items-center gap-3 group cursor-pointer"
             >
-              <div className="w-10 h-10 rounded-xl bg-brand-red/25 border border-brand-red/40 text-brand-red-light flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                <Phone className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-lg bg-brand-red/25 border border-brand-red/40 text-brand-red-light flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <Phone className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs font-mono font-bold text-white/70 uppercase tracking-wider">Coimbatore HQ</div>
-                <div className="text-sm font-black text-white hover:text-sky-300 transition-colors">{BRAND.primaryPhone}</div>
+                <div className="text-[10px] font-mono font-bold text-white/70 uppercase tracking-wider">Coimbatore HQ</div>
+                <div className="text-xs font-black text-white hover:text-sky-300 transition-colors truncate">{BRAND.primaryPhone}</div>
               </div>
             </a>
 
             <a 
               href={`tel:${BRAND.supportPhones[1]}`} 
-              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
+              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 shadow-sm transition-all flex items-center gap-3 group cursor-pointer"
             >
-              <div className="w-10 h-10 rounded-xl bg-sky-500/25 border border-sky-400/40 text-sky-300 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                <Phone className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-lg bg-sky-500/25 border border-sky-400/40 text-sky-300 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <Phone className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs font-mono font-bold text-white/70 uppercase tracking-wider">Chennai Port Hub</div>
-                <div className="text-sm font-black text-white hover:text-sky-300 transition-colors">{BRAND.supportPhones[1]}</div>
+                <div className="text-[10px] font-mono font-bold text-white/70 uppercase tracking-wider">Chennai Port Hub</div>
+                <div className="text-xs font-black text-white hover:text-sky-300 transition-colors truncate">{BRAND.supportPhones[1]}</div>
               </div>
             </a>
 
@@ -104,26 +100,26 @@ export const ContactPage = () => {
               href={`https://wa.me/919087924488?text=${encodeURIComponent('Hello Flymingo Logistics, I need shipment assistance.')}`}
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
+              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 shadow-sm transition-all flex items-center gap-3 group cursor-pointer"
             >
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/25 border border-emerald-400/40 text-emerald-300 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                <MessageSquare className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-lg bg-emerald-500/25 border border-emerald-400/40 text-emerald-300 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <MessageSquare className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs font-mono font-bold text-white/70 uppercase tracking-wider">WhatsApp 24/7</div>
-                <div className="text-sm font-black text-emerald-300">Instant Chat Reply</div>
+                <div className="text-[10px] font-mono font-bold text-white/70 uppercase tracking-wider">WhatsApp 24/7</div>
+                <div className="text-xs font-black text-emerald-300 truncate">Instant Chat Reply</div>
               </div>
             </a>
 
             <a 
               href={`mailto:${BRAND.primaryEmail}`}
-              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
+              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 shadow-sm transition-all flex items-center gap-3 group cursor-pointer"
             >
-              <div className="w-10 h-10 rounded-xl bg-white/15 border border-white/25 text-white flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                <Mail className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-lg bg-white/15 border border-white/25 text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <Mail className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs font-mono font-bold text-white/70 uppercase tracking-wider">Official Email</div>
+                <div className="text-[10px] font-mono font-bold text-white/70 uppercase tracking-wider">Official Email</div>
                 <div className="text-xs font-bold text-white truncate">{BRAND.primaryEmail}</div>
               </div>
             </a>
