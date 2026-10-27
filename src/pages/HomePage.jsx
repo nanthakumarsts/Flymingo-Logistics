@@ -5,7 +5,7 @@ import {
   ArrowRight, Calculator, Check, Quote,
   Boxes, FileText, Coffee, Luggage, HeartPulse, Flame,
   Ship, Radio, Utensils, Atom, Activity, Car,
-  ArrowUpRight, Globe, Clock
+  ArrowUpRight, Globe, Clock, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import {
   BRAND, STATS, CORE_SERVICES, SIX_WAYS_CARGO,
@@ -19,6 +19,61 @@ const IMG = {
   process: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=70',
   industries: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1920&q=70',
 };
+
+/* Hero banner slider items - structured with minimal text for future CMS / admin integration */
+const HERO_SLIDES = [
+  {
+    id: 'marine-logistics',
+    badge: 'Marine Logistics & Port Operations',
+    titlePrefix: 'Six ways we get your cargo from ',
+    highlight: 'origin to destination',
+    titleSuffix: '.',
+    desc: 'From ship spares delivered on board at global anchorages to overseas courier, personal relocation and certified DG air cargo.',
+    image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1920&q=70',
+    primaryCta: 'Get fare rate',
+    secondaryCta: 'Explore services',
+    secondaryLink: '/services',
+    serviceId: 'ship-spares',
+    featureBadge: 'Priority Marine Desk',
+    featureTitle: 'Ship Spares Logistics',
+    featureDesc: 'Port deck & outer anchorage delivery with onboard hand-over and round-the-clock clearance.',
+    highlights: ['24/7 Port deck delivery', 'IATA / IMO certified DG', 'Zero-demurrage focus'],
+  },
+  {
+    id: 'worldwide-courier',
+    badge: 'Express Global Network',
+    titlePrefix: 'Rapid door-to-door ',
+    highlight: 'worldwide express courier',
+    titleSuffix: ' delivery.',
+    desc: 'Connecting 190+ countries with priority doorstep delivery for commercial samples, urgent documents, and specialized parcels.',
+    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=70',
+    primaryCta: 'Calculate fare rate',
+    secondaryCta: 'View courier options',
+    secondaryLink: '/services',
+    serviceId: 'international-courier',
+    featureBadge: 'Global Express Dispatch',
+    featureTitle: 'Worldwide Express Courier',
+    featureDesc: 'Fastest door-to-door transit times to USA, UK, Europe, Middle East, Singapore & worldwide.',
+    highlights: ['190+ Global destinations', 'Live end-to-end GPS tracking', 'Express customs clearance'],
+  },
+  {
+    id: 'customs-brokerage',
+    badge: 'Multimodal Freight & Brokerage',
+    titlePrefix: 'Seamless ocean & air ',
+    highlight: 'freight forwarding & customs',
+    titleSuffix: ' clearance.',
+    desc: 'Dedicated seaport and airport customs clearance with direct EDI filing, warehousing, and intermodal transport across all major corridors.',
+    image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1920&q=70',
+    primaryCta: 'Request freight quote',
+    secondaryCta: 'Explore all solutions',
+    secondaryLink: '/services',
+    serviceId: 'customs-clearance',
+    featureBadge: 'Licensed Customs House',
+    featureTitle: 'Direct Seaport & Airport EDI',
+    featureDesc: 'Zero-delay documentation and automated filing across all major Indian ports.',
+    highlights: ['Licensed Customs Brokers', 'Air & ocean freight options', 'Dedicated 24/7 support desk'],
+  },
+];
 
 /* Built-in illustrated backgrounds (brand colours). They always render, even offline;
    the photo from IMG is drawn on top when it loads. */
@@ -164,7 +219,7 @@ const ParallaxBg = ({ src, scene, className = '' }) => (
 const Wave = ({ className = '', flip = false }) => (
   <svg
     viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"
-    className={`absolute left-0 w-full h-10 sm:h-16 pointer-events-none ${flip ? 'top-0 rotate-180' : 'bottom-[-1px]'} ${className}`}
+    className={`absolute left-0 w-full h-10 sm:h-16 pointer-events-none ${flip ? '-top-[2px] rotate-180' : '-bottom-[2px]'} ${className}`}
   >
     <path fill="currentColor" d="M0 44 C 240 92 480 0 720 36 S 1200 84 1440 28 V80 H0 Z" />
   </svg>
@@ -220,6 +275,21 @@ const STAT_ICONS = [Globe, Plane, ShieldCheck, Clock];
 
 export const HomePage = ({ onOpenQuote }) => {
   const barRef = useRef(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const slideCount = HERO_SLIDES.length;
+
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slideCount);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [isPaused, slideCount]);
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slideCount);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slideCount) % slideCount);
+  const activeSlide = HERO_SLIDES[currentSlide];
 
   /* scroll progress */
   useEffect(() => {
@@ -240,9 +310,24 @@ export const HomePage = ({ onOpenQuote }) => {
       {/* scroll progress */}
       <div ref={barRef} className="fm-progress fixed top-0 left-0 right-0 h-[3px] z-[60] bg-gradient-to-r from-brand-red via-brand-red to-brand-blue" />
 
-      {/* ============ HERO ============ */}
-      <section className="relative overflow-hidden bg-brand-blue-dark text-white">
-        <BgImage src={IMG.hero} scene={SCENE.ship} eager className="fm-zoom opacity-30" />
+      {/* ============ HERO SLIDER ============ */}
+      <section
+        className="relative overflow-hidden bg-brand-blue-dark text-white select-none"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {/* Slide background crossfade */}
+        {HERO_SLIDES.map((slide, idx) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              idx === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}
+          >
+            <BgImage src={slide.image} scene={SCENE.ship} eager={idx === 0} className="fm-zoom opacity-30" />
+          </div>
+        ))}
+
         {/* Dark contrast scrims to guarantee high legibility while retaining background texture */}
         <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/80 to-brand-blue-dark/50" aria-hidden="true" />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark via-transparent to-brand-blue-dark/70" aria-hidden="true" />
@@ -268,40 +353,88 @@ export const HomePage = ({ onOpenQuote }) => {
           <Ship className="w-7 h-7 text-white" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 sm:pt-10 sm:pb-24 lg:pt-10 lg:pb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-            <div className="lg:col-span-7 space-y-4 sm:space-y-5 text-center lg:text-left">
-              <p className="fm-hero-item inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/25 text-xs sm:text-sm font-semibold text-white" style={{ animationDelay: '.05s' }}>
-                Global marine logistics &amp; freight forwarding
-              </p>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-20 sm:pt-8 sm:pb-24 lg:pt-8 lg:pb-24">
+          {/* Top Bar inside Hero: Category Pill & Carousel Controls */}
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/25 text-xs sm:text-sm font-semibold text-white">
+              <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
+              {activeSlide.badge}
+            </div>
 
-              <h1 className="fm-hero-item text-3xl sm:text-4xl lg:text-[42px] xl:text-5xl font-black tracking-tight text-white leading-[1.12] drop-shadow-lg" style={{ animationDelay: '.15s' }}>
-                Six ways we get your cargo from <span className="fm-gradient-light">origin to destination</span>.
+            {/* Slider Controls: Counter & Arrows */}
+            <div className="flex items-center gap-2">
+              <div className="text-xs font-mono text-white/80 font-semibold tracking-wider mr-1">
+                <span className="text-white font-bold">{String(currentSlide + 1).padStart(2, '0')}</span>
+                <span className="text-white/40"> / </span>
+                <span>{String(slideCount).padStart(2, '0')}</span>
+              </div>
+              <button
+                type="button"
+                onClick={prevSlide}
+                aria-label="Previous slide"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-brand-red text-white border border-white/25 hover:border-brand-red flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={nextSlide}
+                aria-label="Next slide"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-brand-red text-white border border-white/25 hover:border-brand-red flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            {/* Left Column: Clean, CMS-Ready Minimal Text */}
+            <div className="lg:col-span-7 space-y-4 sm:space-y-4 text-center lg:text-left">
+              <h1 className="text-3xl sm:text-4xl lg:text-[40px] xl:text-[46px] font-black tracking-tight text-white leading-[1.14] drop-shadow-lg min-h-[76px] sm:min-h-[92px] flex items-center">
+                <span>
+                  {activeSlide.titlePrefix}
+                  <span className="fm-gradient-light">{activeSlide.highlight}</span>
+                  {activeSlide.titleSuffix}
+                </span>
               </h1>
 
-              <p className="fm-hero-item text-sm sm:text-base text-white/85 max-w-xl mx-auto lg:mx-0 leading-relaxed border-l-0 lg:border-l-3 lg:border-brand-red lg:pl-4" style={{ animationDelay: '.3s' }}>
-                From ship spares delivered on board at global anchorages to overseas courier,
-                personal relocation and certified dangerous goods air cargo.
+              <p className="text-sm sm:text-base text-white/85 max-w-xl mx-auto lg:mx-0 leading-relaxed border-l-0 lg:border-l-3 lg:border-brand-red lg:pl-4 min-h-[44px]">
+                {activeSlide.desc}
               </p>
 
-              <div className="fm-hero-item flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1" style={{ animationDelay: '.45s' }}>
-                <button onClick={() => onOpenQuote()}
-                  className="group px-6 py-3.5 bg-gradient-to-r from-brand-red to-brand-red-dark text-white rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/40 hover:shadow-2xl hover:shadow-brand-red/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center gap-2">
-                  <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" /> Get fare rate
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1">
+                <button
+                  type="button"
+                  onClick={() => onOpenQuote(activeSlide.serviceId)}
+                  className="group px-6 py-3.5 bg-gradient-to-r from-brand-red to-brand-red-dark text-white rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/40 hover:shadow-2xl hover:shadow-brand-red/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center gap-2"
+                >
+                  <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+                  {activeSlide.primaryCta}
                 </button>
-                <Link to="/services"
-                  className="px-6 py-3.5 bg-white/10 backdrop-blur border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-xl text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 cursor-pointer flex items-center gap-2">
-                  <Package className="w-4 h-4" /> Explore services
+                <Link
+                  to={activeSlide.secondaryLink}
+                  className="px-6 py-3.5 bg-white/10 backdrop-blur border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-xl text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 cursor-pointer flex items-center gap-2"
+                >
+                  <Package className="w-4 h-4" />
+                  {activeSlide.secondaryCta}
                 </Link>
-                <a href={BRAND.brochurePath} download
-                  className="group px-3 py-3.5 text-xs sm:text-sm font-semibold text-white/80 hover:text-white transition inline-flex items-center gap-1.5">
+                <a
+                  href={BRAND.brochurePath}
+                  download
+                  className="group px-3 py-3.5 text-xs sm:text-sm font-semibold text-white/80 hover:text-white transition inline-flex items-center gap-1.5"
+                >
                   Download brochure <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
 
-              <ul className="fm-hero-item flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1" style={{ animationDelay: '.6s' }}>
-                {['Customs house brokerage', 'IATA / IMO certified DG', '24/7 port deck delivery'].map((t) => (
-                  <li key={t} className="flex items-center gap-2 pl-1.5 pr-3.5 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs sm:text-sm text-white/90">
+              {/* Minimal Highlight Chips */}
+              <ul className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
+                {activeSlide.highlights.map((t) => (
+                  <li
+                    key={t}
+                    className="flex items-center gap-2 pl-1.5 pr-3.5 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs sm:text-sm text-white/90"
+                  >
                     <span className="w-4 h-4 rounded-full bg-brand-red flex items-center justify-center">
                       <Check className="w-2.5 h-2.5 text-white" />
                     </span>
@@ -311,8 +444,8 @@ export const HomePage = ({ onOpenQuote }) => {
               </ul>
             </div>
 
-            {/* Quick Priority Corridors Showcase Card */}
-            <div className="lg:col-span-5 fm-hero-item" style={{ animationDelay: '.35s' }}>
+            {/* Right Column: Slide-Synced Priority Showcase Card */}
+            <div className="lg:col-span-5">
               <div className="relative">
                 {/* Glow backdrop */}
                 <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-brand-red/40 via-white/10 to-brand-blue/50 blur-lg opacity-70" aria-hidden="true" />
@@ -320,65 +453,33 @@ export const HomePage = ({ onOpenQuote }) => {
                   {/* Card Header */}
                   <div className="flex items-center justify-between pb-3 border-b border-white/15">
                     <div>
-                      <span className="text-[11px] font-mono uppercase tracking-widest text-brand-red font-bold">Priority Corridors</span>
-                      <h3 className="text-base font-bold text-white">Direct Operational Desks</h3>
+                      <span className="text-[11px] font-mono uppercase tracking-widest text-brand-red font-bold">
+                        {activeSlide.featureBadge}
+                      </span>
+                      <h3 className="text-base font-bold text-white">{activeSlide.featureTitle}</h3>
                     </div>
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-[11px] font-semibold text-emerald-300">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      24/7 Active
+                      Live Network
                     </span>
                   </div>
 
-                  {/* Corridor Quick Links */}
-                  <div className="space-y-2.5">
-                    {[
-                      {
-                        id: 'ship-spares',
-                        title: 'Ship Spares Logistics',
-                        desc: 'Port deck & outer anchorage delivery with onboard hand-over.',
-                        icon: Ship,
-                      },
-                      {
-                        id: 'international-courier',
-                        title: 'Worldwide Express Courier',
-                        desc: '190+ countries door-to-door documents & parcels clearance.',
-                        icon: Plane,
-                      },
-                      {
-                        id: 'customs-brokerage',
-                        title: 'Customs Clearance & Forwarding',
-                        desc: 'Direct seaport & airport EDI filing with zero demurrage focus.',
-                        icon: ShieldCheck,
-                      },
-                    ].map((item) => {
-                      const Icon = item.icon;
-                      return (
-                        <button
-                          key={item.id}
-                          onClick={() => onOpenQuote(item.id)}
-                          className="group w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.14] border border-white/10 hover:border-brand-red/60 text-left transition-all duration-200 cursor-pointer"
-                        >
-                          <div className="flex items-center gap-3 min-w-0">
-                            <div className="w-9 h-9 rounded-lg bg-brand-red/20 group-hover:bg-brand-red text-white flex items-center justify-center flex-shrink-0 transition-colors">
-                              <Icon className="w-4 h-4" />
-                            </div>
-                            <div className="min-w-0">
-                              <div className="text-xs sm:text-sm font-bold text-white group-hover:text-brand-red-light transition-colors truncate">
-                                {item.title}
-                              </div>
-                              <div className="text-[11px] text-white/70 line-clamp-1">{item.desc}</div>
-                            </div>
-                          </div>
-                          <ArrowRight className="w-4 h-4 text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0 ml-2" />
-                        </button>
-                      );
-                    })}
+                  {/* Feature Overview */}
+                  <div className="p-3.5 rounded-xl bg-white/[0.06] border border-white/10 space-y-2">
+                    <p className="text-xs sm:text-sm text-white/90 leading-relaxed">
+                      {activeSlide.featureDesc}
+                    </p>
+                    <div className="flex items-center justify-between text-[11px] text-brand-red-light font-semibold pt-1">
+                      <span>Direct Hub Routing</span>
+                      <span className="text-white/70">Verified Protocol</span>
+                    </div>
                   </div>
 
                   {/* Instant Action CTA */}
                   <div className="pt-1">
                     <button
-                      onClick={() => onOpenQuote()}
+                      type="button"
+                      onClick={() => onOpenQuote(activeSlide.serviceId)}
                       className="group w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-brand-red to-brand-red-dark hover:from-brand-red-dark hover:to-brand-red text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/30 hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2"
                     >
                       <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" />
@@ -400,6 +501,23 @@ export const HomePage = ({ onOpenQuote }) => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Bottom Progress Indicator Dots / Bars */}
+          <div className="flex items-center justify-center gap-2.5 pt-6 sm:pt-8">
+            {HERO_SLIDES.map((slide, idx) => (
+              <button
+                key={slide.id}
+                type="button"
+                onClick={() => setCurrentSlide(idx)}
+                aria-label={`Go to slide ${idx + 1}: ${slide.badge}`}
+                className={`transition-all duration-300 h-2 rounded-full cursor-pointer ${
+                  idx === currentSlide
+                    ? 'w-10 bg-brand-red shadow-md shadow-brand-red/50'
+                    : 'w-2.5 bg-white/30 hover:bg-white/60'
+                }`}
+              />
+            ))}
           </div>
         </div>
 
@@ -584,6 +702,16 @@ export const HomePage = ({ onOpenQuote }) => {
 
       {/* ============ SPECIALIZED EXPRESS ============ */}
       <section className="relative overflow-hidden bg-brand-blue-50">
+        {/* Subtle background image texture with high-contrast scrim */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <img
+            src="/assets/packing.jpg"
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover opacity-10"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-blue-50/95 via-brand-blue-50/90 to-brand-blue-50/98" />
+        </div>
         <div className="fm-blob absolute -top-24 right-0 w-96 h-96 rounded-full bg-brand-red/10 blur-3xl pointer-events-none" aria-hidden="true" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
           <SectionHead
