@@ -22,8 +22,6 @@ const IMG = {
   industries: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1920&q=70',
 };
 
-
-
 const SERVICE_ICONS = {
   'international-courier': Package,
   'freight-forwarding': Plane,
@@ -37,33 +35,31 @@ const INDUSTRY_ICONS = { Ship, Radio, Utensils, Atom, Activity, Car };
 
 /* Logo colours: red #E8291F, blue #005687 */
 const css = `
-@keyframes fm-rise { from { opacity: 0; transform: translateY(26px); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes fm-rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
 @keyframes fm-draw { to { stroke-dashoffset: 0; } }
 @keyframes fm-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 @keyframes fm-blob { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(30px,-24px) scale(1.08); } 66% { transform: translate(-22px,18px) scale(.95); } }
 @keyframes fm-shine { to { background-position: 200% center; } }
-@keyframes fm-zoom { from { transform: scale(1.08); } to { transform: scale(1); } }
+@keyframes fm-zoom { from { transform: scale(1.04); } to { transform: scale(1); } }
 @keyframes fm-ping { 0% { transform: scale(1); opacity: .6; } 100% { transform: scale(2.6); opacity: 0; } }
 @keyframes fm-dash { to { stroke-dashoffset: -64; } }
 @keyframes fm-spin-slow { to { transform: rotate(360deg); } }
 @keyframes fm-pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(232,41,31,.55); } 100% { box-shadow: 0 0 0 16px rgba(232,41,31,0); } }
 @keyframes fm-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes fm-kb-zoom-in {
-  0% { transform: scale(1.02) translate(0, 0); }
-  50% { transform: scale(1.10) translate(-1.5%, -1%); }
-  100% { transform: scale(1.18) translate(-3%, -2%); }
+  0% { transform: scale(1.0) translate3d(0, 0, 0); }
+  100% { transform: scale(1.04) translate3d(-1%, -0.5%, 0); }
 }
 @keyframes fm-kb-zoom-out {
-  0% { transform: scale(1.18) translate(0, 0); }
-  50% { transform: scale(1.10) translate(1.5%, 1%); }
-  100% { transform: scale(1.02) translate(3%, 1.5%); }
+  0% { transform: scale(1.04) translate3d(0, 0, 0); }
+  100% { transform: scale(1.0) translate3d(1%, 0.5%, 0); }
 }
 @keyframes fm-kb-pan-right {
-  0% { transform: scale(1.08) translate(-3%, 0); }
-  50% { transform: scale(1.12) translate(0%, -1%); }
-  100% { transform: scale(1.16) translate(3%, -1.5%); }
+  0% { transform: scale(1.02) translate3d(-1%, 0, 0); }
+  100% { transform: scale(1.02) translate3d(1%, -0.5%, 0); }
 }
 @keyframes fm-slide-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes fm-fade-in { from { opacity: 0; } to { opacity: 1; } }
 
 .fm-hero-item { opacity: 0; animation: fm-rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
 .fm-wing { stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: fm-draw 2.4s .2s cubic-bezier(.3,.6,.2,1) forwards; }
@@ -73,17 +69,21 @@ const css = `
 .fm-dash { stroke-dasharray: 8 12; animation: fm-dash 4s linear infinite; }
 .fm-spin { animation: fm-spin-slow 40s linear infinite; }
 .fm-pulse { animation: fm-pulse-ring 2s ease-out infinite; }
+.fm-fade { animation: fm-fade-in .6s ease forwards; }
 
-/* new hero slider */
+/* hero slider - maximum hardware clarity */
 .fm-bar { transform-origin: left; animation: fm-bar 6s linear forwards; }
 .fm-bar-paused { animation-play-state: paused; }
-.fm-kb-0 { animation: fm-kb-zoom-in 8s linear infinite alternate; will-change: transform; }
-.fm-kb-1 { animation: fm-kb-zoom-out 8s linear infinite alternate; will-change: transform; }
-.fm-kb-2 { animation: fm-kb-pan-right 8s linear infinite alternate; will-change: transform; }
+.fm-kb-0 { animation: fm-kb-zoom-in 10s ease-in-out infinite alternate; will-change: transform; backface-visibility: hidden; transform: translateZ(0); image-rendering: -webkit-optimize-contrast; }
+.fm-kb-1 { animation: fm-kb-zoom-out 10s ease-in-out infinite alternate; will-change: transform; backface-visibility: hidden; transform: translateZ(0); image-rendering: -webkit-optimize-contrast; }
+.fm-kb-2 { animation: fm-kb-pan-right 10s ease-in-out infinite alternate; will-change: transform; backface-visibility: hidden; transform: translateZ(0); image-rendering: -webkit-optimize-contrast; }
 .fm-s1 { opacity: 0; animation: fm-slide-in .7s .05s cubic-bezier(.2,.7,.2,1) forwards; }
 .fm-s2 { opacity: 0; animation: fm-slide-in .7s .18s cubic-bezier(.2,.7,.2,1) forwards; }
 .fm-s3 { opacity: 0; animation: fm-slide-in .7s .30s cubic-bezier(.2,.7,.2,1) forwards; }
 .fm-s4 { opacity: 0; animation: fm-slide-in .7s .42s cubic-bezier(.2,.7,.2,1) forwards; }
+
+/* vertical text for collapsed sector panels (desktop only) */
+@media (min-width: 1024px) { .fm-vert { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; } }
 
 /* photo backgrounds: parallax on desktop, normal scroll on touch devices */
 .fm-parallax { background-image: var(--bg); background-size: cover; background-position: center; }
@@ -115,7 +115,7 @@ const css = `
 .fm-progress { transform-origin: left; transform: scaleX(var(--p,0)); }
 
 @media (prefers-reduced-motion: reduce) {
-  .fm-hero-item, .fm-reveal, .fm-s1, .fm-s2, .fm-s3, .fm-s4 { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; filter: none !important; }
+  .fm-hero-item, .fm-reveal, .fm-s1, .fm-s2, .fm-s3, .fm-s4, .fm-fade { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; filter: none !important; }
   .fm-wing { stroke-dashoffset: 0; animation: none; }
   .fm-zoom, .fm-kb-0, .fm-kb-1, .fm-kb-2, .fm-bar, .fm-float, .fm-blob, .fm-ping::after, .fm-dash, .fm-spin, .fm-pulse { animation: none; }
 }
@@ -144,7 +144,6 @@ const Reveal = ({ children, delay = 0, className = '', variant = 'up' }) => {
     </div>
   );
 };
-
 
 /* Curved edge that blends a dark section into the next one. Colour comes from text-* */
 const Wave = ({ className = '', flip = false }) => (
@@ -222,7 +221,7 @@ export const HomePage = ({ onOpenQuote }) => {
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slideCount) % slideCount);
   const activeSlide = HERO_SLIDES[currentSlide] || HERO_SLIDES[0] || {};
 
-  /* Process slider state */
+  /* Process (pickup to delivery) state */
   const [processSlide, setProcessSlide] = useState(0);
   const [isProcessPaused, setIsProcessPaused] = useState(false);
   const processCount = SIX_WAYS_CARGO.length;
@@ -237,8 +236,10 @@ export const HomePage = ({ onOpenQuote }) => {
 
   const nextProcess = () => setProcessSlide((prev) => (prev + 1) % processCount);
   const prevProcess = () => setProcessSlide((prev) => (prev - 1 + processCount) % processCount);
+  const processPct = processCount > 1 ? (processSlide / (processCount - 1)) * 100 : 0;
+  const activeStep = SIX_WAYS_CARGO[processSlide];
 
-  /* Sectors slider state */
+  /* Sectors state */
   const [sectorSlide, setSectorSlide] = useState(0);
   const [isSectorPaused, setIsSectorPaused] = useState(false);
   const sectorCount = INDUSTRIES_SERVED.length;
@@ -298,7 +299,7 @@ export const HomePage = ({ onOpenQuote }) => {
                 loading={idx === 0 ? 'eager' : 'lazy'}
                 decoding="async"
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none contrast-[1.05] brightness-[0.98] ${
+                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none contrast-[1.06] brightness-[1.0] ${
                   isActive ? `${kbClass} opacity-95` : 'scale-100 opacity-0'
                 }`}
               />
@@ -306,16 +307,16 @@ export const HomePage = ({ onOpenQuote }) => {
           );
         })}
 
-        {/* Subtle dark film scrim - allows photo colors & motion to be clearly visible while guaranteeing 100% crisp text readability without any box */}
-        <div className="absolute inset-0 bg-[#001426]/50 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-30 z-0" />
+        {/* Crisp balanced film scrim - gives maximum text contrast without pitch-black darkening */}
+        <div className="absolute inset-0 bg-[#001426]/40 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-25 z-0" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[360px]">
 
-            {/* LEFT: content (open, natural, high-end editorial layout - matching reference) */}
-            <div 
-              key={activeSlide.id} 
+            {/* LEFT: content */}
+            <div
+              key={activeSlide.id}
               className="lg:col-span-8 space-y-4 sm:space-y-5 text-left"
             >
               <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
@@ -408,7 +409,6 @@ export const HomePage = ({ onOpenQuote }) => {
                         {slide.badge}
                       </div>
                     </div>
-                    {/* timer bar on the active card */}
                     {active && (
                       <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-white/20" aria-hidden="true">
                         <span
@@ -423,9 +423,8 @@ export const HomePage = ({ onOpenQuote }) => {
             </div>
           </div>
 
-          {/* bottom controls: Unified glass capsule arrows + counter, and stylish download brochure action */}
+          {/* bottom controls */}
           <div className="mt-7 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 relative z-20">
-            {/* Slide Navigation Capsule */}
             <div className="flex items-center gap-2 p-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
               <button
                 type="button"
@@ -449,7 +448,6 @@ export const HomePage = ({ onOpenQuote }) => {
               </button>
             </div>
 
-            {/* Download Brochure Capsule */}
             <a
               href={BRAND.brochurePath}
               download
@@ -465,7 +463,7 @@ export const HomePage = ({ onOpenQuote }) => {
         <Wave className="text-white" />
       </section>
 
-      {/* ============ STATS (Compact, Sleek Ribbon - Never Overlaps Controls) ============ */}
+      {/* ============ STATS ============ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-6 mb-12 sm:mb-16 relative z-10">
         <div className="bg-white rounded-2xl shadow-xl shadow-slate-900/6 border border-slate-200/80 p-4 sm:p-5">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 divide-y sm:divide-y-0 lg:divide-x divide-slate-100">
@@ -514,7 +512,6 @@ export const HomePage = ({ onOpenQuote }) => {
                     onMouseMove={spot}
                     className="fm-spot group relative h-full bg-white rounded-3xl border border-slate-200 flex flex-col overflow-hidden shadow-lg shadow-brand-blue/5 hover:border-brand-blue/40 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-blue/15 transition-all duration-300"
                   >
-                    {/* authentic photo header with badge and icon */}
                     <div className="relative h-40 bg-brand-blue-dark overflow-hidden">
                       <img
                         src={s.image || '/assets/service banner.jpg'}
@@ -562,139 +559,147 @@ export const HomePage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* ============ SIX WAYS (pickup to delivery) SLIDER ============ */}
-      <section 
-        className="relative bg-brand-blue-dark text-white py-16 sm:py-24 overflow-hidden select-none"
+      {/* ============ PICKUP TO DELIVERY: "Flight path" journey tracker (dark, horizontal) ============ */}
+      <section
+        className="relative bg-brand-blue-dark text-white py-20 sm:py-28 overflow-hidden select-none"
         onMouseEnter={() => setIsProcessPaused(true)}
         onMouseLeave={() => setIsProcessPaused(false)}
       >
-        {/* Dynamic moving photo background with Ken Burns camera movement */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
-            src="/assets/loading and unloading.jpg"
+            src="/assets/banner-process-hd.jpg"
             alt=""
             aria-hidden="true"
-            className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-1"
+            className="w-full h-full object-cover object-center opacity-95 contrast-[1.06] brightness-[1.0] scale-100 fm-kb-1"
           />
         </div>
-        <div className="absolute inset-0 bg-[#001426]/55 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-30 z-0" />
-        <Wave className="text-white" flip />
+        <div className="absolute inset-0 bg-[#001426]/40 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-25 z-0" />
+        <Wave className="text-slate-50" flip />
         <Wave className="text-white" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <SectionHead
             light
             title="From pickup to delivery, one clear process"
             text="A standard, transparent pipeline built around shipowner precision and door-to-door accountability."
           />
 
-          {/* Quick Stage Stepper Pills */}
-          <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
+          {/* journey track: a plane flies along the line to the active stage */}
+          <div className="relative mx-4 sm:mx-10 h-24 sm:h-32 mb-6">
+            {/* pickup / delivery end labels */}
+            <span className="absolute -left-2 sm:-left-6 -top-1 text-[10px] sm:text-xs font-mono font-extrabold tracking-widest text-white/60 uppercase">Pickup</span>
+            <span className="absolute -right-2 sm:-right-6 -top-1 text-[10px] sm:text-xs font-mono font-extrabold tracking-widest text-white/60 uppercase">Delivery</span>
+
+            {/* base line + progress fill */}
+            <div className="absolute left-0 right-0 top-[56px] h-1 rounded-full bg-white/20" aria-hidden="true" />
+            <div
+              className="absolute left-0 top-[56px] h-1 rounded-full bg-brand-red shadow-[0_0_14px_rgba(232,41,31,0.8)] transition-all duration-700 ease-out"
+              style={{ width: `${processPct}%` }}
+              aria-hidden="true"
+            />
+
+            {/* the plane */}
+            <div
+              className="absolute top-3 -translate-x-1/2 transition-all duration-700 ease-out pointer-events-none"
+              style={{ left: `${processPct}%` }}
+              aria-hidden="true"
+            >
+              <div className="fm-float w-9 h-9 rounded-full bg-white text-brand-red flex items-center justify-center shadow-xl shadow-black/40">
+                <Plane className="w-5 h-5 rotate-45" />
+              </div>
+            </div>
+
+            {/* stage nodes */}
             {SIX_WAYS_CARGO.map((item, idx) => {
+              const done = idx < processSlide;
               const active = idx === processSlide;
+              const left = processCount > 1 ? (idx / (processCount - 1)) * 100 : 0;
               return (
-                <button
-                  key={item.step}
-                  type="button"
-                  onClick={() => setProcessSlide(idx)}
-                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${
-                    active 
-                      ? 'bg-brand-red text-white shadow-lg shadow-brand-red/30 scale-105' 
-                      : 'bg-black/40 text-white/70 hover:text-white hover:bg-black/60 border border-white/15'
-                  }`}
+                <div
+                  key={idx}
+                  className="absolute top-[56px] -translate-x-1/2"
+                  style={{ left: `${left}%` }}
                 >
-                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${active ? 'bg-black/25 text-white' : 'bg-white/10'}`}>
-                    {item.step}
+                  <button
+                    type="button"
+                    onClick={() => setProcessSlide(idx)}
+                    aria-label={`Stage ${idx + 1}: ${item.title}`}
+                    className={`-translate-y-1/2 flex items-center justify-center rounded-full font-black text-xs sm:text-sm border-2 transition-all duration-300 cursor-pointer ${
+                      active
+                        ? 'w-10 h-10 sm:w-12 sm:h-12 bg-brand-red border-white text-white fm-pulse scale-110'
+                        : done
+                        ? 'w-8 h-8 sm:w-10 sm:h-10 bg-brand-red border-brand-red text-white'
+                        : 'w-8 h-8 sm:w-10 sm:h-10 bg-[#0a2a44] border-white/30 text-white/70 hover:border-white hover:text-white'
+                    }`}
+                  >
+                    {done ? <Check className="w-4 h-4 stroke-[3]" /> : idx + 1}
+                  </button>
+                  <span
+                    className={`hidden sm:block absolute left-1/2 -translate-x-1/2 top-9 w-28 text-center text-[11px] font-bold leading-tight transition-colors ${
+                      active ? 'text-white' : 'text-white/55'
+                    }`}
+                  >
+                    {item.title}
                   </span>
-                  <span>{item.title}</span>
-                </button>
+                </div>
               );
             })}
           </div>
 
-          {/* Process Slider Stage Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[300px]">
-            {/* LEFT: Active Step Detailed Feature */}
-            <div className="lg:col-span-7 space-y-4 text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
-                STAGE {SIX_WAYS_CARGO[processSlide].step} &bull; TRANSPARENT PIPELINE
+          {/* active stage detail card */}
+          <div className="relative overflow-hidden rounded-3xl bg-black/45 backdrop-blur-xl border border-white/15 shadow-2xl shadow-black/40 p-6 sm:p-10">
+            <span
+              className="absolute -right-2 -top-8 sm:-top-14 text-[9rem] sm:text-[15rem] font-black leading-none text-white/[0.06] select-none pointer-events-none"
+              aria-hidden="true"
+            >
+              {String(processSlide + 1).padStart(2, '0')}
+            </span>
+            <span className="absolute left-0 top-8 bottom-8 w-1.5 rounded-r-full bg-brand-red" aria-hidden="true" />
+
+            <div key={processSlide} className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+              <div className="lg:col-span-8 space-y-4 text-left">
+                <div className="fm-s1 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light">
+                  Stage {String(processSlide + 1).padStart(2, '0')} of {String(processCount).padStart(2, '0')}
+                </div>
+                <h3 className="fm-s2 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white">
+                  {activeStep.title}
+                </h3>
+                <p className="fm-s3 text-base sm:text-lg text-white/90 leading-relaxed max-w-2xl">
+                  {activeStep.desc}
+                </p>
+                <div className="fm-s4 flex flex-wrap gap-2.5 pt-1">
+                  <span className="px-4 py-2 rounded-full bg-white/10 border border-white/15 text-xs font-semibold flex items-center gap-2">
+                    <Check className="w-4 h-4 text-brand-red-light" /> Real-time milestone logging
+                  </span>
+                  <span className="px-4 py-2 rounded-full bg-white/10 border border-white/15 text-xs font-semibold flex items-center gap-2">
+                    <Check className="w-4 h-4 text-brand-red-light" /> Zero-delay customs pre-check
+                  </span>
+                </div>
               </div>
 
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
-                {SIX_WAYS_CARGO[processSlide].title}
-              </h3>
-
-              <p className="text-base sm:text-lg text-white/95 leading-relaxed max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
-                {SIX_WAYS_CARGO[processSlide].desc}
-              </p>
-
-              <div className="pt-2 flex flex-wrap gap-3">
-                <div className="px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-semibold text-white flex items-center gap-2 shadow-md">
-                  <Check className="w-4 h-4 text-brand-red-light" />
-                  <span>Real-Time Milestone Logging</span>
-                </div>
-                <div className="px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-semibold text-white flex items-center gap-2 shadow-md">
-                  <Check className="w-4 h-4 text-brand-red-light" />
-                  <span>Zero-Delay Customs Pre-Check</span>
-                </div>
-              </div>
-            </div>
-
-            {/* RIGHT: Visual Selector Rail */}
-            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {SIX_WAYS_CARGO.map((item, idx) => {
-                const active = idx === processSlide;
-                return (
+              {/* controls */}
+              <div className="lg:col-span-4 flex lg:flex-col items-center lg:items-end justify-between lg:justify-center gap-4">
+                <div className="flex items-center gap-2 p-1.5 rounded-full bg-black/40 border border-white/20">
                   <button
-                    key={item.step}
                     type="button"
-                    onClick={() => setProcessSlide(idx)}
-                    className={`text-left p-4 rounded-2xl border backdrop-blur-md transition-all cursor-pointer relative overflow-hidden ${
-                      active
-                        ? 'bg-black/60 border-brand-red shadow-xl ring-2 ring-brand-red/30 scale-[1.02]'
-                        : 'bg-black/30 border-white/15 hover:bg-black/45 hover:border-white/30'
-                    }`}
+                    onClick={prevProcess}
+                    aria-label="Previous stage"
+                    className="w-10 h-10 rounded-full bg-white/10 hover:bg-brand-red flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-xs font-extrabold text-brand-red-light">{item.step}</span>
-                      {active && <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />}
-                    </div>
-                    <h4 className="text-sm font-bold text-white mb-1 leading-snug">{item.title}</h4>
-                    <p className="text-xs text-white/70 line-clamp-2">{item.desc}</p>
+                    <ChevronLeft className="w-5 h-5" />
                   </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Slider Bottom Controls: Frosted Glass Capsule */}
-          <div className="mt-8 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-2 p-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
-              <button
-                type="button"
-                onClick={prevProcess}
-                aria-label="Previous process stage"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <div className="px-3 text-xs font-mono font-bold tracking-wider text-white select-none">
-                <span className="text-brand-red font-black text-sm">{String(processSlide + 1).padStart(2, '0')}</span>
-                <span className="text-white/40"> / {String(processCount).padStart(2, '0')}</span>
+                  <button
+                    type="button"
+                    onClick={nextProcess}
+                    aria-label="Next stage"
+                    className="w-10 h-10 rounded-full bg-white/10 hover:bg-brand-red flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="text-[11px] font-mono text-white/60 tracking-widest uppercase">Auto-cycle &bull; hover to pause</div>
               </div>
-              <button
-                type="button"
-                onClick={nextProcess}
-                aria-label="Next process stage"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="text-xs font-mono text-white/70 tracking-wider">
-              AUTO-CYCLE &bull; HOVER TO PAUSE
             </div>
           </div>
         </div>
@@ -738,128 +743,113 @@ export const HomePage = ({ onOpenQuote }) => {
         </Reveal>
       </section>
 
-
-      {/* ============ INDUSTRIES (Serving critical global sectors) SLIDER ============ */}
-      <section 
-        className="relative bg-brand-blue-dark py-16 sm:py-24 overflow-hidden text-white select-none"
+      {/* ============ SECTORS: light, expanding accordion panels ============ */}
+      <section
+        className="relative bg-brand-blue-50 py-20 sm:py-28 overflow-hidden"
         onMouseEnter={() => setIsSectorPaused(true)}
         onMouseLeave={() => setIsSectorPaused(false)}
       >
-        {/* Dynamic moving maritime photo background with Ken Burns camera movement */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <img
-            src="/assets/sea cargo.jpg"
-            alt=""
-            aria-hidden="true"
-            className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-2"
-          />
-        </div>
-        <div className="absolute inset-0 bg-[#001426]/55 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-30 z-0" />
-        <Wave className="text-slate-50" flip />
-        <Wave className="text-slate-50" />
+        <div className="fm-blob absolute -top-24 -left-20 w-96 h-96 rounded-full bg-brand-blue/10 blur-3xl pointer-events-none" aria-hidden="true" />
+        <div className="fm-blob absolute -bottom-24 -right-20 w-96 h-96 rounded-full bg-brand-red/10 blur-3xl pointer-events-none" style={{ animationDelay: '-9s' }} aria-hidden="true" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHead
-            light
             title="Serving critical global sectors"
             text="Logistics workflows built to meet strict industry benchmarks."
           />
 
-          {/* Sector Slider Showcase Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[300px]">
-            {/* LEFT: Active Sector Spotlight */}
-            <div className="lg:col-span-7 space-y-4 text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
-                CORRIDOR {String(sectorSlide + 1).padStart(2, '0')} &bull; SPECIALIZED SECTOR
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-brand-red/20 border border-brand-red/40 text-brand-red flex items-center justify-center shrink-0 shadow-lg">
-                  {(() => {
-                    const ActiveIcon = INDUSTRY_ICONS[INDUSTRIES_SERVED[sectorSlide].icon] || Ship;
-                    return <ActiveIcon className="w-7 h-7" />;
-                  })()}
-                </div>
-                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
-                  {INDUSTRIES_SERVED[sectorSlide].name}
-                </h3>
-              </div>
-
-              <p className="text-base sm:text-lg text-white/95 leading-relaxed max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
-                {INDUSTRIES_SERVED[sectorSlide].desc}
-              </p>
-
-              <div className="pt-2 flex flex-wrap gap-4">
-                <button
-                  type="button"
-                  onClick={() => onOpenQuote()}
-                  className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+          <div className="flex flex-col lg:flex-row gap-3 lg:h-[460px]">
+            {INDUSTRIES_SERVED.map((ind, idx) => {
+              const active = idx === sectorSlide;
+              const Icon = INDUSTRY_ICONS[ind.icon] || Ship;
+              return (
+                <div
+                  key={ind.name}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={ind.name}
+                  aria-expanded={active}
+                  onClick={() => setSectorSlide(idx)}
+                  onMouseEnter={() => setSectorSlide(idx)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSectorSlide(idx); } }}
+                  className={`group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 ease-[cubic-bezier(.2,.7,.2,1)] ${
+                    active
+                      ? 'lg:flex-[5] bg-gradient-to-br from-brand-blue-dark via-brand-blue to-brand-blue-dark text-white shadow-2xl shadow-brand-blue/30'
+                      : 'lg:flex-[1] bg-white border border-slate-200 shadow-md hover:border-brand-blue/40 hover:shadow-xl'
+                  }`}
                 >
-                  <span>Request Industry Logistics Rate</span>
-                  <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                    <ArrowRight className="h-3.5 w-3.5 text-white" />
-                  </span>
-                </button>
-              </div>
-            </div>
+                  {active ? (
+                    <>
+                      <img
+                        src="/assets/sea cargo.jpg"
+                        alt=""
+                        aria-hidden="true"
+                        className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity pointer-events-none"
+                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                      />
+                      <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-brand-red/30 blur-3xl pointer-events-none" aria-hidden="true" />
+                      <Icon className="absolute -right-8 -bottom-8 w-64 h-64 text-white/[0.07] pointer-events-none" aria-hidden="true" />
+                      <span className="absolute right-6 top-4 text-7xl font-black font-mono text-white/10 leading-none select-none" aria-hidden="true">
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
 
-            {/* RIGHT: Visual Sector Selector Rail */}
-            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {INDUSTRIES_SERVED.map((ind, idx) => {
-                const active = idx === sectorSlide;
-                const Icon = INDUSTRY_ICONS[ind.icon] || Ship;
-                return (
-                  <button
-                    key={ind.name}
-                    type="button"
-                    onClick={() => setSectorSlide(idx)}
-                    className={`text-left p-4 rounded-2xl border backdrop-blur-md transition-all cursor-pointer relative overflow-hidden ${
-                      active
-                        ? 'bg-black/60 border-brand-red shadow-xl ring-2 ring-brand-red/30 scale-[1.02]'
-                        : 'bg-black/30 border-white/15 hover:bg-black/45 hover:border-white/30'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-xs font-extrabold text-brand-red-light">{String(idx + 1).padStart(2, '0')}</span>
-                      <Icon className="w-5 h-5 text-white/70" />
+                      <div className="fm-fade relative p-6 sm:p-8 lg:absolute lg:inset-y-0 lg:left-0 lg:w-[480px] lg:p-10 flex flex-col justify-end gap-4">
+                        <div className="w-14 h-14 rounded-2xl bg-brand-red flex items-center justify-center shadow-xl shadow-brand-red/40">
+                          <Icon className="w-7 h-7 text-white" />
+                        </div>
+                        <h3 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight">{ind.name}</h3>
+                        <p className="text-sm sm:text-base text-white/85 leading-relaxed">{ind.desc}</p>
+                        <button
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); onOpenQuote(); }}
+                          className="group/btn self-start mt-1 px-6 py-3 bg-white text-brand-blue-dark hover:bg-brand-red hover:text-white rounded-full text-xs sm:text-sm font-bold shadow-lg transition-all cursor-pointer flex items-center gap-2"
+                        >
+                          Request industry rate
+                          <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex lg:flex-col items-center lg:justify-between gap-4 p-4 lg:py-7 lg:px-2 h-full">
+                      <span className="font-mono text-xs font-bold text-slate-400">{String(idx + 1).padStart(2, '0')}</span>
+                      <div className="w-11 h-11 rounded-xl bg-brand-blue-50 text-brand-blue flex items-center justify-center group-hover:bg-brand-red group-hover:text-white group-hover:scale-110 transition-all duration-300 shrink-0">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <span className="fm-vert flex-1 lg:flex-none font-bold text-slate-800 text-sm sm:text-base leading-tight">
+                        {ind.name}
+                      </span>
                     </div>
-                    <h4 className="text-sm font-bold text-white mb-1 leading-snug">{ind.name}</h4>
-                    <p className="text-xs text-white/70 line-clamp-2">{ind.desc}</p>
-                  </button>
-                );
-              })}
-            </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
-          {/* Slider Bottom Controls: Frosted Glass Capsule */}
-          <div className="mt-8 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-2 p-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
+          {/* controls */}
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-2 p-1.5 rounded-full bg-white border border-slate-200 shadow-md">
               <button
                 type="button"
                 onClick={prevSector}
                 aria-label="Previous sector"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <div className="px-3 text-xs font-mono font-bold tracking-wider text-white select-none">
+              <div className="px-3 text-xs font-mono font-bold tracking-wider text-slate-500 select-none">
                 <span className="text-brand-red font-black text-sm">{String(sectorSlide + 1).padStart(2, '0')}</span>
-                <span className="text-white/40"> / {String(sectorCount).padStart(2, '0')}</span>
+                <span> / {String(sectorCount).padStart(2, '0')}</span>
               </div>
               <button
                 type="button"
                 onClick={nextSector}
                 aria-label="Next sector"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
-
-            <div className="text-xs font-mono text-white/70 tracking-wider">
-              AUTO-CYCLE &bull; HOVER TO PAUSE
-            </div>
+            <div className="text-xs font-mono text-slate-500 tracking-widest uppercase">Hover or tap a sector to explore</div>
           </div>
         </div>
       </section>

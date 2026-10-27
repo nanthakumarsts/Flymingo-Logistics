@@ -30,13 +30,13 @@ export const ContactPage = () => {
         {/* Photographic Background Texture with continuous Ken Burns motion */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
-            src="/assets/communication.jpg" 
+            src="/assets/banner-contact-hd.jpg" 
             alt="Flymingo Logistics Global Operations Desk" 
-            className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-0"
+            className="w-full h-full object-cover object-center opacity-95 contrast-[1.06] brightness-[1.0] scale-100 fm-kb-0"
           />
         </div>
-        <div className="absolute inset-0 bg-[#001426]/50 z-0 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-30 z-0" />
+        <div className="absolute inset-0 bg-[#001426]/40 z-0 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-25 z-0" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl space-y-3 sm:space-y-4 text-left">

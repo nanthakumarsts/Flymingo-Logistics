@@ -24,18 +24,18 @@ export function PageBanner({
       {/* High-clarity background photo with continuous Ken Burns camera glide */}
       <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
         <img 
-          src={image || '/assets/sea cargo.jpg'} 
+          src={image || '/assets/banner-marine-hd.jpg'} 
           alt="" 
-          onError={(e) => { e.currentTarget.src = '/assets/sea cargo.jpg'; }}
-          className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-0" 
+          onError={(e) => { e.currentTarget.src = '/assets/banner-marine-hd.jpg'; }}
+          className="w-full h-full object-cover object-center opacity-95 contrast-[1.06] brightness-[1.0] scale-100 fm-kb-0" 
         />
       </div>
 
       {/* Solid balanced film scrim - gives maximum text contrast without pitch-black darkening */}
-      <div className="absolute inset-0 -z-15 bg-[#001426]/50 pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-0 -z-15 bg-[#001426]/40 pointer-events-none" aria-hidden="true" />
 
       {/* Global flight route map overlay */}
-      <FlightRouteMap className="opacity-30" />
+      <FlightRouteMap className="opacity-25" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 z-10">
         <div className="max-w-3xl space-y-3 sm:space-y-4 text-left">
