@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { BRAND, CORE_SERVICES, STATS } from '../data/siteData';
 import { FlightRouteMap } from '../components/FlightRouteMap';
+import { BannerSideMotif } from '../components/BannerSideMotif';
 
 export const ServicesPage = ({ onOpenQuote }) => {
   const CAPABILITIES = [
@@ -132,51 +133,61 @@ export const ServicesPage = ({ onOpenQuote }) => {
         <FlightRouteMap className="opacity-10 z-0" />
 
         <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
-          <div className="max-w-3xl space-y-3 sm:space-y-4 text-left">
-            {/* Banner Eyebrow Badge - clean, no '//' */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
-                SOUTH INDIA &rarr; THE WORLD
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+            
+            {/* Left: Text Content */}
+            <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
+              {/* Banner Eyebrow Badge - clean, no '//' */}
+              <div>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
+                  SOUTH INDIA &rarr; THE WORLD
+                </div>
+              </div>
+
+              {/* Banner Title & Subtext */}
+              <div className="space-y-1 sm:space-y-1.5">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                  Six Proven Channels.<br />
+                  <span className="text-brand-red font-black">
+                    Zero Cargo Gaps.
+                  </span>
+                </h1>
+
+                <p className="text-sm sm:text-base font-bold text-slate-700 tracking-wide">
+                  Connecting Businesses. Delivering Possibilities.
+                </p>
+              </div>
+
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
+                From time-critical vessel spares delivery on-board at outer anchorage berths to worldwide express courier and heavy air/ocean freight forwarders, Flymingo Logistics handles every consignment with shipowner precision.
+              </p>
+
+              {/* Banner Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <button
+                  onClick={() => onOpenQuote()}
+                  className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                >
+                  <Calculator className="w-4 h-4" />
+                  <span>Request Instant Fare Quote</span>
+                  <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                    <ArrowRight className="h-3.5 w-3.5 text-white" />
+                  </span>
+                </button>
+                <a
+                  href={`tel:${BRAND.primaryPhone}`}
+                  className="px-6 py-3 bg-white border border-slate-300 text-slate-800 hover:text-brand-blue hover:border-brand-blue rounded-full text-xs sm:text-sm font-bold transition-all shadow-sm flex items-center gap-2"
+                >
+                  <span>Speak To Logistics Desk</span>
+                </a>
               </div>
             </div>
 
-            {/* Banner Title & Subtext */}
-            <div className="space-y-1 sm:space-y-1.5">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-                Six Proven Channels.<br />
-                <span className="text-brand-red font-black">
-                  Zero Cargo Gaps.
-                </span>
-              </h1>
-
-              <p className="text-sm sm:text-base font-bold text-slate-700 tracking-wide">
-                Connecting Businesses. Delivering Possibilities.
-              </p>
+            {/* Right: Signature Side Design Motif */}
+            <div className="lg:col-span-5 hidden sm:flex items-center justify-center">
+              <BannerSideMotif variant="services" />
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
-              From time-critical vessel spares delivery on-board at outer anchorage berths to worldwide express courier and heavy air/ocean freight forwarders, Flymingo Logistics handles every consignment with shipowner precision.
-            </p>
-
-            {/* Banner Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-1">
-              <button
-                onClick={() => onOpenQuote()}
-                className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
-              >
-                <Calculator className="w-4 h-4" />
-                <span>Request Instant Fare Quote</span>
-                <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                  <ArrowRight className="h-3.5 w-3.5 text-white" />
-                </span>
-              </button>
-              <a
-                href={`tel:${BRAND.primaryPhone}`}
-                className="px-6 py-3 bg-white border border-slate-300 text-slate-800 hover:text-brand-blue hover:border-brand-blue rounded-full text-xs sm:text-sm font-bold transition-all shadow-sm flex items-center gap-2"
-              >
-                <span>Speak To Logistics Desk</span>
-              </a>
-            </div>
           </div>
         </div>
       </section>

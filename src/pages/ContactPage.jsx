@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { BRAND, OFFICES, CORE_SERVICES, COUNTRIES } from '../data/siteData';
 import { FlightRouteMap } from '../components/FlightRouteMap';
+import { BannerSideMotif } from '../components/BannerSideMotif';
 
 export const ContactPage = () => {
   const [name, setName] = useState('');
@@ -39,31 +40,41 @@ export const ContactPage = () => {
         <FlightRouteMap className="opacity-10 z-0" />
 
         <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
-          <div className="max-w-3xl space-y-3 sm:space-y-4 text-left">
-            {/* Banner Eyebrow Badge - clean, no '//' */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
-                SOUTH INDIA &rarr; THE WORLD
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+            
+            {/* Left: Text Content */}
+            <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
+              {/* Banner Eyebrow Badge - clean, no '//' */}
+              <div>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
+                  SOUTH INDIA &rarr; THE WORLD
+                </div>
               </div>
-            </div>
 
-            {/* Banner Title & Subtext */}
-            <div className="space-y-1 sm:space-y-1.5">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-                Direct Lines.<br />
-                <span className="text-brand-red font-black">
-                  Immediate Logistics Response.
-                </span>
-              </h1>
+              {/* Banner Title & Subtext */}
+              <div className="space-y-1 sm:space-y-1.5">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                  Direct Lines.<br />
+                  <span className="text-brand-red font-black">
+                    Immediate Logistics Response.
+                  </span>
+                </h1>
 
-              <p className="text-sm sm:text-base font-bold text-slate-700 tracking-wide">
-                Always On Call. Ready For Rapid Dispatch.
+                <p className="text-sm sm:text-base font-bold text-slate-700 tracking-wide">
+                  Always On Call. Ready For Rapid Dispatch.
+                </p>
+              </div>
+
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
+                Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.
               </p>
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
-              Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.
-            </p>
+            {/* Right: Signature Side Design Motif */}
+            <div className="lg:col-span-5 hidden sm:flex items-center justify-center">
+              <BannerSideMotif variant="contact" />
+            </div>
+
           </div>
         </div>
       </section>

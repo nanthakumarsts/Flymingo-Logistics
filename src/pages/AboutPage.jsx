@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
 import { FlightRouteMap } from '../components/FlightRouteMap';
+import { BannerSideMotif } from '../components/BannerSideMotif';
 
 /* ---------- local styles (self-contained, prefixed ab-) ---------- */
 const css = `
@@ -204,7 +205,7 @@ export const AboutPage = ({ onOpenQuote }) => {
       {/* ========================================================= */}
       {/* 1. HERO                                                   */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-slate-50 text-slate-900 border-b border-slate-200 py-20 sm:py-28 lg:py-32 select-none">
+      <section className="relative overflow-hidden bg-slate-50 text-slate-900 border-b border-slate-200 py-8 sm:py-10 lg:py-12 select-none">
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img
             src="/assets/banner-marine-hd.jpg"
@@ -217,48 +218,58 @@ export const AboutPage = ({ onOpenQuote }) => {
         <div className="ab-blob absolute -bottom-24 -right-16 w-96 h-96 rounded-full bg-brand-red/15 blur-3xl pointer-events-none" aria-hidden="true" />
 
         <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
-          <div className="max-w-3xl space-y-5 sm:space-y-6 text-left">
-            <div className="ab-h1">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
-                SOUTH INDIA &rarr; THE WORLD
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+            
+            {/* Left: Text Content - fits within screen height */}
+            <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
+              <div className="ab-h1">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
+                  SOUTH INDIA &rarr; THE WORLD
+                </div>
+              </div>
+
+              <div className="ab-h2 space-y-1 sm:space-y-1.5">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                  We Are The Bridge Between You And Your Relations.<br />
+                  <span className="text-brand-red font-black">
+                    Across Oceans &amp; Continents.
+                  </span>
+                </h1>
+                <p className="text-sm sm:text-base font-bold text-slate-700 tracking-wide">
+                  Connecting Families. Empowering Global Trade.
+                </p>
+              </div>
+
+              <p className="ab-h3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
+                Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.
+              </p>
+
+              <div className="ab-h4 flex flex-wrap items-center gap-3 pt-1">
+                <button
+                  type="button"
+                  onClick={() => onOpenQuote()}
+                  className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                >
+                  <span>Explore Our Services</span>
+                  <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                    <ArrowRight className="h-3.5 w-3.5 text-white" />
+                  </span>
+                </button>
+                <a
+                  href={`tel:${BRAND.primaryPhone}`}
+                  className="px-6 py-3 bg-white border border-slate-300 text-slate-800 hover:text-brand-blue hover:border-brand-blue rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 shadow-sm"
+                >
+                  Speak To Logistics Desk
+                </a>
               </div>
             </div>
 
-            <div className="ab-h2 space-y-3">
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08]">
-                We Are The Bridge Between You And Your Relations.<br />
-                <span className="text-brand-red font-black">
-                  Across Oceans &amp; Continents.
-                </span>
-              </h1>
-              <p className="pl-4 border-l-4 border-brand-red text-base sm:text-xl font-bold text-slate-700 tracking-wide">
-                Connecting Families. Empowering Global Trade.
-              </p>
+            {/* Right: Signature Side Design Motif (Like Oneloop in Reference Screenshot) */}
+            <div className="lg:col-span-5 hidden sm:flex items-center justify-center">
+              <BannerSideMotif variant="about" />
             </div>
 
-            <p className="ab-h3 text-sm sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-              Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.
-            </p>
-
-            <div className="ab-h4 flex flex-wrap items-center gap-3 pt-2">
-              <button
-                type="button"
-                onClick={() => onOpenQuote()}
-                className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
-              >
-                <span>Explore Our Services</span>
-                <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                  <ArrowRight className="h-3.5 w-3.5 text-white" />
-                </span>
-              </button>
-              <a
-                href={`tel:${BRAND.primaryPhone}`}
-                className="px-7 py-3.5 bg-white border border-slate-300 text-slate-800 hover:text-brand-blue hover:border-brand-blue rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 shadow-sm"
-              >
-                Speak To Logistics Desk
-              </a>
-            </div>
           </div>
         </div>
         <Wave className="text-white" />

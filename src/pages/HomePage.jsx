@@ -280,7 +280,7 @@ export const HomePage = ({ onOpenQuote }) => {
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        {/* Continuous cinematic logistics motion video - clearly visible in background */}
+        {/* Continuous cinematic logistics motion video - clearly visible in background from fliqmarine */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <video
             autoPlay
@@ -288,9 +288,12 @@ export const HomePage = ({ onOpenQuote }) => {
             muted
             playsInline
             preload="auto"
-            className="w-full h-full object-cover object-center opacity-85 contrast-105 brightness-100"
-            src="/assets/hero-banner-video.mp4"
-          />
+            className="w-full h-full object-cover object-center opacity-90 contrast-[1.08] brightness-[1.02]"
+          >
+            <source src="/assets/fliqmarine-hero.mov" type="video/mp4" />
+            <source src="/assets/fliqmarine-hero.mov" type="video/quicktime" />
+            <source src="/assets/hero-banner-video.mp4" type="video/mp4" />
+          </video>
         </div>
 
         {/* full-bleed slide images - dynamic Ken Burns subtle ambient layer */}
