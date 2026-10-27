@@ -738,36 +738,6 @@ export const HomePage = ({ onOpenQuote }) => {
         </Reveal>
       </section>
 
-      {/* ============ SPECIALIZED EXPRESS (Distinct Horizontal Category Layout) ============ */}
-      <section className="relative overflow-hidden bg-slate-50 py-16 sm:py-24">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHead
-            title="Tailored express consignments"
-            text="Special packaging and compliant customs clearance for specific categories."
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-            {SPECIALIZED_EXPRESS.map((item, idx) => {
-              const Icon = EXPRESS_ICONS[item.icon] || Boxes;
-              return (
-                <Reveal key={idx} delay={(idx % 3) * 70}>
-                  <div className="group relative flex items-start gap-4 p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-brand-red/50 hover:shadow-xl hover:shadow-brand-red/5 hover:-translate-y-1 transition-all duration-300">
-                    <div className="w-12 h-12 rounded-xl bg-brand-blue-50 text-brand-blue flex items-center justify-center shrink-0 group-hover:bg-brand-red group-hover:text-white transition-all duration-300 shadow-sm">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-2 mb-1">
-                        <h3 className="text-base font-bold text-slate-900 group-hover:text-brand-blue transition-colors">{item.title}</h3>
-                        <ArrowUpRight className="w-4 h-4 text-slate-300 group-hover:text-brand-red group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
-                      </div>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{item.desc}</p>
-                    </div>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       {/* ============ INDUSTRIES (Serving critical global sectors) SLIDER ============ */}
       <section 
