@@ -272,7 +272,6 @@ export const AboutPage = ({ onOpenQuote }) => {
 
           </div>
         </div>
-        <Wave className="text-white" />
       </section>
 
       {/* ========================================================= */}

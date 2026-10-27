@@ -1,14 +1,14 @@
 import React from 'react';
 import { 
   Anchor, Plane, Package, ShieldCheck, Truck, AlertTriangle, 
-  Phone, Compass, Globe 
+  Phone, Compass, Globe, ArrowUpRight, Zap, CheckCircle2 
 } from 'lucide-react';
 
 /**
  * BannerSideMotif
- * Executive interlocking rings and concentric radar orbit motif
- * inspired by Oneloop Logistics (from user reference screenshot), customized with 
- * Flymingo's maritime blue (#005687) and high-energy red (#ed2926) with category icons.
+ * Ultra-modern, executive geometric logistics dispatch card.
+ * Completely free of circles - uses sharp rectangular bento cards,
+ * angled route vectors, diamond waypoints, and real-time operational telemetry.
  */
 export const BannerSideMotif = ({
   variant = 'about',
@@ -21,165 +21,209 @@ export const BannerSideMotif = ({
   const configs = {
     about: {
       Icon: CustomIcon || Compass,
-      primary: '#005687',
-      secondary: '#ed2926',
-      badge: 'SINCE 2018',
-      nodePos: { cx: 168, cy: 118 }
+      title: 'Global Gateway Desk',
+      hub: 'COIMBATORE &bull; WORLDWIDE',
+      tag: 'ESTABLISHED 2018',
+      stat1: { val: '190+', label: 'Countries' },
+      stat2: { val: '24/7', label: 'Port Berth' },
+      stat3: { val: '4-6d', label: 'Express Delivery' },
+      routes: [
+        { from: 'COIMBATORE HUB', to: 'MAA / CHENNAI PORT', time: 'SAME DAY' },
+        { from: 'CHENNAI / TUTICORIN', to: 'GLOBAL DESTINATIONS', time: 'DIRECT FLIGHT & SEA' }
+      ]
     },
     services: {
       Icon: CustomIcon || Globe,
-      primary: '#005687',
-      secondary: '#ed2926',
-      badge: '6 CHANNELS',
-      nodePos: { cx: 168, cy: 118 }
+      title: 'Multimodal Freight Grid',
+      hub: 'AIR &bull; OCEAN &bull; SURFACE',
+      tag: '6 PROVEN CHANNELS',
+      stat1: { val: '6', label: 'Channels' },
+      stat2: { val: '0', label: 'Port Delay' },
+      stat3: { val: '100%', label: 'Transit Insured' },
+      routes: [
+        { from: 'BERTH & ANCHORAGE', to: 'OUTER ROADS LAUNCH', time: '45 MIN MOBILIZATION' },
+        { from: 'ICEGATE EDI / DG', to: 'DOOR-TO-DOOR GLOBAL', time: 'PRIORITY ROUTING' }
+      ]
     },
     contact: {
       Icon: CustomIcon || Phone,
-      primary: '#005687',
-      secondary: '#ed2926',
-      badge: '24/7 DESK',
-      nodePos: { cx: 352, cy: 118 }
+      title: 'Direct Dispatch Control',
+      hub: 'TAMIL NADU TO GLOBAL',
+      tag: 'OPERATIONS DESK',
+      stat1: { val: '< 15m', label: 'Quote Response' },
+      stat2: { val: '24/7', label: 'Emergency Deck' },
+      stat3: { val: 'Direct', label: 'Logistics Manager' },
+      routes: [
+        { from: 'COIMBATORE HEAD OFFICE', to: 'CHENNAI PORT DESK', time: 'INSTANT CONNECT' },
+        { from: 'DUTY COORDINATOR', to: 'VESSEL MASTER DISPATCH', time: 'ROUND-THE-CLOCK' }
+      ]
     },
     'ship-spares': {
       Icon: CustomIcon || Anchor,
-      primary: '#005687',
-      secondary: '#ed2926',
-      badge: 'ON-BOARD BERTH',
-      nodePos: { cx: 168, cy: 118 }
+      title: 'Berth Delivery Control',
+      hub: '10+ INDIAN SEAPORTS',
+      tag: 'CRITICAL MARITIME',
+      stat1: { val: '45m', label: 'Mobilization' },
+      stat2: { val: '10+', label: 'Major Ports' },
+      stat3: { val: '0', label: 'Demurrage Delay' },
+      routes: [
+        { from: 'AIR CARGO CUSTOMS', to: 'BONDED GATE PASS', time: 'PRE-CLEARED' },
+        { from: 'LAUNCH BOAT PIER', to: 'VESSEL ON-BOARD DECK', time: 'DIRECT DELIVERY' }
+      ]
     },
     'freight-forwarding': {
       Icon: CustomIcon || Plane,
-      primary: '#005687',
-      secondary: '#0284c7',
-      badge: 'AIR & OCEAN',
-      nodePos: { cx: 352, cy: 118 }
+      title: 'Ocean & Air Forwarding',
+      hub: 'FCL &bull; LCL &bull; CHARTER',
+      tag: 'PRIORITY CARGO',
+      stat1: { val: 'FCL/LCL', label: 'Full Options' },
+      stat2: { val: 'NFO', label: 'Next Flight Out' },
+      stat3: { val: 'Direct', label: 'Liner Contracts' },
+      routes: [
+        { from: 'ORIGIN INLAND WAREHOUSE', to: 'PORT OF LOADING', time: 'SCHEDULED' },
+        { from: 'INTERNATIONAL AIRPORT', to: 'DESTINATION AIRPORT', time: 'EXPRESS TRACK' }
+      ]
     },
     'international-courier': {
       Icon: CustomIcon || Package,
-      primary: '#005687',
-      secondary: '#ed2926',
-      badge: '190+ COUNTRIES',
-      nodePos: { cx: 168, cy: 118 }
+      title: 'Worldwide Express Courier',
+      hub: '190+ DESTINATIONS',
+      tag: 'DOOR-TO-DOOR',
+      stat1: { val: '190+', label: 'Countries' },
+      stat2: { val: 'Free', label: 'Doorstep Pickup' },
+      stat3: { val: '4-6d', label: 'Transit Days' },
+      routes: [
+        { from: 'DOORSTEP PICKUP (TN)', to: 'EXPORT CONSOLIDATION', time: 'FREE PACKING' },
+        { from: 'GLOBAL AIR HUB', to: 'DESTINATION DOORSTEP', time: 'LIVE MILESTONES' }
+      ]
     },
     'customs-clearance': {
       Icon: CustomIcon || ShieldCheck,
-      primary: '#005687',
-      secondary: '#7c3aed',
-      badge: 'ICEGATE EDI',
-      nodePos: { cx: 352, cy: 118 }
+      title: 'Licensed CHA Brokerage',
+      hub: 'ICEGATE EDI FILING',
+      tag: 'REGULATORY DESK',
+      stat1: { val: '100%', label: 'EDI Compliant' },
+      stat2: { val: 'Zero', label: 'Tariff Penalty' },
+      stat3: { val: 'Licensed', label: 'Customs House' },
+      routes: [
+        { from: 'BILL OF ENTRY SUBMISSION', to: 'HSN CLASSIFICATION', time: 'INSTANT EDI' },
+        { from: 'EXAMINATION DOCK', to: 'OUT OF CHARGE RELEASE', time: 'RAPID CLEAR' }
+      ]
     },
     'dg-shipping': {
       Icon: CustomIcon || AlertTriangle,
-      primary: '#005687',
-      secondary: '#d97706',
-      badge: 'CLASS 1-9 DG',
-      nodePos: { cx: 168, cy: 118 }
+      title: 'Dangerous Goods Hazmat',
+      hub: 'IATA &bull; IMO CERTIFIED',
+      tag: 'CLASS 1 TO 9 DG',
+      stat1: { val: 'Class 1-9', label: 'All Hazmat' },
+      stat2: { val: 'UN Spec', label: 'Packaging' },
+      stat3: { val: 'DGD', label: 'Filing Ready' },
+      routes: [
+        { from: 'UN CERTIFIED CRATING', to: 'SHIPPERS DECLARATION', time: 'INSPECTED' },
+        { from: 'HAZMAT AIRWAYBILL', to: 'SPECIALIZED VESSEL DECK', time: 'CERTIFIED' }
+      ]
     },
     'international-relocation': {
       Icon: CustomIcon || Truck,
-      primary: '#005687',
-      secondary: '#0d9488',
-      badge: 'PACKERS & MOVERS',
-      nodePos: { cx: 168, cy: 118 }
+      title: 'Overseas Relocation Desk',
+      hub: 'PACKERS &bull; MOVERS',
+      tag: 'TURNKEY MOVING',
+      stat1: { val: 'Turnkey', label: 'Door-to-Door' },
+      stat2: { val: 'TR', label: 'Customs Exemption' },
+      stat3: { val: 'Custom', label: 'Wooden Crating' },
+      routes: [
+        { from: 'ORIGIN RESIDENCE SURVEY', to: 'EXPORT WOODEN CRATING', time: 'WHITE GLOVE' },
+        { from: 'DESTINATION PORT', to: 'ROOM-BY-ROOM SETUP', time: 'UNPACK & PLACED' }
+      ]
     }
   };
 
   const cfg = configs[variant] || configs.about;
   const ActiveIcon = cfg.Icon;
-  const c1 = primaryColor || cfg.primary;
-  const c2 = secondaryColor || cfg.secondary;
-  const displayBadge = badge || cfg.badge;
 
   return (
-    <div className={`relative w-full max-w-[420px] lg:max-w-[460px] mx-auto select-none pointer-events-none ${className}`}>
-      <svg
-        viewBox="0 0 540 340"
-        className="w-full h-auto drop-shadow-sm overflow-visible"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <linearGradient id={`loop-grad-1-${variant}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={c1} />
-            <stop offset="100%" stopColor="#0b2545" />
-          </linearGradient>
-          <linearGradient id={`loop-grad-2-${variant}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={c2} />
-            <stop offset="100%" stopColor="#c51614" />
-          </linearGradient>
-          <filter id={`shadow-${variant}`} x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="4" stdDeviation="5" floodOpacity="0.16" floodColor="#000000" />
-          </filter>
-        </defs>
+    <div className={`w-full max-w-[460px] lg:max-w-[490px] mx-auto select-none ${className}`}>
+      {/* Modern Executive Bento Specimen Card - NO circles */}
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/60 p-5 sm:p-6 space-y-4">
+        
+        {/* Card Header: Live Status + Service Identity */}
+        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue">
+              <ActiveIcon className="w-5 h-5 text-brand-blue" />
+            </div>
+            <div>
+              <div className="text-xs font-black tracking-wider text-slate-900 uppercase">
+                {cfg.title}
+              </div>
+              <div 
+                className="text-[10px] font-bold text-slate-500 tracking-wide uppercase"
+                dangerouslySetInnerHTML={{ __html: cfg.hub }}
+              />
+            </div>
+          </div>
 
-        {/* Concentric Radar Navigation Rings */}
-        <g opacity="0.28">
-          <circle cx="260" cy="180" r="70" fill="none" stroke="#005687" strokeWidth="1" strokeDasharray="3 5" />
-          <circle cx="260" cy="180" r="115" fill="none" stroke="#005687" strokeWidth="1.2" strokeDasharray="4 6" />
-          <circle cx="260" cy="180" r="160" fill="none" stroke="#005687" strokeWidth="1" strokeDasharray="3 6" />
-          <circle cx="260" cy="180" r="205" fill="none" stroke="#005687" strokeWidth="1" strokeDasharray="5 7" />
-          <circle cx="260" cy="180" r="250" fill="none" stroke="#005687" strokeWidth="0.8" strokeDasharray="4 8" />
-          
-          <line x1="260" y1="20" x2="260" y2="340" stroke="#005687" strokeWidth="0.75" strokeDasharray="4 6" opacity="0.5" />
-          <line x1="10" y1="180" x2="510" y2="180" stroke="#005687" strokeWidth="0.75" strokeDasharray="4 6" opacity="0.5" />
-        </g>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 border border-emerald-200 text-[10px] font-mono font-bold text-emerald-700">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>LIVE DESK</span>
+          </div>
+        </div>
 
-        {/* Signature Interlocking Rings */}
-        <circle
-          cx="200"
-          cy="180"
-          r="86"
-          fill="none"
-          stroke={`url(#loop-grad-1-${variant})`}
-          strokeWidth="28"
-          strokeLinecap="round"
-        />
+        {/* Center: Geometric Vector Route Corridor (Rectangular / Angled Line Art - NO Circles) */}
+        <div className="bg-slate-50/80 rounded-xl border border-slate-200/70 p-3.5 space-y-2.5">
+          <div className="flex items-center justify-between text-[10px] font-mono font-bold text-slate-500">
+            <span className="text-brand-red font-black tracking-wider uppercase">{cfg.tag}</span>
+            <span>LAT 11.01°N &bull; LON 76.95°E</span>
+          </div>
 
-        <circle
-          cx="330"
-          cy="180"
-          r="86"
-          fill="none"
-          stroke={`url(#loop-grad-2-${variant})`}
-          strokeWidth="28"
-          strokeLinecap="round"
-        />
+          {/* Clean Route Corridors */}
+          <div className="space-y-2">
+            {cfg.routes.map((rt, i) => (
+              <div key={i} className="flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-slate-200/80 shadow-xs">
+                <div className="flex items-center gap-2 text-xs font-extrabold text-slate-800">
+                  <div className="w-1.5 h-3 bg-brand-red rounded-xs" />
+                  <span className="truncate max-w-[130px] sm:max-w-[150px]">{rt.from}</span>
+                  <span className="text-slate-400 font-normal">&rarr;</span>
+                  <span className="text-brand-blue truncate max-w-[110px] sm:max-w-[130px]">{rt.to}</span>
+                </div>
+                <span className="text-[9.5px] font-mono font-black text-brand-blue bg-brand-blue/5 border border-brand-blue/15 px-1.5 py-0.5 rounded">
+                  {rt.time}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
 
-        {/* Interlocking overlap arc (Ring 1 loop over Ring 2) */}
-        <path
-          d="M 200 94 A 86 86 0 0 1 278 142"
-          fill="none"
-          stroke={`url(#loop-grad-1-${variant})`}
-          strokeWidth="28"
-          strokeLinecap="round"
-        />
+        {/* Bottom Bento Metric Strip: 3 Rectangular Metric Tiles */}
+        <div className="grid grid-cols-3 gap-2 text-center pt-0.5">
+          <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-100 hover:border-brand-red/30 transition-colors">
+            <div className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
+              {cfg.stat1.val}
+            </div>
+            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+              {cfg.stat1.label}
+            </div>
+          </div>
 
-        {/* Floating Node Badge Indicator on Loop */}
-        <g transform={`translate(${cfg.nodePos.cx}, ${cfg.nodePos.cy})`} filter={`url(#shadow-${variant})`}>
-          <circle cx="0" cy="0" r="24" fill="#ffffff" stroke={c1} strokeWidth="3" />
-          <circle cx="0" cy="0" r="27" fill="none" stroke={c2} strokeWidth="1.5" opacity="0.4" strokeDasharray="2 3" />
-        </g>
+          <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-100 hover:border-brand-blue/30 transition-colors">
+            <div className="text-base sm:text-lg font-black text-brand-red tracking-tight">
+              {cfg.stat2.val}
+            </div>
+            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+              {cfg.stat2.label}
+            </div>
+          </div>
 
-        {/* Telemetry Badge */}
-        <g transform="translate(330, 285)">
-          <rect x="-75" y="-11" width="150" height="22" rx="11" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1" filter={`url(#shadow-${variant})`} />
-          <circle cx="-60" cy="0" r="3.5" fill={c2} />
-          <text x="-48" y="3" fill="#1e293b" fontSize="9" fontWeight="800" fontFamily="system-ui, sans-serif" letterSpacing="0.06em">
-            {displayBadge}
-          </text>
-        </g>
-      </svg>
+          <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-100 hover:border-brand-blue/30 transition-colors">
+            <div className="text-base sm:text-lg font-black text-brand-blue tracking-tight">
+              {cfg.stat3.val}
+            </div>
+            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+              {cfg.stat3.label}
+            </div>
+          </div>
+        </div>
 
-      {/* Center Icon inside white node */}
-      <div 
-        className="absolute w-9 h-9 rounded-full flex items-center justify-center pointer-events-auto"
-        style={{
-          left: `${(cfg.nodePos.cx / 540) * 100}%`,
-          top: `${(cfg.nodePos.cy / 340) * 100}%`,
-          transform: 'translate(-50%, -50%)'
-        }}
-        title={displayBadge}
-      >
-        <ActiveIcon className="w-4.5 h-4.5 text-brand-blue" strokeWidth={2.4} />
       </div>
     </div>
   );
