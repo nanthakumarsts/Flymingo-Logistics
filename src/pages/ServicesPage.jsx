@@ -125,10 +125,10 @@ export const ServicesPage = ({ onOpenQuote }) => {
           <img 
             src="/assets/banner-courier-hd.jpg" 
             alt="Flymingo Logistics Global Multimodal Operations" 
-            className="w-full h-full object-cover object-center opacity-30 contrast-[1.05] brightness-[1.08] scale-100 fm-kb-0"
+            className="w-full h-full object-cover object-center opacity-65 contrast-[1.05] brightness-[1.05] scale-100 fm-kb-0"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-brand-blue-50/70 z-0 pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 via-45% to-white/25 z-0 pointer-events-none" aria-hidden="true" />
         <FlightRouteMap className="opacity-10 z-0" />
 
         <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">

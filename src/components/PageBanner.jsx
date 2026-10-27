@@ -27,12 +27,12 @@ export function PageBanner({
           src={image || '/assets/banner-marine-hd.jpg'} 
           alt="" 
           onError={(e) => { e.currentTarget.src = '/assets/banner-marine-hd.jpg'; }}
-          className="w-full h-full object-cover object-center opacity-35 contrast-[1.05] brightness-[1.08] scale-100 fm-kb-0" 
+          className="w-full h-full object-cover object-center opacity-65 contrast-[1.05] brightness-[1.05] scale-100 fm-kb-0" 
         />
       </div>
 
-      {/* Clean light gradient overlay */}
-      <div className="absolute inset-0 -z-15 bg-gradient-to-r from-white/95 via-white/85 to-brand-blue-50/70 pointer-events-none" aria-hidden="true" />
+      {/* Directional light text scrim - high white on text side, clear view of image on right */}
+      <div className="absolute inset-0 -z-15 bg-gradient-to-r from-white via-white/85 via-45% to-white/25 pointer-events-none" aria-hidden="true" />
 
       {/* Global flight route map overlay */}
       <FlightRouteMap className="opacity-15 stroke-brand-blue" />

@@ -119,12 +119,12 @@ export const SPECIALIZED_EXPRESS = [
 ];
 
 export const INDUSTRIES_SERVED = [
-  { name: 'Shipping, Marine & Shipbuilding', desc: 'Time-critical ship spares, deck machinery, navigation units, and vessel refit parts.', icon: 'Ship' },
-  { name: 'Aerospace & High-Tech', desc: 'AOG spare components, delicate avionics, precision instruments, and high-value equipment.', icon: 'Radio' },
-  { name: 'Food, Perishables & Cold Chain', desc: 'Temperature-controlled food products, traditional snacks, and seasonal culinary goods.', icon: 'Utensils' },
-  { name: 'Chemicals & Dangerous Goods (DG)', desc: 'Industrial chemicals, laboratory reagents, paints, batteries, and hazardous materials.', icon: 'Atom' },
-  { name: 'Pharmaceuticals & Healthcare', desc: 'Urgent diagnostic supplies, critical medicines, medical equipment, and healthcare logistics.', icon: 'Activity' },
-  { name: 'Automotive & Manufacturing', desc: 'Assembly line parts, precision automotive engines, components, and heavy engineering cargo.', icon: 'Car' }
+  { name: 'Shipping, Marine & Shipbuilding', desc: 'Time-critical ship spares, deck machinery, navigation units, and vessel refit parts.', icon: 'Ship', image: '/assets/banner-marine-hd.jpg' },
+  { name: 'Aerospace & High-Tech', desc: 'AOG spare components, delicate avionics, precision instruments, and high-value equipment.', icon: 'Radio', image: '/assets/banner-aircargo-hd.jpg' },
+  { name: 'Food, Perishables & Cold Chain', desc: 'Temperature-controlled food products, traditional snacks, and seasonal culinary goods.', icon: 'Utensils', image: '/assets/loading.jpg' },
+  { name: 'Chemicals & Dangerous Goods (DG)', desc: 'Industrial chemicals, laboratory reagents, paints, batteries, and hazardous materials.', icon: 'Atom', image: '/assets/customs.jpg' },
+  { name: 'Pharmaceuticals & Healthcare', desc: 'Urgent diagnostic supplies, critical medicines, medical equipment, and healthcare logistics.', icon: 'Activity', image: '/assets/banner-courier-hd.jpg' },
+  { name: 'Automotive & Manufacturing', desc: 'Assembly line parts, precision automotive engines, components, and heavy engineering cargo.', icon: 'Car', image: '/assets/why_choose.jpg' }
 ];
 
 export const TESTIMONIALS = [

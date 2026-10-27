@@ -280,7 +280,7 @@ export const HomePage = ({ onOpenQuote }) => {
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        {/* Continuous cinematic logistics motion video */}
+        {/* Continuous cinematic logistics motion video - clearly visible in background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <video
             autoPlay
@@ -288,20 +288,20 @@ export const HomePage = ({ onOpenQuote }) => {
             muted
             playsInline
             preload="auto"
-            className="w-full h-full object-cover object-center opacity-35 contrast-105 brightness-105"
+            className="w-full h-full object-cover object-center opacity-85 contrast-105 brightness-100"
             src="/assets/hero-banner-video.mp4"
           />
         </div>
 
-        {/* full-bleed slide images - dynamic Ken Burns continuous camera moving effect with light crisp clarity */}
+        {/* full-bleed slide images - dynamic Ken Burns subtle ambient layer */}
         {HERO_SLIDES.map((slide, idx) => {
           const isActive = idx === currentSlide;
           const kbClass = idx % 3 === 0 ? 'fm-kb-0' : idx % 3 === 1 ? 'fm-kb-1' : 'fm-kb-2';
           return (
             <div
               key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                isActive ? 'opacity-100 z-0' : 'opacity-0 pointer-events-none'
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out pointer-events-none ${
+                isActive ? 'opacity-25 z-0' : 'opacity-0'
               }`}
             >
               <img
@@ -312,17 +312,17 @@ export const HomePage = ({ onOpenQuote }) => {
                 loading={idx === 0 ? 'eager' : 'lazy'}
                 decoding="async"
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none contrast-[1.05] brightness-[1.05] ${
-                  isActive ? `${kbClass} opacity-25` : 'scale-100 opacity-0'
+                className={`absolute inset-0 w-full h-full object-cover object-center ${
+                  isActive ? `${kbClass}` : 'scale-100'
                 }`}
               />
             </div>
           );
         })}
 
-        {/* Clean executive light gradient scrim */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-brand-blue-50/70 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-10 z-0" />
+        {/* Directional light text scrim: protective white on left for text, completely clear on center/right for video */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 via-42% to-transparent pointer-events-none z-[1]" aria-hidden="true" />
+        <FlightRouteMap className="opacity-10 z-[1]" />
 
         <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[360px]">
@@ -570,11 +570,11 @@ export const HomePage = ({ onOpenQuote }) => {
             src="/assets/banner-process-hd.jpg"
             alt=""
             aria-hidden="true"
-            className="w-full h-full object-cover object-center opacity-30 contrast-[1.05] brightness-[1.08] scale-100 fm-kb-1"
+            className="w-full h-full object-cover object-center opacity-60 contrast-[1.05] brightness-[1.05] scale-100 fm-kb-1"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-slate-50/75 to-white/90 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-10 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-slate-50/55 to-white/80 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-15 z-0" />
         <Wave className="text-white" flip />
         <Wave className="text-slate-50" />
 
@@ -779,24 +779,25 @@ export const HomePage = ({ onOpenQuote }) => {
                   {active ? (
                     <>
                       <img
-                        src="/assets/banner-sectors-hd.jpg"
-                        alt=""
+                        src={ind.image || '/assets/banner-sectors-hd.jpg'}
+                        alt={ind.name}
                         aria-hidden="true"
-                        className="absolute inset-0 w-full h-full object-cover opacity-20 contrast-[1.05] brightness-[1.05] pointer-events-none"
-                        onError={(e) => { e.currentTarget.src = '/assets/sea cargo.jpg'; }}
+                        className="absolute inset-0 w-full h-full object-cover opacity-60 contrast-[1.05] brightness-[1.05] pointer-events-none"
+                        onError={(e) => { e.currentTarget.src = '/assets/banner-sectors-hd.jpg'; }}
                       />
+                      <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 via-48% to-transparent pointer-events-none" aria-hidden="true" />
                       <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-brand-red/15 blur-3xl pointer-events-none" aria-hidden="true" />
                       <Icon className="absolute -right-8 -bottom-8 w-64 h-64 text-brand-blue/[0.05] pointer-events-none" aria-hidden="true" />
-                      <span className="absolute right-6 top-4 text-7xl font-black font-mono text-brand-blue/10 leading-none select-none" aria-hidden="true">
+                      <span className="absolute right-6 top-4 text-7xl font-black font-mono text-brand-blue/15 leading-none select-none" aria-hidden="true">
                         {String(idx + 1).padStart(2, '0')}
                       </span>
 
-                      <div className="fm-fade relative p-6 sm:p-8 lg:absolute lg:inset-y-0 lg:left-0 lg:w-[480px] lg:p-10 flex flex-col justify-end gap-4">
+                      <div className="fm-fade relative p-6 sm:p-8 lg:absolute lg:inset-y-0 lg:left-0 lg:w-[490px] lg:p-10 flex flex-col justify-end gap-4 z-10">
                         <div className="w-14 h-14 rounded-2xl bg-brand-red flex items-center justify-center shadow-lg shadow-brand-red/30">
                           <Icon className="w-7 h-7 text-white" />
                         </div>
                         <h3 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight text-slate-900">{ind.name}</h3>
-                        <p className="text-sm sm:text-base text-slate-600 leading-relaxed">{ind.desc}</p>
+                        <p className="text-sm sm:text-base font-bold text-slate-800 leading-relaxed drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)]">{ind.desc}</p>
                         <button
                           type="button"
                           onClick={(e) => { e.stopPropagation(); onOpenQuote(); }}
