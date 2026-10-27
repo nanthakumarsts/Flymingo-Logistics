@@ -140,7 +140,7 @@ export const Footer = ({ onOpenQuote }) => {
               </li>
               <li>
                 <Link to="/services" className="hover:text-brand-blue transition-colors flex items-center gap-1">
-                  <span>Our 6 Core Services</span>
+                  <span>Our Services</span>
                 </Link>
               </li>
               <li>

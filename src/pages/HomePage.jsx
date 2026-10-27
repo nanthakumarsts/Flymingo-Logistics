@@ -5,7 +5,7 @@ import {
   ArrowRight, Calculator, Check, Quote,
   Boxes, FileText, Coffee, Luggage, HeartPulse, Flame,
   Ship, Radio, Utensils, Atom, Activity, Car,
-  ArrowUpRight, Globe, Clock, ChevronLeft, ChevronRight
+  ArrowUpRight, Globe, Clock, ChevronLeft, ChevronRight, Download
 } from 'lucide-react';
 import {
   BRAND, STATS, CORE_SERVICES, SIX_WAYS_CARGO,
@@ -273,22 +273,22 @@ export const HomePage = ({ onOpenQuote }) => {
           );
         })}
 
-        {/* Subtle cinematic tint so full-bleed image colors & motion are vivid and clearly visible */}
-        <div className="absolute inset-0 bg-slate-950/20 pointer-events-none" aria-hidden="true" />
+        {/* Subtle dark film scrim - allows photo colors & motion to be clearly visible while guaranteeing 100% crisp text readability without any box */}
+        <div className="absolute inset-0 bg-[#001426]/55 pointer-events-none" aria-hidden="true" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-14 sm:pt-6 sm:pb-16 lg:pt-6 lg:pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[370px]">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[360px]">
 
-            {/* LEFT: high-contrast executive dark glass panel for 100% crisp text readability */}
+            {/* LEFT: content (open, natural, high-end editorial layout - NO restrictive box) */}
             <div 
               key={activeSlide.id} 
-              className="lg:col-span-8 p-6 sm:p-8 lg:p-9 rounded-3xl bg-[#00172bf0] sm:bg-[#00172bd9] backdrop-blur-md border border-white/20 shadow-2xl space-y-4 text-left"
+              className="lg:col-span-8 space-y-4 sm:space-y-5 text-left"
             >
-              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-brand-red/20 border border-brand-red/50 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light">
+              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
                 {activeSlide.badge}
               </div>
 
-              <h1 className="fm-s2 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.12] text-white drop-shadow-md">
+              <h1 className="fm-s2 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
                 {activeSlide.titlePrefix}
                 <span className="text-brand-red font-black">
                   {activeSlide.highlight}
@@ -296,22 +296,22 @@ export const HomePage = ({ onOpenQuote }) => {
                 {activeSlide.titleSuffix}
               </h1>
 
-              <p className="fm-s3 text-sm sm:text-base text-slate-100 leading-relaxed max-w-xl">
+              <p className="fm-s3 text-sm sm:text-lg text-white/95 leading-relaxed max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
                 {activeSlide.desc}
               </p>
 
-              <div className="fm-s4 flex flex-wrap items-center justify-start gap-3 pt-1">
+              <div className="fm-s4 flex flex-wrap items-center justify-start gap-3.5 pt-1">
                 <button
                   type="button"
                   onClick={() => onOpenQuote(activeSlide.serviceId)}
-                  className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/40 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
+                  className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/40 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
                 >
                   <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" />
                   {activeSlide.primaryCta}
                 </button>
                 <Link
                   to={activeSlide.secondaryLink}
-                  className="px-6 py-3 bg-white/15 backdrop-blur border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2"
+                  className="px-7 py-3.5 bg-black/35 backdrop-blur-md border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-lg"
                 >
                   {activeSlide.secondaryCta}
                   <ArrowRight className="w-4 h-4" />
@@ -319,11 +319,11 @@ export const HomePage = ({ onOpenQuote }) => {
               </div>
 
               {activeSlide.highlights && activeSlide.highlights.length > 0 && (
-                <ul className="fm-s4 flex flex-wrap items-center justify-start gap-2 pt-1.5">
+                <ul className="fm-s4 flex flex-wrap items-center justify-start gap-2.5 pt-1.5">
                   {activeSlide.highlights.map((t) => (
-                    <li key={t} className="flex items-center gap-1.5 pl-2 pr-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs font-medium text-white">
-                      <span className="w-3.5 h-3.5 rounded-full bg-brand-red flex items-center justify-center shrink-0">
-                        <Check className="w-2 h-2 text-white" />
+                    <li key={t} className="flex items-center gap-2 pl-2 pr-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-md">
+                      <span className="w-4 h-4 rounded-full bg-brand-red flex items-center justify-center shrink-0">
+                        <Check className="w-2.5 h-2.5 text-white stroke-[3]" />
                       </span>
                       {t}
                     </li>
@@ -333,7 +333,7 @@ export const HomePage = ({ onOpenQuote }) => {
             </div>
 
             {/* RIGHT: slide selector rail (desktop) */}
-            <div className="hidden lg:flex lg:col-span-4 flex-col gap-2.5">
+            <div className="hidden lg:flex lg:col-span-4 flex-col gap-3">
               {HERO_SLIDES.map((slide, idx) => {
                 const active = idx === currentSlide;
                 return (
@@ -344,8 +344,8 @@ export const HomePage = ({ onOpenQuote }) => {
                     aria-label={`Go to slide ${idx + 1}: ${slide.badge}`}
                     className={`group relative overflow-hidden flex items-center gap-3.5 p-3 rounded-2xl border text-left backdrop-blur-md transition-all duration-300 cursor-pointer ${
                       active
-                        ? 'bg-[#00172bf0] border-white/50 shadow-2xl ring-2 ring-brand-red/50 scale-[1.02]'
-                        : 'bg-[#00172bb3] border-white/20 hover:bg-[#00172be6]'
+                        ? 'bg-black/55 border-brand-red/80 shadow-2xl ring-2 ring-brand-red/40 scale-[1.02]'
+                        : 'bg-black/30 border-white/15 hover:bg-black/45 hover:border-white/30'
                     }`}
                   >
                     <img
@@ -360,7 +360,7 @@ export const HomePage = ({ onOpenQuote }) => {
                       <div className="text-[10px] font-mono tracking-widest text-brand-red-light font-bold uppercase">
                         {String(idx + 1).padStart(2, '0')} // Corridor
                       </div>
-                      <div className={`text-xs sm:text-sm font-bold leading-snug truncate ${active ? 'text-white' : 'text-slate-200'}`}>
+                      <div className={`text-xs sm:text-sm font-bold leading-snug truncate ${active ? 'text-white' : 'text-white/80'}`}>
                         {slide.badge}
                       </div>
                     </div>
@@ -379,37 +379,41 @@ export const HomePage = ({ onOpenQuote }) => {
             </div>
           </div>
 
-          {/* bottom controls: arrows + counter + download brochure (Clear above wave) */}
-          <div className="mt-5 sm:mt-6 flex items-center justify-between gap-4 relative z-20">
-            <div className="flex items-center gap-2.5">
+          {/* bottom controls: Unified glass capsule arrows + counter, and stylish download brochure action */}
+          <div className="mt-7 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 relative z-20">
+            {/* Slide Navigation Capsule */}
+            <div className="flex items-center gap-2 p-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
               <button
                 type="button"
                 onClick={prevSlide}
                 aria-label="Previous slide"
-                className="w-10 h-10 rounded-full bg-white/15 hover:bg-brand-red border border-white/30 hover:border-brand-red flex items-center justify-center transition-all cursor-pointer hover:scale-105 shadow-md"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
+              <div className="px-3 text-xs font-mono font-bold tracking-wider text-white select-none">
+                <span className="text-brand-red font-black text-sm">{String(currentSlide + 1).padStart(2, '0')}</span>
+                <span className="text-white/40"> / {String(slideCount).padStart(2, '0')}</span>
+              </div>
               <button
                 type="button"
                 onClick={nextSlide}
                 aria-label="Next slide"
-                className="w-10 h-10 rounded-full bg-white/15 hover:bg-brand-red border border-white/30 hover:border-brand-red flex items-center justify-center transition-all cursor-pointer hover:scale-105 shadow-md"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
-              <div className="ml-2 text-xs font-mono font-semibold tracking-wider">
-                <span className="text-white font-bold text-sm sm:text-base">{String(currentSlide + 1).padStart(2, '0')}</span>
-                <span className="text-white/40"> / {String(slideCount).padStart(2, '0')}</span>
-              </div>
             </div>
 
+            {/* Download Brochure Capsule */}
             <a
               href={BRAND.brochurePath}
               download
-              className="inline-flex group items-center gap-1.5 text-xs sm:text-sm font-semibold text-white/90 hover:text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm transition-all shadow-sm"
+              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-black/40 hover:bg-brand-red text-white border border-white/20 hover:border-brand-red backdrop-blur-md text-xs sm:text-sm font-bold transition-all shadow-lg group cursor-pointer hover:scale-105 active:scale-95"
             >
-              Download brochure <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              <FileText className="w-4 h-4 text-brand-red group-hover:text-white transition-colors" />
+              <span>Download Brochure (PDF)</span>
+              <Download className="w-3.5 h-3.5 text-white/70 group-hover:text-white group-hover:translate-y-0.5 transition-transform" />
             </a>
           </div>
         </div>
