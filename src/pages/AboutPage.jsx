@@ -7,6 +7,7 @@ import {
   TrendingUp, ArrowUpRight, ChevronRight
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
+import { FlightRouteMap } from '../components/FlightRouteMap';
 
 export const AboutPage = ({ onOpenQuote }) => {
   const [activePhase, setActivePhase] = useState(0);
@@ -87,53 +88,79 @@ export const AboutPage = ({ onOpenQuote }) => {
       {/* ========================================================= */}
       {/* 1. CINEMATIC MARITIME EDITORIAL BANNER HERO               */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/15 py-10 sm:py-12 lg:py-14">
-        {/* Full-bleed Photographic Background Texture */}
+      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/10 py-12 sm:py-16 lg:py-20 select-none">
+        {/* Full-bleed Photographic Background Texture with continuous Ken Burns motion */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
             src="/assets/sea cargo.jpg" 
             alt="Flymingo Logistics Global Operations" 
-            className="w-full h-full object-cover object-center opacity-25 scale-105"
+            className="w-full h-full object-cover object-center opacity-80 scale-105 fm-kb-0"
           />
-          <div className="absolute inset-0 bg-slate-950/75" />
         </div>
+        <div className="absolute inset-0 bg-[#001426]/60 z-0 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-40 z-0" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
           {/* Breadcrumb & Telemetry Tag */}
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-            <nav className="flex items-center gap-2 text-white/70 font-medium">
+            <nav className="flex items-center gap-2 text-white/80 font-medium">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <span className="text-white/40">/</span>
-              <span className="text-white font-bold">About Us</span>
+              <span className="text-emerald-400 font-bold">About Us</span>
             </nav>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90 shadow-md">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>11°00'N 76°58'E — COIMBATORE HQ &bull; CHENNAI PORT HUB</span>
             </div>
           </div>
 
           {/* Banner Title & Subtext */}
           <div className="max-w-3xl space-y-3">
-            <div className="inline-block px-3 py-1 rounded-md bg-brand-red/20 border border-brand-red/50 text-brand-red-light text-[11px] font-mono font-extrabold uppercase tracking-widest">
-              [ OUR MISSION &amp; HERITAGE // ESTABLISHED SOUTH INDIA ]
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+              SOUTH INDIA &rarr; THE WORLD // OUR MISSION &amp; HERITAGE
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
               We Are The Bridge Between You And Your Relations.<br />
-              <span className="text-brand-red-light">
+              <span className="text-emerald-400 font-black">
                 Across Oceans &amp; Continents.
               </span>
             </h1>
 
-            <p className="text-sm sm:text-base text-white/80 leading-relaxed font-normal pt-0.5 max-w-2xl">
+            <p className="text-base sm:text-xl font-bold text-white/95 tracking-wide drop-shadow-md">
+              Connecting Families. Empowering Global Trade.
+            </p>
+
+            <p className="text-sm sm:text-base text-white/90 leading-relaxed max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
               Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.
             </p>
           </div>
 
+          {/* Actions */}
+          <div className="flex flex-wrap items-center gap-4 pt-1">
+            <button
+              type="button"
+              onClick={() => onOpenQuote()}
+              className="group px-7 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+            >
+              <span>Explore Our Services</span>
+              <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                <ArrowRight className="h-3.5 w-3.5 text-white" />
+              </span>
+            </button>
+            <a
+              href={`tel:${BRAND.primaryPhone}`}
+              className="px-6 py-3.5 bg-black/40 backdrop-blur-md border border-white/25 hover:bg-white hover:text-brand-blue text-white rounded-full text-xs sm:text-sm font-bold transition-all shadow-md"
+            >
+              Speak To Logistics Desk
+            </a>
+          </div>
+
           {/* High-Contrast Trust Highlights Strip */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
-            <div className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 transition-all flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-sky-500/20 border border-sky-400/30 flex items-center justify-center shrink-0">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4">
+            <div className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 transition-all flex items-center gap-3 shadow-lg">
+              <div className="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-400/40 flex items-center justify-center shrink-0">
                 <Globe className="w-4 h-4 text-sky-300" />
               </div>
               <div className="min-w-0">
@@ -142,9 +169,9 @@ export const AboutPage = ({ onOpenQuote }) => {
               </div>
             </div>
 
-            <div className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 transition-all flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-brand-red/25 border border-brand-red/40 flex items-center justify-center shrink-0">
-                <Anchor className="w-4 h-4 text-brand-red-light" />
+            <div className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 transition-all flex items-center gap-3 shadow-lg">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
+                <Anchor className="w-4 h-4 text-emerald-400" />
               </div>
               <div className="min-w-0">
                 <div className="text-xs font-black text-white truncate">10+ Major Ports</div>
@@ -152,8 +179,8 @@ export const AboutPage = ({ onOpenQuote }) => {
               </div>
             </div>
 
-            <div className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 transition-all flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center shrink-0">
+            <div className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 transition-all flex items-center gap-3 shadow-lg">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
                 <Clock className="w-4 h-4 text-emerald-300" />
               </div>
               <div className="min-w-0">
@@ -162,8 +189,8 @@ export const AboutPage = ({ onOpenQuote }) => {
               </div>
             </div>
 
-            <div className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 transition-all flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-purple-500/20 border border-purple-400/30 flex items-center justify-center shrink-0">
+            <div className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 transition-all flex items-center gap-3 shadow-lg">
+              <div className="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center shrink-0">
                 <ShieldCheck className="w-4 h-4 text-purple-300" />
               </div>
               <div className="min-w-0">

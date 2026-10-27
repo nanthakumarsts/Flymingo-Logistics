@@ -6,6 +6,7 @@ import {
   ExternalLink, Sparkles, Navigation, Shield
 } from 'lucide-react';
 import { BRAND, CORE_SERVICES, STATS } from '../data/siteData';
+import { FlightRouteMap } from '../components/FlightRouteMap';
 
 export const ServicesPage = ({ onOpenQuote }) => {
   const CAPABILITIES = [
@@ -118,61 +119,70 @@ export const ServicesPage = ({ onOpenQuote }) => {
       {/* ========================================================= */}
       {/* 1. CINEMATIC MULTIMODAL TERMINAL BANNER HERO              */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/15 py-10 sm:py-12 lg:py-14">
-        {/* Photographic Background Texture with Deep Maritime Scrim */}
+      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/10 py-12 sm:py-16 lg:py-20 select-none">
+        {/* Photographic Background Texture with continuous Ken Burns motion */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
             src="/assets/international_courier_banner.jpg" 
             alt="Flymingo Logistics Global Multimodal Operations" 
-            className="w-full h-full object-cover object-center opacity-25 scale-105"
+            className="w-full h-full object-cover object-center opacity-80 scale-105 fm-kb-0"
           />
-          <div className="absolute inset-0 bg-slate-950/75" />
         </div>
+        <div className="absolute inset-0 bg-[#001426]/60 z-0 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-40 z-0" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
           {/* Breadcrumb & Telemetry Tag */}
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-            <nav className="flex items-center gap-2 text-white/70 font-medium">
+            <nav className="flex items-center gap-2 text-white/80 font-medium">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <span className="text-white/40">/</span>
-              <span className="text-white font-bold">Services Overview</span>
+              <span className="text-emerald-400 font-bold">Services Overview</span>
             </nav>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90 shadow-md">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>ACTIVE CORRIDORS: 190+ COUNTRIES &bull; 10+ SEAPORTS &bull; 24/7 HOTLINE</span>
             </div>
           </div>
 
           {/* Banner Title & Subtext */}
           <div className="max-w-3xl space-y-3">
-            <div className="inline-block px-3 py-1 rounded-md bg-brand-red/20 border border-brand-red/50 text-brand-red-light text-[11px] font-mono font-extrabold uppercase tracking-widest">
-              [ END-TO-END GLOBAL LOGISTICS // SIX STRATEGIC CHANNELS ]
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+              SOUTH INDIA &rarr; THE WORLD // SIX STRATEGIC CHANNELS
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
               Six Proven Channels.<br />
-              <span className="text-brand-red-light">
+              <span className="text-emerald-400 font-black">
                 Zero Cargo Gaps.
               </span>
             </h1>
 
-            <p className="text-sm sm:text-base text-white/80 leading-relaxed font-normal pt-0.5 max-w-2xl">
+            <p className="text-base sm:text-xl font-bold text-white/95 tracking-wide drop-shadow-md">
+              Connecting Businesses. Delivering Possibilities.
+            </p>
+
+            <p className="text-sm sm:text-base text-white/90 leading-relaxed font-normal pt-0.5 max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
               From time-critical vessel spares delivery on-board at outer anchorage berths to worldwide express courier and heavy air/ocean freight forwarders, Flymingo Logistics handles every consignment with shipowner precision.
             </p>
           </div>
 
           {/* Banner Action Buttons */}
-          <div className="flex flex-wrap items-center gap-3 pt-1">
+          <div className="flex flex-wrap items-center gap-4 pt-1">
             <button
               onClick={() => onOpenQuote()}
-              className="px-6 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-md transition-all hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
+              className="group px-7 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
             >
               <Calculator className="w-4 h-4" />
               <span>Request Instant Fare Quote</span>
+              <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                <ArrowRight className="h-3.5 w-3.5 text-white" />
+              </span>
             </button>
             <a
               href={`tel:${BRAND.primaryPhone}`}
-              className="px-6 py-3.5 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-xl text-xs font-black uppercase tracking-wider shadow-sm transition-all hover:scale-[1.02] flex items-center gap-2 cursor-pointer"
+              className="px-6 py-3.5 bg-black/40 backdrop-blur-md border border-white/25 hover:bg-white hover:text-brand-blue text-white rounded-full text-xs sm:text-sm font-bold transition-all shadow-md flex items-center gap-2"
             >
               <span>Speak To Logistics Desk</span>
             </a>

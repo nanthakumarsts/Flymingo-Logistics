@@ -5,6 +5,7 @@ import {
   Sparkles, Anchor, ShieldCheck, MessageSquare
 } from 'lucide-react';
 import { BRAND, OFFICES, CORE_SERVICES, COUNTRIES } from '../data/siteData';
+import { FlightRouteMap } from '../components/FlightRouteMap';
 
 export const ContactPage = () => {
   const [name, setName] = useState('');
@@ -25,45 +26,51 @@ export const ContactPage = () => {
       {/* ========================================================= */}
       {/* 1. CINEMATIC COMMUNICATIONS DISPATCH BANNER HERO          */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/15 py-10 sm:py-12 lg:py-14">
-        {/* Photographic Background Texture with Deep Maritime Scrim */}
+      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/10 py-12 sm:py-16 lg:py-20 select-none">
+        {/* Photographic Background Texture with continuous Ken Burns motion */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
             src="/assets/communication.jpg" 
             alt="Flymingo Logistics Global Communications Desk" 
-            className="w-full h-full object-cover object-center opacity-25 scale-105"
+            className="w-full h-full object-cover object-center opacity-80 scale-105 fm-kb-0"
           />
-          <div className="absolute inset-0 bg-slate-950/75" />
         </div>
+        <div className="absolute inset-0 bg-[#001426]/60 z-0 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-40 z-0" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
           {/* Breadcrumb & Telemetry Tag */}
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-            <nav className="flex items-center gap-2 text-white/70 font-medium">
+            <nav className="flex items-center gap-2 text-white/80 font-medium">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <span className="text-white/40">/</span>
-              <span className="text-white font-bold">Contact Us</span>
+              <span className="text-emerald-400 font-bold">Contact Us</span>
             </nav>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90 shadow-md">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>LIVE DESK ACTIVE &bull; COIMBATORE HQ &amp; CHENNAI PORT HUB</span>
             </div>
           </div>
 
           {/* Banner Title & Subtext */}
           <div className="max-w-3xl space-y-3">
-            <div className="inline-block px-3 py-1 rounded-md bg-brand-red/20 border border-brand-red/50 text-brand-red-light text-[11px] font-mono font-extrabold uppercase tracking-widest">
-              [ 24/7 CARGO ASSISTANCE &amp; DISPATCH // DIRECT HOTLINES ]
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+              SOUTH INDIA &rarr; THE WORLD // 24/7 SUPPORT &amp; DISPATCH
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
               Direct Lines.<br />
-              <span className="text-brand-red-light">
+              <span className="text-emerald-400 font-black">
                 Immediate Logistics Response.
               </span>
             </h1>
 
-            <p className="text-sm sm:text-base text-white/80 leading-relaxed font-normal pt-0.5 max-w-2xl">
+            <p className="text-base sm:text-xl font-bold text-white/95 tracking-wide drop-shadow-md">
+              Always On Call. Ready For Rapid Dispatch.
+            </p>
+
+            <p className="text-sm sm:text-base text-white/90 leading-relaxed font-normal pt-0.5 max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
               Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.
             </p>
           </div>
@@ -72,22 +79,22 @@ export const ContactPage = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
             <a 
               href={`tel:${BRAND.primaryPhone}`} 
-              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 shadow-sm transition-all flex items-center gap-3 group cursor-pointer"
+              className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 shadow-lg transition-all flex items-center gap-3 group cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-lg bg-brand-red/25 border border-brand-red/40 text-brand-red-light flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                 <Phone className="w-4 h-4" />
               </div>
               <div className="min-w-0">
                 <div className="text-[10px] font-mono font-bold text-white/70 uppercase tracking-wider">Coimbatore HQ</div>
-                <div className="text-xs font-black text-white hover:text-sky-300 transition-colors truncate">{BRAND.primaryPhone}</div>
+                <div className="text-xs font-black text-white hover:text-emerald-300 transition-colors truncate">{BRAND.primaryPhone}</div>
               </div>
             </a>
 
             <a 
               href={`tel:${BRAND.supportPhones[1]}`} 
-              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 shadow-sm transition-all flex items-center gap-3 group cursor-pointer"
+              className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 shadow-lg transition-all flex items-center gap-3 group cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-lg bg-sky-500/25 border border-sky-400/40 text-sky-300 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-400/40 text-sky-300 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                 <Phone className="w-4 h-4" />
               </div>
               <div className="min-w-0">
@@ -100,9 +107,9 @@ export const ContactPage = () => {
               href={`https://wa.me/919087924488?text=${encodeURIComponent('Hello Flymingo Logistics, I need shipment assistance.')}`}
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 shadow-sm transition-all flex items-center gap-3 group cursor-pointer"
+              className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 shadow-lg transition-all flex items-center gap-3 group cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-lg bg-emerald-500/25 border border-emerald-400/40 text-emerald-300 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/25 border border-emerald-400/40 text-emerald-300 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                 <MessageSquare className="w-4 h-4" />
               </div>
               <div className="min-w-0">

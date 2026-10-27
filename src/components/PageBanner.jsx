@@ -1,61 +1,114 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Phone, ShieldCheck, Compass } from 'lucide-react';
+import { FlightRouteMap } from './FlightRouteMap';
 
-/** A consistent, image-led masthead for the detailed service pages. */
-export function PageBanner({ eyebrow, title, description, image, action, onAction, secondaryAction, children }) {
+/** 
+ * Executive Image-Led Banner for Services & Inner Pages.
+ * Faithfully mirrors the layout, flight route map, and high-end typography
+ * established in the flagship reference design.
+ */
+export function PageBanner({ 
+  eyebrow, 
+  title, 
+  highlight,
+  tagline,
+  description, 
+  image, 
+  action, 
+  onAction, 
+  secondaryAction, 
+  children 
+}) {
   return (
-    <section className="relative isolate overflow-hidden border-b border-white/15 bg-brand-blue-dark text-white py-10 sm:py-12 lg:py-14">
-      <img 
-        src={image || '/assets/sea cargo.jpg'} 
-        alt="" 
-        onError={(e) => { e.currentTarget.src = '/assets/sea cargo.jpg'; }}
-        className="absolute inset-0 -z-20 h-full w-full object-cover opacity-25 scale-105" 
-      />
-      <div className="absolute inset-0 -z-10 bg-slate-950/75" />
+    <section className="relative isolate overflow-hidden bg-brand-blue-dark text-white py-12 sm:py-16 lg:py-20 select-none border-b border-white/10">
+      {/* High-clarity background photo with continuous Ken Burns camera glide */}
+      <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
+        <img 
+          src={image || '/assets/sea cargo.jpg'} 
+          alt="" 
+          onError={(e) => { e.currentTarget.src = '/assets/sea cargo.jpg'; }}
+          className="w-full h-full object-cover object-center opacity-80 scale-105 fm-kb-0" 
+        />
+      </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl space-y-5">
+      {/* Solid balanced film scrim - gives maximum text contrast without pitch-black darkening */}
+      <div className="absolute inset-0 -z-15 bg-[#001426]/60 pointer-events-none" aria-hidden="true" />
+
+      {/* Global flight route map overlay */}
+      <FlightRouteMap className="opacity-40" />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 z-10">
+        <div className="max-w-3xl space-y-5 text-left">
+          
+          {/* Breadcrumbs & Route Telemetry */}
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-white/70 font-medium">
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-white/80 font-medium">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <span className="text-white/40">/</span>
               <Link to="/services" className="hover:text-white transition-colors">Services</Link>
               <span className="text-white/40">/</span>
-              <span className="text-white font-bold">{eyebrow}</span>
+              <span className="text-emerald-400 font-bold">{eyebrow}</span>
             </nav>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90 shadow-md">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>ACTIVE CORRIDORS &bull; 24/7 DESK</span>
             </div>
           </div>
 
-          <div className="space-y-3">
-            <span className="inline-flex w-fit items-center gap-2 rounded-md border border-brand-red/50 bg-brand-red/20 px-3 py-1 text-[11px] font-mono font-extrabold uppercase tracking-widest text-brand-red-light">
-              [ {eyebrow} // TIME-CRITICAL DISPATCH ]
-            </span>
-            <h1 className="max-w-3xl text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-              {title}
-            </h1>
-            <p className="max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">
-              {description}
-            </p>
+          {/* Eyebrow badge matching reference format */}
+          <div>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+              SOUTH INDIA &rarr; THE WORLD // {eyebrow ? eyebrow.toUpperCase() : 'EXPRESS LOGISTICS'}
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+          {/* Main Title & Optional Highlight */}
+          <div className="space-y-2">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
+              {title}{' '}
+              {highlight && (
+                <span className="text-emerald-400 font-black">
+                  {highlight}
+                </span>
+              )}
+            </h1>
+            
+            {tagline && (
+              <p className="text-base sm:text-xl font-bold text-white/95 tracking-wide drop-shadow-md">
+                {tagline}
+              </p>
+            )}
+          </div>
+
+          {/* Descriptive narrative */}
+          <p className="text-sm sm:text-base leading-relaxed text-white/90 max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
+            {description}
+          </p>
+
+          {/* Action buttons matching reference pill design */}
+          <div className="flex flex-wrap items-center gap-4 pt-2">
             {action && (
               <button 
+                type="button"
                 onClick={onAction} 
-                className="inline-flex items-center gap-2 rounded-xl bg-brand-red hover:bg-brand-red-dark px-6 py-3.5 text-xs font-black uppercase tracking-wider text-white shadow-md transition hover:-translate-y-0.5 cursor-pointer"
+                className="group px-7 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
               >
-                {action} <ArrowRight className="h-4 w-4" />
+                <span>{action}</span>
+                <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                  <ArrowRight className="h-3.5 w-3.5 text-white" />
+                </span>
               </button>
             )}
             {secondaryAction}
           </div>
+
           {children}
         </div>
       </div>
     </section>
   );
 }
+
+export default PageBanner;

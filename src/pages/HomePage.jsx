@@ -12,6 +12,7 @@ import {
   SPECIALIZED_EXPRESS, INDUSTRIES_SERVED, TESTIMONIALS
 } from '../data/siteData';
 import HERO_SLIDES from '../data/heroSlides.json';
+import { FlightRouteMap } from '../components/FlightRouteMap';
 
 /* Background photos. Swap any URL for your own file, e.g. '/images/process-bg.jpg' in /public.
    If an image fails to load, the section falls back to the dark brand blue behind it. */
@@ -221,6 +222,38 @@ export const HomePage = ({ onOpenQuote }) => {
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slideCount) % slideCount);
   const activeSlide = HERO_SLIDES[currentSlide] || HERO_SLIDES[0] || {};
 
+  /* Process slider state */
+  const [processSlide, setProcessSlide] = useState(0);
+  const [isProcessPaused, setIsProcessPaused] = useState(false);
+  const processCount = SIX_WAYS_CARGO.length;
+
+  useEffect(() => {
+    if (isProcessPaused) return;
+    const timer = setInterval(() => {
+      setProcessSlide((prev) => (prev + 1) % processCount);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isProcessPaused, processCount]);
+
+  const nextProcess = () => setProcessSlide((prev) => (prev + 1) % processCount);
+  const prevProcess = () => setProcessSlide((prev) => (prev - 1 + processCount) % processCount);
+
+  /* Sectors slider state */
+  const [sectorSlide, setSectorSlide] = useState(0);
+  const [isSectorPaused, setIsSectorPaused] = useState(false);
+  const sectorCount = INDUSTRIES_SERVED.length;
+
+  useEffect(() => {
+    if (isSectorPaused) return;
+    const timer = setInterval(() => {
+      setSectorSlide((prev) => (prev + 1) % sectorCount);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isSectorPaused, sectorCount]);
+
+  const nextSector = () => setSectorSlide((prev) => (prev + 1) % sectorCount);
+  const prevSector = () => setSectorSlide((prev) => (prev - 1 + sectorCount) % sectorCount);
+
   /* scroll progress */
   useEffect(() => {
     const onScroll = () => {
@@ -275,26 +308,35 @@ export const HomePage = ({ onOpenQuote }) => {
 
         {/* Subtle dark film scrim - allows photo colors & motion to be clearly visible while guaranteeing 100% crisp text readability without any box */}
         <div className="absolute inset-0 bg-[#001426]/55 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-40 z-0" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[360px]">
 
-            {/* LEFT: content (open, natural, high-end editorial layout - NO restrictive box) */}
+            {/* LEFT: content (open, natural, high-end editorial layout - matching reference) */}
             <div 
               key={activeSlide.id} 
               className="lg:col-span-8 space-y-4 sm:space-y-5 text-left"
             >
-              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
+              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
                 {activeSlide.badge}
               </div>
 
-              <h1 className="fm-s2 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
-                {activeSlide.titlePrefix}
-                <span className="text-brand-red font-black">
-                  {activeSlide.highlight}
-                </span>
-                {activeSlide.titleSuffix}
-              </h1>
+              <div className="space-y-2">
+                <h1 className="fm-s2 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+                  {activeSlide.titlePrefix}
+                  <span className="text-emerald-400 font-black">
+                    {activeSlide.highlight}
+                  </span>
+                  {activeSlide.titleSuffix}
+                </h1>
+
+                {activeSlide.tagline && (
+                  <p className="fm-s2 text-base sm:text-xl font-bold text-white/95 tracking-wide drop-shadow-md">
+                    {activeSlide.tagline}
+                  </p>
+                )}
+              </div>
 
               <p className="fm-s3 text-sm sm:text-lg text-white/95 leading-relaxed max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
                 {activeSlide.desc}
@@ -304,10 +346,12 @@ export const HomePage = ({ onOpenQuote }) => {
                 <button
                   type="button"
                   onClick={() => onOpenQuote(activeSlide.serviceId)}
-                  className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/40 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
+                  className="group px-7 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
                 >
-                  <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-                  {activeSlide.primaryCta}
+                  <span>{activeSlide.primaryCta}</span>
+                  <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                    <ArrowRight className="w-3.5 h-3.5 text-white" />
+                  </span>
                 </button>
                 <Link
                   to={activeSlide.secondaryLink}
@@ -518,65 +562,140 @@ export const HomePage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* ============ SIX WAYS (pickup to delivery) ============ */}
-      <section className="relative bg-[#00172b] text-white py-20 sm:py-28 overflow-hidden">
-        {/* Real photo background with calibrated contrast scrim - crystal clear text */}
+      {/* ============ SIX WAYS (pickup to delivery) SLIDER ============ */}
+      <section 
+        className="relative bg-brand-blue-dark text-white py-16 sm:py-24 overflow-hidden select-none"
+        onMouseEnter={() => setIsProcessPaused(true)}
+        onMouseLeave={() => setIsProcessPaused(false)}
+      >
+        {/* Dynamic moving photo background with Ken Burns camera movement */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
             src="/assets/loading and unloading.jpg"
             alt=""
             aria-hidden="true"
-            className="w-full h-full object-cover object-center opacity-30 scale-105"
+            className="w-full h-full object-cover object-center opacity-80 scale-105 fm-kb-1"
           />
-          <div className="absolute inset-0 bg-[#001426]/92" />
         </div>
+        <div className="absolute inset-0 bg-[#001426]/70 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-35 z-0" />
         <Wave className="text-white" flip />
         <Wave className="text-white" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <SectionHead
             light
             title="From pickup to delivery, one clear process"
             text="A standard, transparent pipeline built around shipowner precision and door-to-door accountability."
           />
 
-          {/* start of the route */}
-          <div className="flex lg:justify-center mb-6">
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-sm font-bold text-white shadow-lg shadow-black/20">
-              Pickup
-            </span>
-          </div>
-
-          {/* vertical timeline, cards alternate left and right on desktop */}
-          <ol className="relative max-w-5xl mx-auto list-none">
-            <span className="absolute left-5 lg:left-1/2 top-0 bottom-0 w-0.5 lg:-translate-x-1/2 bg-white/20" aria-hidden="true" />
+          {/* Quick Stage Stepper Pills */}
+          <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
             {SIX_WAYS_CARGO.map((item, idx) => {
-              const left = idx % 2 === 0;
+              const active = idx === processSlide;
               return (
-                <li key={idx} className="relative pl-16 lg:pl-0 pb-8 lg:pb-10 last:pb-0 lg:grid lg:grid-cols-2 lg:gap-x-24">
-                  <span className="absolute left-0 lg:left-1/2 lg:-translate-x-1/2 top-5 z-10 w-10 h-10 rounded-full bg-brand-red text-white font-bold flex items-center justify-center shadow-lg shadow-brand-red/40 ring-4 ring-white/20">
-                    {idx + 1}
+                <button
+                  key={item.step}
+                  type="button"
+                  onClick={() => setProcessSlide(idx)}
+                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${
+                    active 
+                      ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 scale-105' 
+                      : 'bg-black/40 text-white/70 hover:text-white hover:bg-black/60 border border-white/15'
+                  }`}
+                >
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${active ? 'bg-black/25 text-white' : 'bg-white/10'}`}>
+                    {item.step}
                   </span>
-                  <Reveal variant={left ? 'left' : 'right'} className={left ? 'lg:col-start-1' : 'lg:col-start-2'}>
-                    <div className={`group relative h-full overflow-hidden bg-white/[0.08] backdrop-blur-xl rounded-2xl border border-white/20 p-5 sm:p-6 shadow-2xl shadow-black/30 hover:bg-white/[0.14] hover:border-brand-red/80 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 ${left ? 'lg:text-right' : ''}`}>
-                      <span className={`absolute -top-3 text-7xl font-black text-white/[0.08] leading-none select-none font-mono ${left ? 'right-3 lg:left-3 lg:right-auto' : 'right-3'}`} aria-hidden="true">
-                        {String(idx + 1).padStart(2, '0')}
-                      </span>
-                      <span className={`absolute top-0 bottom-0 w-1 bg-brand-red scale-y-0 group-hover:scale-y-100 transition-transform duration-300 ${left ? 'left-0 lg:left-auto lg:right-0' : 'left-0'}`} aria-hidden="true" />
-                      <h3 className="relative text-lg sm:text-xl font-bold text-white mb-2 drop-shadow-sm">{item.title}</h3>
-                      <p className="relative text-sm sm:text-base text-slate-100/90 leading-relaxed">{item.desc}</p>
-                    </div>
-                  </Reveal>
-                </li>
+                  <span>{item.title}</span>
+                </button>
               );
             })}
-          </ol>
+          </div>
 
-          {/* end of the route */}
-          <div className="flex lg:justify-center mt-6">
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white text-brand-blue-dark text-sm font-bold shadow-lg shadow-black/20">
-              Delivery
-            </span>
+          {/* Process Slider Stage Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[300px]">
+            {/* LEFT: Active Step Detailed Feature */}
+            <div className="lg:col-span-7 space-y-4 text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+                STAGE {SIX_WAYS_CARGO[processSlide].step} // TRANSPARENT PIPELINE
+              </div>
+
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
+                {SIX_WAYS_CARGO[processSlide].title}
+              </h3>
+
+              <p className="text-base sm:text-lg text-white/95 leading-relaxed max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
+                {SIX_WAYS_CARGO[processSlide].desc}
+              </p>
+
+              <div className="pt-2 flex flex-wrap gap-3">
+                <div className="px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-semibold text-white flex items-center gap-2 shadow-md">
+                  <Check className="w-4 h-4 text-emerald-400" />
+                  <span>Real-Time Milestone Logging</span>
+                </div>
+                <div className="px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-semibold text-white flex items-center gap-2 shadow-md">
+                  <Check className="w-4 h-4 text-emerald-400" />
+                  <span>Zero-Delay Customs Pre-Check</span>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT: Visual Selector Rail */}
+            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {SIX_WAYS_CARGO.map((item, idx) => {
+                const active = idx === processSlide;
+                return (
+                  <button
+                    key={item.step}
+                    type="button"
+                    onClick={() => setProcessSlide(idx)}
+                    className={`text-left p-4 rounded-2xl border backdrop-blur-md transition-all cursor-pointer relative overflow-hidden ${
+                      active
+                        ? 'bg-black/60 border-emerald-400 shadow-xl ring-2 ring-emerald-400/30 scale-[1.02]'
+                        : 'bg-black/30 border-white/15 hover:bg-black/45 hover:border-white/30'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-mono text-xs font-extrabold text-emerald-400">{item.step}</span>
+                      {active && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />}
+                    </div>
+                    <h4 className="text-sm font-bold text-white mb-1 leading-snug">{item.title}</h4>
+                    <p className="text-xs text-white/70 line-clamp-2">{item.desc}</p>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Slider Bottom Controls: Frosted Glass Capsule */}
+          <div className="mt-8 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-2 p-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
+              <button
+                type="button"
+                onClick={prevProcess}
+                aria-label="Previous process stage"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-emerald-500 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <div className="px-3 text-xs font-mono font-bold tracking-wider text-white select-none">
+                <span className="text-emerald-400 font-black text-sm">{String(processSlide + 1).padStart(2, '0')}</span>
+                <span className="text-white/40"> / {String(processCount).padStart(2, '0')}</span>
+              </div>
+              <button
+                type="button"
+                onClick={nextProcess}
+                aria-label="Next process stage"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-emerald-500 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="text-xs font-mono text-white/70 tracking-wider">
+              AUTO-CYCLE &bull; HOVER TO PAUSE
+            </div>
           </div>
         </div>
       </section>
@@ -650,49 +769,127 @@ export const HomePage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* ============ INDUSTRIES (Serving critical global sectors) ============ */}
-      <section className="relative bg-[#00172b] py-20 sm:py-28 overflow-hidden text-white">
-        {/* Real maritime photo background with high-contrast cinematic overlay - crystal clear text */}
+      {/* ============ INDUSTRIES (Serving critical global sectors) SLIDER ============ */}
+      <section 
+        className="relative bg-brand-blue-dark py-16 sm:py-24 overflow-hidden text-white select-none"
+        onMouseEnter={() => setIsSectorPaused(true)}
+        onMouseLeave={() => setIsSectorPaused(false)}
+      >
+        {/* Dynamic moving maritime photo background with Ken Burns camera movement */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
             src="/assets/sea cargo.jpg"
             alt=""
             aria-hidden="true"
-            className="w-full h-full object-cover object-center opacity-30 scale-105"
+            className="w-full h-full object-cover object-center opacity-80 scale-105 fm-kb-2"
           />
-          <div className="absolute inset-0 bg-[#001426]/92" />
         </div>
+        <div className="absolute inset-0 bg-[#001426]/70 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-35 z-0" />
         <Wave className="text-slate-50" flip />
         <Wave className="text-slate-50" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <SectionHead
             light
             title="Serving critical global sectors"
             text="Logistics workflows built to meet strict industry benchmarks."
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {INDUSTRIES_SERVED.map((ind, idx) => {
-              const Icon = INDUSTRY_ICONS[ind.icon] || Ship;
-              return (
-                <Reveal key={idx} delay={(idx % 3) * 80}>
-                  <div
-                    onMouseMove={spot}
-                    className="fm-spot group relative h-full overflow-hidden bg-white/[0.08] backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-2xl shadow-black/30 hover:border-brand-red/80 hover:bg-white/[0.14] hover:-translate-y-1.5 transition-all duration-300"
+
+          {/* Sector Slider Showcase Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[300px]">
+            {/* LEFT: Active Sector Spotlight */}
+            <div className="lg:col-span-7 space-y-4 text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+                CORRIDOR {String(sectorSlide + 1).padStart(2, '0')} // SPECIALIZED SECTOR
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center shrink-0 shadow-lg">
+                  {(() => {
+                    const ActiveIcon = INDUSTRY_ICONS[INDUSTRIES_SERVED[sectorSlide].icon] || Ship;
+                    return <ActiveIcon className="w-7 h-7" />;
+                  })()}
+                </div>
+                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
+                  {INDUSTRIES_SERVED[sectorSlide].name}
+                </h3>
+              </div>
+
+              <p className="text-base sm:text-lg text-white/95 leading-relaxed max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
+                {INDUSTRIES_SERVED[sectorSlide].desc}
+              </p>
+
+              <div className="pt-2 flex flex-wrap gap-4">
+                <button
+                  type="button"
+                  onClick={() => onOpenQuote()}
+                  className="group px-7 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                >
+                  <span>Request Industry Logistics Rate</span>
+                  <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                    <ArrowRight className="h-3.5 w-3.5 text-white" />
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* RIGHT: Visual Sector Selector Rail */}
+            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {INDUSTRIES_SERVED.map((ind, idx) => {
+                const active = idx === sectorSlide;
+                const Icon = INDUSTRY_ICONS[ind.icon] || Ship;
+                return (
+                  <button
+                    key={ind.name}
+                    type="button"
+                    onClick={() => setSectorSlide(idx)}
+                    className={`text-left p-4 rounded-2xl border backdrop-blur-md transition-all cursor-pointer relative overflow-hidden ${
+                      active
+                        ? 'bg-black/60 border-emerald-400 shadow-xl ring-2 ring-emerald-400/30 scale-[1.02]'
+                        : 'bg-black/30 border-white/15 hover:bg-black/45 hover:border-white/30'
+                    }`}
                   >
-                    <Icon className="absolute -right-6 -bottom-6 w-32 h-32 text-white/[0.05] group-hover:text-brand-red/20 group-hover:rotate-12 transition-all duration-500" aria-hidden="true" />
-                    <span className="absolute right-5 top-4 text-4xl font-black text-white/10 leading-none select-none font-mono" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</span>
-                    <div className="relative flex items-center gap-3.5 mb-3.5">
-                      <div className="w-12 h-12 rounded-xl bg-brand-red/20 border border-brand-red/40 text-brand-red flex items-center justify-center group-hover:bg-brand-red group-hover:text-white group-hover:scale-105 transition-all duration-300 shadow-sm">
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <h3 className="font-bold text-base sm:text-lg text-white leading-snug pr-6 drop-shadow-sm">{ind.name}</h3>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-mono text-xs font-extrabold text-emerald-400">{String(idx + 1).padStart(2, '0')}</span>
+                      <Icon className="w-5 h-5 text-white/70" />
                     </div>
-                    <p className="relative text-xs sm:text-sm text-slate-100/90 leading-relaxed">{ind.desc}</p>
-                  </div>
-                </Reveal>
-              );
-            })}
+                    <h4 className="text-sm font-bold text-white mb-1 leading-snug">{ind.name}</h4>
+                    <p className="text-xs text-white/70 line-clamp-2">{ind.desc}</p>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Slider Bottom Controls: Frosted Glass Capsule */}
+          <div className="mt-8 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-2 p-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
+              <button
+                type="button"
+                onClick={prevSector}
+                aria-label="Previous sector"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-emerald-500 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <div className="px-3 text-xs font-mono font-bold tracking-wider text-white select-none">
+                <span className="text-emerald-400 font-black text-sm">{String(sectorSlide + 1).padStart(2, '0')}</span>
+                <span className="text-white/40"> / {String(sectorCount).padStart(2, '0')}</span>
+              </div>
+              <button
+                type="button"
+                onClick={nextSector}
+                aria-label="Next sector"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-emerald-500 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="text-xs font-mono text-white/70 tracking-wider">
+              AUTO-CYCLE &bull; HOVER TO PAUSE
+            </div>
           </div>
         </div>
       </section>
