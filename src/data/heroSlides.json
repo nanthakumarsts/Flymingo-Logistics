@@ -4,7 +4,7 @@
     "badge": "Marine Logistics",
     "titlePrefix": "Six ways we get your cargo from ",
     "highlight": "origin to destination",
-    "titleSuffix": ".",
+    "titleSuffix": "",
     "desc": "From ship spares delivered on board at global anchorages to overseas courier, personal relocation and certified DG air cargo.",
     "image": "/assets/slide-marine.jpg",
     "primaryCta": "Get fare rate",
@@ -15,22 +15,14 @@
     "featureTitle": "Ship Spares Logistics",
     "featureDesc": "Port deck & outer anchorage delivery with onboard hand-over and round-the-clock clearance.",
     "highlights": ["24/7 Port deck delivery", "IATA / IMO certified DG", "Zero-demurrage focus"],
-    "isActive": true,
-    "design": {
-      "gradientStart": "#0f0f23",
-      "gradientEnd": "#1a1a3e",
-      "accentColor": "#E8291F",
-      "overlayOpacity": "93%",
-      "badgeBackground": "bg-brand-red-50 text-brand-red border-brand-red-200",
-      "showFeatureCard": true
-    }
+    "isActive": true
   },
   {
     "id": "worldwide-courier",
     "badge": "Express Courier",
     "titlePrefix": "Rapid door-to-door ",
     "highlight": "worldwide delivery",
-    "titleSuffix": ".",
+    "titleSuffix": "",
     "desc": "Connecting 190+ countries with priority doorstep delivery for commercial samples, urgent documents, and specialized parcels.",
     "image": "/assets/slide-courier.jpg",
     "primaryCta": "Calculate fare",
@@ -41,22 +33,14 @@
     "featureTitle": "Worldwide Courier",
     "featureDesc": "Fastest door-to-door transit times to USA, UK, Europe, Middle East & worldwide.",
     "highlights": ["190+ Global destinations", "Live tracking", "Express customs"],
-    "isActive": true,
-    "design": {
-      "gradientStart": "#1b1b2f",
-      "gradientEnd": "#2c2c62",
-      "accentColor": "#005687",
-      "overlayOpacity": "90%",
-      "badgeBackground": "bg-emerald-50 text-emerald-700 border-emerald-200",
-      "showFeatureCard": true
-    }
+    "isActive": true
   },
   {
     "id": "customs-brokerage",
     "badge": "Customs Brokerage",
     "titlePrefix": "Seamless ocean & air ",
     "highlight": "freight clearance",
-    "titleSuffix": ".",
+    "titleSuffix": "",
     "desc": "Dedicated seaport and airport customs clearance with direct EDI filing, warehousing, and intermodal transport across all major corridors.",
     "image": "/assets/slide-customs.jpg",
     "primaryCta": "Request quote",
@@ -67,14 +51,6 @@
     "featureTitle": "Direct Seaport & Airport EDI",
     "featureDesc": "Zero-delay documentation and automated filing across all major Indian ports.",
     "highlights": ["Licensed Customs Brokers", "Air & ocean freight", "24/7 support desk"],
-    "isActive": true,
-    "design": {
-      "gradientStart": "#1e1e2f",
-      "gradientEnd": "#2d1b4e",
-      "accentColor": "#A855F7",
-      "overlayOpacity": "95%",
-      "badgeBackground": "bg-purple-50 text-purple-700 border-purple-200",
-      "showFeatureCard": true
-    }
+    "isActive": true
   }
 ]

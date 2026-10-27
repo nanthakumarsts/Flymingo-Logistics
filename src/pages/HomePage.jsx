@@ -333,83 +333,85 @@ export const HomePage = ({ onOpenQuote }) => {
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        {/* full-bleed slide images */}
+        {/* full-bleed slide images - real high-res photography with clean dark scrims, NO cartoon container SVG boxes */}
         {HERO_SLIDES.map((slide, idx) => (
           <div
             key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ${idx === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            className={`absolute inset-0 transition-opacity duration-700 ${idx === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           >
-            <BgImage src={slide.image} scene={SCENE.ship} eager={idx === 0} className={idx === currentSlide ? 'fm-kb opacity-60' : 'opacity-60'} />
+            <img
+              src={slide.image}
+              alt=""
+              aria-hidden="true"
+              loading={idx === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-transform duration-1000 ${
+                idx === currentSlide ? 'scale-105 opacity-40' : 'opacity-30'
+              }`}
+            />
           </div>
         ))}
 
-        {/* scrims: dark on left for text, light on right so the photo shows */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/70 to-brand-blue-dark/10" aria-hidden="true" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark/90 via-transparent to-brand-blue-dark/40" aria-hidden="true" />
-        <div className="fm-blob absolute -bottom-32 -right-24 w-96 h-96 rounded-full bg-brand-red/30 blur-3xl pointer-events-none" aria-hidden="true" />
+        {/* Professional corporate gradient overlays for crystal-clear readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/80 to-brand-blue-dark/45" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark via-transparent to-brand-blue-dark/50" aria-hidden="true" />
 
-        {/* wing line echoing the logo */}
-        <svg className="absolute -top-6 right-0 w-[60%] max-w-[800px] pointer-events-none hidden md:block" viewBox="0 0 900 400" fill="none" aria-hidden="true">
-          <path className="fm-wing" d="M20 360 C 220 340, 420 220, 560 120 C 640 62, 760 30, 880 20" stroke="#E8291F" strokeWidth="3" strokeLinecap="round" opacity="0.8" />
-        </svg>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-28 sm:pt-14 sm:pb-32 lg:pt-16 lg:pb-36">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center min-h-[460px]">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 lg:pt-6 lg:pb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[370px]">
 
             {/* LEFT: content (re-animates on every slide change via key) */}
-            <div key={activeSlide.id} className="lg:col-span-8 space-y-6 text-center lg:text-left">
-              <div className="fm-s1 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/25 text-xs sm:text-sm font-semibold">
-                <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
+            <div key={activeSlide.id} className="lg:col-span-8 space-y-3.5 sm:space-y-4 text-center lg:text-left">
+              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs font-semibold uppercase tracking-wider text-white/90">
                 {activeSlide.badge}
               </div>
 
-              <h1 className="fm-s2 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-[1.08] drop-shadow-xl">
+              <h1 className="fm-s2 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.12] drop-shadow-md">
                 {activeSlide.titlePrefix}
-                <span className="relative inline-block text-brand-red">
+                <span className="text-brand-red font-black">
                   {activeSlide.highlight}
-                  <svg className="absolute left-0 -bottom-2 w-full h-3" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true">
-                    <path d="M2 8 Q 50 0 100 6 T 198 4" stroke="#E8291F" strokeWidth="4" fill="none" strokeLinecap="round" />
-                  </svg>
                 </span>
                 {activeSlide.titleSuffix}
               </h1>
 
-              <p className="fm-s3 text-base sm:text-lg text-white/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="fm-s3 text-sm sm:text-base text-white/85 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 {activeSlide.desc}
               </p>
 
-              <div className="fm-s4 flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
+              <div className="fm-s4 flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-0.5">
                 <button
                   type="button"
                   onClick={() => onOpenQuote(activeSlide.serviceId)}
-                  className="group px-7 py-4 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-sm font-bold shadow-xl shadow-brand-red/40 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
+                  className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
                 >
                   <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" />
                   {activeSlide.primaryCta}
                 </button>
                 <Link
                   to={activeSlide.secondaryLink}
-                  className="px-7 py-4 bg-white/10 backdrop-blur border border-white/40 hover:bg-white hover:text-brand-blue text-white rounded-full text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2"
+                  className="px-6 py-3 bg-white/10 backdrop-blur border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2"
                 >
                   {activeSlide.secondaryCta}
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
 
-              <ul className="fm-s4 flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-2">
-                {activeSlide.highlights.map((t) => (
-                  <li key={t} className="flex items-center gap-2 pl-1.5 pr-3.5 py-1 rounded-full bg-black/25 backdrop-blur border border-white/20 text-xs sm:text-sm text-white/90">
-                    <span className="w-4 h-4 rounded-full bg-brand-red flex items-center justify-center">
-                      <Check className="w-2.5 h-2.5 text-white" />
-                    </span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
+              {activeSlide.highlights && activeSlide.highlights.length > 0 && (
+                <ul className="fm-s4 flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
+                  {activeSlide.highlights.map((t) => (
+                    <li key={t} className="flex items-center gap-1.5 pl-1.5 pr-3 py-0.5 rounded-full bg-black/25 backdrop-blur border border-white/15 text-xs text-white/90">
+                      <span className="w-3.5 h-3.5 rounded-full bg-brand-red flex items-center justify-center">
+                        <Check className="w-2 h-2 text-white" />
+                      </span>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
-            {/* RIGHT: slide selector rail (desktop). Uses only slide.image + slide.badge */}
-            <div className="hidden lg:flex lg:col-span-4 flex-col gap-3">
+            {/* RIGHT: slide selector rail (desktop) */}
+            <div className="hidden lg:flex lg:col-span-4 flex-col gap-2.5">
               {HERO_SLIDES.map((slide, idx) => {
                 const active = idx === currentSlide;
                 return (
@@ -418,9 +420,9 @@ export const HomePage = ({ onOpenQuote }) => {
                     type="button"
                     onClick={() => setCurrentSlide(idx)}
                     aria-label={`Go to slide ${idx + 1}: ${slide.badge}`}
-                    className={`group relative overflow-hidden flex items-center gap-4 p-3 rounded-2xl border text-left backdrop-blur-md transition-all duration-300 cursor-pointer ${
+                    className={`group relative overflow-hidden flex items-center gap-3.5 p-2.5 rounded-xl border text-left backdrop-blur-md transition-all duration-300 cursor-pointer ${
                       active
-                        ? 'bg-white/20 border-white/50 shadow-2xl shadow-black/30 scale-[1.03]'
+                        ? 'bg-white/20 border-white/50 shadow-xl shadow-black/20 scale-[1.02]'
                         : 'bg-white/5 border-white/15 hover:bg-white/15 hover:border-white/30'
                     }`}
                   >
@@ -430,19 +432,19 @@ export const HomePage = ({ onOpenQuote }) => {
                       aria-hidden="true"
                       loading="lazy"
                       onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      className="w-16 h-16 rounded-xl object-cover bg-brand-blue flex-shrink-0"
+                      className="w-14 h-14 rounded-lg object-cover bg-brand-blue flex-shrink-0"
                     />
                     <div className="min-w-0 flex-1">
-                      <div className="text-[11px] font-mono tracking-widest text-brand-red font-bold">
+                      <div className="text-[10px] font-mono tracking-widest text-brand-red font-bold">
                         {String(idx + 1).padStart(2, '0')}
                       </div>
-                      <div className={`text-sm font-bold leading-snug ${active ? 'text-white' : 'text-white/75'}`}>
+                      <div className={`text-xs sm:text-sm font-bold leading-snug ${active ? 'text-white' : 'text-white/75'}`}>
                         {slide.badge}
                       </div>
                     </div>
                     {/* timer bar on the active card */}
                     {active && (
-                      <span className="absolute left-0 right-0 bottom-0 h-1 bg-white/15" aria-hidden="true">
+                      <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-white/15" aria-hidden="true">
                         <span
                           key={currentSlide}
                           className={`fm-bar block h-full bg-brand-red ${isPaused ? 'fm-bar-paused' : ''}`}
@@ -455,34 +457,37 @@ export const HomePage = ({ onOpenQuote }) => {
             </div>
           </div>
 
-          {/* bottom controls: arrows + counter + mobile dots */}
-          <div className="mt-10 flex items-center justify-center lg:justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <button type="button" onClick={prevSlide} aria-label="Previous slide"
-                className="w-11 h-11 rounded-full bg-white/10 hover:bg-brand-red border border-white/30 hover:border-brand-red flex items-center justify-center transition-all cursor-pointer hover:scale-105">
-                <ChevronLeft className="w-5 h-5" />
+          {/* bottom controls: arrows + counter + download brochure */}
+          <div className="mt-4 sm:mt-5 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                onClick={prevSlide}
+                aria-label="Previous slide"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red border border-white/30 hover:border-brand-red flex items-center justify-center transition-all cursor-pointer hover:scale-105"
+              >
+                <ChevronLeft className="w-4 h-4" />
               </button>
-              <button type="button" onClick={nextSlide} aria-label="Next slide"
-                className="w-11 h-11 rounded-full bg-white/10 hover:bg-brand-red border border-white/30 hover:border-brand-red flex items-center justify-center transition-all cursor-pointer hover:scale-105">
-                <ChevronRight className="w-5 h-5" />
+              <button
+                type="button"
+                onClick={nextSlide}
+                aria-label="Next slide"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red border border-white/30 hover:border-brand-red flex items-center justify-center transition-all cursor-pointer hover:scale-105"
+              >
+                <ChevronRight className="w-4 h-4" />
               </button>
-              <div className="ml-2 text-sm font-mono font-semibold tracking-wider">
-                <span className="text-white font-bold text-lg">{String(currentSlide + 1).padStart(2, '0')}</span>
+              <div className="ml-2 text-xs font-mono font-semibold tracking-wider">
+                <span className="text-white font-bold text-sm sm:text-base">{String(currentSlide + 1).padStart(2, '0')}</span>
                 <span className="text-white/40"> / {String(slideCount).padStart(2, '0')}</span>
               </div>
             </div>
 
-            <div className="flex lg:hidden items-center gap-2">
-              {HERO_SLIDES.map((slide, idx) => (
-                <button key={slide.id} type="button" onClick={() => setCurrentSlide(idx)}
-                  aria-label={`Go to slide ${idx + 1}`}
-                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${idx === currentSlide ? 'w-8 bg-brand-red' : 'w-2.5 bg-white/40'}`} />
-              ))}
-            </div>
-
-            <a href={BRAND.brochurePath} download
-              className="hidden lg:inline-flex group items-center gap-2 text-sm font-semibold text-white/80 hover:text-white transition">
-              Download brochure <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <a
+              href={BRAND.brochurePath}
+              download
+              className="inline-flex group items-center gap-1.5 text-xs sm:text-sm font-semibold text-white/80 hover:text-white transition"
+            >
+              Download brochure <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
         </div>
