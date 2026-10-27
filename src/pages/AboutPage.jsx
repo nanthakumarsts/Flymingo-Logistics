@@ -1,38 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ShieldCheck, Clock, Award, Users, Globe, ArrowRight, 
   CheckCircle2, HeartHandshake, Compass, Check,
-  Anchor, Sparkles, MapPin, Shield
+  Anchor, Sparkles, MapPin, Shield, Plane, Boxes,
+  TrendingUp, ArrowUpRight, ChevronRight
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
 
 export const AboutPage = ({ onOpenQuote }) => {
+  const [activePhase, setActivePhase] = useState(0);
+
   const TIMELINE = [
     {
-      year: 'Phase 1',
-      title: 'Foundation',
-      desc: 'Flymingo Logistics established as a trusted bridge connecting South India to NRI diaspora across the globe with reliable international courier dispatches.'
+      phase: '01',
+      stage: 'Phase 1 // Inception',
+      title: 'Foundation & NRI Express Network',
+      desc: 'Established in Coimbatore as a dependable logistics bridge connecting South Indian families, businesses, and expatriates to 190+ global destinations with personal care.',
+      icon: Globe,
+      badge: 'Cross-Border Personal Express',
+      metric: 'Coimbatore & South India Hub',
+      features: ['Dedicated NRI Family Support', 'Door-to-Door International Courier', 'Strict Document Security']
     },
     {
-      year: 'Phase 2',
-      title: 'Expanding Horizons',
-      desc: 'Extended dedicated commercial air express lanes to the UK, United States, Canada, Australia, UAE, Singapore, and Europe with streamlined customs handoffs.'
+      phase: '02',
+      stage: 'Phase 2 // Network Scale',
+      title: 'Global Commercial Air Express Corridors',
+      desc: 'Expanded direct commercial air priority lanes into the UK, United States, Canada, Australia, UAE, Singapore, and Europe with express customs handoffs.',
+      icon: Plane,
+      badge: 'Priority Air Transit Corridors',
+      metric: 'Direct Airport Hub Clearances',
+      features: ['IATA Priority Routing', 'Rapid Transit Commercial Samples', 'Customs Formalities Pre-Check']
     },
     {
-      year: 'Phase 3',
-      title: 'Multi-Modal Logistics',
-      desc: 'Incorporated sea freight forwarding (FCL & LCL) and international relocation packers & movers with door-to-door unpack solutions.'
+      phase: '03',
+      stage: 'Phase 3 // Multi-Modal',
+      title: 'Ocean Freight & International Relocation',
+      desc: 'Scaled into full-container (FCL) and consolidated (LCL) ocean freight forwarding alongside dedicated overseas household packers & movers with turnkey relocation.',
+      icon: Boxes,
+      badge: 'Intermodal Freight Operations',
+      metric: 'Ocean & Land Intermodal',
+      features: ['Turnkey Household Relocation', 'FCL & LCL Container Solutions', 'Industrial Multi-Layer Packing']
     },
     {
-      year: 'Phase 4',
-      title: 'Technological Leap',
-      desc: 'Implemented real-time digital milestone tracking, instant fare calculation desks, and automated export paperwork processing.'
+      phase: '04',
+      stage: 'Phase 4 // Modernization',
+      title: 'Digital EDI & Automated Customs Filing',
+      desc: 'Deployed real-time cargo milestone tracking, online fare estimation calculators, and direct electronic data interchange (EDI) filings with Indian customs.',
+      icon: ShieldCheck,
+      badge: 'Digital Clearing Infrastructure',
+      metric: 'Zero-Demurrage Protocol',
+      features: ['Direct Customs Seaport EDI', 'Live GPS Tracking Visibility', 'Automated Export Billing']
     },
     {
-      year: 'Phase 5',
-      title: 'Global Maritime Leader',
-      desc: 'Launched specialized 24/7 Ship Spares Logistics & launch boat on-board deck deliveries across major Indian ports alongside certified Dangerous Goods (DG) compliance.'
+      phase: '05',
+      stage: 'Phase 5 // Offshore Leadership',
+      title: 'Maritime Berth Spares & Certified DG Handling',
+      desc: 'Launched 24/7 dedicated Ship Spares Logistics with offshore launch boat deck deliveries across major Indian ports, paired with certified IMO/IATA Dangerous Goods operations.',
+      icon: Anchor,
+      badge: '24/7 Port Deck Delivery',
+      metric: 'All Major Indian Seaports',
+      features: ['Outer Anchorage Boat Hand-over', 'IMO Certified Dangerous Goods (DG)', '24/7 Dedicated Ops Command Desk']
     }
   ];
 
@@ -96,7 +124,7 @@ export const AboutPage = ({ onOpenQuote }) => {
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
               We Are The Bridge Between You And Your Relations.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-white to-brand-red-light">
+              <span className="text-brand-red-light">
                 Across Oceans &amp; Continents.
               </span>
             </h1>
@@ -290,64 +318,174 @@ export const AboutPage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* Growth Journey Timeline */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        <div className="text-center space-y-2">
-          <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue">
-            Milestones
-          </span>
-          <h2 className="text-3xl font-extrabold text-slate-900">
-            Our Journey of Growth
+      {/* ========================================================= */}
+      {/* 4. MILESTONES: OUR JOURNEY OF GROWTH (UI/UX PRO MAX)       */}
+      {/* ========================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-mono font-bold tracking-wider uppercase">
+            <TrendingUp className="w-3.5 h-3.5 text-brand-red" />
+            <span>Evolutionary Milestones</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            Our Journey of Continuous Growth
           </h2>
-          <p className="text-xs text-slate-500">
-            From our founding to a globally respected freight &amp; maritime logistics partner.
+          <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+            From our founding roots in Coimbatore connecting families to the world, to an internationally recognized multi-modal freight and offshore maritime logistics leader.
           </p>
         </div>
 
-        <div className="relative pl-8 sm:pl-10 space-y-8 before:absolute before:left-3.5 sm:before:left-4 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
+        {/* Phase Stepper Pills (Desktop & Mobile) */}
+        <div className="flex items-center justify-start lg:justify-center gap-2 overflow-x-auto pb-2">
           {TIMELINE.map((item, idx) => (
-            <div key={idx} className="relative flex items-start gap-4">
-              <div className="absolute -left-8 sm:-left-10 top-0.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-brand-blue text-white text-xs font-bold flex items-center justify-center ring-4 ring-white shadow-xs">
-                {idx + 1}
-              </div>
-              <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex-1 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-base font-bold text-slate-900">{item.title}</h3>
-                  <span className="text-xs font-bold text-brand-red bg-brand-red/10 px-2.5 py-0.5 rounded-full">
-                    {item.year}
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            </div>
+            <button
+              key={item.phase}
+              type="button"
+              onClick={() => setActivePhase(idx)}
+              className={`flex-shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer flex items-center gap-2 border ${
+                activePhase === idx
+                  ? 'bg-brand-blue text-white border-brand-blue shadow-lg shadow-brand-blue/20'
+                  : 'bg-white text-slate-700 border-slate-200 hover:border-brand-blue/50 hover:bg-slate-50'
+              }`}
+            >
+              <span className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-mono font-black ${
+                activePhase === idx ? 'bg-white text-brand-blue' : 'bg-slate-100 text-slate-600'
+              }`}>
+                {item.phase}
+              </span>
+              <span>{item.stage.split(' // ')[1]}</span>
+            </button>
           ))}
         </div>
-      </section>
 
-      {/* Call to action */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white text-center space-y-6 shadow-xl">
-          <h2 className="text-3xl font-extrabold tracking-tight">
-            Ready To Ship With Flymingo Logistics?
-          </h2>
-          <p className="text-sm text-slate-300 max-w-xl mx-auto">
-            Get in touch with our operations team today for customized quotations, vessel logistics planning, or courier pickup.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button
-              onClick={onOpenQuote}
-              className="px-8 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg transition-all cursor-pointer"
-            >
-              Get Fare Rate Quote
-            </button>
-            <Link
-              to="/contact"
-              className="px-8 py-3.5 bg-white text-slate-900 hover:bg-slate-100 rounded-xl text-sm font-bold transition-all"
-            >
-              Contact Our Offices
-            </Link>
+        {/* Bento Milestones Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+          {TIMELINE.map((item, idx) => {
+            const Icon = item.icon;
+            const isFeatured = idx === 4; // Phase 5: Maritime Leader
+            const isSelected = activePhase === idx;
+
+            return (
+              <div
+                key={item.phase}
+                onClick={() => setActivePhase(idx)}
+                className={`group relative rounded-3xl p-6 sm:p-8 transition-all duration-300 cursor-pointer flex flex-col justify-between ${
+                  isFeatured
+                    ? 'lg:col-span-2 bg-[#00243d] text-white border border-white/20 shadow-xl hover:border-brand-red/60'
+                    : `bg-white border text-slate-800 ${
+                        isSelected
+                          ? 'border-brand-blue ring-2 ring-brand-blue/20 shadow-xl'
+                          : 'border-slate-200/90 hover:border-brand-blue/40 shadow-sm hover:shadow-lg'
+                      }`
+                }`}
+              >
+                {/* Background Watermark Number */}
+                <span className={`absolute right-6 top-4 text-6xl sm:text-7xl font-black select-none pointer-events-none transition-opacity ${
+                  isFeatured ? 'text-white/[0.04]' : 'text-slate-100 group-hover:text-brand-blue/[0.08]'
+                }`}>
+                  {item.phase}
+                </span>
+
+                <div className="space-y-4 relative z-10">
+                  {/* Top Bar: Icon, Phase Badge, Tag */}
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-105 ${
+                        isFeatured
+                          ? 'bg-brand-red text-white shadow-lg shadow-brand-red/30'
+                          : 'bg-brand-blue-50 text-brand-blue group-hover:bg-brand-blue group-hover:text-white'
+                      }`}>
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <span className={`text-[11px] font-mono font-extrabold uppercase tracking-widest ${
+                          isFeatured ? 'text-brand-red-light' : 'text-brand-red'
+                        }`}>
+                          {item.stage}
+                        </span>
+                        <div className={`text-xs font-semibold ${isFeatured ? 'text-white/70' : 'text-slate-500'}`}>
+                          {item.metric}
+                        </div>
+                      </div>
+                    </div>
+
+                    <span className={`text-[11px] font-bold px-3 py-1 rounded-full border ${
+                      isFeatured
+                        ? 'bg-white/10 text-white border-white/20'
+                        : 'bg-slate-100 text-slate-700 border-slate-200'
+                    }`}>
+                      {item.badge}
+                    </span>
+                  </div>
+
+                  {/* Title & Description */}
+                  <div className="space-y-2 pt-1">
+                    <h3 className={`text-xl sm:text-2xl font-black tracking-tight leading-snug ${
+                      isFeatured ? 'text-white' : 'text-slate-900 group-hover:text-brand-blue transition-colors'
+                    }`}>
+                      {item.title}
+                    </h3>
+                    <p className={`text-sm leading-relaxed ${
+                      isFeatured ? 'text-white/85' : 'text-slate-600'
+                    }`}>
+                      {item.desc}
+                    </p>
+                  </div>
+
+                  {/* Feature Checkpoints */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
+                    {item.features.map((feat) => (
+                      <div
+                        key={feat}
+                        className={`px-3 py-2 rounded-xl text-xs font-medium flex items-center gap-2 ${
+                          isFeatured
+                            ? 'bg-white/10 text-white/90 border border-white/15'
+                            : 'bg-slate-50 text-slate-700 border border-slate-200'
+                        }`}
+                      >
+                        <Check className={`w-3.5 h-3.5 flex-shrink-0 ${isFeatured ? 'text-brand-red-light' : 'text-brand-blue'}`} />
+                        <span className="truncate">{feat}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Footer Link / Verification Indicator */}
+                <div className={`mt-6 pt-4 border-t flex items-center justify-between text-xs font-bold ${
+                  isFeatured ? 'border-white/15 text-white/80' : 'border-slate-100 text-slate-500'
+                }`}>
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className={`w-4 h-4 ${isFeatured ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                    Operational Benchmark Verified
+                  </span>
+                  <span className={`inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform ${
+                    isFeatured ? 'text-brand-red-light' : 'text-brand-blue'
+                  }`}>
+                    Phase {item.phase} Details <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Summary Achievement Metrics Strip */}
+        <div className="rounded-3xl bg-slate-900 text-white p-6 sm:p-8 border border-slate-800 shadow-xl grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div>
+            <div className="text-3xl sm:text-4xl font-black text-brand-red font-mono">15+</div>
+            <div className="text-xs font-bold text-slate-300 mt-1">Years Logistics Heritage</div>
+          </div>
+          <div>
+            <div className="text-3xl sm:text-4xl font-black text-white font-mono">190+</div>
+            <div className="text-xs font-bold text-slate-300 mt-1">Global Destinations</div>
+          </div>
+          <div>
+            <div className="text-3xl sm:text-4xl font-black text-sky-400 font-mono">10+</div>
+            <div className="text-xs font-bold text-slate-300 mt-1">Major Indian Seaports</div>
+          </div>
+          <div>
+            <div className="text-3xl sm:text-4xl font-black text-emerald-400 font-mono">24/7</div>
+            <div className="text-xs font-bold text-slate-300 mt-1">Berth &amp; Spares Boats</div>
           </div>
         </div>
       </section>

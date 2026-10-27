@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   FileDown, ShieldCheck, 
   ArrowUpRight, Clock, Anchor, MapPin
@@ -7,44 +7,49 @@ import {
 import { BRAND, OFFICES, CORE_SERVICES } from '../data/siteData';
 
 export const Footer = ({ onOpenQuote }) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
   return (
     <footer className="bg-slate-50 border-t border-slate-200 text-slate-700 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        {/* Top Action Card */}
-        <div className="bg-gradient-to-r from-brand-blue to-brand-blue-dark rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-          <div className="space-y-2 z-10 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/90 text-xs font-semibold backdrop-blur-sm">
-              <Anchor className="w-3.5 h-3.5 text-brand-red" />
-              <span>Door-to-Deck Maritime &amp; Air Logistics</span>
+        {/* Top Action Card - Rendered ONLY on Home Page */}
+        {isHomePage && (
+          <div className="bg-[#002d4d] rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div className="space-y-2 z-10 text-center md:text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/90 text-xs font-semibold backdrop-blur-sm">
+                <Anchor className="w-3.5 h-3.5 text-brand-red" />
+                <span>Door-to-Deck Maritime &amp; Air Logistics</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+                Let's Move Your Cargo With Zero Gaps.
+              </h3>
+              <p className="text-sm text-slate-200 max-w-xl">
+                Tell us what you need to move. Our specialized team designs the optimal route, mode, and timing with full accountability.
+              </p>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              Let's Move Your Cargo With Zero Gaps.
-            </h3>
-            <p className="text-sm text-slate-200 max-w-xl">
-              Tell us what you need to move. Our specialized team designs the optimal route, mode, and timing with full accountability.
-            </p>
-          </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 z-10">
-            <button
-              onClick={onOpenQuote}
-              className="px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-red/30 transition-all cursor-pointer"
-            >
-              Get Instant Fare Quote
-            </button>
-            <Link
-              to="/services"
-              className="px-6 py-3 bg-white text-brand-blue hover:bg-slate-100 rounded-xl text-sm font-bold shadow-md transition-all cursor-pointer"
-            >
-              Explore All Services
-            </Link>
-          </div>
+            <div className="flex flex-wrap items-center justify-center gap-3 z-10">
+              <button
+                onClick={onOpenQuote}
+                className="px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-red/30 transition-all cursor-pointer"
+              >
+                Get Instant Fare Quote
+              </button>
+              <Link
+                to="/services"
+                className="px-6 py-3 bg-white text-brand-blue hover:bg-slate-100 rounded-xl text-sm font-bold shadow-md transition-all cursor-pointer"
+              >
+                Explore All Services
+              </Link>
+            </div>
 
-          {/* Decorative watermark */}
-          <div className="absolute -right-10 -bottom-10 opacity-10 pointer-events-none select-none text-white font-black text-9xl">
-            FLY
+            {/* Decorative watermark */}
+            <div className="absolute -right-10 -bottom-10 opacity-10 pointer-events-none select-none text-white font-black text-9xl">
+              FLY
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Main Footer Directory */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10 pt-4">

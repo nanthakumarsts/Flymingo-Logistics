@@ -118,17 +118,10 @@ const css = `
 .fm-pulse { animation: fm-pulse-ring 2s ease-out infinite; }
 
 .fm-gradient-text {
-  background: linear-gradient(90deg, #005687 0%, #E8291F 50%, #005687 100%);
-  background-size: 200% auto; -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; color: transparent;
-  animation: fm-shine 6s linear infinite;
+  color: #005687;
 }
-/* same idea for dark backgrounds: white to red */
 .fm-gradient-light {
-  background: linear-gradient(90deg, #ffffff 0%, #E8291F 50%, #ffffff 100%);
-  background-size: 200% auto; -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; color: transparent;
-  animation: fm-shine 6s linear infinite;
+  color: #E8291F;
 }
 
 /* photo backgrounds: parallax on desktop, normal scroll on touch devices */
@@ -393,7 +386,7 @@ export const HomePage = ({ onOpenQuote }) => {
               <h1 className="text-3xl sm:text-4xl lg:text-[40px] xl:text-[46px] font-black tracking-tight text-white leading-[1.14] drop-shadow-lg min-h-[76px] sm:min-h-[92px] flex items-center">
                 <span>
                   {activeSlide.titlePrefix}
-                  <span className="fm-gradient-light">{activeSlide.highlight}</span>
+                  <span className="text-brand-red font-black">{activeSlide.highlight}</span>
                   {activeSlide.titleSuffix}
                 </span>
               </h1>
@@ -407,7 +400,7 @@ export const HomePage = ({ onOpenQuote }) => {
                 <button
                   type="button"
                   onClick={() => onOpenQuote(activeSlide.serviceId)}
-                  className="group px-6 py-3.5 bg-gradient-to-r from-brand-red to-brand-red-dark text-white rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/40 hover:shadow-2xl hover:shadow-brand-red/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center gap-2"
+                  className="group px-6 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/40 hover:shadow-2xl hover:shadow-brand-red/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center gap-2"
                 >
                   <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" />
                   {activeSlide.primaryCta}
@@ -480,7 +473,7 @@ export const HomePage = ({ onOpenQuote }) => {
                     <button
                       type="button"
                       onClick={() => onOpenQuote(activeSlide.serviceId)}
-                      className="group w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-brand-red to-brand-red-dark hover:from-brand-red-dark hover:to-brand-red text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/30 hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2"
+                      className="group w-full py-2.5 px-4 rounded-xl bg-brand-red hover:bg-brand-red-dark text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/30 hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2"
                     >
                       <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" />
                       Calculate Fare Rate Online
@@ -536,7 +529,7 @@ export const HomePage = ({ onOpenQuote }) => {
                   <div className="relative mx-auto mb-4 w-12 h-12 rounded-2xl bg-brand-blue-50 text-brand-blue flex items-center justify-center group-hover:bg-brand-red group-hover:text-white group-hover:-rotate-6 transition-all duration-300">
                     <StatIcon className="w-6 h-6" />
                   </div>
-                  <div className="relative text-4xl lg:text-5xl font-extrabold tracking-tight fm-gradient-text">
+                  <div className="relative text-4xl lg:text-5xl font-extrabold tracking-tight text-brand-blue">
                     <CountUp value={st.value} />
                   </div>
                   <div className="relative mt-2 text-sm font-bold text-slate-900">{st.label}</div>
