@@ -48,16 +48,19 @@ const css = `
 @keyframes fm-pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(232,41,31,.55); } 100% { box-shadow: 0 0 0 16px rgba(232,41,31,0); } }
 @keyframes fm-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes fm-kb-zoom-in {
-  0% { transform: scale(1.04) translate(0, 0); }
-  100% { transform: scale(1.18) translate(-1.5%, -1%); }
+  0% { transform: scale(1.02) translate(0, 0); }
+  50% { transform: scale(1.10) translate(-1.5%, -1%); }
+  100% { transform: scale(1.18) translate(-3%, -2%); }
 }
 @keyframes fm-kb-zoom-out {
   0% { transform: scale(1.18) translate(0, 0); }
-  100% { transform: scale(1.04) translate(1.5%, -0.5%); }
+  50% { transform: scale(1.10) translate(1.5%, 1%); }
+  100% { transform: scale(1.02) translate(3%, 1.5%); }
 }
 @keyframes fm-kb-pan-right {
-  0% { transform: scale(1.10) translate(-2%, 0); }
-  100% { transform: scale(1.16) translate(1.5%, -1%); }
+  0% { transform: scale(1.08) translate(-3%, 0); }
+  50% { transform: scale(1.12) translate(0%, -1%); }
+  100% { transform: scale(1.16) translate(3%, -1.5%); }
 }
 @keyframes fm-slide-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 
@@ -73,9 +76,9 @@ const css = `
 /* new hero slider */
 .fm-bar { transform-origin: left; animation: fm-bar 6s linear forwards; }
 .fm-bar-paused { animation-play-state: paused; }
-.fm-kb-0 { animation: fm-kb-zoom-in 7.5s linear forwards; will-change: transform; }
-.fm-kb-1 { animation: fm-kb-zoom-out 7.5s linear forwards; will-change: transform; }
-.fm-kb-2 { animation: fm-kb-pan-right 7.5s linear forwards; will-change: transform; }
+.fm-kb-0 { animation: fm-kb-zoom-in 8s linear infinite alternate; will-change: transform; }
+.fm-kb-1 { animation: fm-kb-zoom-out 8s linear infinite alternate; will-change: transform; }
+.fm-kb-2 { animation: fm-kb-pan-right 8s linear infinite alternate; will-change: transform; }
 .fm-s1 { opacity: 0; animation: fm-slide-in .7s .05s cubic-bezier(.2,.7,.2,1) forwards; }
 .fm-s2 { opacity: 0; animation: fm-slide-in .7s .18s cubic-bezier(.2,.7,.2,1) forwards; }
 .fm-s3 { opacity: 0; animation: fm-slide-in .7s .30s cubic-bezier(.2,.7,.2,1) forwards; }
@@ -263,26 +266,29 @@ export const HomePage = ({ onOpenQuote }) => {
                 decoding="async"
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
                 className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none ${
-                  isActive ? `${kbClass} opacity-50` : 'scale-100 opacity-20'
+                  isActive ? `${kbClass} opacity-95` : 'scale-100 opacity-0'
                 }`}
               />
             </div>
           );
         })}
 
-        {/* Professional corporate solid scrim overlay for crystal-clear readability */}
-        <div className="absolute inset-0 bg-[#00172b]/80" aria-hidden="true" />
+        {/* Subtle cinematic tint so full-bleed image colors & motion are vivid and clearly visible */}
+        <div className="absolute inset-0 bg-slate-950/20 pointer-events-none" aria-hidden="true" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-14 sm:pt-6 sm:pb-16 lg:pt-6 lg:pb-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[370px]">
 
-            {/* LEFT: content (re-animates on every slide change via key) */}
-            <div key={activeSlide.id} className="lg:col-span-8 space-y-3.5 sm:space-y-4 text-center lg:text-left">
-              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs font-semibold uppercase tracking-wider text-white/90">
+            {/* LEFT: high-contrast executive dark glass panel for 100% crisp text readability */}
+            <div 
+              key={activeSlide.id} 
+              className="lg:col-span-8 p-6 sm:p-8 lg:p-9 rounded-3xl bg-[#00172bf0] sm:bg-[#00172bd9] backdrop-blur-md border border-white/20 shadow-2xl space-y-4 text-left"
+            >
+              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-brand-red/20 border border-brand-red/50 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light">
                 {activeSlide.badge}
               </div>
 
-              <h1 className="fm-s2 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.12] drop-shadow-md">
+              <h1 className="fm-s2 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.12] text-white drop-shadow-md">
                 {activeSlide.titlePrefix}
                 <span className="text-brand-red font-black">
                   {activeSlide.highlight}
@@ -290,22 +296,22 @@ export const HomePage = ({ onOpenQuote }) => {
                 {activeSlide.titleSuffix}
               </h1>
 
-              <p className="fm-s3 text-sm sm:text-base text-white/85 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="fm-s3 text-sm sm:text-base text-slate-100 leading-relaxed max-w-xl">
                 {activeSlide.desc}
               </p>
 
-              <div className="fm-s4 flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-0.5">
+              <div className="fm-s4 flex flex-wrap items-center justify-start gap-3 pt-1">
                 <button
                   type="button"
                   onClick={() => onOpenQuote(activeSlide.serviceId)}
-                  className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
+                  className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/40 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
                 >
                   <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" />
                   {activeSlide.primaryCta}
                 </button>
                 <Link
                   to={activeSlide.secondaryLink}
-                  className="px-6 py-3 bg-white/10 backdrop-blur border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2"
+                  className="px-6 py-3 bg-white/15 backdrop-blur border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2"
                 >
                   {activeSlide.secondaryCta}
                   <ArrowRight className="w-4 h-4" />
@@ -313,10 +319,10 @@ export const HomePage = ({ onOpenQuote }) => {
               </div>
 
               {activeSlide.highlights && activeSlide.highlights.length > 0 && (
-                <ul className="fm-s4 flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
+                <ul className="fm-s4 flex flex-wrap items-center justify-start gap-2 pt-1.5">
                   {activeSlide.highlights.map((t) => (
-                    <li key={t} className="flex items-center gap-1.5 pl-1.5 pr-3 py-0.5 rounded-full bg-black/25 backdrop-blur border border-white/15 text-xs text-white/90">
-                      <span className="w-3.5 h-3.5 rounded-full bg-brand-red flex items-center justify-center">
+                    <li key={t} className="flex items-center gap-1.5 pl-2 pr-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs font-medium text-white">
+                      <span className="w-3.5 h-3.5 rounded-full bg-brand-red flex items-center justify-center shrink-0">
                         <Check className="w-2 h-2 text-white" />
                       </span>
                       {t}
@@ -336,10 +342,10 @@ export const HomePage = ({ onOpenQuote }) => {
                     type="button"
                     onClick={() => setCurrentSlide(idx)}
                     aria-label={`Go to slide ${idx + 1}: ${slide.badge}`}
-                    className={`group relative overflow-hidden flex items-center gap-3.5 p-2.5 rounded-xl border text-left backdrop-blur-md transition-all duration-300 cursor-pointer ${
+                    className={`group relative overflow-hidden flex items-center gap-3.5 p-3 rounded-2xl border text-left backdrop-blur-md transition-all duration-300 cursor-pointer ${
                       active
-                        ? 'bg-white/20 border-white/50 shadow-xl shadow-black/20 scale-[1.02]'
-                        : 'bg-white/5 border-white/15 hover:bg-white/15 hover:border-white/30'
+                        ? 'bg-[#00172bf0] border-white/50 shadow-2xl ring-2 ring-brand-red/50 scale-[1.02]'
+                        : 'bg-[#00172bb3] border-white/20 hover:bg-[#00172be6]'
                     }`}
                   >
                     <img
@@ -348,19 +354,19 @@ export const HomePage = ({ onOpenQuote }) => {
                       aria-hidden="true"
                       loading="lazy"
                       onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      className="w-14 h-14 rounded-lg object-cover bg-brand-blue flex-shrink-0"
+                      className="w-14 h-14 rounded-xl object-cover bg-brand-blue shrink-0 border border-white/20 shadow-sm"
                     />
                     <div className="min-w-0 flex-1">
-                      <div className="text-[10px] font-mono tracking-widest text-brand-red font-bold">
-                        {String(idx + 1).padStart(2, '0')}
+                      <div className="text-[10px] font-mono tracking-widest text-brand-red-light font-bold uppercase">
+                        {String(idx + 1).padStart(2, '0')} // Corridor
                       </div>
-                      <div className={`text-xs sm:text-sm font-bold leading-snug ${active ? 'text-white' : 'text-white/75'}`}>
+                      <div className={`text-xs sm:text-sm font-bold leading-snug truncate ${active ? 'text-white' : 'text-slate-200'}`}>
                         {slide.badge}
                       </div>
                     </div>
                     {/* timer bar on the active card */}
                     {active && (
-                      <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-white/15" aria-hidden="true">
+                      <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-white/20" aria-hidden="true">
                         <span
                           key={currentSlide}
                           className={`fm-bar block h-full bg-brand-red ${isPaused ? 'fm-bar-paused' : ''}`}
