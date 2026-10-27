@@ -224,7 +224,6 @@ export const AboutPage = ({ onOpenQuote }) => {
             <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
               <div className="ab-h1">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
-                  <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
                   SOUTH INDIA &rarr; THE WORLD
                 </div>
               </div>
