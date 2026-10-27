@@ -29,7 +29,6 @@ export function PageBanner({ eyebrow, title, description, image, action, onActio
             </nav>
 
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>ACTIVE CORRIDORS &bull; 24/7 DESK</span>
             </div>
           </div>

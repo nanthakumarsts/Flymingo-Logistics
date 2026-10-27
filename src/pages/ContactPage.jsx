@@ -50,7 +50,6 @@ export const ContactPage = () => {
             </nav>
 
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>LIVE DESK ACTIVE &bull; COIMBATORE HQ &amp; CHENNAI PORT HUB</span>
             </div>
           </div>
@@ -76,7 +75,7 @@ export const ContactPage = () => {
           {/* Contact Fast-Response Quick Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-3">
             <a 
-              href="tel:+919361693617" 
+              href={`tel:${BRAND.primaryPhone}`} 
               className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
             >
               <div className="w-10 h-10 rounded-xl bg-brand-red/25 border border-brand-red/40 text-brand-red-light flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
@@ -84,12 +83,12 @@ export const ContactPage = () => {
               </div>
               <div className="min-w-0">
                 <div className="text-xs font-mono font-bold text-white/70 uppercase tracking-wider">Coimbatore HQ</div>
-                <div className="text-sm font-black text-white hover:text-sky-300 transition-colors">+91 93616 93617</div>
+                <div className="text-sm font-black text-white hover:text-sky-300 transition-colors">{BRAND.primaryPhone}</div>
               </div>
             </a>
 
             <a 
-              href="tel:+919444362340" 
+              href={`tel:${BRAND.supportPhones[1]}`} 
               className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
             >
               <div className="w-10 h-10 rounded-xl bg-sky-500/25 border border-sky-400/40 text-sky-300 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
@@ -97,12 +96,12 @@ export const ContactPage = () => {
               </div>
               <div className="min-w-0">
                 <div className="text-xs font-mono font-bold text-white/70 uppercase tracking-wider">Chennai Port Hub</div>
-                <div className="text-sm font-black text-white hover:text-sky-300 transition-colors">+91 94443 62340</div>
+                <div className="text-sm font-black text-white hover:text-sky-300 transition-colors">{BRAND.supportPhones[1]}</div>
               </div>
             </a>
 
             <a 
-              href={`https://wa.me/919361693617?text=${encodeURIComponent('Hello Flymingo Logistics, I need shipment assistance.')}`}
+              href={`https://wa.me/919087924488?text=${encodeURIComponent('Hello Flymingo Logistics, I need shipment assistance.')}`}
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
@@ -117,7 +116,7 @@ export const ContactPage = () => {
             </a>
 
             <a 
-              href="mailto:flymingologistics@gmail.com"
+              href={`mailto:${BRAND.primaryEmail}`}
               className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-lg transition-all flex items-center gap-3.5 group cursor-pointer"
             >
               <div className="w-10 h-10 rounded-xl bg-white/15 border border-white/25 text-white flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
@@ -125,7 +124,7 @@ export const ContactPage = () => {
               </div>
               <div className="min-w-0">
                 <div className="text-xs font-mono font-bold text-white/70 uppercase tracking-wider">Official Email</div>
-                <div className="text-xs font-bold text-white truncate">flymingologistics@gmail.com</div>
+                <div className="text-xs font-bold text-white truncate">{BRAND.primaryEmail}</div>
               </div>
             </a>
           </div>

@@ -147,7 +147,6 @@ export const Navbar = ({ onOpenQuote }) => {
               <div className="absolute top-full left-0 w-84 bg-white rounded-2xl shadow-xl border border-slate-200 p-2.5 space-y-1 z-50 animate-fade-in">
                 <div className="px-3 py-2 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest border-b border-slate-100 flex items-center justify-between">
                   <span>Our Core Capabilities</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse" />
                 </div>
                 {CORE_SERVICES.map((s) => {
                   const isCurrentService = location.pathname === s.path;

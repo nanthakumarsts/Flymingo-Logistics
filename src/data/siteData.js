@@ -31,10 +31,10 @@ export const OFFICES = [
 ];
 
 export const STATS = [
-  { label: 'Network Coverage', value: '4,000+', suffix: 'km', desc: 'Active road, rail & maritime corridors' },
-  { label: 'Global Destinations', value: '190+', suffix: '', desc: 'Direct international delivery countries' },
-  { label: 'Successful Shipments', value: '101k+', suffix: '', desc: 'Cargo safely delivered on deck & doorstep' },
-  { label: 'Years of Excellence', value: '10+', suffix: 'Yrs', desc: 'Decade of trusted maritime & freight expertise' },
+  { label: 'Packages Delivered', value: '4,000+', suffix: 'km', desc: 'Active road, rail & maritime corridors' },
+  { label: 'Countries Covered', value: '190+', suffix: '', desc: 'Direct international delivery countries' },
+  { label: 'Happy Customers', value: '101k+', suffix: '', desc: 'Cargo safely delivered on deck & doorstep' },
+  { label: 'Years Of Experience', value: '10+', suffix: 'Yrs', desc: 'Decade of trusted maritime & freight expertise' },
 ];
 
 export const CORE_SERVICES = [
@@ -129,22 +129,28 @@ export const INDUSTRIES_SERVED = [
 
 export const TESTIMONIALS = [
   {
-    quote: 'Flymingo saved our vessel from heavy demurrage at Chennai port. The critical main engine injector spare parts were cleared through customs and delivered directly on-board within hours of arrival.',
-    author: 'Capt. R. Mohan',
-    role: 'Fleet Technical Superintendent',
-    company: 'Oceanic Horizon Maritime'
+    quote: 'One of the best courier service provider in Coimbatore. They undertake both domestic and international courier. Perfect Partners for your needs.',
+    author: 'Nishanth Williams',
+    role: 'Verified Customer',
+    company: 'Coimbatore, India'
   },
   {
-    quote: 'We send regular food packages, homemade masalas, and clothes to our children in the UK and Canada. Flymingo\'s door pickup and vacuum packing were outstanding. Arrived in 4 days in perfect shape!',
-    author: 'K. Senthil Kumar',
-    role: 'Coimbatore, India',
-    company: 'Family & Personal Relocation Client'
+    quote: 'Good service, realtime tracking and on time delivery. Simply excellent',
+    author: 'shalini nagarajan',
+    role: 'Verified Customer',
+    company: 'Express Courier Client'
   },
   {
-    quote: 'Handling dangerous goods (DG) air cargo requires zero mistakes with paperwork. Flymingo\'s team is certified, proactive, and guided us with UN box packaging and smooth airline clearance.',
-    author: 'Dr. Anand Raman',
-    role: 'Supply Chain Director',
-    company: 'BioPharma Chemicals Ltd'
+    quote: 'User friendly approach guided by the firm in transacting the shipments. I done my shipment to Singapore through them and completely satisfied with their service.',
+    author: 'ELANGOSENATHIPATHI',
+    role: 'Verified Customer',
+    company: 'Singapore Shipment'
+  },
+  {
+    quote: 'Excellent service & delivery. Very prompt response from the owner. Exceeded my expectations with respect to packing.',
+    author: 'Bavithra venkat',
+    role: 'Verified Customer',
+    company: 'Domestic & International Relocation'
   }
 ];
 

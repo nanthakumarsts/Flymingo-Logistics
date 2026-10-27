@@ -4,7 +4,8 @@ import {
   Package, Plane, Anchor, AlertTriangle, Truck, ShieldCheck,
   ArrowRight, Calculator, Check, Quote,
   Boxes, FileText, Coffee, Luggage, HeartPulse, Flame,
-  Ship, Radio, Utensils, Atom, Activity, Car, ChevronLeft, ChevronRight, Pause, Play
+  Ship, Radio, Utensils, Atom, Activity, Car,
+  ArrowUpRight, Globe, Clock
 } from 'lucide-react';
 import {
   BRAND, STATS, CORE_SERVICES, SIX_WAYS_CARGO,
@@ -48,17 +49,18 @@ const css = `
 @keyframes fm-shine { to { background-position: 200% center; } }
 @keyframes fm-zoom { from { transform: scale(1.08); } to { transform: scale(1); } }
 @keyframes fm-ping { 0% { transform: scale(1); opacity: .6; } 100% { transform: scale(2.6); opacity: 0; } }
-@keyframes fm-slide-progress { from { width: 0%; } to { width: 100%; } }
-
-.fm-progress-bar-fill { animation: fm-slide-progress 6s linear forwards; }
-.fm-progress-paused { animation-play-state: paused !important; }
+@keyframes fm-dash { to { stroke-dashoffset: -64; } }
+@keyframes fm-spin-slow { to { transform: rotate(360deg); } }
+@keyframes fm-pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(232,41,31,.55); } 100% { box-shadow: 0 0 0 16px rgba(232,41,31,0); } }
 
 .fm-hero-item { opacity: 0; animation: fm-rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
 .fm-wing { stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: fm-draw 2.4s .2s cubic-bezier(.3,.6,.2,1) forwards; }
 .fm-zoom { animation: fm-zoom 14s ease-out forwards; }
 .fm-float { animation: fm-float 7s ease-in-out infinite; }
 .fm-blob { animation: fm-blob 16s ease-in-out infinite; }
-.fm-ping::after { content:''; position:absolute; inset:0; border-radius:9999px; background:#10b981; animation: fm-ping 1.8s ease-out infinite; }
+.fm-dash { stroke-dasharray: 8 12; animation: fm-dash 4s linear infinite; }
+.fm-spin { animation: fm-spin-slow 40s linear infinite; }
+.fm-pulse { animation: fm-pulse-ring 2s ease-out infinite; }
 
 .fm-gradient-text {
   background: linear-gradient(90deg, #005687 0%, #E8291F 50%, #005687 100%);
@@ -66,18 +68,23 @@ const css = `
   -webkit-text-fill-color: transparent; color: transparent;
   animation: fm-shine 6s linear infinite;
 }
-.fm-grid-bg {
-  background-image: linear-gradient(to right, rgba(0,86,135,.07) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(0,86,135,.07) 1px, transparent 1px);
-  background-size: 44px 44px;
-  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 25%, transparent 75%);
-          mask-image: radial-gradient(ellipse at 50% 40%, #000 25%, transparent 75%);
+/* same idea for dark backgrounds: white to red */
+.fm-gradient-light {
+  background: linear-gradient(90deg, #ffffff 0%, #E8291F 50%, #ffffff 100%);
+  background-size: 200% auto; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: fm-shine 6s linear infinite;
 }
+
+/* photo backgrounds: parallax on desktop, normal scroll on touch devices */
+.fm-parallax { background-image: var(--bg); background-size: cover; background-position: center; }
+@media (min-width: 1024px) { .fm-parallax { background-attachment: fixed; } }
 
 /* scroll reveal variants */
 .fm-reveal { opacity: 0; transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); will-change: transform, opacity; }
 .fm-up    { transform: translateY(28px); }
 .fm-left  { transform: translateX(-28px); }
+.fm-right { transform: translateX(28px); }
 .fm-scale { transform: scale(.94); }
 .fm-reveal.fm-in { opacity: 1; transform: none; }
 
@@ -89,6 +96,7 @@ const css = `
   transition: opacity .3s;
 }
 .fm-spot:hover::before { opacity: 1; }
+.fm-spot-dark::before { background: radial-gradient(380px circle at var(--mx,50%) var(--my,50%), rgba(232,41,31,.22), transparent 60%); }
 
 /* animated accent line on cards */
 .fm-line { transform: scaleX(0); transform-origin: left; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
@@ -100,7 +108,7 @@ const css = `
 @media (prefers-reduced-motion: reduce) {
   .fm-hero-item, .fm-reveal { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; filter: none !important; }
   .fm-wing { stroke-dashoffset: 0; animation: none; }
-  .fm-zoom, .fm-float, .fm-blob, .fm-gradient-text, .fm-ping::after { animation: none; }
+  .fm-zoom, .fm-float, .fm-blob, .fm-gradient-text, .fm-gradient-light, .fm-ping::after, .fm-dash, .fm-spin, .fm-pulse { animation: none; }
 }
 `;
 
@@ -128,7 +136,7 @@ const Reveal = ({ children, delay = 0, className = '', variant = 'up' }) => {
   );
 };
 
-/* Photo background that hides itself if the file is missing */
+/* Photo background that hides itself if the file is missing (used by the hero, with slow zoom) */
 const BgImage = ({ src, scene, className = '', eager = false }) => (
   <>
     {scene && (
@@ -141,6 +149,25 @@ const BgImage = ({ src, scene, className = '', eager = false }) => (
       className={`absolute inset-0 w-full h-full object-cover pointer-events-none ${className}`}
     />
   </>
+);
+
+/* Full-bleed photo with parallax. The built-in scene sits underneath as the fallback. */
+const ParallaxBg = ({ src, scene, className = '' }) => (
+  <div
+    aria-hidden="true"
+    className={`fm-parallax absolute inset-0 pointer-events-none ${className}`}
+    style={{ '--bg': `url("${src}"), ${scene}` }}
+  />
+);
+
+/* Curved edge that blends a dark section into the next one. Colour comes from text-* */
+const Wave = ({ className = '', flip = false }) => (
+  <svg
+    viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"
+    className={`absolute left-0 w-full h-10 sm:h-16 pointer-events-none ${flip ? 'top-0 rotate-180' : 'bottom-[-1px]'} ${className}`}
+  >
+    <path fill="currentColor" d="M0 44 C 240 92 480 0 720 36 S 1200 84 1440 28 V80 H0 Z" />
+  </svg>
 );
 
 /* Cursor-follow glow handler */
@@ -182,10 +209,10 @@ const CountUp = ({ value }) => {
 };
 
 const SectionHead = ({ title, text, light = false }) => (
-  <Reveal className="max-w-2xl mx-auto text-center space-y-4 mb-14">
-    <span className="mx-auto block h-1 w-12 rounded-full bg-gradient-to-r from-brand-red to-brand-blue" />
-    <h2 className={`text-3xl sm:text-4xl font-bold tracking-tight ${light ? 'text-white' : 'text-slate-900'}`}>{title}</h2>
-    {text && <p className={`text-base leading-relaxed ${light ? 'text-white/70' : 'text-slate-600'}`}>{text}</p>}
+  <Reveal className="max-w-3xl mx-auto text-center space-y-4 mb-14 sm:mb-16">
+    <span className="mx-auto block h-1 w-12 rounded-full bg-brand-red" aria-hidden="true" />
+    <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight ${light ? 'text-white' : 'text-slate-900'}`}>{title}</h2>
+    {text && <p className={`text-base sm:text-lg leading-relaxed ${light ? 'text-white/80' : 'text-slate-600'}`}>{text}</p>}
   </Reveal>
 );
 
@@ -194,75 +221,12 @@ const fieldCls =
   'focus:outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue focus:bg-white transition';
 const labelCls = 'block text-sm font-medium text-slate-700 mb-1.5';
 
-const HERO_SLIDES = [
-  {
-    id: 'ship-spares',
-    badge: '01 // TIME-CRITICAL MARITIME OPERATIONS',
-    badgeColor: 'border-brand-red/60 bg-brand-red/25 text-white',
-    title: 'Vessel Spares Direct To Deck. Zero Port Detention.',
-    subtitle: 'Emergency delivery to master on-board at outer anchorage roads and berths across 10+ Indian ports in under 45 minutes.',
-    image: '/assets/any size.jpg',
-    serviceId: 'ship-spares',
-    specs: [
-      '< 45-Min Launch Mobilization',
-      'Bonded Gate Passes Pre-Cleared',
-      'VHF Ch 16 / 12 Harbor Run'
-    ],
-    tabLabel: '01 Ship Spares'
-  },
-  {
-    id: 'freight-forwarding',
-    badge: '02 // GLOBAL MULTIMODAL CORRIDORS',
-    badgeColor: 'border-sky-400/60 bg-sky-500/25 text-sky-200',
-    title: 'Priority Air Charter & Direct Ocean Liner Contracts.',
-    subtitle: 'Next Flight Out (NFO) air freight and high-volume FCL/LCL ocean container shipping with aggressive carrier space allocations.',
-    image: '/assets/air cargo.jpg',
-    serviceId: 'freight-forwarding',
-    specs: [
-      'Direct Airline Space Allocations',
-      'FCL / LCL Multimodal Corridors',
-      'Zero Cargo Gaps End-to-End'
-    ],
-    tabLabel: '02 Air & Sea Freight'
-  },
-  {
-    id: 'international-courier',
-    badge: '03 // DOORSTEP PICKUP TO 190+ NATIONS',
-    badgeColor: 'border-emerald-400/60 bg-emerald-500/25 text-emerald-200',
-    title: 'Connecting Families & Global Commerce Across Continents.',
-    subtitle: 'Specialized export-grade protective packaging for homemade food sweets, prescribed medicines, student luggage, and university docs.',
-    image: '/assets/courier.jpg',
-    serviceId: 'international-courier',
-    specs: [
-      'Free Doorstep Pickup Across TN',
-      'Food-Grade Multi-Layer Seal',
-      '2–4 Days Express USA/UK/UAE'
-    ],
-    tabLabel: '03 Express Courier'
-  },
-  {
-    id: 'customs-clearance',
-    badge: '04 // REGULATORY COMPLIANCE & HAZMAT',
-    badgeColor: 'border-purple-400/60 bg-purple-500/25 text-purple-200',
-    title: 'Licensed Customs House Broker. 100% Rapid Port Clearance.',
-    subtitle: 'Exact HS code classification, duty optimization advisory, and IATA/IMO certified dangerous goods handling across Classes 1 through 9.',
-    image: '/assets/customs clearance.jpg',
-    serviceId: 'customs-clearance',
-    specs: [
-      'Customs House Agent (CHA)',
-      'IATA & IMO DG Certified',
-      'Zero Port Demurrage Guarantee'
-    ],
-    tabLabel: '04 Customs & DG'
-  }
-];
+const STAT_ICONS = [Globe, Plane, ShieldCheck, Clock];
 
 export const HomePage = ({ onOpenQuote }) => {
-  const [heroActive, setHeroActive] = useState(0);
-  const [heroPaused, setHeroPaused] = useState(false);
   const [heroFromCountry, setHeroFromCountry] = useState('India');
   const [heroToCountry, setHeroToCountry] = useState('United States');
-  const [heroService, setHeroService] = useState('ship-spares');
+  const [heroService, setHeroService] = useState('international-courier');
   const [heroWeight, setHeroWeight] = useState('10');
   const barRef = useRef(null);
 
@@ -278,17 +242,6 @@ export const HomePage = ({ onOpenQuote }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  /* Auto-rotate hero slider every 6 seconds */
-  useEffect(() => {
-    if (heroPaused) return undefined;
-    const timer = setInterval(() => {
-      setHeroActive((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [heroPaused, heroActive]);
-
-  const currentSlide = HERO_SLIDES[heroActive];
-
   const handleHeroQuoteSubmit = (e) => {
     e.preventDefault();
     onOpenQuote(heroService);
@@ -301,201 +254,88 @@ export const HomePage = ({ onOpenQuote }) => {
       {/* scroll progress */}
       <div ref={barRef} className="fm-progress fixed top-0 left-0 right-0 h-[3px] z-[60] bg-gradient-to-r from-brand-red via-brand-red to-brand-blue" />
 
-      {/* ============ HERO SLIDER CAROUSEL ============ */}
-      <section className="relative overflow-hidden bg-brand-blue-dark text-white min-h-[680px]">
-        {/* Full-bleed Multi-slide Photographic Backgrounds with Ken-Burns and Cross-fade */}
-        {HERO_SLIDES.map((slide, idx) => (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out pointer-events-none ${
-              idx === heroActive ? 'opacity-100 z-0' : 'opacity-0 -z-10'
-            }`}
-          >
-            <img
-              src={slide.image}
-              alt=""
-              aria-hidden="true"
-              className={`w-full h-full object-cover object-center transition-transform duration-[7000ms] ease-out ${
-                idx === heroActive ? 'scale-110' : 'scale-100'
-              }`}
-            />
-          </div>
-        ))}
-
-        {/* Deep Tactical Marine Scrim for Maximum Contrast & Readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/90 to-brand-blue-dark/65 pointer-events-none z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark via-transparent to-brand-blue-dark/80 pointer-events-none z-[1]" />
-        
-        {/* Swiss Industrial Blueprint Grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-[1]" />
-        <div className="fm-blob absolute -bottom-32 -right-24 w-80 h-80 rounded-full bg-brand-red/20 blur-3xl pointer-events-none z-[1]" aria-hidden="true" />
+      {/* ============ HERO ============ */}
+      <section className="relative overflow-hidden bg-brand-blue-dark text-white">
+        <BgImage src={IMG.hero} scene={SCENE.ship} eager className="fm-zoom" />
+        {/* lighter overlays so the photo is clearly visible, dark only where the text sits */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/70 to-brand-blue/20" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark/80 via-transparent to-brand-blue-dark/40" aria-hidden="true" />
+        <div className="fm-blob absolute -bottom-32 -right-24 w-96 h-96 rounded-full bg-brand-red/30 blur-3xl pointer-events-none" aria-hidden="true" />
+        <div className="fm-blob absolute -top-32 -left-24 w-96 h-96 rounded-full bg-brand-blue/50 blur-3xl pointer-events-none" style={{ animationDelay: '-6s' }} aria-hidden="true" />
 
         {/* Wing line echoing the logo */}
-        <svg className="absolute -top-6 right-0 w-[70%] max-w-[900px] pointer-events-none hidden md:block z-[1]" viewBox="0 0 900 400" fill="none" aria-hidden="true">
+        <svg className="absolute -top-6 right-0 w-[70%] max-w-[900px] pointer-events-none hidden md:block" viewBox="0 0 900 400" fill="none" aria-hidden="true">
           <path className="fm-wing" d="M20 360 C 220 340, 420 220, 560 120 C 640 62, 760 30, 880 20" stroke="#E8291F" strokeWidth="3" strokeLinecap="round" opacity="0.8" />
           <path className="fm-wing" style={{ animationDelay: '.5s' }} d="M60 380 C 260 360, 460 250, 600 160 C 680 108, 780 70, 880 60" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity="0.35" />
         </svg>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 sm:pt-20 sm:pb-28 lg:pt-24 z-[2]">
+        {/* Pickup to delivery route, drawn behind the content */}
+        <svg className="absolute left-0 bottom-24 w-full h-40 pointer-events-none hidden md:block opacity-60" viewBox="0 0 1440 160" preserveAspectRatio="none" fill="none" aria-hidden="true">
+          <path className="fm-dash" d="M40 130 C 360 20, 700 170, 1000 70 S 1320 40, 1400 90" stroke="#fff" strokeOpacity="0.55" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+
+        {/* floating mode chips */}
+        <div className="hidden xl:flex absolute left-[57%] top-[14%] w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/25 items-center justify-center fm-float shadow-xl shadow-black/20" aria-hidden="true">
+          <Plane className="w-7 h-7 text-white" />
+        </div>
+        <div className="hidden xl:flex absolute left-[55%] bottom-[24%] w-14 h-14 rounded-2xl bg-brand-red/90 border border-white/20 items-center justify-center fm-float shadow-xl shadow-brand-red/40" style={{ animationDelay: '-3s' }} aria-hidden="true">
+          <Ship className="w-7 h-7 text-white" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-44 sm:pt-24 sm:pb-52 lg:pt-28">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Carousel Column */}
-            <div 
-              className="lg:col-span-7 space-y-7 text-center lg:text-left"
-              onMouseEnter={() => setHeroPaused(true)}
-              onMouseLeave={() => setHeroPaused(false)}
-            >
-              <div key={heroActive} className="space-y-5" aria-live="polite">
-                {/* Telemetry Chip with Pulse */}
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                  <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-mono font-bold tracking-wider backdrop-blur-md shadow-xs ${currentSlide.badgeColor}`}>
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    {currentSlide.badge}
-                  </span>
-                  {heroPaused && (
-                    <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-[10px] font-mono tracking-widest uppercase border border-white/10">
-                      PAUSED
-                    </span>
-                  )}
-                </div>
+            <div className="lg:col-span-7 space-y-7 text-center lg:text-left">
+              <p className="fm-hero-item inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/25 text-sm font-semibold text-white" style={{ animationDelay: '.05s' }}>
+                Global marine logistics &amp; freight forwarding
+              </p>
 
-                {/* Main Headline */}
-                <h1 className="fm-hero-item text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.08] min-h-[3.2em] sm:min-h-[2.4em] lg:min-h-[2.2em]">
-                  {currentSlide.title}
-                </h1>
+              <h1 className="fm-hero-item text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.08] drop-shadow-lg" style={{ animationDelay: '.15s' }}>
+                Six ways we get your cargo from <span className="fm-gradient-light">origin to destination</span>.
+              </h1>
 
-                {/* Subtitle */}
-                <p className="fm-hero-item text-base sm:text-lg text-white/85 max-w-xl mx-auto lg:mx-0 leading-relaxed min-h-[4em] sm:min-h-[3em]">
-                  {currentSlide.subtitle}
-                </p>
+              <p className="fm-hero-item text-base sm:text-lg text-white/85 max-w-xl mx-auto lg:mx-0 leading-relaxed border-l-0 lg:border-l-4 lg:border-brand-red lg:pl-5" style={{ animationDelay: '.3s' }}>
+                From ship spares delivered on board at global anchorages to overseas courier,
+                personal relocation and certified dangerous goods air cargo.
+              </p>
 
-                {/* Spec Highlights Grid */}
-                <div className="fm-hero-item flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
-                  {currentSlide.specs.map((spec) => (
-                    <span 
-                      key={spec}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-sm border border-white/15 text-xs text-white/90 font-medium"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-red" />
-                      {spec}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Hero Action Buttons */}
-              <div className="fm-hero-item flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
-                <button 
-                  onClick={() => onOpenQuote(currentSlide.serviceId)}
-                  className="group px-6 py-3.5 bg-gradient-to-r from-brand-red to-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-red/40 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center gap-2"
-                >
-                  <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" /> 
-                  <span>Get fare rate</span>
+              <div className="fm-hero-item flex flex-wrap items-center justify-center lg:justify-start gap-3" style={{ animationDelay: '.45s' }}>
+                <button onClick={() => onOpenQuote()}
+                  className="group px-7 py-4 bg-gradient-to-r from-brand-red to-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-red/40 hover:shadow-2xl hover:shadow-brand-red/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center gap-2">
+                  <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" /> Get fare rate
                 </button>
-                <Link 
-                  to="/services"
-                  className="px-6 py-3.5 bg-white/10 backdrop-blur border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-xl text-sm font-bold transition-all hover:-translate-y-0.5 cursor-pointer flex items-center gap-2"
-                >
-                  <Package className="w-4 h-4" /> 
-                  <span>Explore services</span>
+                <Link to="/services"
+                  className="px-7 py-4 bg-white/10 backdrop-blur border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-xl text-sm font-bold transition-all hover:-translate-y-0.5 cursor-pointer flex items-center gap-2">
+                  <Package className="w-4 h-4" /> Explore services
                 </Link>
-                <a 
-                  href={BRAND.brochurePath} 
-                  download
-                  className="group px-3 py-3.5 text-sm font-semibold text-white/80 hover:text-white transition inline-flex items-center gap-1.5"
-                >
-                  <span>Brochure</span> 
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <a href={BRAND.brochurePath} download
+                  className="group px-3 py-4 text-sm font-semibold text-white/80 hover:text-white transition inline-flex items-center gap-1.5">
+                  Download brochure <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
 
-              {/* Interactive Carousel Navigation Bar */}
-              <div className="pt-6 border-t border-white/15">
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                  {/* 4 Clickable Slide Tabs with Progress Bars */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full sm:w-auto flex-1" role="tablist" aria-label="Hero carousel slides">
-                    {HERO_SLIDES.map((slide, idx) => {
-                      const isCurrent = idx === heroActive;
-                      return (
-                        <button
-                          key={slide.id}
-                          type="button"
-                          role="tab"
-                          aria-selected={isCurrent}
-                          onClick={() => {
-                            setHeroActive(idx);
-                            setHeroService(slide.serviceId);
-                          }}
-                          className={`relative text-left p-2.5 rounded-xl transition-all cursor-pointer overflow-hidden border ${
-                            isCurrent 
-                              ? 'bg-white/15 border-white/40 shadow-sm' 
-                              : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
-                          }`}
-                        >
-                          <div className="text-[11px] font-mono font-bold text-white/95 truncate">
-                            {slide.tabLabel}
-                          </div>
-                          {/* Countdown Fill Bar */}
-                          <div className="mt-2 h-1 w-full bg-white/15 rounded-full overflow-hidden">
-                            {isCurrent ? (
-                              <div 
-                                key={`fill-${heroActive}-${heroPaused}`}
-                                className={`h-full bg-brand-red rounded-full fm-progress-bar-fill ${heroPaused ? 'fm-progress-paused' : ''}`}
-                              />
-                            ) : (
-                              <div className="h-full w-0" />
-                            )}
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Prev / Play-Pause / Next Controls */}
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => setHeroActive((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
-                      aria-label="Previous slide"
-                      className="w-9 h-9 grid place-items-center rounded-xl border border-white/20 bg-white/10 hover:bg-white hover:text-brand-blue text-white transition cursor-pointer"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setHeroPaused((p) => !p)}
-                      aria-label={heroPaused ? 'Play slide rotation' : 'Pause slide rotation'}
-                      className="w-9 h-9 grid place-items-center rounded-xl border border-white/20 bg-white/10 hover:bg-white hover:text-brand-blue text-white transition cursor-pointer"
-                    >
-                      {heroPaused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setHeroActive((prev) => (prev + 1) % HERO_SLIDES.length)}
-                      aria-label="Next slide"
-                      className="w-9 h-9 grid place-items-center rounded-xl border border-white/20 bg-white/10 hover:bg-white hover:text-brand-blue text-white transition cursor-pointer"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                    <span className="text-xs font-mono text-white/60 ml-1">
-                      0{heroActive + 1} / 0{HERO_SLIDES.length}
+              <ul className="fm-hero-item flex flex-wrap items-center justify-center lg:justify-start gap-3" style={{ animationDelay: '.6s' }}>
+                {['Customs house brokerage', 'IATA / IMO certified DG', '24/7 port deck delivery'].map((t) => (
+                  <li key={t} className="flex items-center gap-2 pl-1.5 pr-4 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/20 text-sm text-white/90">
+                    <span className="w-5 h-5 rounded-full bg-brand-red flex items-center justify-center">
+                      <Check className="w-3 h-3 text-white" />
                     </span>
-                  </div>
-                </div>
-              </div>
+                    {t}
+                  </li>
+                ))}
+              </ul>
             </div>
 
             {/* Quick action card */}
             <div className="lg:col-span-5 fm-hero-item" style={{ animationDelay: '.35s' }}>
-              <div className="fm-float">
+              <div className="fm-float relative">
+                <div className="absolute -inset-1.5 rounded-[2rem] bg-gradient-to-br from-brand-red via-white/40 to-brand-blue blur-md opacity-60" aria-hidden="true" />
                 <div className="relative rounded-3xl bg-white text-slate-800 shadow-2xl shadow-black/40 overflow-hidden">
-                  <span className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-red to-brand-blue" />
                   <div className="p-6 sm:p-8">
                     <div className="mb-5 pb-3 border-b border-slate-100 flex items-center justify-between">
                       <div>
                         <span className="text-xs font-bold uppercase tracking-wider text-brand-red">Fare Rate Calculator</span>
                         <h3 className="text-lg font-bold text-slate-900">Cargo Request Quote</h3>
                       </div>
-                      <span className="relative w-2.5 h-2.5 rounded-full bg-emerald-500 fm-ping" />
                     </div>
 
                     <form onSubmit={handleHeroQuoteSubmit} className="space-y-4">
@@ -525,7 +365,7 @@ export const HomePage = ({ onOpenQuote }) => {
                           onChange={(e) => setHeroWeight(e.target.value)} placeholder="e.g. 15" className={fieldCls} />
                       </div>
                       <button type="submit"
-                        className="group w-full py-3.5 bg-gradient-to-r from-brand-blue to-brand-blue-dark text-white rounded-xl text-sm font-semibold shadow-lg shadow-brand-blue/25 hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2">
+                        className="group w-full py-3.5 bg-gradient-to-r from-brand-blue to-brand-blue-dark text-white rounded-xl text-sm font-semibold shadow-lg shadow-brand-blue/25 hover:shadow-xl hover:-translate-y-0.5 transition-all cursor-pointer flex items-center justify-center gap-2">
                         Continue with full details <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </button>
                       <p className="text-xs text-center text-slate-400">Instant quote. Direct operational rates.</p>
@@ -536,67 +376,27 @@ export const HomePage = ({ onOpenQuote }) => {
             </div>
           </div>
         </div>
+
+        <Wave className="text-white" />
       </section>
 
       {/* ============ STATS ============ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 sm:-mt-24 relative z-10">
-        <Reveal variant="scale">
-          <div className="relative overflow-hidden rounded-3xl bg-white border-t-4 border-brand-red shadow-2xl shadow-brand-blue/20">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-8 py-10 px-2 sm:px-6 lg:divide-x divide-slate-200">
-              {STATS.map((st, i) => (
-                <div key={i} className="text-center px-4">
-                  <div className="text-4xl lg:text-5xl font-extrabold tracking-tight text-brand-blue">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-28 sm:-mt-32 relative z-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {STATS.map((st, i) => {
+            const StatIcon = STAT_ICONS[i % STAT_ICONS.length];
+            return (
+              <Reveal key={i} variant="scale" delay={i * 90}>
+                <div className="group relative h-full overflow-hidden rounded-2xl bg-white border border-slate-100 p-5 sm:p-7 text-center shadow-xl shadow-brand-blue/15 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-blue/25 transition-all duration-300">
+                  <StatIcon className="absolute -right-5 -bottom-5 w-28 h-28 text-brand-blue/[0.06] group-hover:text-brand-red/10 group-hover:rotate-12 transition-all duration-500" aria-hidden="true" />
+                  <div className="relative mx-auto mb-4 w-12 h-12 rounded-2xl bg-brand-blue-50 text-brand-blue flex items-center justify-center group-hover:bg-brand-red group-hover:text-white group-hover:-rotate-6 transition-all duration-300">
+                    <StatIcon className="w-6 h-6" />
+                  </div>
+                  <div className="relative text-4xl lg:text-5xl font-extrabold tracking-tight fm-gradient-text">
                     <CountUp value={st.value} />
                   </div>
-                  <div className="mt-1 text-sm font-bold text-slate-900">{st.label}</div>
-                  <p className="mt-1 text-sm text-slate-500 max-w-[220px] mx-auto">{st.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* ============ CORE SERVICES ============ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
-        <SectionHead
-          title="Comprehensive logistics and maritime services"
-          text="Built for reliability, transparent tracking and full compliance across worldwide corridors."
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {CORE_SERVICES.map((s, i) => {
-            const Icon = SERVICE_ICONS[s.id] || Package;
-            return (
-              <Reveal key={s.id} delay={(i % 3) * 90}>
-                <div
-                  onMouseMove={spot}
-                  className="fm-spot group relative h-full bg-white rounded-2xl border border-slate-200 p-7 flex flex-col overflow-hidden hover:border-brand-blue/40 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-brand-blue/10 transition-all duration-300"
-                >
-                  <span className="fm-line absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand-red to-brand-blue" />
-                  <Icon className="absolute -right-8 -bottom-8 w-40 h-40 text-brand-blue/[0.05] group-hover:text-brand-red/10 group-hover:rotate-6 transition-all duration-500 pointer-events-none" aria-hidden="true" />
-                  <div className="relative flex items-start justify-between mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-brand-blue-50 text-brand-blue flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-brand-blue group-hover:to-brand-blue-dark group-hover:text-white group-hover:rotate-[-6deg] group-hover:scale-110 transition-all duration-300">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-brand-red/10 text-brand-red">{s.badge}</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">{s.title}</h3>
-                  <p className="text-sm text-slate-600 leading-relaxed mb-5">{s.shortDesc}</p>
-                  <ul className="space-y-2 text-sm text-slate-600 mb-6">
-                    {s.bullets.map((b, bi) => (
-                      <li key={bi} className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" /> <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto pt-5 border-t border-slate-100 flex items-center justify-between">
-                    <Link to={s.path} className="text-sm font-semibold text-brand-blue hover:text-brand-blue-dark inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                      Explore service <ArrowRight className="w-4 h-4" />
-                    </Link>
-                    <button onClick={() => onOpenQuote(s.id)} className="text-sm font-semibold text-brand-red hover:underline underline-offset-4 cursor-pointer">
-                      Get quote
-                    </button>
-                  </div>
+                  <div className="relative mt-2 text-sm font-bold text-slate-900">{st.label}</div>
+                  <p className="relative mt-1 text-sm text-slate-500 max-w-[220px] mx-auto">{st.desc}</p>
                 </div>
               </Reveal>
             );
@@ -604,115 +404,225 @@ export const HomePage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* ============ SIX WAYS ============ */}
-      <section className="relative bg-brand-blue-dark text-white py-24 sm:py-32 overflow-hidden">
-        <BgImage src={IMG.process} scene={SCENE.stacks} />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-blue-dark/70 via-brand-blue-dark/55 to-brand-blue-dark/85" aria-hidden="true" />
-        <div className="fm-blob absolute -top-20 -right-20 w-80 h-80 rounded-full bg-brand-red/20 blur-3xl pointer-events-none" aria-hidden="true" />
+      {/* ============ CORE SERVICES ============ */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-brand-blue-50 to-white" aria-hidden="true" />
+        <div className="fm-blob absolute top-20 -left-24 w-80 h-80 rounded-full bg-brand-blue/10 blur-3xl pointer-events-none" aria-hidden="true" />
+        <div className="fm-blob absolute bottom-10 -right-24 w-80 h-80 rounded-full bg-brand-red/10 blur-3xl pointer-events-none" style={{ animationDelay: '-7s' }} aria-hidden="true" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+          <SectionHead
+            title="Comprehensive logistics and maritime services"
+            text="Built for reliability, transparent tracking and full compliance across worldwide corridors."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {CORE_SERVICES.map((s, i) => {
+              const Icon = SERVICE_ICONS[s.id] || Package;
+              return (
+                <Reveal key={s.id} delay={(i % 3) * 90}>
+                  <div
+                    onMouseMove={spot}
+                    className="fm-spot group relative h-full bg-white rounded-3xl border border-slate-200 flex flex-col overflow-hidden shadow-lg shadow-brand-blue/5 hover:border-brand-blue/40 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-blue/15 transition-all duration-300"
+                  >
+                    {/* coloured header band */}
+                    <div className="relative h-32 bg-gradient-to-br from-brand-blue via-brand-blue to-brand-blue-dark overflow-hidden">
+                      <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-brand-red/30 blur-2xl group-hover:scale-125 transition-transform duration-500" aria-hidden="true" />
+                      <Icon className="absolute -right-6 -bottom-8 w-40 h-40 text-white/10 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500" aria-hidden="true" />
+                      <span className="absolute left-6 bottom-3 text-5xl font-black text-white/15 leading-none select-none" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                      <div className="absolute left-6 top-5 w-14 h-14 rounded-2xl bg-white text-brand-blue flex items-center justify-center shadow-xl shadow-black/20 group-hover:bg-brand-red group-hover:text-white group-hover:-rotate-6 group-hover:scale-110 transition-all duration-300">
+                        <Icon className="w-7 h-7" />
+                      </div>
+                      <span className="absolute right-5 top-5 px-3 py-1 rounded-full text-xs font-semibold bg-brand-red text-white shadow-lg shadow-brand-red/30">{s.badge}</span>
+                    </div>
+
+                    <div className="relative p-7 flex flex-col flex-1">
+                      <h3 className="text-xl font-bold text-slate-900 mb-2">{s.title}</h3>
+                      <p className="text-sm text-slate-600 leading-relaxed mb-5">{s.shortDesc}</p>
+                      <ul className="space-y-2.5 text-sm text-slate-600 mb-6">
+                        {s.bullets.map((b, bi) => (
+                          <li key={bi} className="flex items-start gap-2.5">
+                            <span className="mt-0.5 w-5 h-5 rounded-full bg-brand-blue-50 text-brand-blue flex items-center justify-center flex-shrink-0 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                              <Check className="w-3 h-3" />
+                            </span>
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-auto pt-5 border-t border-slate-100 flex items-center justify-between">
+                        <Link to={s.path} className="text-sm font-semibold text-brand-blue hover:text-brand-blue-dark inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                          Explore service <ArrowRight className="w-4 h-4" />
+                        </Link>
+                        <button onClick={() => onOpenQuote(s.id)} className="px-4 py-1.5 rounded-full text-sm font-semibold text-brand-red border border-brand-red/30 hover:bg-brand-red hover:text-white transition-colors cursor-pointer">
+                          Get quote
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ SIX WAYS (pickup to delivery) ============ */}
+      <section className="relative bg-brand-blue-dark text-white py-28 sm:py-36 overflow-hidden">
+        <ParallaxBg src={IMG.process} scene={SCENE.stacks} />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-blue-dark/85 via-brand-blue-dark/50 to-brand-blue-dark/90" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/60 via-transparent to-brand-blue-dark/60" aria-hidden="true" />
+        <div className="fm-blob absolute -top-20 -right-20 w-96 h-96 rounded-full bg-brand-red/25 blur-3xl pointer-events-none" aria-hidden="true" />
+        <div className="fm-blob absolute bottom-0 -left-24 w-96 h-96 rounded-full bg-brand-blue/40 blur-3xl pointer-events-none" style={{ animationDelay: '-8s' }} aria-hidden="true" />
+        <Wave className="text-white" flip />
+        <Wave className="text-white" />
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHead
             light
             title="From pickup to delivery, one clear process"
             text="A standard, transparent pipeline built around shipowner precision and door-to-door accountability."
           />
-          <div className="hidden lg:flex items-center gap-4 mb-10 text-sm font-semibold text-white/80" aria-hidden="true">
-            <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-brand-red" /> Pickup</span>
-            <span className="flex-1 h-px bg-gradient-to-r from-brand-red via-white/40 to-white/10" />
-            <span className="flex items-center gap-2">Delivery <span className="w-3 h-3 rounded-full bg-white" /></span>
+
+          {/* start of the route */}
+          <div className="flex lg:justify-center mb-6">
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/25 text-sm font-bold">
+              Pickup
+            </span>
           </div>
-          <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 list-none">
-            {SIX_WAYS_CARGO.map((item, idx) => (
-              <Reveal key={idx} delay={(idx % 3) * 90} variant="left">
-                <li className="group h-full bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 p-6 hover:bg-white/[0.16] hover:border-brand-red/60 hover:-translate-y-1 transition-all duration-300">
-                  <span className="w-11 h-11 rounded-full bg-brand-red text-white font-bold flex items-center justify-center mb-4 shadow-lg shadow-brand-red/30 group-hover:scale-110 transition-transform">
+
+          {/* vertical timeline, cards alternate left and right on desktop */}
+          <ol className="relative max-w-5xl mx-auto list-none">
+            <span className="absolute left-5 lg:left-1/2 top-0 bottom-0 w-0.5 lg:-translate-x-1/2 bg-gradient-to-b from-brand-red via-white/50 to-white/10" aria-hidden="true" />
+            {SIX_WAYS_CARGO.map((item, idx) => {
+              const left = idx % 2 === 0;
+              return (
+                <li key={idx} className="relative pl-16 lg:pl-0 pb-8 lg:pb-10 last:pb-0 lg:grid lg:grid-cols-2 lg:gap-x-24">
+                  <span className="absolute left-0 lg:left-1/2 lg:-translate-x-1/2 top-5 z-10 w-10 h-10 rounded-full bg-brand-red text-white font-bold flex items-center justify-center shadow-lg shadow-brand-red/40 ring-4 ring-white/20">
                     {idx + 1}
                   </span>
-                  <h3 className="text-lg font-bold text-white mb-1.5">{item.title}</h3>
-                  <p className="text-sm text-white/70 leading-relaxed">{item.desc}</p>
+                  <Reveal variant={left ? 'left' : 'right'} className={left ? 'lg:col-start-1' : 'lg:col-start-2'}>
+                    <div className={`group relative h-full overflow-hidden bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-6 sm:p-7 hover:bg-white/[0.18] hover:border-brand-red/70 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/30 transition-all duration-300 ${left ? 'lg:text-right' : ''}`}>
+                      <span className={`absolute -top-3 text-8xl font-black text-white/[0.07] leading-none select-none ${left ? 'right-3 lg:left-3 lg:right-auto' : 'right-3'}`} aria-hidden="true">
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
+                      <span className={`absolute top-0 bottom-0 w-1 bg-brand-red scale-y-0 group-hover:scale-y-100 transition-transform duration-300 ${left ? 'left-0 lg:left-auto lg:right-0' : 'left-0'}`} aria-hidden="true" />
+                      <h3 className="relative text-lg sm:text-xl font-bold text-white mb-2">{item.title}</h3>
+                      <p className="relative text-sm sm:text-base text-white/75 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </Reveal>
                 </li>
-              </Reveal>
-            ))}
+              );
+            })}
           </ol>
+
+          {/* end of the route */}
+          <div className="flex lg:justify-center mt-6">
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white text-brand-blue-dark text-sm font-bold shadow-lg shadow-black/20">
+              Delivery
+            </span>
+          </div>
         </div>
       </section>
 
       {/* ============ PROMISE ============ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
         <Reveal variant="scale">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-blue via-brand-blue to-brand-blue-dark text-white p-7 sm:p-14">
+          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-blue via-brand-blue to-brand-blue-dark text-white p-7 sm:p-12 lg:p-16 shadow-2xl shadow-brand-blue/30">
+            <BgImage src={IMG.hero} scene={SCENE.ship} className="opacity-30 mix-blend-luminosity" />
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/80 via-brand-blue/40 to-transparent" aria-hidden="true" />
             <div className="fm-blob absolute -top-20 -left-16 w-72 h-72 rounded-full bg-brand-red/30 blur-3xl pointer-events-none" aria-hidden="true" />
             <div className="fm-blob absolute -bottom-24 right-10 w-72 h-72 rounded-full bg-white/10 blur-3xl pointer-events-none" style={{ animationDelay: '-8s' }} aria-hidden="true" />
-            <BgImage src={IMG.hero} scene={SCENE.ship} className="opacity-20 mix-blend-luminosity" />
-            <Quote className="absolute -right-4 -bottom-6 w-48 h-48 text-white/5" />
-            <div className="relative max-w-3xl space-y-6">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">We never break our promise.</h2>
-              <blockquote className="border-l-4 border-brand-red pl-5 py-1 text-base sm:text-lg leading-relaxed text-white/90 bg-white/5 rounded-r-xl backdrop-blur-sm">
+            <Quote className="absolute -right-4 -bottom-6 w-56 h-56 text-white/5" />
+            <span className="absolute left-0 top-10 bottom-10 w-1.5 rounded-r-full bg-gradient-to-b from-brand-red to-transparent" aria-hidden="true" />
+
+            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+              <div className="space-y-6">
+                <span className="w-14 h-14 rounded-2xl bg-brand-red flex items-center justify-center shadow-xl shadow-brand-red/40 fm-float">
+                  <ShieldCheck className="w-7 h-7 text-white" />
+                </span>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">We never break our promise.</h2>
+                <p className="text-white/85 leading-relaxed text-base sm:text-lg">
+                  At Flymingo Logistics, every consignment is treated as mission-critical. Whether it is an AOG spare part
+                  for an aircraft, replacement machinery for a berthing vessel, or homemade sweets sent to family overseas,
+                  we operate with intentional precision.
+                </p>
+              </div>
+              <blockquote className="relative border-l-4 border-brand-red pl-6 pr-5 py-6 text-lg sm:text-xl leading-relaxed text-white bg-white/10 rounded-r-2xl backdrop-blur-md border-y border-r border-y-white/15 border-r-white/15 shadow-xl shadow-black/20">
+                <Quote className="w-8 h-8 text-brand-red mb-3" />
                 &ldquo;Just because you are doing a lot more doesn&apos;t mean you are getting a lot done. Don&apos;t confuse movement with progress!&rdquo;
-                <footer className="mt-2 text-sm text-white/60">Denzel Washington, our core inspiration</footer>
+                <footer className="mt-4 text-sm text-white/70 font-semibold">Denzel Washington, our core inspiration</footer>
               </blockquote>
-              <p className="text-white/80 leading-relaxed">
-                At Flymingo Logistics, every consignment is treated as mission-critical. Whether it is an AOG spare part
-                for an aircraft, replacement machinery for a berthing vessel, or homemade sweets sent to family overseas,
-                we operate with intentional precision.
-              </p>
             </div>
           </div>
         </Reveal>
       </section>
 
       {/* ============ SPECIALIZED EXPRESS ============ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 sm:pb-28">
-        <SectionHead
-          title="Tailored express consignments"
-          text="Special packaging and compliant customs clearance for specific categories."
-        />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {SPECIALIZED_EXPRESS.map((item, idx) => {
-            const Icon = EXPRESS_ICONS[item.icon] || Boxes;
-            return (
-              <Reveal key={idx} delay={(idx % 3) * 90} variant="scale">
-                <div className="group h-full flex items-start gap-4 p-6 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-slate-100 hover:border-brand-red/30 hover:shadow-lg hover:shadow-brand-red/5 hover:-translate-y-1 transition-all duration-300">
-                  <div className="w-11 h-11 rounded-xl bg-white text-brand-blue flex items-center justify-center flex-shrink-0 shadow-sm ring-1 ring-slate-100 group-hover:bg-brand-red group-hover:text-white group-hover:ring-brand-red group-hover:scale-110 transition-all duration-300">
-                    <Icon className="w-5 h-5" />
+      <section className="relative overflow-hidden bg-brand-blue-50">
+        <div className="fm-blob absolute -top-24 right-0 w-96 h-96 rounded-full bg-brand-red/10 blur-3xl pointer-events-none" aria-hidden="true" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+          <SectionHead
+            title="Tailored express consignments"
+            text="Special packaging and compliant customs clearance for specific categories."
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {SPECIALIZED_EXPRESS.map((item, idx) => {
+              const Icon = EXPRESS_ICONS[item.icon] || Boxes;
+              return (
+                <Reveal key={idx} delay={(idx % 3) * 90} variant="scale">
+                  <div className="group relative h-full overflow-hidden flex flex-col gap-5 p-7 rounded-3xl bg-white border border-slate-100 shadow-lg shadow-brand-blue/5 hover:border-brand-red/40 hover:shadow-2xl hover:shadow-brand-red/10 hover:-translate-y-2 transition-all duration-300">
+                    <Icon className="absolute -right-8 -bottom-8 w-36 h-36 text-brand-blue/[0.05] group-hover:text-brand-red/10 group-hover:rotate-12 transition-all duration-500" aria-hidden="true" />
+                    <div className="relative flex items-start justify-between">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-blue to-brand-blue-dark text-white flex items-center justify-center shadow-lg shadow-brand-blue/30 group-hover:from-brand-red group-hover:to-brand-red-dark group-hover:shadow-brand-red/40 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <ArrowUpRight className="w-5 h-5 text-slate-300 group-hover:text-brand-red group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" aria-hidden="true" />
+                    </div>
+                    <div className="relative">
+                      <h3 className="text-lg font-bold text-slate-900 mb-1.5">{item.title}</h3>
+                      <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-slate-900 mb-1">{item.title}</h3>
-                    <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              </Reveal>
-            );
-          })}
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* ============ INDUSTRIES ============ */}
-      <section className="relative bg-brand-blue-dark py-24 sm:py-32 overflow-hidden">
-        <BgImage src={IMG.industries} scene={SCENE.port} />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-brand-blue-dark/55 to-brand-blue-dark/85" aria-hidden="true" />
-        <div className="fm-blob absolute top-10 left-1/4 w-80 h-80 rounded-full bg-brand-blue/40 blur-3xl pointer-events-none" aria-hidden="true" />
+      <section className="relative bg-brand-blue-dark py-28 sm:py-36 overflow-hidden">
+        <ParallaxBg src={IMG.industries} scene={SCENE.port} />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-blue-dark/85 via-brand-blue-dark/45 to-brand-blue-dark/90" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/50 via-transparent to-slate-900/50" aria-hidden="true" />
+        <div className="fm-blob absolute top-10 left-1/4 w-96 h-96 rounded-full bg-brand-blue/40 blur-3xl pointer-events-none" aria-hidden="true" />
+        <div className="fm-blob absolute bottom-0 right-0 w-80 h-80 rounded-full bg-brand-red/25 blur-3xl pointer-events-none" style={{ animationDelay: '-9s' }} aria-hidden="true" />
+        <Wave className="text-brand-blue-50" flip />
+        <Wave className="text-slate-50" />
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHead
             light
             title="Serving critical global sectors"
             text="Logistics workflows built to meet strict industry benchmarks."
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {INDUSTRIES_SERVED.map((ind, idx) => {
               const Icon = INDUSTRY_ICONS[ind.icon] || Ship;
               return (
                 <Reveal key={idx} delay={(idx % 3) * 90}>
                   <div
                     onMouseMove={spot}
-                    className="fm-spot group h-full bg-white/[0.06] backdrop-blur rounded-2xl p-6 border border-white/10 hover:border-brand-red/60 hover:bg-white/[0.14] hover:-translate-y-1 transition-all duration-300"
+                    className="fm-spot fm-spot-dark group relative h-full overflow-hidden bg-white/10 backdrop-blur-md rounded-3xl p-7 border border-white/20 hover:border-brand-red/70 hover:bg-white/[0.18] hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/30 transition-all duration-300"
                   >
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-lg bg-white/10 text-white flex items-center justify-center group-hover:bg-brand-red transition-colors duration-300">
-                        <Icon className="w-5 h-5" />
+                    <Icon className="absolute -right-6 -bottom-6 w-32 h-32 text-white/[0.06] group-hover:text-brand-red/20 group-hover:rotate-12 transition-all duration-500" aria-hidden="true" />
+                    <span className="absolute right-5 top-4 text-5xl font-black text-white/10 leading-none select-none" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</span>
+                    <div className="relative flex items-center gap-4 mb-4">
+                      <div className="w-14 h-14 rounded-2xl bg-white/15 border border-white/20 text-white flex items-center justify-center group-hover:bg-brand-red group-hover:border-brand-red group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                        <Icon className="w-6 h-6" />
                       </div>
-                      <h3 className="font-bold text-white leading-snug">{ind.name}</h3>
+                      <h3 className="font-bold text-lg text-white leading-snug pr-8">{ind.name}</h3>
                     </div>
-                    <p className="text-sm text-white/65 leading-relaxed">{ind.desc}</p>
+                    <p className="relative text-sm text-white/75 leading-relaxed">{ind.desc}</p>
                   </div>
                 </Reveal>
               );
@@ -722,29 +632,34 @@ export const HomePage = ({ onOpenQuote }) => {
       </section>
 
       {/* ============ TESTIMONIALS ============ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
-        <SectionHead title="Trusted by maritime fleets and global families" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {TESTIMONIALS.map((t, idx) => (
-            <Reveal key={idx} delay={idx * 100}>
-              <figure className="group relative h-full flex flex-col justify-between bg-white rounded-2xl border border-slate-200 p-7 overflow-hidden hover:-translate-y-1.5 hover:shadow-xl hover:shadow-brand-blue/10 transition-all duration-300">
-                <span className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-brand-red to-brand-blue" />
-                <div className="space-y-4">
-                  <Quote className="w-8 h-8 text-brand-red/70 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300" />
-                  <blockquote className="text-slate-700 leading-relaxed">{t.quote}</blockquote>
-                </div>
-                <figcaption className="mt-6 pt-5 border-t border-slate-100 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-blue to-brand-blue-dark text-white font-bold flex items-center justify-center ring-2 ring-brand-red/30 ring-offset-2">
-                    {t.author.charAt(0)}
+      <section className="relative overflow-hidden bg-slate-50">
+        <Quote className="absolute left-4 top-24 w-56 h-56 text-brand-blue/[0.05] -rotate-6" aria-hidden="true" />
+        <Quote className="absolute right-4 bottom-10 w-56 h-56 text-brand-red/[0.06] rotate-6" aria-hidden="true" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+          <SectionHead title="Trusted by maritime fleets and global families" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {TESTIMONIALS.map((t, idx) => (
+              <Reveal key={idx} delay={idx * 80}>
+                <figure className="group relative h-full flex flex-col justify-between bg-white rounded-3xl border border-slate-200 p-7 overflow-hidden shadow-lg shadow-brand-blue/5 hover:-translate-y-2 hover:border-brand-blue/30 hover:shadow-2xl hover:shadow-brand-blue/15 transition-all duration-300">
+                  <div className="space-y-4">
+                    <div className="w-12 h-12 rounded-2xl bg-brand-red/10 text-brand-red flex items-center justify-center group-hover:bg-brand-red group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                      <Quote className="w-6 h-6" />
+                    </div>
+                    <blockquote className="text-slate-700 leading-relaxed text-sm">{t.quote}</blockquote>
                   </div>
-                  <div>
-                    <div className="text-sm font-semibold text-slate-900">{t.author}</div>
-                    <div className="text-xs text-slate-500">{t.role}, {t.company}</div>
-                  </div>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
+                  <figcaption className="mt-6 pt-5 border-t border-slate-100 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-blue to-brand-blue-dark text-white font-bold flex items-center justify-center text-sm ring-2 ring-brand-red/30 ring-offset-2 flex-shrink-0">
+                      {t.author.charAt(0)}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm font-semibold text-slate-900 truncate">{t.author}</div>
+                      <div className="text-xs text-slate-500 truncate">{t.role}, {t.company}</div>
+                    </div>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
     </div>
