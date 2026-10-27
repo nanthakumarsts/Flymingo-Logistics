@@ -26,110 +26,44 @@ export const ContactPage = () => {
       {/* ========================================================= */}
       {/* 1. CINEMATIC COMMUNICATIONS DISPATCH BANNER HERO          */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/10 py-12 sm:py-16 lg:py-20 select-none">
+      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/10 py-8 sm:py-10 lg:py-12 select-none">
         {/* Photographic Background Texture with continuous Ken Burns motion */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
-            src="/assets/communication.jpg" 
-            alt="Flymingo Logistics Global Communications Desk" 
-            className="w-full h-full object-cover object-center opacity-80 scale-105 fm-kb-0"
+            src="/assets/loading.jpg" 
+            alt="Flymingo Logistics Global Operations Desk" 
+            className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-0"
           />
         </div>
-        <div className="absolute inset-0 bg-[#001426]/60 z-0 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-40 z-0" />
+        <div className="absolute inset-0 bg-[#001426]/50 z-0 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-30 z-0" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
-          {/* Breadcrumb & Telemetry Tag */}
-          <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-            <nav className="flex items-center gap-2 text-white/80 font-medium">
-              <Link to="/" className="hover:text-white transition-colors">Home</Link>
-              <span className="text-white/40">/</span>
-              <span className="text-brand-red-light font-bold">Contact Us</span>
-            </nav>
-
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90 shadow-md">
-              <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
-              <span>LIVE DESK ACTIVE &bull; COIMBATORE HQ &amp; CHENNAI PORT HUB</span>
-            </div>
-          </div>
-
-          {/* Banner Title & Subtext */}
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
-              SOUTH INDIA &rarr; THE WORLD // 24/7 SUPPORT &amp; DISPATCH
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-3xl space-y-3 sm:space-y-4 text-left">
+            {/* Banner Eyebrow Badge - clean, no '//' */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
+                SOUTH INDIA &rarr; THE WORLD
+              </div>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
-              Direct Lines.<br />
-              <span className="text-brand-red font-black">
-                Immediate Logistics Response.
-              </span>
-            </h1>
+            {/* Banner Title & Subtext */}
+            <div className="space-y-1 sm:space-y-1.5">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
+                Direct Lines.<br />
+                <span className="text-brand-red font-black">
+                  Immediate Logistics Response.
+                </span>
+              </h1>
 
-            <p className="text-base sm:text-xl font-bold text-white/95 tracking-wide drop-shadow-md">
-              Always On Call. Ready For Rapid Dispatch.
-            </p>
+              <p className="text-sm sm:text-base font-bold text-white/95 tracking-wide drop-shadow-md">
+                Always On Call. Ready For Rapid Dispatch.
+              </p>
+            </div>
 
-            <p className="text-sm sm:text-base text-white/90 leading-relaxed font-normal pt-0.5 max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
+            <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-normal pt-0.5 max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
               Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.
             </p>
-          </div>
-
-          {/* Contact Fast-Response Quick Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
-            <a 
-              href={`tel:${BRAND.primaryPhone}`} 
-              className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 shadow-lg transition-all flex items-center gap-3 group cursor-pointer"
-            >
-              <div className="w-9 h-9 rounded-xl bg-brand-red/20 border border-brand-red/40 text-brand-red-light flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                <Phone className="w-4 h-4" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-[10px] font-mono font-bold text-white/70 uppercase tracking-wider">Coimbatore HQ</div>
-                <div className="text-xs font-black text-white hover:text-brand-red-light transition-colors truncate">{BRAND.primaryPhone}</div>
-              </div>
-            </a>
-
-            <a 
-              href={`tel:${BRAND.supportPhones[1]}`} 
-              className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 shadow-lg transition-all flex items-center gap-3 group cursor-pointer"
-            >
-              <div className="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-400/40 text-sky-300 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                <Phone className="w-4 h-4" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-[10px] font-mono font-bold text-white/70 uppercase tracking-wider">Chennai Port Hub</div>
-                <div className="text-xs font-black text-white hover:text-sky-300 transition-colors truncate">{BRAND.supportPhones[1]}</div>
-              </div>
-            </a>
-
-            <a 
-              href={`https://wa.me/919087924488?text=${encodeURIComponent('Hello Flymingo Logistics, I need shipment assistance.')}`}
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 shadow-lg transition-all flex items-center gap-3 group cursor-pointer"
-            >
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/25 border border-emerald-400/40 text-emerald-300 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                <MessageSquare className="w-4 h-4" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-[10px] font-mono font-bold text-white/70 uppercase tracking-wider">WhatsApp 24/7</div>
-                <div className="text-xs font-black text-emerald-300 truncate">Instant Chat Reply</div>
-              </div>
-            </a>
-
-            <a 
-              href={`mailto:${BRAND.primaryEmail}`}
-              className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-3 border border-white/15 shadow-sm transition-all flex items-center gap-3 group cursor-pointer"
-            >
-              <div className="w-9 h-9 rounded-lg bg-white/15 border border-white/25 text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                <Mail className="w-4 h-4" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-[10px] font-mono font-bold text-white/70 uppercase tracking-wider">Official Email</div>
-                <div className="text-xs font-bold text-white truncate">{BRAND.primaryEmail}</div>
-              </div>
-            </a>
           </div>
         </div>
       </section>

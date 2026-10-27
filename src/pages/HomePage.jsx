@@ -298,7 +298,7 @@ export const HomePage = ({ onOpenQuote }) => {
                 loading={idx === 0 ? 'eager' : 'lazy'}
                 decoding="async"
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none ${
+                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none contrast-[1.05] brightness-[0.98] ${
                   isActive ? `${kbClass} opacity-95` : 'scale-100 opacity-0'
                 }`}
               />
@@ -307,8 +307,8 @@ export const HomePage = ({ onOpenQuote }) => {
         })}
 
         {/* Subtle dark film scrim - allows photo colors & motion to be clearly visible while guaranteeing 100% crisp text readability without any box */}
-        <div className="absolute inset-0 bg-[#001426]/55 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-40 z-0" />
+        <div className="absolute inset-0 bg-[#001426]/50 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-30 z-0" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[360px]">
@@ -402,7 +402,7 @@ export const HomePage = ({ onOpenQuote }) => {
                     />
                     <div className="min-w-0 flex-1">
                       <div className="text-[10px] font-mono tracking-widest text-brand-red-light font-bold uppercase">
-                        {String(idx + 1).padStart(2, '0')} // Corridor
+                        CORRIDOR {String(idx + 1).padStart(2, '0')}
                       </div>
                       <div className={`text-xs sm:text-sm font-bold leading-snug truncate ${active ? 'text-white' : 'text-white/80'}`}>
                         {slide.badge}
@@ -574,11 +574,11 @@ export const HomePage = ({ onOpenQuote }) => {
             src="/assets/loading and unloading.jpg"
             alt=""
             aria-hidden="true"
-            className="w-full h-full object-cover object-center opacity-80 scale-105 fm-kb-1"
+            className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-1"
           />
         </div>
-        <div className="absolute inset-0 bg-[#001426]/70 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-35 z-0" />
+        <div className="absolute inset-0 bg-[#001426]/55 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-30 z-0" />
         <Wave className="text-white" flip />
         <Wave className="text-white" />
 
@@ -618,7 +618,7 @@ export const HomePage = ({ onOpenQuote }) => {
             {/* LEFT: Active Step Detailed Feature */}
             <div className="lg:col-span-7 space-y-4 text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
-                STAGE {SIX_WAYS_CARGO[processSlide].step} // TRANSPARENT PIPELINE
+                STAGE {SIX_WAYS_CARGO[processSlide].step} &bull; TRANSPARENT PIPELINE
               </div>
 
               <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
@@ -778,14 +778,14 @@ export const HomePage = ({ onOpenQuote }) => {
         {/* Dynamic moving maritime photo background with Ken Burns camera movement */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
-            src="/assets/sea cargo.jpg"
+            src="/assets/loading.jpg"
             alt=""
             aria-hidden="true"
-            className="w-full h-full object-cover object-center opacity-80 scale-105 fm-kb-2"
+            className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-2"
           />
         </div>
-        <div className="absolute inset-0 bg-[#001426]/70 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-35 z-0" />
+        <div className="absolute inset-0 bg-[#001426]/55 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-30 z-0" />
         <Wave className="text-slate-50" flip />
         <Wave className="text-slate-50" />
 
@@ -801,7 +801,7 @@ export const HomePage = ({ onOpenQuote }) => {
             {/* LEFT: Active Sector Spotlight */}
             <div className="lg:col-span-7 space-y-4 text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
-                CORRIDOR {String(sectorSlide + 1).padStart(2, '0')} // SPECIALIZED SECTOR
+                CORRIDOR {String(sectorSlide + 1).padStart(2, '0')} &bull; SPECIALIZED SECTOR
               </div>
 
               <div className="flex items-center gap-4">

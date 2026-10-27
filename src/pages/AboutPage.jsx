@@ -88,73 +88,64 @@ export const AboutPage = ({ onOpenQuote }) => {
       {/* ========================================================= */}
       {/* 1. CINEMATIC MARITIME EDITORIAL BANNER HERO               */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/10 py-12 sm:py-16 lg:py-20 select-none">
+      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/10 py-8 sm:py-10 lg:py-12 select-none">
         {/* Full-bleed Photographic Background Texture with continuous Ken Burns motion */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
-            src="/assets/sea cargo.jpg" 
+            src="/assets/loading.jpg" 
             alt="Flymingo Logistics Global Operations" 
-            className="w-full h-full object-cover object-center opacity-80 scale-105 fm-kb-0"
+            className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-0"
           />
         </div>
-        <div className="absolute inset-0 bg-[#001426]/60 z-0 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-40 z-0" />
+        <div className="absolute inset-0 bg-[#001426]/50 z-0 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-30 z-0" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
-          {/* Breadcrumb & Telemetry Tag */}
-          <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-            <nav className="flex items-center gap-2 text-white/80 font-medium">
-              <Link to="/" className="hover:text-white transition-colors">Home</Link>
-              <span className="text-white/40">/</span>
-              <span className="text-brand-red-light font-bold">About Us</span>
-            </nav>
-
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90 shadow-md">
-              <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
-              <span>11°00'N 76°58'E — COIMBATORE HQ &bull; CHENNAI PORT HUB</span>
-            </div>
-          </div>
-
-          {/* Banner Title & Subtext */}
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
-              SOUTH INDIA &rarr; THE WORLD // OUR MISSION &amp; HERITAGE
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-3xl space-y-3 sm:space-y-4 text-left">
+            {/* Banner Eyebrow Badge - clean, no '//' */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
+                SOUTH INDIA &rarr; THE WORLD
+              </div>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
-              We Are The Bridge Between You And Your Relations.<br />
-              <span className="text-brand-red font-black">
-                Across Oceans &amp; Continents.
-              </span>
-            </h1>
+            {/* Banner Title & Subtext */}
+            <div className="space-y-1 sm:space-y-1.5">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
+                We Are The Bridge Between You And Your Relations.<br />
+                <span className="text-brand-red font-black">
+                  Across Oceans &amp; Continents.
+                </span>
+              </h1>
 
-            <p className="text-base sm:text-xl font-bold text-white/95 tracking-wide drop-shadow-md">
-              Connecting Families. Empowering Global Trade.
-            </p>
+              <p className="text-sm sm:text-base font-bold text-white/95 tracking-wide drop-shadow-md">
+                Connecting Families. Empowering Global Trade.
+              </p>
+            </div>
 
-            <p className="text-sm sm:text-base text-white/90 leading-relaxed max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
+            <p className="text-xs sm:text-sm text-white/90 leading-relaxed max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
               Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.
             </p>
-          </div>
 
-          {/* Actions */}
-          <div className="flex flex-wrap items-center gap-4 pt-1">
-            <button
-              type="button"
-              onClick={() => onOpenQuote()}
-              className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
-            >
-              <span>Explore Our Services</span>
-              <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                <ArrowRight className="h-3.5 w-3.5 text-white" />
-              </span>
-            </button>
-            <a
-              href={`tel:${BRAND.primaryPhone}`}
-              className="px-6 py-3.5 bg-black/40 backdrop-blur-md border border-white/25 hover:bg-white hover:text-brand-blue text-white rounded-full text-xs sm:text-sm font-bold transition-all shadow-md"
-            >
-              Speak To Logistics Desk
-            </a>
+            {/* Actions */}
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <button
+                type="button"
+                onClick={() => onOpenQuote()}
+                className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+              >
+                <span>Explore Our Services</span>
+                <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                  <ArrowRight className="h-3.5 w-3.5 text-white" />
+                </span>
+              </button>
+              <a
+                href={`tel:${BRAND.primaryPhone}`}
+                className="px-6 py-3 bg-black/40 backdrop-blur-md border border-white/25 hover:bg-white hover:text-brand-blue text-white rounded-full text-xs sm:text-sm font-bold transition-all shadow-md"
+              >
+                Speak To Logistics Desk
+              </a>
+            </div>
           </div>
         </div>
       </section>
