@@ -778,7 +778,7 @@ export const HomePage = ({ onOpenQuote }) => {
         {/* Dynamic moving maritime photo background with Ken Burns camera movement */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <img
-            src="/assets/loading.jpg"
+            src="/assets/sea cargo.jpg"
             alt=""
             aria-hidden="true"
             className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-2"

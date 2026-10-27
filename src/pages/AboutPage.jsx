@@ -4,87 +4,108 @@ import {
   ShieldCheck, Clock, Award, Users, Globe, ArrowRight, 
   CheckCircle2, HeartHandshake, Compass, Check,
   Anchor, Sparkles, MapPin, Shield, Plane, Boxes,
-  TrendingUp, ArrowUpRight, ChevronRight
+  TrendingUp, Ship, Truck
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
 import { FlightRouteMap } from '../components/FlightRouteMap';
 
 export const AboutPage = ({ onOpenQuote }) => {
-  const [activePhase, setActivePhase] = useState(0);
+  const [activeYear, setActiveYear] = useState('2024');
 
+  /* Authentic Growth Journey from flamingonew.saitechnosolutions.in/about.php */
   const TIMELINE = [
     {
-      phase: '01',
-      stage: 'Phase 1 // Inception',
-      title: 'Foundation & NRI Express Network',
-      desc: 'Established in Coimbatore as a dependable logistics bridge connecting South Indian families, businesses, and expatriates to 190+ global destinations with personal care.',
+      year: '2018',
+      title: 'Foundation',
+      desc: 'Flymingo Logistics was established in Coimbatore with a vision to simplify international logistics for individuals and businesses.',
+      image: '/assets/movers.jpg',
+      icon: Compass,
+      tag: 'Coimbatore Inception',
+      metric: 'Coimbatore Hub Established',
+      features: ['Personal Courier Focus', 'Doorstep Pickup In Coimbatore', 'Transparent Direct Pricing']
+    },
+    {
+      year: '2019',
+      title: 'Expanding Horizons',
+      desc: 'Expanded our network to cover 50+ countries, partnering with major global carriers to offer seamless courier services.',
+      image: '/assets/movers.jpg',
       icon: Globe,
-      badge: 'Cross-Border Personal Express',
-      metric: 'Coimbatore & South India Hub',
-      features: ['Dedicated NRI Family Support', 'Door-to-Door International Courier', 'Strict Document Security']
+      tag: 'Global Scale',
+      metric: '50+ Countries Connected',
+      features: ['Major Global Airline Partnerships', 'Commercial Samples Transit', 'Rapid Document Courier']
     },
     {
-      phase: '02',
-      stage: 'Phase 2 // Network Scale',
-      title: 'Global Commercial Air Express Corridors',
-      desc: 'Expanded direct commercial air priority lanes into the UK, United States, Canada, Australia, UAE, Singapore, and Europe with express customs handoffs.',
-      icon: Plane,
-      badge: 'Priority Air Transit Corridors',
-      metric: 'Direct Airport Hub Clearances',
-      features: ['IATA Priority Routing', 'Rapid Transit Commercial Samples', 'Customs Formalities Pre-Check']
-    },
-    {
-      phase: '03',
-      stage: 'Phase 3 // Multi-Modal',
-      title: 'Ocean Freight & International Relocation',
-      desc: 'Scaled into full-container (FCL) and consolidated (LCL) ocean freight forwarding alongside dedicated overseas household packers & movers with turnkey relocation.',
+      year: '2021',
+      title: 'Multi-Modal Logistics',
+      desc: 'Launched dedicated Sea and Air Freight divisions, enabling us to handle heavy cargo and commercial shipments efficiently.',
+      image: '/assets/sea cargo.jpg',
       icon: Boxes,
-      badge: 'Intermodal Freight Operations',
-      metric: 'Ocean & Land Intermodal',
-      features: ['Turnkey Household Relocation', 'FCL & LCL Container Solutions', 'Industrial Multi-Layer Packing']
+      tag: 'Intermodal Expansion',
+      metric: 'Air & Ocean Freight Divisions',
+      features: ['FCL & LCL Ocean Freight', 'Heavy Commercial Air Cargo', 'Multi-Layer Packing Standards']
     },
     {
-      phase: '04',
-      stage: 'Phase 4 // Modernization',
-      title: 'Digital EDI & Automated Customs Filing',
-      desc: 'Deployed real-time cargo milestone tracking, online fare estimation calculators, and direct electronic data interchange (EDI) filings with Indian customs.',
+      year: '2023',
+      title: 'Technological Leap',
+      desc: 'Implemented advanced tracking systems and automated customs clearance processes to ensure 99% on-time delivery.',
+      image: '/assets/service banner.jpg',
       icon: ShieldCheck,
-      badge: 'Digital Clearing Infrastructure',
-      metric: 'Zero-Demurrage Protocol',
-      features: ['Direct Customs Seaport EDI', 'Live GPS Tracking Visibility', 'Automated Export Billing']
+      tag: 'Digital Automation',
+      metric: '99% On-Time Delivery Benchmark',
+      features: ['Real-Time GPS Tracking', 'Direct Seaport EDI Clearance', 'Zero-Delay Clearance Protocol']
     },
     {
-      phase: '05',
-      stage: 'Phase 5 // Offshore Leadership',
-      title: 'Maritime Berth Spares & Certified DG Handling',
-      desc: 'Launched 24/7 dedicated Ship Spares Logistics with offshore launch boat deck deliveries across major Indian ports, paired with certified IMO/IATA Dangerous Goods operations.',
+      year: '2024',
+      title: 'Global Leader',
+      desc: 'Now serving 220+ countries with specialized services like Ship Spares Logistics and DG Shipping, setting new industry standards.',
+      image: '/assets/international_courier_banner.jpg',
       icon: Anchor,
-      badge: '24/7 Port Deck Delivery',
-      metric: 'All Major Indian Seaports',
-      features: ['Outer Anchorage Boat Hand-over', 'IMO Certified Dangerous Goods (DG)', '24/7 Dedicated Ops Command Desk']
+      tag: 'Worldwide Maritime Leader',
+      metric: '220+ Countries & Berth Services',
+      features: ['24/7 Ship Spares Deck Delivery', 'IMO / IATA Certified DG Handling', 'Full International Network']
     }
   ];
 
+  /* Authentic Pillars from original site */
   const PILLARS = [
     {
-      title: 'Our Values',
-      desc: 'Uncompromising integrity, transparent customer service, and treating every single parcel as if it belongs to our own family.',
-      image: '/assets/value.jpg'
+      title: 'Values',
+      desc: 'Values us unit what bind us together to move towards our vision.',
+      image: '/assets/value.jpg',
+      badge: 'Core Identity'
     },
     {
-      title: 'Certified Quality',
-      desc: 'Multi-layer industrial grade packaging, shock-proof containers, and zero-defect compliance with international airline & port authorities.',
-      image: '/assets/quality.jpg'
+      title: 'Quality',
+      desc: 'Attention to detail and attributes of balanced perfection are accomplished from Quality. Quality could also be a true concern for finishing work well and is gained through education, training, and information. We, at Flymingo Logistics, lay durable stress on work our workers, as we tend to believe that the absolute best levels of consumer satisfaction and operational excellence unit achieved only with this worth.',
+      image: '/assets/quality.jpg',
+      badge: 'Zero Defect'
     },
     {
-      title: 'Transparent Communication',
-      desc: 'Direct WhatsApp and 24/7 desk access. You are never left in the dark about cargo transit, customs reviews, or vessel delivery timings.',
-      image: '/assets/communication.jpg'
+      title: 'Communication',
+      desc: "Effective communication is the key for sustained business relationships. At Flymingo Logistics, we tend to trust that language supported effective listening; understanding other's points of browse, and applicable discretion would cause durable teams and partnerships.",
+      image: '/assets/communication.jpg',
+      badge: '24/7 Responsiveness'
     }
+  ];
+
+  const WHY_US_POINTS = [
+    'We Carry anything globally',
+    'Most Competitive Prices! Unmatched',
+    'Door Pickup – Door delivery – Free Packing',
+    'Your packages will be delivered in 4 to 6 business days',
+    'We ship with DHL, FEDEX, TNT & ETC world renown companies',
+    'You save up to 50% due to our high volume of shipping',
+    'Each shipment carries insurance'
+  ];
+
+  const GOALS_POINTS = [
+    'Rendering quality services at your door step',
+    'We maintain genuineness with our service',
+    'We maintain good rapport with our customer'
   ];
 
   return (
-    <div className="space-y-20 pb-20">
+    <div className="space-y-16 sm:space-y-24 pb-20 select-none">
       {/* ========================================================= */}
       {/* 1. CINEMATIC MARITIME EDITORIAL BANNER HERO               */}
       {/* ========================================================= */}
@@ -92,7 +113,7 @@ export const AboutPage = ({ onOpenQuote }) => {
         {/* Full-bleed Photographic Background Texture with continuous Ken Burns motion */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
-            src="/assets/loading.jpg" 
+            src="/assets/sea cargo.jpg" 
             alt="Flymingo Logistics Global Operations" 
             className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-0"
           />
@@ -150,110 +171,274 @@ export const AboutPage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* Mission & Overview Section */}
+      {/* ========================================================= */}
+      {/* 2. AUTHENTIC WHO WE ARE SECTION (Original site text)      */}
+      {/* ========================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-brand-red">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="lg:col-span-7 space-y-6 text-left">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-red/10 border border-brand-red/20 text-xs font-bold uppercase tracking-widest text-brand-red">
               <Compass className="w-4 h-4" />
-              <span>Who We Are</span>
+              <span>About Flymingo Logistics</span>
             </div>
-            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              A Dedicated Team with Deep Maritime &amp; Air Freight Heritage
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-snug">
+              We Are The Bridge Between You And Your Relations
             </h2>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              Flymingo Logistics is an International Logistics company that offers high-quality international courier services, professional packers and movers, ocean &amp; air freight forwarding, time-critical ship spares logistics, licensed customs clearance brokerage, and certified dangerous goods handling.
-            </p>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              Headquartered in Coimbatore with our major seaport and airport logistics operations based in Chennai, we bridge local manufacturers, international traders, maritime fleet managers, and families worldwide with speed, security, and competitive rates.
+
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
+              Flymingo Logistics is an International Logistics company that offers high quality international courier services, packers and movers services and all mode international shipping within budget worldwide. Our primary objective is to provide quick delivery, clearance and door to door delivery worldwide. We are based out of Coimbatore.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-2">
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                <div className="text-2xl font-bold text-brand-blue font-mono">100%</div>
-                <div className="text-xs font-bold text-slate-800 mt-0.5">Customs Compliance</div>
-                <p className="text-[11px] text-slate-500 mt-1">Exact HS code classification &amp; legal document filing</p>
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
+              Flymingo Logistics has an excellent track record of success in delivering packages both on time and damage free. We have partnered with leading international companies worldwide to reach each corner of the world. We are glad to mention that our services are best leading in position within the present market.
+            </p>
+
+            {/* Quick Metrics */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
+                <div className="text-2xl font-black text-brand-blue font-mono">220+</div>
+                <div className="text-xs font-bold text-slate-800 mt-0.5">Countries Served</div>
+                <p className="text-[11px] text-slate-500 mt-0.5">Global air &amp; ocean routes</p>
               </div>
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                <div className="text-2xl font-bold text-brand-red font-mono">24/7</div>
-                <div className="text-xs font-bold text-slate-800 mt-0.5">Vessel &amp; Air Support</div>
-                <p className="text-[11px] text-slate-500 mt-1">Direct coordination with port authorities &amp; airlines</p>
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
+                <div className="text-2xl font-black text-brand-red font-mono">99%</div>
+                <div className="text-xs font-bold text-slate-800 mt-0.5">On-Time Clearance</div>
+                <p className="text-[11px] text-slate-500 mt-0.5">Zero damage track record</p>
+              </div>
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs col-span-2 sm:col-span-1">
+                <div className="text-2xl font-black text-slate-900 font-mono">2018</div>
+                <div className="text-xs font-bold text-slate-800 mt-0.5">Year Established</div>
+                <p className="text-[11px] text-slate-500 mt-0.5">Founded in Coimbatore</p>
               </div>
             </div>
           </div>
 
-          <div className="relative">
-            <div className="rounded-3xl overflow-hidden border border-slate-200 shadow-xl bg-slate-100">
+          <div className="lg:col-span-5">
+            <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl bg-slate-100 group">
               <img 
-                src="/assets/international_courier_banner.jpg" 
-                alt="Flymingo Logistics Global Operations" 
-                className="w-full h-auto object-cover"
+                src="/assets/about page  first relation image.jpg" 
+                alt="Flymingo Logistics Family Relations & Cargo Dispatch" 
+                className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
                 onError={(e) => {
-                  e.target.style.display = 'none';
+                  e.currentTarget.src = '/assets/about 2.jpg';
                 }}
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute bottom-4 left-4 right-4 text-white">
+                <div className="text-xs font-mono font-bold uppercase tracking-wider text-brand-red-light">Delivering With Care</div>
+                <div className="text-sm font-bold">Trusted Doorstep International Courier</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Our Goals */}
+      {/* ========================================================= */}
+      {/* 3. OUR JOURNEY OF GROWTH (Exact original years & data)    */}
+      {/* ========================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-mono font-bold tracking-wider uppercase">
+            <TrendingUp className="w-3.5 h-3.5 text-brand-red" />
+            <span>Milestone History</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            Our Journey of Growth
+          </h2>
+          <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+            Connecting the world, one shipment at a time.
+          </p>
+        </div>
+
+        {/* Year Pills Navigation */}
+        <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+          {TIMELINE.map((item) => {
+            const isSelected = activeYear === item.year;
+            return (
+              <button
+                key={item.year}
+                type="button"
+                onClick={() => setActiveYear(item.year)}
+                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer flex items-center gap-2.5 border ${
+                  isSelected
+                    ? 'bg-brand-red text-white border-brand-red shadow-lg shadow-brand-red/25 scale-105'
+                    : 'bg-white text-slate-700 border-slate-200 hover:border-brand-blue/40 hover:bg-slate-50'
+                }`}
+              >
+                <span className={`px-2 py-0.5 rounded-full text-[11px] font-mono font-black ${
+                  isSelected ? 'bg-black/25 text-white' : 'bg-slate-100 text-slate-600'
+                }`}>
+                  {item.year}
+                </span>
+                <span>{item.title}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Timeline Bento Cards with Real Photographs */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {TIMELINE.map((item) => {
+            const Icon = item.icon;
+            const isSelected = activeYear === item.year;
+            const isFeatured = item.year === '2024';
+
+            return (
+              <div
+                key={item.year}
+                onClick={() => setActiveYear(item.year)}
+                className={`group relative rounded-3xl p-6 sm:p-7 transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden ${
+                  isFeatured
+                    ? 'lg:col-span-2 bg-[#00243d] text-white border border-white/20 shadow-xl hover:border-brand-red/60'
+                    : `bg-white border text-slate-800 ${
+                        isSelected
+                          ? 'border-brand-red ring-2 ring-brand-red/20 shadow-xl'
+                          : 'border-slate-200 hover:border-brand-blue/40 shadow-sm hover:shadow-lg'
+                      }`
+                }`}
+              >
+                {/* Year Header Badge & Watermark */}
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 ${
+                      isFeatured 
+                        ? 'bg-brand-red text-white shadow-lg shadow-brand-red/30' 
+                        : 'bg-brand-blue/10 text-brand-blue group-hover:bg-brand-red group-hover:text-white transition-colors'
+                    }`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className={`text-2xl font-black font-mono tracking-tight ${
+                        isFeatured ? 'text-brand-red-light' : 'text-brand-red'
+                      }`}>
+                        {item.year}
+                      </div>
+                      <div className={`text-[11px] font-bold uppercase tracking-wider ${
+                        isFeatured ? 'text-white/70' : 'text-slate-500'
+                      }`}>
+                        {item.tag}
+                      </div>
+                    </div>
+                  </div>
+
+                  <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
+                    isFeatured
+                      ? 'bg-white/10 text-white border-white/20'
+                      : 'bg-slate-100 text-slate-700 border-slate-200'
+                  }`}>
+                    {item.metric}
+                  </span>
+                </div>
+
+                {/* Milestone Image Thumbnail - Real Photography */}
+                <div className="h-40 w-full rounded-2xl overflow-hidden mb-4 bg-slate-100 relative">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      e.currentTarget.src = '/assets/sea cargo.jpg';
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                </div>
+
+                {/* Title & Authentic Description */}
+                <div className="space-y-2 flex-1">
+                  <h3 className={`text-lg sm:text-xl font-black tracking-tight ${
+                    isFeatured ? 'text-white' : 'text-slate-900 group-hover:text-brand-blue transition-colors'
+                  }`}>
+                    {item.title}
+                  </h3>
+                  <p className={`text-xs sm:text-sm leading-relaxed ${
+                    isFeatured ? 'text-white/85' : 'text-slate-600'
+                  }`}>
+                    {item.desc}
+                  </p>
+                </div>
+
+                {/* Features Checkpoints */}
+                <div className="pt-4 mt-4 border-t border-slate-100/20 space-y-1.5">
+                  {item.features.map((feat) => (
+                    <div key={feat} className="flex items-center gap-2 text-xs">
+                      <Check className={`w-3.5 h-3.5 shrink-0 ${isFeatured ? 'text-brand-red-light' : 'text-brand-red'}`} />
+                      <span className={isFeatured ? 'text-white/90' : 'text-slate-700'}>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 4. OUR GOALS (Low Cost and Quick Delivery)                */}
+      {/* ========================================================= */}
       <section className="bg-slate-50 border-y border-slate-200 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="text-center space-y-2 max-w-xl mx-auto">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue">
-              Our Core Mission
-            </span>
-            <h2 className="text-3xl font-extrabold text-slate-900">
-              Low Cost and Quick Delivery
-            </h2>
-            <p className="text-xs text-slate-500">
-              Delivering unbeatable freight rates without compromising packaging integrity or transit speed.
-            </p>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            {/* Left: Mission Image */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl bg-white max-w-md w-full">
+                <img 
+                  src="/assets/mission statement.jpg" 
+                  alt="Flymingo Logistics Goals and Mission" 
+                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
+                  onError={(e) => {
+                    e.currentTarget.src = '/assets/about 2.jpg';
+                  }}
+                />
+              </div>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-brand-blue-50 text-brand-blue flex items-center justify-center font-bold">
-                1
+            {/* Right: Goals Content */}
+            <div className="lg:col-span-7 space-y-6 text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-xs font-bold uppercase tracking-widest text-brand-blue">
+                <Award className="w-4 h-4" />
+                <span>Our Goals</span>
               </div>
-              <h3 className="text-base font-bold text-slate-900">Economical Pricing</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Aggressive bulk volume discounts negotiated directly with major commercial airlines and international container shipping lines passed on to you.
+
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-snug">
+                Low Cost and Quick Delivery
+              </h2>
+
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                Our relentless focus is on ensuring your shipments travel swiftly across domestic and international borders with uncompromising safety and transparent, cost-effective pricing.
               </p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-brand-red-50 text-brand-red flex items-center justify-center font-bold">
-                2
+
+              <div className="space-y-3 pt-2">
+                {GOALS_POINTS.map((point, idx) => (
+                  <div 
+                    key={idx}
+                    className="flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-slate-200 shadow-xs"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center shrink-0">
+                      <Ship className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-bold text-slate-800">{point}</span>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-base font-bold text-slate-900">Express Rapid Transit</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Priority uplift agreements with cargo carriers ensure your parcels and urgent spares fly on the next immediate flight out (NFO).
-              </p>
-            </div>
-            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                3
-              </div>
-              <h3 className="text-base font-bold text-slate-900">Zero Surprise Fees</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Transparent, upfront itemized quotations including export paperwork, packaging materials, and delivery without hidden surcharges.
-              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Values, Quality & Communication (With original assets) */}
+      {/* ========================================================= */}
+      {/* 5. VALUES, QUALITY & COMMUNICATION                        */}
+      {/* ========================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        <div className="text-center space-y-2 max-w-xl mx-auto">
+        <div className="text-center space-y-3 max-w-xl mx-auto">
           <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
             The Flymingo Virtues
           </span>
-          <h2 className="text-3xl font-extrabold text-slate-900">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
             Values, Quality &amp; Communication
           </h2>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs sm:text-sm text-slate-500">
             The foundational pillars guiding every customer interaction and cargo movement.
           </p>
         </div>
@@ -262,26 +447,29 @@ export const AboutPage = ({ onOpenQuote }) => {
           {PILLARS.map((p, idx) => (
             <div 
               key={idx} 
-              className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-xl transition-all flex flex-col"
+              className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all flex flex-col group"
             >
-              <div className="h-48 overflow-hidden bg-slate-100">
+              <div className="h-52 overflow-hidden bg-slate-100 relative">
                 <img 
                   src={p.image} 
                   alt={p.title} 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                   onError={(e) => {
-                    e.target.style.display = 'none';
+                    e.currentTarget.src = '/assets/about 2.jpg';
                   }}
                 />
-              </div>
-              <div className="p-6 space-y-3 flex-1 flex flex-col justify-between">
-                <div className="space-y-2">
-                  <h3 className="text-lg font-bold text-slate-900">{p.title}</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">{p.desc}</p>
+                <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md text-white text-[11px] font-bold border border-white/20">
+                  {p.badge}
                 </div>
-                <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-brand-blue">
+              </div>
+              <div className="p-6 space-y-3 flex-1 flex flex-col justify-between text-left">
+                <div className="space-y-2">
+                  <h3 className="text-xl font-black text-slate-900">{p.title}</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">{p.desc}</p>
+                </div>
+                <div className="pt-3 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-brand-blue">
                   <Check className="w-4 h-4 text-emerald-600" />
-                  <span>Guaranteed Standard</span>
+                  <span>Flymingo Core Commitment</span>
                 </div>
               </div>
             </div>
@@ -290,176 +478,74 @@ export const AboutPage = ({ onOpenQuote }) => {
       </section>
 
       {/* ========================================================= */}
-      {/* 4. MILESTONES: OUR JOURNEY OF GROWTH (UI/UX PRO MAX)       */}
+      {/* 6. WHY US? (Exact 7 points & image from original site)    */}
       {/* ========================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-xs font-mono font-bold tracking-wider uppercase">
-            <TrendingUp className="w-3.5 h-3.5 text-brand-red" />
-            <span>Evolutionary Milestones</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            Our Journey of Continuous Growth
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-            From our founding roots in Coimbatore connecting families to the world, to an internationally recognized multi-modal freight and offshore maritime logistics leader.
-          </p>
-        </div>
-
-        {/* Phase Stepper Pills (Desktop & Mobile) */}
-        <div className="flex items-center justify-start lg:justify-center gap-2 overflow-x-auto pb-2">
-          {TIMELINE.map((item, idx) => (
-            <button
-              key={item.phase}
-              type="button"
-              onClick={() => setActivePhase(idx)}
-              className={`flex-shrink-0 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer flex items-center gap-2 border ${
-                activePhase === idx
-                  ? 'bg-brand-blue text-white border-brand-blue shadow-lg shadow-brand-blue/20'
-                  : 'bg-white text-slate-700 border-slate-200 hover:border-brand-blue/50 hover:bg-slate-50'
-              }`}
-            >
-              <span className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-mono font-black ${
-                activePhase === idx ? 'bg-white text-brand-blue' : 'bg-slate-100 text-slate-600'
-              }`}>
-                {item.phase}
-              </span>
-              <span>{item.stage.split(' // ')[1]}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Bento Milestones Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-          {TIMELINE.map((item, idx) => {
-            const Icon = item.icon;
-            const isFeatured = idx === 4; // Phase 5: Maritime Leader
-            const isSelected = activePhase === idx;
-
-            return (
-              <div
-                key={item.phase}
-                onClick={() => setActivePhase(idx)}
-                className={`group relative rounded-3xl p-6 sm:p-8 transition-all duration-300 cursor-pointer flex flex-col justify-between ${
-                  isFeatured
-                    ? 'lg:col-span-2 bg-[#00243d] text-white border border-white/20 shadow-xl hover:border-brand-red/60'
-                    : `bg-white border text-slate-800 ${
-                        isSelected
-                          ? 'border-brand-blue ring-2 ring-brand-blue/20 shadow-xl'
-                          : 'border-slate-200/90 hover:border-brand-blue/40 shadow-sm hover:shadow-lg'
-                      }`
-                }`}
-              >
-                {/* Background Watermark Number */}
-                <span className={`absolute right-6 top-4 text-6xl sm:text-7xl font-black select-none pointer-events-none transition-opacity ${
-                  isFeatured ? 'text-white/[0.04]' : 'text-slate-100 group-hover:text-brand-blue/[0.08]'
-                }`}>
-                  {item.phase}
-                </span>
-
-                <div className="space-y-4 relative z-10">
-                  {/* Top Bar: Icon, Phase Badge, Tag */}
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-105 ${
-                        isFeatured
-                          ? 'bg-brand-red text-white shadow-lg shadow-brand-red/30'
-                          : 'bg-brand-blue-50 text-brand-blue group-hover:bg-brand-blue group-hover:text-white'
-                      }`}>
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <span className={`text-[11px] font-mono font-extrabold uppercase tracking-widest ${
-                          isFeatured ? 'text-brand-red-light' : 'text-brand-red'
-                        }`}>
-                          {item.stage}
-                        </span>
-                        <div className={`text-xs font-semibold ${isFeatured ? 'text-white/70' : 'text-slate-500'}`}>
-                          {item.metric}
-                        </div>
-                      </div>
-                    </div>
-
-                    <span className={`text-[11px] font-bold px-3 py-1 rounded-full border ${
-                      isFeatured
-                        ? 'bg-white/10 text-white border-white/20'
-                        : 'bg-slate-100 text-slate-700 border-slate-200'
-                    }`}>
-                      {item.badge}
-                    </span>
-                  </div>
-
-                  {/* Title & Description */}
-                  <div className="space-y-2 pt-1">
-                    <h3 className={`text-xl sm:text-2xl font-black tracking-tight leading-snug ${
-                      isFeatured ? 'text-white' : 'text-slate-900 group-hover:text-brand-blue transition-colors'
-                    }`}>
-                      {item.title}
-                    </h3>
-                    <p className={`text-sm leading-relaxed ${
-                      isFeatured ? 'text-white/85' : 'text-slate-600'
-                    }`}>
-                      {item.desc}
-                    </p>
-                  </div>
-
-                  {/* Feature Checkpoints */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
-                    {item.features.map((feat) => (
-                      <div
-                        key={feat}
-                        className={`px-3 py-2 rounded-xl text-xs font-medium flex items-center gap-2 ${
-                          isFeatured
-                            ? 'bg-white/10 text-white/90 border border-white/15'
-                            : 'bg-slate-50 text-slate-700 border border-slate-200'
-                        }`}
-                      >
-                        <Check className={`w-3.5 h-3.5 flex-shrink-0 ${isFeatured ? 'text-brand-red-light' : 'text-brand-blue'}`} />
-                        <span className="truncate">{feat}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Footer Link / Verification Indicator */}
-                <div className={`mt-6 pt-4 border-t flex items-center justify-between text-xs font-bold ${
-                  isFeatured ? 'border-white/15 text-white/80' : 'border-slate-100 text-slate-500'
-                }`}>
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className={`w-4 h-4 ${isFeatured ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                    Operational Benchmark Verified
-                  </span>
-                  <span className={`inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform ${
-                    isFeatured ? 'text-brand-red-light' : 'text-brand-blue'
-                  }`}>
-                    Phase {item.phase} Details <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-slate-900 text-white p-8 sm:p-12 border border-slate-800 shadow-2xl overflow-hidden relative">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            {/* Left: Image */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="rounded-2xl overflow-hidden border border-white/15 shadow-xl max-w-sm w-full bg-slate-800">
+                <img 
+                  src="/assets/why_choose.jpg" 
+                  alt="Why Choose Flymingo Logistics" 
+                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
+                  onError={(e) => {
+                    e.currentTarget.src = '/assets/about 2.jpg';
+                  }}
+                />
               </div>
-            );
-          })}
-        </div>
+            </div>
 
-        {/* Summary Achievement Metrics Strip */}
-        <div className="rounded-3xl bg-slate-900 text-white p-6 sm:p-8 border border-slate-800 shadow-xl grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div>
-            <div className="text-3xl sm:text-4xl font-black text-brand-red font-mono">15+</div>
-            <div className="text-xs font-bold text-slate-300 mt-1">Years Logistics Heritage</div>
-          </div>
-          <div>
-            <div className="text-3xl sm:text-4xl font-black text-white font-mono">190+</div>
-            <div className="text-xs font-bold text-slate-300 mt-1">Global Destinations</div>
-          </div>
-          <div>
-            <div className="text-3xl sm:text-4xl font-black text-sky-400 font-mono">10+</div>
-            <div className="text-xs font-bold text-slate-300 mt-1">Major Indian Seaports</div>
-          </div>
-          <div>
-            <div className="text-3xl sm:text-4xl font-black text-emerald-400 font-mono">24/7</div>
-            <div className="text-xs font-bold text-slate-300 mt-1">Berth &amp; Spares Boats</div>
+            {/* Right: Why Us 7 Points */}
+            <div className="lg:col-span-7 space-y-6 text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-red/20 border border-brand-red/40 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light">
+                Why Flymingo
+              </div>
+
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-snug">
+                Why Choose Us?
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                {WHY_US_POINTS.map((pt, idx) => (
+                  <div 
+                    key={idx}
+                    className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs hover:bg-white/10 transition-colors"
+                  >
+                    <div className="w-5 h-5 rounded-md bg-brand-red/30 text-brand-red-light flex items-center justify-center shrink-0 mt-0.5">
+                      <Ship className="w-3.5 h-3.5" />
+                    </div>
+                    <span className="text-xs sm:text-sm font-semibold text-white/90 leading-snug">{pt}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Call to Action */}
+              <div className="pt-4 flex flex-wrap gap-4 items-center">
+                <button
+                  type="button"
+                  onClick={() => onOpenQuote()}
+                  className="px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/30 transition-all cursor-pointer flex items-center gap-2"
+                >
+                  <span>Request Fare Quote</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <a
+                  href={`tel:${BRAND.primaryPhone}`}
+                  className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-full text-xs sm:text-sm font-bold transition-all"
+                >
+                  Call +91 95662 54488
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
     </div>
   );
 };
+
+export default AboutPage;

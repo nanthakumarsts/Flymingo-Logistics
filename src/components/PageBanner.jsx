@@ -24,9 +24,9 @@ export function PageBanner({
       {/* High-clarity background photo with continuous Ken Burns camera glide */}
       <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
         <img 
-          src={image || '/assets/loading.jpg'} 
+          src={image || '/assets/sea cargo.jpg'} 
           alt="" 
-          onError={(e) => { e.currentTarget.src = '/assets/loading.jpg'; }}
+          onError={(e) => { e.currentTarget.src = '/assets/sea cargo.jpg'; }}
           className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-0" 
         />
       </div>

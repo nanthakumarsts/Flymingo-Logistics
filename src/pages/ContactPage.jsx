@@ -30,7 +30,7 @@ export const ContactPage = () => {
         {/* Photographic Background Texture with continuous Ken Burns motion */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
-            src="/assets/loading.jpg" 
+            src="/assets/communication.jpg" 
             alt="Flymingo Logistics Global Operations Desk" 
             className="w-full h-full object-cover object-center opacity-90 contrast-[1.05] brightness-[0.98] scale-105 fm-kb-0"
           />
