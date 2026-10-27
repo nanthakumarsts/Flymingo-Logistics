@@ -137,24 +137,24 @@ export const ServicesPage = ({ onOpenQuote }) => {
             <nav className="flex items-center gap-2 text-white/80 font-medium">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <span className="text-white/40">/</span>
-              <span className="text-emerald-400 font-bold">Services Overview</span>
+              <span className="text-brand-red-light font-bold">Services Overview</span>
             </nav>
 
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90 shadow-md">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
               <span>ACTIVE CORRIDORS: 190+ COUNTRIES &bull; 10+ SEAPORTS &bull; 24/7 HOTLINE</span>
             </div>
           </div>
 
           {/* Banner Title & Subtext */}
           <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
               SOUTH INDIA &rarr; THE WORLD // SIX STRATEGIC CHANNELS
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
               Six Proven Channels.<br />
-              <span className="text-emerald-400 font-black">
+              <span className="text-brand-red font-black">
                 Zero Cargo Gaps.
               </span>
             </h1>
@@ -172,7 +172,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
           <div className="flex flex-wrap items-center gap-4 pt-1">
             <button
               onClick={() => onOpenQuote()}
-              className="group px-7 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+              className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
             >
               <Calculator className="w-4 h-4" />
               <span>Request Instant Fare Quote</span>

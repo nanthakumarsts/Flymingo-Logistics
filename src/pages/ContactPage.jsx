@@ -44,24 +44,24 @@ export const ContactPage = () => {
             <nav className="flex items-center gap-2 text-white/80 font-medium">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <span className="text-white/40">/</span>
-              <span className="text-emerald-400 font-bold">Contact Us</span>
+              <span className="text-brand-red-light font-bold">Contact Us</span>
             </nav>
 
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90 shadow-md">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
               <span>LIVE DESK ACTIVE &bull; COIMBATORE HQ &amp; CHENNAI PORT HUB</span>
             </div>
           </div>
 
           {/* Banner Title & Subtext */}
           <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
               SOUTH INDIA &rarr; THE WORLD // 24/7 SUPPORT &amp; DISPATCH
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
               Direct Lines.<br />
-              <span className="text-emerald-400 font-black">
+              <span className="text-brand-red font-black">
                 Immediate Logistics Response.
               </span>
             </h1>
@@ -81,12 +81,12 @@ export const ContactPage = () => {
               href={`tel:${BRAND.primaryPhone}`} 
               className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 shadow-lg transition-all flex items-center gap-3 group cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-9 h-9 rounded-xl bg-brand-red/20 border border-brand-red/40 text-brand-red-light flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                 <Phone className="w-4 h-4" />
               </div>
               <div className="min-w-0">
                 <div className="text-[10px] font-mono font-bold text-white/70 uppercase tracking-wider">Coimbatore HQ</div>
-                <div className="text-xs font-black text-white hover:text-emerald-300 transition-colors truncate">{BRAND.primaryPhone}</div>
+                <div className="text-xs font-black text-white hover:text-brand-red-light transition-colors truncate">{BRAND.primaryPhone}</div>
               </div>
             </a>
 

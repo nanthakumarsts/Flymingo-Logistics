@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * World flight route and nautical corridor overlay.
- * Recreates the subtle illuminated global route arcs and node grid seen in modern logistics banners.
+ * Recreates the subtle illuminated global route arcs and node grid with Flymingo brand colors.
  */
 export const FlightRouteMap = ({ className = '' }) => (
   <svg
@@ -15,9 +15,9 @@ export const FlightRouteMap = ({ className = '' }) => (
   >
     <defs>
       <linearGradient id="routeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#10b981" stopOpacity="0.7" />
+        <stop offset="0%" stopColor="#E8291F" stopOpacity="0.8" />
         <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.5" />
-        <stop offset="100%" stopColor="#10b981" stopOpacity="0.2" />
+        <stop offset="100%" stopColor="#E8291F" stopOpacity="0.2" />
       </linearGradient>
       <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
         <feGaussianBlur stdDeviation="3" result="blur" />
@@ -57,9 +57,9 @@ export const FlightRouteMap = ({ className = '' }) => (
 
     {/* South India Primary Operations Hub (Coimbatore / Chennai / Tuticorin) */}
     <g transform="translate(880, 320)">
-      <circle cx="0" cy="0" r="14" stroke="#10b981" strokeWidth="1" strokeDasharray="3 3" opacity="0.5" className="animate-spin" style={{ animationDuration: '12s' }} />
-      <circle cx="0" cy="0" r="8" fill="#10b981" opacity="0.25" />
-      <circle cx="0" cy="0" r="4.5" fill="#10b981" />
+      <circle cx="0" cy="0" r="14" stroke="#E8291F" strokeWidth="1" strokeDasharray="3 3" opacity="0.5" className="animate-spin" style={{ animationDuration: '12s' }} />
+      <circle cx="0" cy="0" r="8" fill="#E8291F" opacity="0.25" />
+      <circle cx="0" cy="0" r="4.5" fill="#E8291F" />
       <circle cx="0" cy="0" r="2" fill="#ffffff" />
     </g>
   </svg>

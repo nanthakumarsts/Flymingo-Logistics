@@ -106,24 +106,24 @@ export const AboutPage = ({ onOpenQuote }) => {
             <nav className="flex items-center gap-2 text-white/80 font-medium">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <span className="text-white/40">/</span>
-              <span className="text-emerald-400 font-bold">About Us</span>
+              <span className="text-brand-red-light font-bold">About Us</span>
             </nav>
 
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 font-mono text-[11px] text-white/90 shadow-md">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
               <span>11°00'N 76°58'E — COIMBATORE HQ &bull; CHENNAI PORT HUB</span>
             </div>
           </div>
 
           {/* Banner Title & Subtext */}
           <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
               SOUTH INDIA &rarr; THE WORLD // OUR MISSION &amp; HERITAGE
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
               We Are The Bridge Between You And Your Relations.<br />
-              <span className="text-emerald-400 font-black">
+              <span className="text-brand-red font-black">
                 Across Oceans &amp; Continents.
               </span>
             </h1>
@@ -142,7 +142,7 @@ export const AboutPage = ({ onOpenQuote }) => {
             <button
               type="button"
               onClick={() => onOpenQuote()}
-              className="group px-7 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+              className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
             >
               <span>Explore Our Services</span>
               <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
@@ -155,49 +155,6 @@ export const AboutPage = ({ onOpenQuote }) => {
             >
               Speak To Logistics Desk
             </a>
-          </div>
-
-          {/* High-Contrast Trust Highlights Strip */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4">
-            <div className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 transition-all flex items-center gap-3 shadow-lg">
-              <div className="w-9 h-9 rounded-xl bg-sky-500/20 border border-sky-400/40 flex items-center justify-center shrink-0">
-                <Globe className="w-4 h-4 text-sky-300" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-xs font-black text-white truncate">190+ Countries</div>
-                <div className="text-[10px] text-white/70">Global Reach</div>
-              </div>
-            </div>
-
-            <div className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 transition-all flex items-center gap-3 shadow-lg">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
-                <Anchor className="w-4 h-4 text-emerald-400" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-xs font-black text-white truncate">10+ Major Ports</div>
-                <div className="text-[10px] text-white/70">Berth Logistics</div>
-              </div>
-            </div>
-
-            <div className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 transition-all flex items-center gap-3 shadow-lg">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0">
-                <Clock className="w-4 h-4 text-emerald-300" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-xs font-black text-white truncate">24/7 Operations</div>
-                <div className="text-[10px] text-white/70">Continuous Support</div>
-              </div>
-            </div>
-
-            <div className="bg-black/40 hover:bg-black/55 backdrop-blur-md rounded-2xl p-3.5 border border-white/20 transition-all flex items-center gap-3 shadow-lg">
-              <div className="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-4 h-4 text-purple-300" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-xs font-black text-white truncate">100% Licensed</div>
-                <div className="text-[10px] text-white/70">Customs Brokerage</div>
-              </div>
-            </div>
           </div>
         </div>
       </section>

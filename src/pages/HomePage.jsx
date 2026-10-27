@@ -318,14 +318,14 @@ export const HomePage = ({ onOpenQuote }) => {
               key={activeSlide.id} 
               className="lg:col-span-8 space-y-4 sm:space-y-5 text-left"
             >
-              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
                 {activeSlide.badge}
               </div>
 
               <div className="space-y-2">
                 <h1 className="fm-s2 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
                   {activeSlide.titlePrefix}
-                  <span className="text-emerald-400 font-black">
+                  <span className="text-brand-red font-black">
                     {activeSlide.highlight}
                   </span>
                   {activeSlide.titleSuffix}
@@ -346,7 +346,7 @@ export const HomePage = ({ onOpenQuote }) => {
                 <button
                   type="button"
                   onClick={() => onOpenQuote(activeSlide.serviceId)}
-                  className="group px-7 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                  className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
                 >
                   <span>{activeSlide.primaryCta}</span>
                   <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
@@ -600,7 +600,7 @@ export const HomePage = ({ onOpenQuote }) => {
                   onClick={() => setProcessSlide(idx)}
                   className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${
                     active 
-                      ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 scale-105' 
+                      ? 'bg-brand-red text-white shadow-lg shadow-brand-red/30 scale-105' 
                       : 'bg-black/40 text-white/70 hover:text-white hover:bg-black/60 border border-white/15'
                   }`}
                 >
@@ -617,7 +617,7 @@ export const HomePage = ({ onOpenQuote }) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[300px]">
             {/* LEFT: Active Step Detailed Feature */}
             <div className="lg:col-span-7 space-y-4 text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
                 STAGE {SIX_WAYS_CARGO[processSlide].step} // TRANSPARENT PIPELINE
               </div>
 
@@ -631,11 +631,11 @@ export const HomePage = ({ onOpenQuote }) => {
 
               <div className="pt-2 flex flex-wrap gap-3">
                 <div className="px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-semibold text-white flex items-center gap-2 shadow-md">
-                  <Check className="w-4 h-4 text-emerald-400" />
+                  <Check className="w-4 h-4 text-brand-red-light" />
                   <span>Real-Time Milestone Logging</span>
                 </div>
                 <div className="px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-semibold text-white flex items-center gap-2 shadow-md">
-                  <Check className="w-4 h-4 text-emerald-400" />
+                  <Check className="w-4 h-4 text-brand-red-light" />
                   <span>Zero-Delay Customs Pre-Check</span>
                 </div>
               </div>
@@ -652,13 +652,13 @@ export const HomePage = ({ onOpenQuote }) => {
                     onClick={() => setProcessSlide(idx)}
                     className={`text-left p-4 rounded-2xl border backdrop-blur-md transition-all cursor-pointer relative overflow-hidden ${
                       active
-                        ? 'bg-black/60 border-emerald-400 shadow-xl ring-2 ring-emerald-400/30 scale-[1.02]'
+                        ? 'bg-black/60 border-brand-red shadow-xl ring-2 ring-brand-red/30 scale-[1.02]'
                         : 'bg-black/30 border-white/15 hover:bg-black/45 hover:border-white/30'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-xs font-extrabold text-emerald-400">{item.step}</span>
-                      {active && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />}
+                      <span className="font-mono text-xs font-extrabold text-brand-red-light">{item.step}</span>
+                      {active && <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />}
                     </div>
                     <h4 className="text-sm font-bold text-white mb-1 leading-snug">{item.title}</h4>
                     <p className="text-xs text-white/70 line-clamp-2">{item.desc}</p>
@@ -675,19 +675,19 @@ export const HomePage = ({ onOpenQuote }) => {
                 type="button"
                 onClick={prevProcess}
                 aria-label="Previous process stage"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-emerald-500 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <div className="px-3 text-xs font-mono font-bold tracking-wider text-white select-none">
-                <span className="text-emerald-400 font-black text-sm">{String(processSlide + 1).padStart(2, '0')}</span>
+                <span className="text-brand-red font-black text-sm">{String(processSlide + 1).padStart(2, '0')}</span>
                 <span className="text-white/40"> / {String(processCount).padStart(2, '0')}</span>
               </div>
               <button
                 type="button"
                 onClick={nextProcess}
                 aria-label="Next process stage"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-emerald-500 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -800,12 +800,12 @@ export const HomePage = ({ onOpenQuote }) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[300px]">
             {/* LEFT: Active Sector Spotlight */}
             <div className="lg:col-span-7 space-y-4 text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-emerald-400 shadow-md">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
                 CORRIDOR {String(sectorSlide + 1).padStart(2, '0')} // SPECIALIZED SECTOR
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center shrink-0 shadow-lg">
+                <div className="w-14 h-14 rounded-2xl bg-brand-red/20 border border-brand-red/40 text-brand-red flex items-center justify-center shrink-0 shadow-lg">
                   {(() => {
                     const ActiveIcon = INDUSTRY_ICONS[INDUSTRIES_SERVED[sectorSlide].icon] || Ship;
                     return <ActiveIcon className="w-7 h-7" />;
@@ -824,7 +824,7 @@ export const HomePage = ({ onOpenQuote }) => {
                 <button
                   type="button"
                   onClick={() => onOpenQuote()}
-                  className="group px-7 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                  className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
                 >
                   <span>Request Industry Logistics Rate</span>
                   <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
@@ -846,12 +846,12 @@ export const HomePage = ({ onOpenQuote }) => {
                     onClick={() => setSectorSlide(idx)}
                     className={`text-left p-4 rounded-2xl border backdrop-blur-md transition-all cursor-pointer relative overflow-hidden ${
                       active
-                        ? 'bg-black/60 border-emerald-400 shadow-xl ring-2 ring-emerald-400/30 scale-[1.02]'
+                        ? 'bg-black/60 border-brand-red shadow-xl ring-2 ring-brand-red/30 scale-[1.02]'
                         : 'bg-black/30 border-white/15 hover:bg-black/45 hover:border-white/30'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-xs font-extrabold text-emerald-400">{String(idx + 1).padStart(2, '0')}</span>
+                      <span className="font-mono text-xs font-extrabold text-brand-red-light">{String(idx + 1).padStart(2, '0')}</span>
                       <Icon className="w-5 h-5 text-white/70" />
                     </div>
                     <h4 className="text-sm font-bold text-white mb-1 leading-snug">{ind.name}</h4>
@@ -869,19 +869,19 @@ export const HomePage = ({ onOpenQuote }) => {
                 type="button"
                 onClick={prevSector}
                 aria-label="Previous sector"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-emerald-500 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <div className="px-3 text-xs font-mono font-bold tracking-wider text-white select-none">
-                <span className="text-emerald-400 font-black text-sm">{String(sectorSlide + 1).padStart(2, '0')}</span>
+                <span className="text-brand-red font-black text-sm">{String(sectorSlide + 1).padStart(2, '0')}</span>
                 <span className="text-white/40"> / {String(sectorCount).padStart(2, '0')}</span>
               </div>
               <button
                 type="button"
                 onClick={nextSector}
                 aria-label="Next sector"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-emerald-500 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
