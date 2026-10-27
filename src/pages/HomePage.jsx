@@ -280,7 +280,20 @@ export const HomePage = ({ onOpenQuote }) => {
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        {/* full-bleed slide images - dynamic Ken Burns continuous camera moving effect */}
+        {/* Continuous cinematic logistics motion video */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover object-center opacity-35 contrast-105 brightness-105"
+            src="/assets/hero-banner-video.mp4"
+          />
+        </div>
+
+        {/* full-bleed slide images - dynamic Ken Burns continuous camera moving effect with light crisp clarity */}
         {HERO_SLIDES.map((slide, idx) => {
           const isActive = idx === currentSlide;
           const kbClass = idx % 3 === 0 ? 'fm-kb-0' : idx % 3 === 1 ? 'fm-kb-1' : 'fm-kb-2';
@@ -299,16 +312,16 @@ export const HomePage = ({ onOpenQuote }) => {
                 loading={idx === 0 ? 'eager' : 'lazy'}
                 decoding="async"
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none contrast-[1.02] brightness-[1.0] ${
-                  isActive ? `${kbClass} opacity-20` : 'scale-100 opacity-0'
+                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none contrast-[1.05] brightness-[1.05] ${
+                  isActive ? `${kbClass} opacity-25` : 'scale-100 opacity-0'
                 }`}
               />
             </div>
           );
         })}
 
-        {/* Clean executive light gradient scrim inspired by onelooplogistics */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-brand-blue-50/70 pointer-events-none" aria-hidden="true" />
+        {/* Clean executive light gradient scrim */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-brand-blue-50/70 pointer-events-none" aria-hidden="true" />
         <FlightRouteMap className="opacity-10 z-0" />
 
         <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
@@ -557,10 +570,10 @@ export const HomePage = ({ onOpenQuote }) => {
             src="/assets/banner-process-hd.jpg"
             alt=""
             aria-hidden="true"
-            className="w-full h-full object-cover object-center opacity-15 contrast-[1.02] brightness-[1.0] scale-100 fm-kb-1"
+            className="w-full h-full object-cover object-center opacity-30 contrast-[1.05] brightness-[1.08] scale-100 fm-kb-1"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-slate-50/80 to-white/90 pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-slate-50/75 to-white/90 pointer-events-none" aria-hidden="true" />
         <FlightRouteMap className="opacity-10 z-0" />
         <Wave className="text-white" flip />
         <Wave className="text-slate-50" />
@@ -759,35 +772,35 @@ export const HomePage = ({ onOpenQuote }) => {
                   onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSectorSlide(idx); } }}
                   className={`group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 ease-[cubic-bezier(.2,.7,.2,1)] ${
                     active
-                      ? 'lg:flex-[5] bg-gradient-to-br from-brand-blue-dark via-brand-blue to-brand-blue-dark text-white shadow-2xl shadow-brand-blue/30'
-                      : 'lg:flex-[1] bg-white border border-slate-200 shadow-md hover:border-brand-blue/40 hover:shadow-xl'
+                      ? 'lg:flex-[5] bg-gradient-to-br from-brand-blue-50/90 via-white to-brand-blue-50/60 text-slate-900 border-2 border-brand-blue-200 shadow-xl'
+                      : 'lg:flex-[1] bg-white border border-slate-200 shadow-sm hover:border-brand-blue/40 hover:shadow-md'
                   }`}
                 >
                   {active ? (
                     <>
                       <img
-                        src="/assets/sea cargo.jpg"
+                        src="/assets/banner-sectors-hd.jpg"
                         alt=""
                         aria-hidden="true"
-                        className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity pointer-events-none"
-                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                        className="absolute inset-0 w-full h-full object-cover opacity-20 contrast-[1.05] brightness-[1.05] pointer-events-none"
+                        onError={(e) => { e.currentTarget.src = '/assets/sea cargo.jpg'; }}
                       />
-                      <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-brand-red/30 blur-3xl pointer-events-none" aria-hidden="true" />
-                      <Icon className="absolute -right-8 -bottom-8 w-64 h-64 text-white/[0.07] pointer-events-none" aria-hidden="true" />
-                      <span className="absolute right-6 top-4 text-7xl font-black font-mono text-white/10 leading-none select-none" aria-hidden="true">
+                      <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-brand-red/15 blur-3xl pointer-events-none" aria-hidden="true" />
+                      <Icon className="absolute -right-8 -bottom-8 w-64 h-64 text-brand-blue/[0.05] pointer-events-none" aria-hidden="true" />
+                      <span className="absolute right-6 top-4 text-7xl font-black font-mono text-brand-blue/10 leading-none select-none" aria-hidden="true">
                         {String(idx + 1).padStart(2, '0')}
                       </span>
 
                       <div className="fm-fade relative p-6 sm:p-8 lg:absolute lg:inset-y-0 lg:left-0 lg:w-[480px] lg:p-10 flex flex-col justify-end gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-brand-red flex items-center justify-center shadow-xl shadow-brand-red/40">
+                        <div className="w-14 h-14 rounded-2xl bg-brand-red flex items-center justify-center shadow-lg shadow-brand-red/30">
                           <Icon className="w-7 h-7 text-white" />
                         </div>
-                        <h3 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight">{ind.name}</h3>
-                        <p className="text-sm sm:text-base text-white/85 leading-relaxed">{ind.desc}</p>
+                        <h3 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight text-slate-900">{ind.name}</h3>
+                        <p className="text-sm sm:text-base text-slate-600 leading-relaxed">{ind.desc}</p>
                         <button
                           type="button"
                           onClick={(e) => { e.stopPropagation(); onOpenQuote(); }}
-                          className="group/btn self-start mt-1 px-6 py-3 bg-white text-brand-blue-dark hover:bg-brand-red hover:text-white rounded-full text-xs sm:text-sm font-bold shadow-lg transition-all cursor-pointer flex items-center gap-2"
+                          className="group/btn self-start mt-1 px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-md shadow-brand-red/25 transition-all cursor-pointer flex items-center gap-2"
                         >
                           Request industry rate
                           <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />

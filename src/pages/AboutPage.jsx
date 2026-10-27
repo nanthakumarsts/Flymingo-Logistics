@@ -209,10 +209,10 @@ export const AboutPage = ({ onOpenQuote }) => {
           <img
             src="/assets/banner-marine-hd.jpg"
             alt="Flymingo Logistics Global Operations"
-            className="w-full h-full object-cover object-center opacity-20 contrast-[1.02] brightness-[1.0] ab-kb"
+            className="w-full h-full object-cover object-center opacity-30 contrast-[1.05] brightness-[1.08] ab-kb"
           />
         </div>
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-white via-white/95 to-brand-blue-50/70 pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-white/95 via-white/85 to-brand-blue-50/70 pointer-events-none" aria-hidden="true" />
         <FlightRouteMap className="opacity-10 z-0" />
         <div className="ab-blob absolute -bottom-24 -right-16 w-96 h-96 rounded-full bg-brand-red/15 blur-3xl pointer-events-none" aria-hidden="true" />
 
