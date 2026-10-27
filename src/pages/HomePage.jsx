@@ -47,7 +47,18 @@ const css = `
 @keyframes fm-spin-slow { to { transform: rotate(360deg); } }
 @keyframes fm-pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(232,41,31,.55); } 100% { box-shadow: 0 0 0 16px rgba(232,41,31,0); } }
 @keyframes fm-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes fm-kenburns { from { transform: scale(1.12) translate(0,0); } to { transform: scale(1) translate(-1%, 1%); } }
+@keyframes fm-kb-zoom-in {
+  0% { transform: scale(1.04) translate(0, 0); }
+  100% { transform: scale(1.18) translate(-1.5%, -1%); }
+}
+@keyframes fm-kb-zoom-out {
+  0% { transform: scale(1.18) translate(0, 0); }
+  100% { transform: scale(1.04) translate(1.5%, -0.5%); }
+}
+@keyframes fm-kb-pan-right {
+  0% { transform: scale(1.10) translate(-2%, 0); }
+  100% { transform: scale(1.16) translate(1.5%, -1%); }
+}
 @keyframes fm-slide-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 
 .fm-hero-item { opacity: 0; animation: fm-rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
@@ -62,7 +73,9 @@ const css = `
 /* new hero slider */
 .fm-bar { transform-origin: left; animation: fm-bar 6s linear forwards; }
 .fm-bar-paused { animation-play-state: paused; }
-.fm-kb { animation: fm-kenburns 8s ease-out forwards; }
+.fm-kb-0 { animation: fm-kb-zoom-in 7.5s linear forwards; will-change: transform; }
+.fm-kb-1 { animation: fm-kb-zoom-out 7.5s linear forwards; will-change: transform; }
+.fm-kb-2 { animation: fm-kb-pan-right 7.5s linear forwards; will-change: transform; }
 .fm-s1 { opacity: 0; animation: fm-slide-in .7s .05s cubic-bezier(.2,.7,.2,1) forwards; }
 .fm-s2 { opacity: 0; animation: fm-slide-in .7s .18s cubic-bezier(.2,.7,.2,1) forwards; }
 .fm-s3 { opacity: 0; animation: fm-slide-in .7s .30s cubic-bezier(.2,.7,.2,1) forwards; }
@@ -100,7 +113,7 @@ const css = `
 @media (prefers-reduced-motion: reduce) {
   .fm-hero-item, .fm-reveal, .fm-s1, .fm-s2, .fm-s3, .fm-s4 { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; filter: none !important; }
   .fm-wing { stroke-dashoffset: 0; animation: none; }
-  .fm-zoom, .fm-kb, .fm-bar, .fm-float, .fm-blob, .fm-ping::after, .fm-dash, .fm-spin, .fm-pulse { animation: none; }
+  .fm-zoom, .fm-kb-0, .fm-kb-1, .fm-kb-2, .fm-bar, .fm-float, .fm-blob, .fm-ping::after, .fm-dash, .fm-spin, .fm-pulse { animation: none; }
 }
 `;
 
@@ -230,28 +243,35 @@ export const HomePage = ({ onOpenQuote }) => {
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        {/* full-bleed slide images - real high-res photography with clean dark scrims, NO cartoon container SVG boxes */}
-        {HERO_SLIDES.map((slide, idx) => (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-700 ${idx === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-          >
-            <img
-              src={slide.image}
-              alt=""
-              aria-hidden="true"
-              loading={idx === 0 ? 'eager' : 'lazy'}
-              decoding="async"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-              className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-transform duration-1000 ${
-                idx === currentSlide ? 'scale-105 opacity-40' : 'opacity-30'
+        {/* full-bleed slide images - dynamic Ken Burns continuous camera moving effect */}
+        {HERO_SLIDES.map((slide, idx) => {
+          const isActive = idx === currentSlide;
+          const kbClass = idx % 3 === 0 ? 'fm-kb-0' : idx % 3 === 1 ? 'fm-kb-1' : 'fm-kb-2';
+          return (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                isActive ? 'opacity-100 z-0' : 'opacity-0 pointer-events-none'
               }`}
-            />
-          </div>
-        ))}
+            >
+              <img
+                key={isActive ? `${slide.id}-active` : `${slide.id}-idle`}
+                src={slide.image}
+                alt=""
+                aria-hidden="true"
+                loading={idx === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none ${
+                  isActive ? `${kbClass} opacity-50` : 'scale-100 opacity-20'
+                }`}
+              />
+            </div>
+          );
+        })}
 
         {/* Professional corporate solid scrim overlay for crystal-clear readability */}
-        <div className="absolute inset-0 bg-brand-blue-dark/85" aria-hidden="true" />
+        <div className="absolute inset-0 bg-[#00172b]/80" aria-hidden="true" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-14 sm:pt-6 sm:pb-16 lg:pt-6 lg:pb-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[370px]">
