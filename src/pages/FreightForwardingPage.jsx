@@ -28,7 +28,7 @@ export const FreightForwardingPage = ({ onOpenQuote }) => {
       <PageBanner eyebrow="Multimodal global freight" title="Freight forwarding by sea & air" description="Seamless international ocean container shipping and expedited air cargo, backed by competitive freight rate negotiation." image="/assets/air cargo.jpg" action="Request freight rate" onAction={() => onOpenQuote('freight-forwarding')} />
 
       {/* Air Cargo Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
             <div className="flex items-center gap-4">
@@ -65,7 +65,7 @@ export const FreightForwardingPage = ({ onOpenQuote }) => {
       </section>
 
       {/* Sea Cargo Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
             <div className="flex items-center gap-4">
@@ -102,7 +102,7 @@ export const FreightForwardingPage = ({ onOpenQuote }) => {
       </section>
 
       {/* Call to action */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="space-y-2 text-center md:text-left">
             <h2 className="text-2xl sm:text-3xl font-extrabold">Need Multi-Modal Ocean &amp; Air Logistics?</h2>

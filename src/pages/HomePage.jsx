@@ -311,7 +311,7 @@ export const HomePage = ({ onOpenQuote }) => {
         <div className="absolute inset-0 bg-[#001426]/55 pointer-events-none" aria-hidden="true" />
         <FlightRouteMap className="opacity-20 z-0" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
+        <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[360px]">
 
             {/* LEFT: content */}
@@ -451,7 +451,7 @@ export const HomePage = ({ onOpenQuote }) => {
       </section>
 
       {/* ============ STATS ============ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-6 mb-12 sm:mb-16 relative z-10">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 mt-4 sm:mt-6 mb-12 sm:mb-16 relative z-10">
         <div className="bg-white rounded-2xl shadow-xl shadow-slate-900/6 border border-slate-200/80 p-4 sm:p-5">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 divide-y sm:divide-y-0 lg:divide-x divide-slate-100">
             {STATS.map((st, i) => {
@@ -485,7 +485,7 @@ export const HomePage = ({ onOpenQuote }) => {
         <div className="fm-blob absolute top-20 -left-24 w-80 h-80 rounded-full bg-brand-blue/10 blur-3xl pointer-events-none" aria-hidden="true" />
         <div className="fm-blob absolute bottom-10 -right-24 w-80 h-80 rounded-full bg-brand-red/10 blur-3xl pointer-events-none" style={{ animationDelay: '-7s' }} aria-hidden="true" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+        <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-20 sm:py-28">
           <SectionHead
             title="Comprehensive logistics and maritime services"
             text="Built for reliability, transparent tracking and full compliance across worldwide corridors."
@@ -565,7 +565,7 @@ export const HomePage = ({ onOpenQuote }) => {
         <Wave className="text-slate-50" flip />
         <Wave className="text-white" />
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 z-10">
           <SectionHead
             light
             title="From pickup to delivery, one clear process"
@@ -693,7 +693,7 @@ export const HomePage = ({ onOpenQuote }) => {
       </section>
 
       {/* ============ PROMISE ============ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-20 sm:py-28">
         <Reveal variant="scale">
           <div className="relative overflow-hidden rounded-[2rem] bg-brand-blue-dark border border-brand-blue/30 text-white p-7 sm:p-12 lg:p-16 shadow-2xl">
             <img
@@ -739,7 +739,7 @@ export const HomePage = ({ onOpenQuote }) => {
         <div className="fm-blob absolute -top-24 -left-20 w-96 h-96 rounded-full bg-brand-blue/10 blur-3xl pointer-events-none" aria-hidden="true" />
         <div className="fm-blob absolute -bottom-24 -right-20 w-96 h-96 rounded-full bg-brand-red/10 blur-3xl pointer-events-none" style={{ animationDelay: '-9s' }} aria-hidden="true" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <SectionHead
             title="Serving critical global sectors"
             text="Logistics workflows built to meet strict industry benchmarks."
@@ -845,7 +845,7 @@ export const HomePage = ({ onOpenQuote }) => {
       <section className="relative overflow-hidden bg-slate-50">
         <Quote className="absolute left-4 top-24 w-56 h-56 text-brand-blue/[0.05] -rotate-6" aria-hidden="true" />
         <Quote className="absolute right-4 bottom-10 w-56 h-56 text-brand-red/[0.06] rotate-6" aria-hidden="true" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+        <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-20 sm:py-28">
           <SectionHead title="Trusted by maritime fleets and global families" />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {TESTIMONIALS.map((t, idx) => (

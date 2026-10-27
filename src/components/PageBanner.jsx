@@ -37,7 +37,7 @@ export function PageBanner({
       {/* Global flight route map overlay */}
       <FlightRouteMap className="opacity-25" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 z-10">
+      <div className="relative mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-8 xl:px-12 z-10">
         <div className="max-w-3xl space-y-3 sm:space-y-4 text-left">
           
           {/* Eyebrow badge - clean, no '//' */}

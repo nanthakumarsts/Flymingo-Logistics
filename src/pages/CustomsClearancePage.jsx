@@ -39,7 +39,7 @@ export const CustomsClearancePage = ({ onOpenQuote }) => {
       <PageBanner eyebrow="Licensed customs brokerage" title="Import & export customs clearance" description="Precise HS classification, duty valuation and rapid out-of-charge by an experienced customs house brokerage team." image="/assets/customs clearance.jpg" action="Consult customs broker" onAction={() => onOpenQuote('customs-clearance')} />
 
       {/* Main Content */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-10">
         <div className="text-center space-y-2 max-w-xl mx-auto">
           <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue">
             Clearance Expertise
@@ -66,7 +66,7 @@ export const CustomsClearancePage = ({ onOpenQuote }) => {
       </section>
 
       {/* Ports Handled */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-6">
           <div className="max-w-2xl space-y-2">
             <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
@@ -102,7 +102,7 @@ export const CustomsClearancePage = ({ onOpenQuote }) => {
       </section>
 
       {/* CTA Box */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="space-y-2 text-center md:text-left">
             <h2 className="text-2xl sm:text-3xl font-extrabold">Need Urgent Customs Clearance Assistance?</h2>

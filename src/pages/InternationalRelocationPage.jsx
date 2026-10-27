@@ -54,7 +54,7 @@ export const InternationalRelocationPage = ({ onOpenQuote }) => {
       <PageBanner eyebrow="Packers & movers" title="International relocation & moving services" description="Stress-free overseas home moves with export-grade packing, all-risk marine insurance and Transfer of Residence customs support." image="/assets/movers.jpg" action="Request relocation survey" onAction={() => onOpenQuote('international-relocation')} />
 
       {/* 6 Step Moving Workflow */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-10">
         <div className="text-center space-y-2 max-w-xl mx-auto">
           <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue">
             Complete Moving Protocol
@@ -81,7 +81,7 @@ export const InternationalRelocationPage = ({ onOpenQuote }) => {
       </section>
 
       {/* Transfer of Residence (TR) Guide */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-8">
           <div className="max-w-2xl space-y-2">
             <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
@@ -140,7 +140,7 @@ export const InternationalRelocationPage = ({ onOpenQuote }) => {
       </section>
 
       {/* CTA Box */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="space-y-2 text-center md:text-left">
             <h2 className="text-2xl sm:text-3xl font-extrabold">Planning An Overseas Relocation?</h2>

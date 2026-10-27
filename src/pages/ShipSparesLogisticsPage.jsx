@@ -50,7 +50,7 @@ export const ShipSparesLogisticsPage = ({ onOpenQuote }) => {
       <PageBanner eyebrow="24/7 maritime logistics" title="Ship spares & on-board delivery" description="Time-critical marine replacement parts cleared through customs and delivered direct to the vessel deck, without port detention." image="/assets/any size.jpg" action="Request spares delivery" onAction={() => onOpenQuote('ship-spares')} secondaryAction={<a href={`tel:${BRAND.primaryPhone}`} className="rounded-xl border border-white/40 bg-white/10 px-6 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white hover:text-brand-blue">Call 24/7 port hotline</a>} />
 
       {/* Integrated Import & Vessel Delivery Management */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-10">
         <div className="text-center space-y-2 max-w-xl mx-auto">
           <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue">
             Operational Protocol
@@ -77,7 +77,7 @@ export const ShipSparesLogisticsPage = ({ onOpenQuote }) => {
       </section>
 
       {/* Capabilities & Value Proposition */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             <div className="space-y-4">
@@ -130,7 +130,7 @@ export const ShipSparesLogisticsPage = ({ onOpenQuote }) => {
       </section>
 
       {/* CTA Box */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="space-y-2 text-center md:text-left">
             <h2 className="text-2xl sm:text-3xl font-extrabold">Vessel Arriving At Indian Port Soon?</h2>

@@ -131,7 +131,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
         <div className="absolute inset-0 bg-[#001426]/40 z-0 pointer-events-none" aria-hidden="true" />
         <FlightRouteMap className="opacity-25 z-0" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
           <div className="max-w-3xl space-y-3 sm:space-y-4 text-left">
             {/* Banner Eyebrow Badge - clean, no '//' */}
             <div>
@@ -184,7 +184,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
       {/* ========================================================= */}
       {/* 2. STATS STRIP                                            */}
       {/* ========================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center divide-y lg:divide-y-0 lg:divide-x divide-slate-100">
             {STATS.map((st, i) => (
@@ -207,7 +207,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
       {/* ========================================================= */}
       {/* 3. COMPREHENSIVE 6 SERVICES SHOWCASE                       */}
       {/* ========================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-12">
         <div className="text-center space-y-1.5 max-w-2xl mx-auto">
           <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
             Tailored Specialized Solutions
@@ -305,7 +305,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
       {/* ========================================================= */}
       {/* 4. BOTTOM ACTION STRIP                                    */}
       {/* ========================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-brand-blue-dark rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-brand-blue/30">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-xs font-bold uppercase tracking-wider text-brand-red bg-white/10 px-3 py-1 rounded-full inline-block">

@@ -37,7 +37,7 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
       <PageBanner eyebrow="Doorstep express service" title="Fast, reliable global courier delivery" description="B2B commercial dispatches, B2C e-commerce and C2C personal packages delivered worldwide with speed and care." image="/assets/international_courier_banner.jpg" action="Get courier fare rate" onAction={() => onOpenQuote('international-courier')} />
 
       {/* B2B & B2C Enterprise Features */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-8">
           <div className="max-w-2xl space-y-2">
             <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue">
@@ -116,7 +116,7 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
       </section>
 
       {/* C2C Personal & Family Services */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-10">
         <div className="text-center space-y-2 max-w-xl mx-auto">
           <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
             Personal &amp; Family Care
@@ -157,7 +157,7 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
 
       {/* Everything We Deliver */}
       <section className="bg-slate-50 border-y border-slate-200 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-10">
           <div className="text-center space-y-2 max-w-xl mx-auto">
             <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue">
               All Categories
@@ -184,7 +184,7 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
       </section>
 
       {/* How It Works */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-10">
         <div className="text-center space-y-2 max-w-xl mx-auto">
           <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
             Workflow
@@ -208,7 +208,7 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
       </section>
 
       {/* CTA Box */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-brand-blue-dark rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-brand-blue/30">
           <div className="space-y-2 text-center md:text-left">
             <h2 className="text-2xl sm:text-3xl font-extrabold">Need an Express Pickup Today?</h2>

@@ -12,7 +12,7 @@ export const Footer = ({ onOpenQuote }) => {
 
   return (
     <footer className="bg-slate-50 border-t border-slate-200 text-slate-700 pt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-12">
         {/* Top Action Card - Rendered ONLY on Home Page */}
         {isHomePage && (
           <div className="bg-[#002d4d] rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">

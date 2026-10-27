@@ -38,7 +38,7 @@ export const ContactPage = () => {
         <div className="absolute inset-0 bg-[#001426]/40 z-0 pointer-events-none" aria-hidden="true" />
         <FlightRouteMap className="opacity-25 z-0" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
           <div className="max-w-3xl space-y-3 sm:space-y-4 text-left">
             {/* Banner Eyebrow Badge - clean, no '//' */}
             <div>
@@ -69,7 +69,7 @@ export const ContactPage = () => {
       </section>
 
       {/* Main Contact Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Left Column: Office Locations & Direct Contacts */}
           <div className="lg:col-span-5 space-y-6">
@@ -267,7 +267,7 @@ export const ContactPage = () => {
       </section>
 
       {/* Embedded Map Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm">
           <div className="p-6 border-b border-slate-200 flex flex-wrap items-center justify-between gap-4">
             <div>
