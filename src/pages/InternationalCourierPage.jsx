@@ -207,25 +207,25 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* CTA Box */}
+      {/* CTA Box (Light Theme) */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-        <div className="bg-brand-blue-dark rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-brand-blue/30">
+        <div className="bg-gradient-to-r from-brand-blue-50 via-white to-brand-blue-50/50 rounded-3xl p-8 sm:p-12 text-slate-900 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-brand-blue-100">
           <div className="space-y-2 text-center md:text-left">
-            <h2 className="text-2xl sm:text-3xl font-extrabold">Need an Express Pickup Today?</h2>
-            <p className="text-xs sm:text-sm text-slate-200">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Need an Express Pickup Today?</h2>
+            <p className="text-xs sm:text-sm text-slate-600">
               Call our courier booking hotline or request an instant doorstep rate quote online.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => onOpenQuote('international-courier')}
-              className="px-7 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg transition-all cursor-pointer"
+              className="px-7 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg shadow-brand-red/30 transition-all cursor-pointer"
             >
               Get Fare Rate Quote
             </button>
             <a
               href={`tel:${BRAND.primaryPhone}`}
-              className="px-7 py-3 bg-white text-brand-blue hover:bg-slate-100 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+              className="px-7 py-3 bg-white border border-slate-300 text-slate-800 hover:text-brand-blue hover:border-brand-blue rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-sm cursor-pointer"
             >
               Call {BRAND.primaryPhone}
             </a>

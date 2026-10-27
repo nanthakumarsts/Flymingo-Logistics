@@ -204,41 +204,40 @@ export const AboutPage = ({ onOpenQuote }) => {
       {/* ========================================================= */}
       {/* 1. HERO                                                   */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-brand-blue-dark text-white py-20 sm:py-28 lg:py-32">
+      <section className="relative overflow-hidden bg-slate-50 text-slate-900 border-b border-slate-200 py-20 sm:py-28 lg:py-32 select-none">
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img
             src="/assets/banner-marine-hd.jpg"
             alt="Flymingo Logistics Global Operations"
-            className="w-full h-full object-cover object-center opacity-95 contrast-[1.06] ab-kb"
+            className="w-full h-full object-cover object-center opacity-20 contrast-[1.02] brightness-[1.0] ab-kb"
           />
         </div>
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#001426]/90 via-[#001426]/60 to-[#001426]/20 pointer-events-none" aria-hidden="true" />
-        <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#001426]/70 via-transparent to-transparent pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-25 z-0" />
-        <div className="ab-blob absolute -bottom-24 -right-16 w-96 h-96 rounded-full bg-brand-red/30 blur-3xl pointer-events-none" aria-hidden="true" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-white via-white/95 to-brand-blue-50/70 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-10 z-0" />
+        <div className="ab-blob absolute -bottom-24 -right-16 w-96 h-96 rounded-full bg-brand-red/15 blur-3xl pointer-events-none" aria-hidden="true" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
           <div className="max-w-3xl space-y-5 sm:space-y-6 text-left">
             <div className="ab-h1">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
                 SOUTH INDIA &rarr; THE WORLD
               </div>
             </div>
 
             <div className="ab-h2 space-y-3">
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08] drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)]">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08]">
                 We Are The Bridge Between You And Your Relations.<br />
                 <span className="text-brand-red font-black">
                   Across Oceans &amp; Continents.
                 </span>
               </h1>
-              <p className="pl-4 border-l-4 border-brand-red text-base sm:text-xl font-bold text-white/95 tracking-wide drop-shadow-md">
+              <p className="pl-4 border-l-4 border-brand-red text-base sm:text-xl font-bold text-slate-700 tracking-wide">
                 Connecting Families. Empowering Global Trade.
               </p>
             </div>
 
-            <p className="ab-h3 text-sm sm:text-lg text-white/90 leading-relaxed max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
+            <p className="ab-h3 text-sm sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
               Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.
             </p>
 
@@ -246,16 +245,16 @@ export const AboutPage = ({ onOpenQuote }) => {
               <button
                 type="button"
                 onClick={() => onOpenQuote()}
-                className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/40 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
               >
                 <span>Explore Our Services</span>
-                <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
                   <ArrowRight className="h-3.5 w-3.5 text-white" />
                 </span>
               </button>
               <a
                 href={`tel:${BRAND.primaryPhone}`}
-                className="px-7 py-3.5 bg-black/40 backdrop-blur-md border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 shadow-md"
+                className="px-7 py-3.5 bg-white border border-slate-300 text-slate-800 hover:text-brand-blue hover:border-brand-blue rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 shadow-sm"
               >
                 Speak To Logistics Desk
               </a>
@@ -554,19 +553,19 @@ export const AboutPage = ({ onOpenQuote }) => {
       {/* ========================================================= */}
       {/* 6. WHY US                                                 */}
       {/* ========================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <Reveal variant="scale">
-          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#00172b] via-brand-blue-dark to-[#002a47] text-white p-7 sm:p-12 lg:p-14 border border-white/10 shadow-2xl shadow-brand-blue/30">
-            <div className="ab-blob absolute -top-24 -left-16 w-80 h-80 rounded-full bg-brand-red/25 blur-3xl pointer-events-none" aria-hidden="true" />
-            <div className="ab-blob absolute -bottom-28 right-0 w-80 h-80 rounded-full bg-brand-blue/40 blur-3xl pointer-events-none" style={{ animationDelay: '-8s' }} aria-hidden="true" />
-            <Ship className="absolute -right-10 -bottom-10 w-72 h-72 text-white/[0.04] pointer-events-none" aria-hidden="true" />
+          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-brand-blue-50 via-white to-brand-blue-50/50 text-slate-900 p-7 sm:p-12 lg:p-14 border border-brand-blue-100 shadow-xl">
+            <div className="ab-blob absolute -top-24 -left-16 w-80 h-80 rounded-full bg-brand-red/15 blur-3xl pointer-events-none" aria-hidden="true" />
+            <div className="ab-blob absolute -bottom-28 right-0 w-80 h-80 rounded-full bg-brand-blue/20 blur-3xl pointer-events-none" style={{ animationDelay: '-8s' }} aria-hidden="true" />
+            <Ship className="absolute -right-10 -bottom-10 w-72 h-72 text-brand-blue/[0.04] pointer-events-none" aria-hidden="true" />
             <span className="absolute left-0 top-10 bottom-10 w-1.5 rounded-r-full bg-brand-red" aria-hidden="true" />
 
             <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
               <div className="lg:col-span-5 flex justify-center">
                 <div className="relative w-full max-w-sm">
-                  <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-brand-red/50 via-transparent to-brand-blue/50 blur-xl" aria-hidden="true" />
-                  <div className="ab-float relative rounded-3xl overflow-hidden border-2 border-white/25 shadow-2xl bg-slate-800">
+                  <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-brand-red/30 via-transparent to-brand-blue/30 blur-xl" aria-hidden="true" />
+                  <div className="ab-float relative rounded-3xl overflow-hidden border-2 border-slate-200 shadow-xl bg-white">
                     <img
                       src="/assets/why_choose.jpg"
                       alt="Why Choose Flymingo Logistics"
@@ -578,11 +577,11 @@ export const AboutPage = ({ onOpenQuote }) => {
               </div>
 
               <div className="lg:col-span-7 space-y-6 text-left">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-red/20 border border-brand-red/40 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-blue-50 border border-brand-blue-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-blue">
                   Why Flymingo
                 </div>
 
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
                   Why Choose Us?
                 </h2>
                 <span className="block h-1 w-14 rounded-full bg-brand-red" aria-hidden="true" />
@@ -591,17 +590,17 @@ export const AboutPage = ({ onOpenQuote }) => {
                   {WHY_US_POINTS.map((pt, idx) => (
                     <div
                       key={idx}
-                      className={`group relative flex items-start gap-3 p-4 rounded-2xl bg-white/[0.06] border border-white/10 backdrop-blur-sm hover:bg-white/[0.12] hover:border-brand-red/60 hover:-translate-y-1 transition-all duration-300 overflow-hidden ${
+                      className={`group relative flex items-start gap-3 p-4 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-brand-red/60 hover:shadow-md hover:-translate-y-1 transition-all duration-300 overflow-hidden ${
                         idx === WHY_US_POINTS.length - 1 ? 'sm:col-span-2' : ''
                       }`}
                     >
-                      <span className="absolute -right-1 -top-3 text-5xl font-black font-mono text-white/[0.06] select-none" aria-hidden="true">
+                      <span className="absolute -right-1 -top-3 text-5xl font-black font-mono text-slate-900/[0.04] select-none" aria-hidden="true">
                         {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <div className="relative w-8 h-8 rounded-lg bg-brand-red/25 text-brand-red-light flex items-center justify-center shrink-0 group-hover:bg-brand-red group-hover:text-white transition-colors">
+                      <div className="relative w-8 h-8 rounded-lg bg-brand-red/10 text-brand-red flex items-center justify-center shrink-0 group-hover:bg-brand-red group-hover:text-white transition-colors">
                         <Ship className="w-4 h-4" />
                       </div>
-                      <span className="relative text-xs sm:text-sm font-semibold text-white/90 leading-snug pt-1">{pt}</span>
+                      <span className="relative text-xs sm:text-sm font-semibold text-slate-700 leading-snug pt-1">{pt}</span>
                     </div>
                   ))}
                 </div>
@@ -610,14 +609,14 @@ export const AboutPage = ({ onOpenQuote }) => {
                   <button
                     type="button"
                     onClick={() => onOpenQuote()}
-                    className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/40 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
+                    className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
                   >
                     <span>Request Fare Quote</span>
                     <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </button>
                   <a
                     href={`tel:${BRAND.primaryPhone}`}
-                    className="px-7 py-3.5 bg-white/10 hover:bg-white hover:text-brand-blue-dark border border-white/25 text-white rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2"
+                    className="px-7 py-3.5 bg-white border border-slate-300 text-slate-800 hover:text-brand-blue hover:border-brand-blue rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm"
                   >
                     <Phone className="w-4 h-4" />
                     Call +91 95662 54488

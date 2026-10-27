@@ -276,7 +276,7 @@ export const HomePage = ({ onOpenQuote }) => {
 
       {/* ============ HERO SLIDER ============ */}
       <section
-        className="relative overflow-hidden bg-brand-blue-dark text-white select-none"
+        className="relative overflow-hidden bg-slate-50 text-slate-900 border-b border-slate-200 select-none"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
@@ -299,17 +299,17 @@ export const HomePage = ({ onOpenQuote }) => {
                 loading={idx === 0 ? 'eager' : 'lazy'}
                 decoding="async"
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none contrast-[1.05] brightness-[0.90] ${
-                  isActive ? `${kbClass} opacity-90` : 'scale-100 opacity-0'
+                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none contrast-[1.02] brightness-[1.0] ${
+                  isActive ? `${kbClass} opacity-20` : 'scale-100 opacity-0'
                 }`}
               />
             </div>
           );
         })}
 
-        {/* Balanced dimmed film scrim - comfortable, premium dark contrast without glare */}
-        <div className="absolute inset-0 bg-[#001426]/55 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-20 z-0" />
+        {/* Clean executive light gradient scrim inspired by onelooplogistics */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-brand-blue-50/70 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-10 z-0" />
 
         <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[360px]">
@@ -319,12 +319,12 @@ export const HomePage = ({ onOpenQuote }) => {
               key={activeSlide.id}
               className="lg:col-span-8 space-y-4 sm:space-y-5 text-left"
             >
-              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
+              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
                 {activeSlide.badge}
               </div>
 
               <div className="space-y-2">
-                <h1 className="fm-s2 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+                <h1 className="fm-s2 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-slate-900">
                   {activeSlide.titlePrefix}
                   <span className="text-brand-red font-black">
                     {activeSlide.highlight}
@@ -333,13 +333,13 @@ export const HomePage = ({ onOpenQuote }) => {
                 </h1>
 
                 {activeSlide.tagline && (
-                  <p className="fm-s2 text-base sm:text-xl font-bold text-white/95 tracking-wide drop-shadow-md">
+                  <p className="fm-s2 text-base sm:text-xl font-bold text-slate-700 tracking-wide">
                     {activeSlide.tagline}
                   </p>
                 )}
               </div>
 
-              <p className="fm-s3 text-sm sm:text-lg text-white/95 leading-relaxed max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
+              <p className="fm-s3 text-sm sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
                 {activeSlide.desc}
               </p>
 
@@ -350,13 +350,13 @@ export const HomePage = ({ onOpenQuote }) => {
                   className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
                 >
                   <span>{activeSlide.primaryCta}</span>
-                  <span className="w-6 h-6 rounded-full bg-black/25 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                  <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
                     <ArrowRight className="w-3.5 h-3.5 text-white" />
                   </span>
                 </button>
                 <Link
                   to={activeSlide.secondaryLink}
-                  className="px-7 py-3.5 bg-black/35 backdrop-blur-md border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-lg"
+                  className="px-7 py-3.5 bg-white border border-slate-300 hover:border-brand-blue hover:text-brand-blue text-slate-800 rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm"
                 >
                   {activeSlide.secondaryCta}
                   <ArrowRight className="w-4 h-4" />
@@ -374,10 +374,10 @@ export const HomePage = ({ onOpenQuote }) => {
                     type="button"
                     onClick={() => setCurrentSlide(idx)}
                     aria-label={`Go to slide ${idx + 1}: ${slide.badge}`}
-                    className={`group relative overflow-hidden flex items-center gap-3.5 p-3 rounded-2xl border text-left backdrop-blur-md transition-all duration-300 cursor-pointer ${
+                    className={`group relative overflow-hidden flex items-center gap-3.5 p-3 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
                       active
-                        ? 'bg-black/55 border-brand-red/80 shadow-2xl ring-2 ring-brand-red/40 scale-[1.02]'
-                        : 'bg-black/30 border-white/15 hover:bg-black/45 hover:border-white/30'
+                        ? 'bg-white border-brand-red/80 shadow-xl ring-2 ring-brand-red/30 scale-[1.02]'
+                        : 'bg-white/80 border-slate-200 hover:bg-white hover:border-slate-300 shadow-sm'
                     }`}
                   >
                     <img
@@ -386,18 +386,18 @@ export const HomePage = ({ onOpenQuote }) => {
                       aria-hidden="true"
                       loading="lazy"
                       onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      className="w-14 h-14 rounded-xl object-cover bg-brand-blue shrink-0 border border-white/20 shadow-sm"
+                      className="w-14 h-14 rounded-xl object-cover bg-slate-100 shrink-0 border border-slate-200 shadow-sm"
                     />
                     <div className="min-w-0 flex-1">
-                      <div className="text-[10px] font-mono tracking-widest text-brand-red-light font-bold uppercase">
+                      <div className="text-[10px] font-mono tracking-widest text-brand-red font-bold uppercase">
                         CORRIDOR {String(idx + 1).padStart(2, '0')}
                       </div>
-                      <div className={`text-xs sm:text-sm font-bold leading-snug truncate ${active ? 'text-white' : 'text-white/80'}`}>
+                      <div className={`text-xs sm:text-sm font-bold leading-snug truncate ${active ? 'text-slate-900 font-extrabold' : 'text-slate-700'}`}>
                         {slide.badge}
                       </div>
                     </div>
                     {active && (
-                      <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-white/20" aria-hidden="true">
+                      <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-slate-200" aria-hidden="true">
                         <span
                           key={currentSlide}
                           className={`fm-bar block h-full bg-brand-red ${isPaused ? 'fm-bar-paused' : ''}`}
@@ -411,25 +411,25 @@ export const HomePage = ({ onOpenQuote }) => {
           </div>
 
           {/* bottom controls */}
-          <div className="mt-7 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 relative z-20">
-            <div className="flex items-center gap-2 p-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
+          <div className="mt-7 pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4 relative z-20">
+            <div className="flex items-center gap-2 p-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
               <button
                 type="button"
                 onClick={prevSlide}
                 aria-label="Previous slide"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-brand-red text-slate-700 hover:text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <div className="px-3 text-xs font-mono font-bold tracking-wider text-white select-none">
+              <div className="px-3 text-xs font-mono font-bold tracking-wider text-slate-900 select-none">
                 <span className="text-brand-red font-black text-sm">{String(currentSlide + 1).padStart(2, '0')}</span>
-                <span className="text-white/40"> / {String(slideCount).padStart(2, '0')}</span>
+                <span className="text-slate-400"> / {String(slideCount).padStart(2, '0')}</span>
               </div>
               <button
                 type="button"
                 onClick={nextSlide}
                 aria-label="Next slide"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-red text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-brand-red text-slate-700 hover:text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -438,11 +438,11 @@ export const HomePage = ({ onOpenQuote }) => {
             <a
               href={BRAND.brochurePath}
               download
-              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-black/40 hover:bg-brand-red text-white border border-white/20 hover:border-brand-red backdrop-blur-md text-xs sm:text-sm font-bold transition-all shadow-lg group cursor-pointer hover:scale-105 active:scale-95"
+              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white hover:bg-brand-red text-slate-800 hover:text-white border border-slate-200 hover:border-brand-red text-xs sm:text-sm font-bold transition-all shadow-sm group cursor-pointer hover:scale-105 active:scale-95"
             >
               <FileText className="w-4 h-4 text-brand-red group-hover:text-white transition-colors" />
               <span>Download Brochure (PDF)</span>
-              <Download className="w-3.5 h-3.5 text-white/70 group-hover:text-white group-hover:translate-y-0.5 transition-transform" />
+              <Download className="w-3.5 h-3.5 text-slate-500 group-hover:text-white group-hover:translate-y-0.5 transition-transform" />
             </a>
           </div>
         </div>
@@ -546,9 +546,9 @@ export const HomePage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* ============ PICKUP TO DELIVERY: "Flight path" journey tracker (dark, horizontal) ============ */}
+      {/* ============ PICKUP TO DELIVERY: "Flight path" journey tracker (clean light mode) ============ */}
       <section
-        className="relative bg-brand-blue-dark text-white py-20 sm:py-28 overflow-hidden select-none"
+        className="relative bg-slate-50 text-slate-900 py-20 sm:py-28 overflow-hidden select-none border-y border-slate-200"
         onMouseEnter={() => setIsProcessPaused(true)}
         onMouseLeave={() => setIsProcessPaused(false)}
       >
@@ -557,17 +557,16 @@ export const HomePage = ({ onOpenQuote }) => {
             src="/assets/banner-process-hd.jpg"
             alt=""
             aria-hidden="true"
-            className="w-full h-full object-cover object-center opacity-95 contrast-[1.06] brightness-[1.0] scale-100 fm-kb-1"
+            className="w-full h-full object-cover object-center opacity-15 contrast-[1.02] brightness-[1.0] scale-100 fm-kb-1"
           />
         </div>
-        <div className="absolute inset-0 bg-[#001426]/40 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-25 z-0" />
-        <Wave className="text-slate-50" flip />
-        <Wave className="text-white" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-slate-50/80 to-white/90 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-10 z-0" />
+        <Wave className="text-white" flip />
+        <Wave className="text-slate-50" />
 
         <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 z-10">
           <SectionHead
-            light
             title="From pickup to delivery, one clear process"
             text="A standard, transparent pipeline built around shipowner precision and door-to-door accountability."
           />
@@ -575,13 +574,13 @@ export const HomePage = ({ onOpenQuote }) => {
           {/* journey track: a plane flies along the line to the active stage */}
           <div className="relative mx-4 sm:mx-10 h-24 sm:h-32 mb-6">
             {/* pickup / delivery end labels */}
-            <span className="absolute -left-2 sm:-left-6 -top-1 text-[10px] sm:text-xs font-mono font-extrabold tracking-widest text-white/60 uppercase">Pickup</span>
-            <span className="absolute -right-2 sm:-right-6 -top-1 text-[10px] sm:text-xs font-mono font-extrabold tracking-widest text-white/60 uppercase">Delivery</span>
+            <span className="absolute -left-2 sm:-left-6 -top-1 text-[10px] sm:text-xs font-mono font-extrabold tracking-widest text-slate-500 uppercase">Pickup</span>
+            <span className="absolute -right-2 sm:-right-6 -top-1 text-[10px] sm:text-xs font-mono font-extrabold tracking-widest text-slate-500 uppercase">Delivery</span>
 
             {/* base line + progress fill */}
-            <div className="absolute left-0 right-0 top-[56px] h-1 rounded-full bg-white/20" aria-hidden="true" />
+            <div className="absolute left-0 right-0 top-[56px] h-1 rounded-full bg-slate-200" aria-hidden="true" />
             <div
-              className="absolute left-0 top-[56px] h-1 rounded-full bg-brand-red shadow-[0_0_14px_rgba(232,41,31,0.8)] transition-all duration-700 ease-out"
+              className="absolute left-0 top-[56px] h-1 rounded-full bg-brand-red shadow-[0_0_14px_rgba(232,41,31,0.6)] transition-all duration-700 ease-out"
               style={{ width: `${processPct}%` }}
               aria-hidden="true"
             />
@@ -592,7 +591,7 @@ export const HomePage = ({ onOpenQuote }) => {
               style={{ left: `${processPct}%` }}
               aria-hidden="true"
             >
-              <div className="fm-float w-9 h-9 rounded-full bg-white text-brand-red flex items-center justify-center shadow-xl shadow-black/40">
+              <div className="fm-float w-9 h-9 rounded-full bg-white text-brand-red flex items-center justify-center shadow-lg border border-slate-200">
                 <Plane className="w-5 h-5 rotate-45" />
               </div>
             </div>
@@ -614,17 +613,17 @@ export const HomePage = ({ onOpenQuote }) => {
                     aria-label={`Stage ${idx + 1}: ${item.title}`}
                     className={`-translate-y-1/2 flex items-center justify-center rounded-full font-black text-xs sm:text-sm border-2 transition-all duration-300 cursor-pointer ${
                       active
-                        ? 'w-10 h-10 sm:w-12 sm:h-12 bg-brand-red border-white text-white fm-pulse scale-110'
+                        ? 'w-10 h-10 sm:w-12 sm:h-12 bg-brand-red border-white text-white fm-pulse scale-110 shadow-lg shadow-brand-red/30'
                         : done
                         ? 'w-8 h-8 sm:w-10 sm:h-10 bg-brand-red border-brand-red text-white'
-                        : 'w-8 h-8 sm:w-10 sm:h-10 bg-[#0a2a44] border-white/30 text-white/70 hover:border-white hover:text-white'
+                        : 'w-8 h-8 sm:w-10 sm:h-10 bg-white border-slate-300 text-slate-600 hover:border-brand-blue hover:text-brand-blue shadow-sm'
                     }`}
                   >
                     {done ? <Check className="w-4 h-4 stroke-[3]" /> : idx + 1}
                   </button>
                   <span
                     className={`hidden sm:block absolute left-1/2 -translate-x-1/2 top-9 w-28 text-center text-[11px] font-bold leading-tight transition-colors ${
-                      active ? 'text-white' : 'text-white/55'
+                      active ? 'text-slate-900 font-extrabold' : 'text-slate-500'
                     }`}
                   >
                     {item.title}
@@ -635,9 +634,9 @@ export const HomePage = ({ onOpenQuote }) => {
           </div>
 
           {/* active stage detail card */}
-          <div className="relative overflow-hidden rounded-3xl bg-black/45 backdrop-blur-xl border border-white/15 shadow-2xl shadow-black/40 p-6 sm:p-10">
+          <div className="relative overflow-hidden rounded-3xl bg-white border border-slate-200 shadow-xl p-6 sm:p-10">
             <span
-              className="absolute -right-2 -top-8 sm:-top-14 text-[9rem] sm:text-[15rem] font-black leading-none text-white/[0.06] select-none pointer-events-none"
+              className="absolute -right-2 -top-8 sm:-top-14 text-[9rem] sm:text-[15rem] font-black leading-none text-slate-900/[0.04] select-none pointer-events-none"
               aria-hidden="true"
             >
               {String(processSlide + 1).padStart(2, '0')}
@@ -646,33 +645,33 @@ export const HomePage = ({ onOpenQuote }) => {
 
             <div key={processSlide} className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
               <div className="lg:col-span-8 space-y-4 text-left">
-                <div className="fm-s1 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light">
+                <div className="fm-s1 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-blue-50 border border-brand-blue-100 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-blue">
                   Stage {String(processSlide + 1).padStart(2, '0')} of {String(processCount).padStart(2, '0')}
                 </div>
-                <h3 className="fm-s2 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white">
+                <h3 className="fm-s2 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-slate-900">
                   {activeStep.title}
                 </h3>
-                <p className="fm-s3 text-base sm:text-lg text-white/90 leading-relaxed max-w-2xl">
+                <p className="fm-s3 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
                   {activeStep.desc}
                 </p>
                 <div className="fm-s4 flex flex-wrap gap-2.5 pt-1">
-                  <span className="px-4 py-2 rounded-full bg-white/10 border border-white/15 text-xs font-semibold flex items-center gap-2">
-                    <Check className="w-4 h-4 text-brand-red-light" /> Real-time milestone logging
+                  <span className="px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 flex items-center gap-2">
+                    <Check className="w-4 h-4 text-brand-red" /> Real-time milestone logging
                   </span>
-                  <span className="px-4 py-2 rounded-full bg-white/10 border border-white/15 text-xs font-semibold flex items-center gap-2">
-                    <Check className="w-4 h-4 text-brand-red-light" /> Zero-delay customs pre-check
+                  <span className="px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 flex items-center gap-2">
+                    <Check className="w-4 h-4 text-brand-red" /> Zero-delay customs pre-check
                   </span>
                 </div>
               </div>
 
               {/* controls */}
               <div className="lg:col-span-4 flex lg:flex-col items-center lg:items-end justify-between lg:justify-center gap-4">
-                <div className="flex items-center gap-2 p-1.5 rounded-full bg-black/40 border border-white/20">
+                <div className="flex items-center gap-2 p-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
                   <button
                     type="button"
                     onClick={prevProcess}
                     aria-label="Previous stage"
-                    className="w-10 h-10 rounded-full bg-white/10 hover:bg-brand-red flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                    className="w-10 h-10 rounded-full bg-slate-100 hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
@@ -680,50 +679,49 @@ export const HomePage = ({ onOpenQuote }) => {
                     type="button"
                     onClick={nextProcess}
                     aria-label="Next stage"
-                    className="w-10 h-10 rounded-full bg-white/10 hover:bg-brand-red flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                    className="w-10 h-10 rounded-full bg-slate-100 hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
                   >
                     <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
-                <div className="text-[11px] font-mono text-white/60 tracking-widest uppercase">Auto-cycle &bull; hover to pause</div>
+                <div className="text-[11px] font-mono text-slate-500 tracking-widest uppercase">Auto-cycle &bull; hover to pause</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ============ PROMISE ============ */}
+      {/* ============ PROMISE: executive clean light card ============ */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-20 sm:py-28">
         <Reveal variant="scale">
-          <div className="relative overflow-hidden rounded-[2rem] bg-brand-blue-dark border border-brand-blue/30 text-white p-7 sm:p-12 lg:p-16 shadow-2xl">
+          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-brand-blue-50 via-white to-brand-blue-50/50 border border-brand-blue-100 text-slate-900 p-7 sm:p-12 lg:p-16 shadow-xl">
             <img
               src="/assets/service banner.jpg"
               alt=""
               aria-hidden="true"
-              className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity pointer-events-none"
+              className="absolute inset-0 w-full h-full object-cover opacity-10 mix-blend-multiply pointer-events-none"
             />
-            <div className="absolute inset-0 bg-[#00172b]/85" aria-hidden="true" />
-            <div className="fm-blob absolute -top-20 -left-16 w-72 h-72 rounded-full bg-brand-red/30 blur-3xl pointer-events-none" aria-hidden="true" />
-            <div className="fm-blob absolute -bottom-24 right-10 w-72 h-72 rounded-full bg-white/10 blur-3xl pointer-events-none" style={{ animationDelay: '-8s' }} aria-hidden="true" />
-            <Quote className="absolute -right-4 -bottom-6 w-56 h-56 text-white/5" />
+            <div className="fm-blob absolute -top-20 -left-16 w-72 h-72 rounded-full bg-brand-red/15 blur-3xl pointer-events-none" aria-hidden="true" />
+            <div className="fm-blob absolute -bottom-24 right-10 w-72 h-72 rounded-full bg-brand-blue/15 blur-3xl pointer-events-none" style={{ animationDelay: '-8s' }} aria-hidden="true" />
+            <Quote className="absolute -right-4 -bottom-6 w-56 h-56 text-brand-blue/5" />
             <span className="absolute left-0 top-10 bottom-10 w-1.5 rounded-r-full bg-brand-red" aria-hidden="true" />
 
             <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
               <div className="space-y-6">
-                <span className="w-14 h-14 rounded-2xl bg-brand-red flex items-center justify-center shadow-xl shadow-brand-red/40 fm-float">
+                <span className="w-14 h-14 rounded-2xl bg-brand-red flex items-center justify-center shadow-xl shadow-brand-red/30 fm-float">
                   <ShieldCheck className="w-7 h-7 text-white" />
                 </span>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">We never break our promise.</h2>
-                <p className="text-white/90 leading-relaxed text-base sm:text-lg">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-slate-900">We never break our promise.</h2>
+                <p className="text-slate-600 leading-relaxed text-base sm:text-lg">
                   At Flymingo Logistics, every consignment is treated as mission-critical. Whether it is an AOG spare part
                   for an aircraft, replacement machinery for a berthing vessel, or homemade sweets sent to family overseas,
                   we operate with intentional precision.
                 </p>
               </div>
-              <blockquote className="relative border-l-4 border-brand-red pl-6 pr-5 py-6 text-lg sm:text-xl leading-relaxed text-white bg-[#001e36]/85 rounded-r-2xl backdrop-blur-md border-y border-r border-y-white/15 border-r-white/15 shadow-xl shadow-black/20">
+              <blockquote className="relative border-l-4 border-brand-red pl-6 pr-5 py-6 text-lg sm:text-xl leading-relaxed text-slate-800 bg-white rounded-r-2xl border-y border-r border-slate-200 shadow-md">
                 <Quote className="w-8 h-8 text-brand-red mb-3" />
                 &ldquo;Just because you are doing a lot more doesn&apos;t mean you are getting a lot done. Don&apos;t confuse movement with progress!&rdquo;
-                <footer className="mt-4 text-sm text-white/70 font-semibold">Denzel Washington, our core inspiration</footer>
+                <footer className="mt-4 text-sm text-slate-500 font-semibold">Denzel Washington, our core inspiration</footer>
               </blockquote>
             </div>
           </div>

@@ -24,44 +24,44 @@ export const ContactPage = () => {
   return (
     <div className="space-y-16 pb-20">
       {/* ========================================================= */}
-      {/* 1. CINEMATIC COMMUNICATIONS DISPATCH BANNER HERO          */}
+      {/* 1. CINEMATIC COMMUNICATIONS DISPATCH BANNER HERO (LIGHT)   */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-brand-blue-dark text-white border-b border-white/10 py-8 sm:py-10 lg:py-12 select-none">
+      <section className="relative overflow-hidden bg-slate-50 text-slate-900 border-b border-slate-200 py-8 sm:py-10 lg:py-12 select-none">
         {/* Photographic Background Texture with continuous Ken Burns motion */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
             src="/assets/banner-contact-hd.jpg" 
             alt="Flymingo Logistics Global Operations Desk" 
-            className="w-full h-full object-cover object-center opacity-95 contrast-[1.06] brightness-[1.0] scale-100 fm-kb-0"
+            className="w-full h-full object-cover object-center opacity-20 contrast-[1.02] brightness-[1.0] scale-100 fm-kb-0"
           />
         </div>
-        <div className="absolute inset-0 bg-[#001426]/40 z-0 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-25 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-brand-blue-50/70 z-0 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-10 z-0" />
 
         <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
           <div className="max-w-3xl space-y-3 sm:space-y-4 text-left">
             {/* Banner Eyebrow Badge - clean, no '//' */}
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red-light shadow-md">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
                 SOUTH INDIA &rarr; THE WORLD
               </div>
             </div>
 
             {/* Banner Title & Subtext */}
             <div className="space-y-1 sm:space-y-1.5">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
                 Direct Lines.<br />
                 <span className="text-brand-red font-black">
                   Immediate Logistics Response.
                 </span>
               </h1>
 
-              <p className="text-sm sm:text-base font-bold text-white/95 tracking-wide drop-shadow-md">
+              <p className="text-sm sm:text-base font-bold text-slate-700 tracking-wide">
                 Always On Call. Ready For Rapid Dispatch.
               </p>
             </div>
 
-            <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-normal pt-0.5 max-w-2xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
               Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.
             </p>
           </div>

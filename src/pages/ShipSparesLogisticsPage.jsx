@@ -129,18 +129,18 @@ export const ShipSparesLogisticsPage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* CTA Box */}
+      {/* CTA Box (Light Theme) */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-        <div className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div className="bg-gradient-to-r from-brand-blue-50 via-white to-brand-blue-50/50 rounded-3xl p-8 sm:p-12 text-slate-900 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-brand-blue-100">
           <div className="space-y-2 text-center md:text-left">
-            <h2 className="text-2xl sm:text-3xl font-extrabold">Vessel Arriving At Indian Port Soon?</h2>
-            <p className="text-xs sm:text-sm text-slate-300">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Vessel Arriving At Indian Port Soon?</h2>
+            <p className="text-xs sm:text-sm text-slate-600">
               Send us your AWB details and vessel ETA for immediate customs pre-entry and launch planning.
             </p>
           </div>
           <button
             onClick={() => onOpenQuote('ship-spares')}
-            className="px-8 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg transition-all cursor-pointer flex-shrink-0"
+            className="px-8 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg shadow-brand-red/30 transition-all cursor-pointer flex-shrink-0"
           >
             Dispatch Ship Spares
           </button>

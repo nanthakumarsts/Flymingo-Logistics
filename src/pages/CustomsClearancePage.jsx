@@ -101,18 +101,18 @@ export const CustomsClearancePage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* CTA Box */}
+      {/* CTA Box (Light Theme) */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-        <div className="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div className="bg-gradient-to-r from-brand-blue-50 via-white to-brand-blue-50/50 rounded-3xl p-8 sm:p-12 text-slate-900 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-brand-blue-100">
           <div className="space-y-2 text-center md:text-left">
-            <h2 className="text-2xl sm:text-3xl font-extrabold">Need Urgent Customs Clearance Assistance?</h2>
-            <p className="text-xs sm:text-sm text-slate-300">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Need Urgent Customs Clearance Assistance?</h2>
+            <p className="text-xs sm:text-sm text-slate-600">
               Contact our customs brokers today with your invoice and packing list for immediate HS code and duty analysis.
             </p>
           </div>
           <button
             onClick={() => onOpenQuote('customs-clearance')}
-            className="px-8 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg transition-all cursor-pointer flex-shrink-0"
+            className="px-8 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg shadow-brand-red/30 transition-all cursor-pointer flex-shrink-0"
           >
             Request Customs Support
           </button>

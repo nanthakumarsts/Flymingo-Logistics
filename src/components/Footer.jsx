@@ -15,16 +15,16 @@ export const Footer = ({ onOpenQuote }) => {
       <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-12">
         {/* Top Action Card - Rendered ONLY on Home Page */}
         {isHomePage && (
-          <div className="bg-[#002d4d] rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+          <div className="bg-gradient-to-r from-brand-blue-50 via-white to-brand-blue-50/50 rounded-3xl p-8 sm:p-10 text-slate-900 shadow-xl border border-brand-blue-100 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
             <div className="space-y-2 z-10 text-center md:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/90 text-xs font-semibold backdrop-blur-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue-50 border border-brand-blue-200 text-brand-blue text-xs font-semibold">
                 <Anchor className="w-3.5 h-3.5 text-brand-red" />
                 <span>Door-to-Deck Maritime &amp; Air Logistics</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+              <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
                 Let's Move Your Cargo With Zero Gaps.
               </h3>
-              <p className="text-sm text-slate-200 max-w-xl">
+              <p className="text-sm text-slate-600 max-w-xl">
                 Tell us what you need to move. Our specialized team designs the optimal route, mode, and timing with full accountability.
               </p>
             </div>
@@ -38,14 +38,14 @@ export const Footer = ({ onOpenQuote }) => {
               </button>
               <Link
                 to="/services"
-                className="px-6 py-3 bg-white text-brand-blue hover:bg-slate-100 rounded-xl text-sm font-bold shadow-md transition-all cursor-pointer"
+                className="px-6 py-3 bg-white border border-slate-300 text-slate-800 hover:text-brand-blue hover:border-brand-blue rounded-xl text-sm font-bold shadow-sm transition-all cursor-pointer"
               >
                 Explore All Services
               </Link>
             </div>
 
             {/* Decorative watermark */}
-            <div className="absolute -right-10 -bottom-10 opacity-10 pointer-events-none select-none text-white font-black text-9xl">
+            <div className="absolute -right-10 -bottom-10 opacity-5 pointer-events-none select-none text-brand-blue font-black text-9xl">
               FLY
             </div>
           </div>
