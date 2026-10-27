@@ -10,10 +10,10 @@ export function PageBanner({ eyebrow, title, description, image, action, onActio
         src={image || '/assets/sea cargo.jpg'} 
         alt="" 
         onError={(e) => { e.currentTarget.src = '/assets/sea cargo.jpg'; }}
-        className="absolute inset-0 -z-20 h-full w-full object-cover opacity-40 scale-105" 
+        className="absolute inset-0 -z-20 h-full w-full object-cover opacity-25 scale-105" 
       />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/90 to-brand-blue-dark/70" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-brand-blue-dark via-transparent to-brand-blue-dark/80" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-blue-dark/98 via-brand-blue-dark/92 to-brand-blue-dark/80" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-brand-blue-dark/95 via-transparent to-brand-blue-dark/85" />
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
       <div className="absolute -right-20 -top-28 -z-10 h-80 w-80 rounded-full bg-brand-red/25 blur-3xl" />
 

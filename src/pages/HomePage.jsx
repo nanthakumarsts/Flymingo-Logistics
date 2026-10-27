@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import {
   BRAND, STATS, CORE_SERVICES, SIX_WAYS_CARGO,
-  SPECIALIZED_EXPRESS, INDUSTRIES_SERVED, TESTIMONIALS, COUNTRIES
+  SPECIALIZED_EXPRESS, INDUSTRIES_SERVED, TESTIMONIALS
 } from '../data/siteData';
 
 /* Background photos. Swap any URL for your own file, e.g. '/images/process-bg.jpg' in /public.
@@ -216,18 +216,9 @@ const SectionHead = ({ title, text, light = false }) => (
   </Reveal>
 );
 
-const fieldCls =
-  'w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-sm text-slate-800 ' +
-  'focus:outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue focus:bg-white transition';
-const labelCls = 'block text-sm font-medium text-slate-700 mb-1.5';
-
 const STAT_ICONS = [Globe, Plane, ShieldCheck, Clock];
 
 export const HomePage = ({ onOpenQuote }) => {
-  const [heroFromCountry, setHeroFromCountry] = useState('India');
-  const [heroToCountry, setHeroToCountry] = useState('United States');
-  const [heroService, setHeroService] = useState('international-courier');
-  const [heroWeight, setHeroWeight] = useState('10');
   const barRef = useRef(null);
 
   /* scroll progress */
@@ -242,11 +233,6 @@ export const HomePage = ({ onOpenQuote }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleHeroQuoteSubmit = (e) => {
-    e.preventDefault();
-    onOpenQuote(heroService);
-  };
-
   return (
     <div className="bg-white text-slate-800 font-sans overflow-x-hidden">
       <style>{css}</style>
@@ -256,10 +242,10 @@ export const HomePage = ({ onOpenQuote }) => {
 
       {/* ============ HERO ============ */}
       <section className="relative overflow-hidden bg-brand-blue-dark text-white">
-        <BgImage src={IMG.hero} scene={SCENE.ship} eager className="fm-zoom" />
-        {/* lighter overlays so the photo is clearly visible, dark only where the text sits */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/70 to-brand-blue/20" aria-hidden="true" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark/80 via-transparent to-brand-blue-dark/40" aria-hidden="true" />
+        <BgImage src={IMG.hero} scene={SCENE.ship} eager className="fm-zoom opacity-30" />
+        {/* Dark contrast scrims to guarantee high legibility while retaining background texture */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/80 to-brand-blue-dark/50" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark via-transparent to-brand-blue-dark/70" aria-hidden="true" />
         <div className="fm-blob absolute -bottom-32 -right-24 w-96 h-96 rounded-full bg-brand-red/30 blur-3xl pointer-events-none" aria-hidden="true" />
         <div className="fm-blob absolute -top-32 -left-24 w-96 h-96 rounded-full bg-brand-blue/50 blur-3xl pointer-events-none" style={{ animationDelay: '-6s' }} aria-hidden="true" />
 
@@ -282,42 +268,42 @@ export const HomePage = ({ onOpenQuote }) => {
           <Ship className="w-7 h-7 text-white" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-44 sm:pt-24 sm:pb-52 lg:pt-28">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-7 space-y-7 text-center lg:text-left">
-              <p className="fm-hero-item inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/25 text-sm font-semibold text-white" style={{ animationDelay: '.05s' }}>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 sm:pt-10 sm:pb-24 lg:pt-10 lg:pb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            <div className="lg:col-span-7 space-y-4 sm:space-y-5 text-center lg:text-left">
+              <p className="fm-hero-item inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/25 text-xs sm:text-sm font-semibold text-white" style={{ animationDelay: '.05s' }}>
                 Global marine logistics &amp; freight forwarding
               </p>
 
-              <h1 className="fm-hero-item text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.08] drop-shadow-lg" style={{ animationDelay: '.15s' }}>
+              <h1 className="fm-hero-item text-3xl sm:text-4xl lg:text-[42px] xl:text-5xl font-black tracking-tight text-white leading-[1.12] drop-shadow-lg" style={{ animationDelay: '.15s' }}>
                 Six ways we get your cargo from <span className="fm-gradient-light">origin to destination</span>.
               </h1>
 
-              <p className="fm-hero-item text-base sm:text-lg text-white/85 max-w-xl mx-auto lg:mx-0 leading-relaxed border-l-0 lg:border-l-4 lg:border-brand-red lg:pl-5" style={{ animationDelay: '.3s' }}>
+              <p className="fm-hero-item text-sm sm:text-base text-white/85 max-w-xl mx-auto lg:mx-0 leading-relaxed border-l-0 lg:border-l-3 lg:border-brand-red lg:pl-4" style={{ animationDelay: '.3s' }}>
                 From ship spares delivered on board at global anchorages to overseas courier,
                 personal relocation and certified dangerous goods air cargo.
               </p>
 
-              <div className="fm-hero-item flex flex-wrap items-center justify-center lg:justify-start gap-3" style={{ animationDelay: '.45s' }}>
+              <div className="fm-hero-item flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1" style={{ animationDelay: '.45s' }}>
                 <button onClick={() => onOpenQuote()}
-                  className="group px-7 py-4 bg-gradient-to-r from-brand-red to-brand-red-dark text-white rounded-xl text-sm font-bold shadow-lg shadow-brand-red/40 hover:shadow-2xl hover:shadow-brand-red/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center gap-2">
+                  className="group px-6 py-3.5 bg-gradient-to-r from-brand-red to-brand-red-dark text-white rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/40 hover:shadow-2xl hover:shadow-brand-red/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center gap-2">
                   <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" /> Get fare rate
                 </button>
                 <Link to="/services"
-                  className="px-7 py-4 bg-white/10 backdrop-blur border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-xl text-sm font-bold transition-all hover:-translate-y-0.5 cursor-pointer flex items-center gap-2">
+                  className="px-6 py-3.5 bg-white/10 backdrop-blur border border-white/30 hover:bg-white hover:text-brand-blue text-white rounded-xl text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 cursor-pointer flex items-center gap-2">
                   <Package className="w-4 h-4" /> Explore services
                 </Link>
                 <a href={BRAND.brochurePath} download
-                  className="group px-3 py-4 text-sm font-semibold text-white/80 hover:text-white transition inline-flex items-center gap-1.5">
+                  className="group px-3 py-3.5 text-xs sm:text-sm font-semibold text-white/80 hover:text-white transition inline-flex items-center gap-1.5">
                   Download brochure <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
 
-              <ul className="fm-hero-item flex flex-wrap items-center justify-center lg:justify-start gap-3" style={{ animationDelay: '.6s' }}>
+              <ul className="fm-hero-item flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1" style={{ animationDelay: '.6s' }}>
                 {['Customs house brokerage', 'IATA / IMO certified DG', '24/7 port deck delivery'].map((t) => (
-                  <li key={t} className="flex items-center gap-2 pl-1.5 pr-4 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/20 text-sm text-white/90">
-                    <span className="w-5 h-5 rounded-full bg-brand-red flex items-center justify-center">
-                      <Check className="w-3 h-3 text-white" />
+                  <li key={t} className="flex items-center gap-2 pl-1.5 pr-3.5 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs sm:text-sm text-white/90">
+                    <span className="w-4 h-4 rounded-full bg-brand-red flex items-center justify-center">
+                      <Check className="w-2.5 h-2.5 text-white" />
                     </span>
                     {t}
                   </li>
@@ -325,51 +311,91 @@ export const HomePage = ({ onOpenQuote }) => {
               </ul>
             </div>
 
-            {/* Quick action card */}
+            {/* Quick Priority Corridors Showcase Card */}
             <div className="lg:col-span-5 fm-hero-item" style={{ animationDelay: '.35s' }}>
-              <div className="fm-float relative">
-                <div className="absolute -inset-1.5 rounded-[2rem] bg-gradient-to-br from-brand-red via-white/40 to-brand-blue blur-md opacity-60" aria-hidden="true" />
-                <div className="relative rounded-3xl bg-white text-slate-800 shadow-2xl shadow-black/40 overflow-hidden">
-                  <div className="p-6 sm:p-8">
-                    <div className="mb-5 pb-3 border-b border-slate-100 flex items-center justify-between">
-                      <div>
-                        <span className="text-xs font-bold uppercase tracking-wider text-brand-red">Fare Rate Calculator</span>
-                        <h3 className="text-lg font-bold text-slate-900">Cargo Request Quote</h3>
-                      </div>
+              <div className="relative">
+                {/* Glow backdrop */}
+                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-brand-red/40 via-white/10 to-brand-blue/50 blur-lg opacity-70" aria-hidden="true" />
+                <div className="relative rounded-2xl bg-[#002844]/95 backdrop-blur-xl border border-white/20 text-white shadow-2xl p-5 sm:p-6 space-y-4">
+                  {/* Card Header */}
+                  <div className="flex items-center justify-between pb-3 border-b border-white/15">
+                    <div>
+                      <span className="text-[11px] font-mono uppercase tracking-widest text-brand-red font-bold">Priority Corridors</span>
+                      <h3 className="text-base font-bold text-white">Direct Operational Desks</h3>
                     </div>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-[11px] font-semibold text-emerald-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      24/7 Active
+                    </span>
+                  </div>
 
-                    <form onSubmit={handleHeroQuoteSubmit} className="space-y-4">
-                      <div>
-                        <label className={labelCls}>Service</label>
-                        <select value={heroService} onChange={(e) => setHeroService(e.target.value)} className={fieldCls}>
-                          {CORE_SERVICES.map((s) => <option key={s.id} value={s.id}>{s.title}</option>)}
-                        </select>
-                      </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className={labelCls}>From</label>
-                          <select value={heroFromCountry} onChange={(e) => setHeroFromCountry(e.target.value)} className={fieldCls}>
-                            {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                          </select>
-                        </div>
-                        <div>
-                          <label className={labelCls}>To</label>
-                          <select value={heroToCountry} onChange={(e) => setHeroToCountry(e.target.value)} className={fieldCls}>
-                            {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                          </select>
-                        </div>
-                      </div>
-                      <div>
-                        <label className={labelCls}>Cargo weight (kg)</label>
-                        <input type="number" min="1" value={heroWeight}
-                          onChange={(e) => setHeroWeight(e.target.value)} placeholder="e.g. 15" className={fieldCls} />
-                      </div>
-                      <button type="submit"
-                        className="group w-full py-3.5 bg-gradient-to-r from-brand-blue to-brand-blue-dark text-white rounded-xl text-sm font-semibold shadow-lg shadow-brand-blue/25 hover:shadow-xl hover:-translate-y-0.5 transition-all cursor-pointer flex items-center justify-center gap-2">
-                        Continue with full details <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </button>
-                      <p className="text-xs text-center text-slate-400">Instant quote. Direct operational rates.</p>
-                    </form>
+                  {/* Corridor Quick Links */}
+                  <div className="space-y-2.5">
+                    {[
+                      {
+                        id: 'ship-spares',
+                        title: 'Ship Spares Logistics',
+                        desc: 'Port deck & outer anchorage delivery with onboard hand-over.',
+                        icon: Ship,
+                      },
+                      {
+                        id: 'international-courier',
+                        title: 'Worldwide Express Courier',
+                        desc: '190+ countries door-to-door documents & parcels clearance.',
+                        icon: Plane,
+                      },
+                      {
+                        id: 'customs-brokerage',
+                        title: 'Customs Clearance & Forwarding',
+                        desc: 'Direct seaport & airport EDI filing with zero demurrage focus.',
+                        icon: ShieldCheck,
+                      },
+                    ].map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => onOpenQuote(item.id)}
+                          className="group w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.14] border border-white/10 hover:border-brand-red/60 text-left transition-all duration-200 cursor-pointer"
+                        >
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className="w-9 h-9 rounded-lg bg-brand-red/20 group-hover:bg-brand-red text-white flex items-center justify-center flex-shrink-0 transition-colors">
+                              <Icon className="w-4 h-4" />
+                            </div>
+                            <div className="min-w-0">
+                              <div className="text-xs sm:text-sm font-bold text-white group-hover:text-brand-red-light transition-colors truncate">
+                                {item.title}
+                              </div>
+                              <div className="text-[11px] text-white/70 line-clamp-1">{item.desc}</div>
+                            </div>
+                          </div>
+                          <ArrowRight className="w-4 h-4 text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0 ml-2" />
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Instant Action CTA */}
+                  <div className="pt-1">
+                    <button
+                      onClick={() => onOpenQuote()}
+                      className="group w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-brand-red to-brand-red-dark hover:from-brand-red-dark hover:to-brand-red text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/30 hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+                      Calculate Fare Rate Online
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+
+                  {/* Support hotline */}
+                  <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-white/75">
+                    <span>Direct Ops Helpline</span>
+                    <a
+                      href={`tel:${BRAND.primaryPhone}`}
+                      className="font-bold text-white hover:text-brand-red transition-colors inline-flex items-center gap-1"
+                    >
+                      {BRAND.primaryPhone}
+                    </a>
                   </div>
                 </div>
               </div>
@@ -381,7 +407,7 @@ export const HomePage = ({ onOpenQuote }) => {
       </section>
 
       {/* ============ STATS ============ */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-28 sm:-mt-32 relative z-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 sm:-mt-14 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {STATS.map((st, i) => {
             const StatIcon = STAT_ICONS[i % STAT_ICONS.length];
@@ -466,10 +492,10 @@ export const HomePage = ({ onOpenQuote }) => {
       </section>
 
       {/* ============ SIX WAYS (pickup to delivery) ============ */}
-      <section className="relative bg-brand-blue-dark text-white py-28 sm:py-36 overflow-hidden">
-        <ParallaxBg src={IMG.process} scene={SCENE.stacks} />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-blue-dark/85 via-brand-blue-dark/50 to-brand-blue-dark/90" aria-hidden="true" />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/60 via-transparent to-brand-blue-dark/60" aria-hidden="true" />
+      <section className="relative bg-brand-blue-dark text-white py-24 sm:py-32 overflow-hidden">
+        <ParallaxBg src={IMG.process} scene={SCENE.stacks} className="opacity-25" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#00172b]/95 via-[#00223b]/90 to-[#00172b]/95" aria-hidden="true" />
+        <div className="absolute inset-0 bg-[#00172b]/50" aria-hidden="true" />
         <div className="fm-blob absolute -top-20 -right-20 w-96 h-96 rounded-full bg-brand-red/25 blur-3xl pointer-events-none" aria-hidden="true" />
         <div className="fm-blob absolute bottom-0 -left-24 w-96 h-96 rounded-full bg-brand-blue/40 blur-3xl pointer-events-none" style={{ animationDelay: '-8s' }} aria-hidden="true" />
         <Wave className="text-white" flip />
@@ -484,7 +510,7 @@ export const HomePage = ({ onOpenQuote }) => {
 
           {/* start of the route */}
           <div className="flex lg:justify-center mb-6">
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/25 text-sm font-bold">
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-sm font-bold text-white shadow-lg shadow-black/20">
               Pickup
             </span>
           </div>
@@ -500,13 +526,13 @@ export const HomePage = ({ onOpenQuote }) => {
                     {idx + 1}
                   </span>
                   <Reveal variant={left ? 'left' : 'right'} className={left ? 'lg:col-start-1' : 'lg:col-start-2'}>
-                    <div className={`group relative h-full overflow-hidden bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-6 sm:p-7 hover:bg-white/[0.18] hover:border-brand-red/70 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/30 transition-all duration-300 ${left ? 'lg:text-right' : ''}`}>
-                      <span className={`absolute -top-3 text-8xl font-black text-white/[0.07] leading-none select-none ${left ? 'right-3 lg:left-3 lg:right-auto' : 'right-3'}`} aria-hidden="true">
+                    <div className={`group relative h-full overflow-hidden bg-[#002d4d]/92 backdrop-blur-xl rounded-2xl border border-white/20 p-6 sm:p-7 shadow-xl shadow-black/40 hover:bg-[#00365c] hover:border-brand-red/80 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 ${left ? 'lg:text-right' : ''}`}>
+                      <span className={`absolute -top-3 text-8xl font-black text-white/[0.08] leading-none select-none ${left ? 'right-3 lg:left-3 lg:right-auto' : 'right-3'}`} aria-hidden="true">
                         {String(idx + 1).padStart(2, '0')}
                       </span>
                       <span className={`absolute top-0 bottom-0 w-1 bg-brand-red scale-y-0 group-hover:scale-y-100 transition-transform duration-300 ${left ? 'left-0 lg:left-auto lg:right-0' : 'left-0'}`} aria-hidden="true" />
-                      <h3 className="relative text-lg sm:text-xl font-bold text-white mb-2">{item.title}</h3>
-                      <p className="relative text-sm sm:text-base text-white/75 leading-relaxed">{item.desc}</p>
+                      <h3 className="relative text-lg sm:text-xl font-bold text-white mb-2 drop-shadow-sm">{item.title}</h3>
+                      <p className="relative text-sm sm:text-base text-slate-100/90 leading-relaxed">{item.desc}</p>
                     </div>
                   </Reveal>
                 </li>
@@ -526,9 +552,9 @@ export const HomePage = ({ onOpenQuote }) => {
       {/* ============ PROMISE ============ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
         <Reveal variant="scale">
-          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-blue via-brand-blue to-brand-blue-dark text-white p-7 sm:p-12 lg:p-16 shadow-2xl shadow-brand-blue/30">
-            <BgImage src={IMG.hero} scene={SCENE.ship} className="opacity-30 mix-blend-luminosity" />
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/80 via-brand-blue/40 to-transparent" aria-hidden="true" />
+          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#00223d] via-brand-blue to-brand-blue-dark text-white p-7 sm:p-12 lg:p-16 shadow-2xl shadow-brand-blue/30">
+            <BgImage src={IMG.hero} scene={SCENE.ship} className="opacity-20 mix-blend-luminosity" />
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/80 to-brand-blue/50" aria-hidden="true" />
             <div className="fm-blob absolute -top-20 -left-16 w-72 h-72 rounded-full bg-brand-red/30 blur-3xl pointer-events-none" aria-hidden="true" />
             <div className="fm-blob absolute -bottom-24 right-10 w-72 h-72 rounded-full bg-white/10 blur-3xl pointer-events-none" style={{ animationDelay: '-8s' }} aria-hidden="true" />
             <Quote className="absolute -right-4 -bottom-6 w-56 h-56 text-white/5" />
@@ -540,13 +566,13 @@ export const HomePage = ({ onOpenQuote }) => {
                   <ShieldCheck className="w-7 h-7 text-white" />
                 </span>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">We never break our promise.</h2>
-                <p className="text-white/85 leading-relaxed text-base sm:text-lg">
+                <p className="text-white/90 leading-relaxed text-base sm:text-lg">
                   At Flymingo Logistics, every consignment is treated as mission-critical. Whether it is an AOG spare part
                   for an aircraft, replacement machinery for a berthing vessel, or homemade sweets sent to family overseas,
                   we operate with intentional precision.
                 </p>
               </div>
-              <blockquote className="relative border-l-4 border-brand-red pl-6 pr-5 py-6 text-lg sm:text-xl leading-relaxed text-white bg-white/10 rounded-r-2xl backdrop-blur-md border-y border-r border-y-white/15 border-r-white/15 shadow-xl shadow-black/20">
+              <blockquote className="relative border-l-4 border-brand-red pl-6 pr-5 py-6 text-lg sm:text-xl leading-relaxed text-white bg-[#001e36]/85 rounded-r-2xl backdrop-blur-md border-y border-r border-y-white/15 border-r-white/15 shadow-xl shadow-black/20">
                 <Quote className="w-8 h-8 text-brand-red mb-3" />
                 &ldquo;Just because you are doing a lot more doesn&apos;t mean you are getting a lot done. Don&apos;t confuse movement with progress!&rdquo;
                 <footer className="mt-4 text-sm text-white/70 font-semibold">Denzel Washington, our core inspiration</footer>
@@ -590,10 +616,10 @@ export const HomePage = ({ onOpenQuote }) => {
       </section>
 
       {/* ============ INDUSTRIES ============ */}
-      <section className="relative bg-brand-blue-dark py-28 sm:py-36 overflow-hidden">
-        <ParallaxBg src={IMG.industries} scene={SCENE.port} />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-blue-dark/85 via-brand-blue-dark/45 to-brand-blue-dark/90" aria-hidden="true" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/50 via-transparent to-slate-900/50" aria-hidden="true" />
+      <section className="relative bg-brand-blue-dark py-24 sm:py-32 overflow-hidden">
+        <ParallaxBg src={IMG.industries} scene={SCENE.port} className="opacity-25" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#00172b]/95 via-[#00223b]/90 to-[#00172b]/95" aria-hidden="true" />
+        <div className="absolute inset-0 bg-[#00172b]/50" aria-hidden="true" />
         <div className="fm-blob absolute top-10 left-1/4 w-96 h-96 rounded-full bg-brand-blue/40 blur-3xl pointer-events-none" aria-hidden="true" />
         <div className="fm-blob absolute bottom-0 right-0 w-80 h-80 rounded-full bg-brand-red/25 blur-3xl pointer-events-none" style={{ animationDelay: '-9s' }} aria-hidden="true" />
         <Wave className="text-brand-blue-50" flip />
@@ -612,7 +638,7 @@ export const HomePage = ({ onOpenQuote }) => {
                 <Reveal key={idx} delay={(idx % 3) * 90}>
                   <div
                     onMouseMove={spot}
-                    className="fm-spot fm-spot-dark group relative h-full overflow-hidden bg-white/10 backdrop-blur-md rounded-3xl p-7 border border-white/20 hover:border-brand-red/70 hover:bg-white/[0.18] hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/30 transition-all duration-300"
+                    className="fm-spot fm-spot-dark group relative h-full overflow-hidden bg-[#002d4d]/92 backdrop-blur-xl rounded-3xl p-7 border border-white/20 shadow-xl shadow-black/40 hover:border-brand-red/80 hover:bg-[#00365c] hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
                   >
                     <Icon className="absolute -right-6 -bottom-6 w-32 h-32 text-white/[0.06] group-hover:text-brand-red/20 group-hover:rotate-12 transition-all duration-500" aria-hidden="true" />
                     <span className="absolute right-5 top-4 text-5xl font-black text-white/10 leading-none select-none" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</span>
@@ -620,9 +646,9 @@ export const HomePage = ({ onOpenQuote }) => {
                       <div className="w-14 h-14 rounded-2xl bg-white/15 border border-white/20 text-white flex items-center justify-center group-hover:bg-brand-red group-hover:border-brand-red group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                         <Icon className="w-6 h-6" />
                       </div>
-                      <h3 className="font-bold text-lg text-white leading-snug pr-8">{ind.name}</h3>
+                      <h3 className="font-bold text-lg text-white leading-snug pr-8 drop-shadow-sm">{ind.name}</h3>
                     </div>
-                    <p className="relative text-sm text-white/75 leading-relaxed">{ind.desc}</p>
+                    <p className="relative text-sm text-slate-100/90 leading-relaxed">{ind.desc}</p>
                   </div>
                 </Reveal>
               );

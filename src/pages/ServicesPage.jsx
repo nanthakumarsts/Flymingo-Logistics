@@ -124,10 +124,10 @@ export const ServicesPage = ({ onOpenQuote }) => {
           <img 
             src="/assets/international_courier_banner.jpg" 
             alt="Flymingo Logistics Global Multimodal Operations" 
-            className="w-full h-full object-cover object-center opacity-40 scale-105"
+            className="w-full h-full object-cover object-center opacity-25 scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/95 via-brand-blue-dark/90 to-brand-blue-dark/70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark via-transparent to-brand-blue-dark/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-blue-dark/98 via-brand-blue-dark/92 to-brand-blue-dark/80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark/95 via-transparent to-brand-blue-dark/85" />
           {/* Swiss Industrial Blueprint Grid */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
           <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-brand-red/20 blur-3xl" />
