@@ -147,7 +147,7 @@ export const Navbar = ({ onOpenQuote }) => {
               <div className="absolute top-full left-0 w-[580px] sm:w-[620px] bg-white rounded-2xl shadow-2xl border border-slate-200 p-3 z-50 animate-fade-in">
                 <div className="px-3 py-1.5 mb-2 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest border-b border-slate-100 flex items-center justify-between">
                   <span>Our Core Capabilities</span>
-                  <span className="text-[10px] text-brand-blue font-bold">6 Dedicated Channels</span>
+                  {/* <span className="text-[10px] text-brand-blue font-bold">6 Dedicated Channels</span> */}
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   {CORE_SERVICES.map((s) => {

@@ -63,27 +63,16 @@ export const Footer = ({ onOpenQuote }) => {
               />
             </Link>
 
-            <p className="text-xs leading-relaxed text-slate-600 max-w-sm">
+            <p className="text-sm sm:text-base leading-relaxed text-slate-600 max-w-md">
               Flymingo Logistics is an International Logistics company offering high-quality international courier services, ocean &amp; air freight forwarding, time-critical ship spares delivery, dangerous goods (DG) logistics, overseas household relocation, and customs clearance brokerage.
             </p>
-
-            <div className="space-y-2 pt-1 text-xs">
-              <div className="flex items-center gap-2 text-slate-700 font-semibold">
-                <Clock className="w-4 h-4 text-brand-blue flex-shrink-0" />
-                <span>24/7 Operations Desk for Vessel Spares &amp; Cargo Dispatches</span>
-              </div>
-              <div className="flex items-center gap-2 text-slate-700 font-semibold">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Licensed Customs Brokerage &amp; Certified DG Logistics</span>
-              </div>
-            </div>
 
             <div className="flex items-center gap-3 pt-2">
               <a
                 href="https://www.instagram.com/p/Cflbq4nOyzM/?igshid=YWZlMWU5YjI="
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-brand-red hover:border-brand-red flex items-center justify-center transition-all shadow-sm"
+                className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-brand-red hover:border-brand-red flex items-center justify-center transition-all shadow-sm"
                 aria-label="Instagram"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -94,7 +83,7 @@ export const Footer = ({ onOpenQuote }) => {
                 href="https://www.facebook.com/profile.php?id=100064629171267"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-brand-blue hover:border-brand-blue flex items-center justify-center transition-all shadow-sm"
+                className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-brand-blue hover:border-brand-blue flex items-center justify-center transition-all shadow-sm"
                 aria-label="Facebook"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -104,9 +93,9 @@ export const Footer = ({ onOpenQuote }) => {
               <a
                 href={BRAND.brochurePath}
                 download
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-brand-blue hover:border-brand-blue text-xs font-bold transition-all shadow-sm"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-brand-blue hover:border-brand-blue text-xs sm:text-sm font-bold transition-all shadow-sm"
               >
-                <FileDown className="w-3.5 h-3.5 text-brand-red" />
+                <FileDown className="w-4 h-4 text-brand-red" />
                 <span>Download Brochure (PDF)</span>
               </a>
             </div>
@@ -114,10 +103,10 @@ export const Footer = ({ onOpenQuote }) => {
 
           {/* Column 2: Quick Links */}
           <div className="space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-2">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-2.5">
               Quick Links
             </h4>
-            <ul className="space-y-2 text-xs font-medium text-slate-600">
+            <ul className="space-y-2.5 text-sm font-medium text-slate-600">
               <li>
                 <Link to="/" className="hover:text-brand-blue transition-colors flex items-center gap-1">
                   <span>Home</span>
@@ -134,11 +123,6 @@ export const Footer = ({ onOpenQuote }) => {
                 </Link>
               </li>
               <li>
-                <button onClick={onOpenQuote} className="hover:text-brand-blue transition-colors text-left cursor-pointer">
-                  Request Cargo Quote
-                </button>
-              </li>
-              <li>
                 <Link to="/services" className="hover:text-brand-blue transition-colors flex items-center gap-1">
                   <span>Our Services</span>
                 </Link>
@@ -146,7 +130,7 @@ export const Footer = ({ onOpenQuote }) => {
               <li>
                 <a href={BRAND.brochurePath} download className="hover:text-brand-red transition-colors flex items-center gap-1">
                   <span>Company Brochure</span>
-                  <ArrowUpRight className="w-3 h-3" />
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               </li>
             </ul>
@@ -154,10 +138,10 @@ export const Footer = ({ onOpenQuote }) => {
 
           {/* Column 3: Logistics Services */}
           <div className="space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-2">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-2.5">
               Our Services
             </h4>
-            <ul className="space-y-2 text-xs font-medium text-slate-600">
+            <ul className="space-y-2.5 text-sm font-medium text-slate-600">
               {CORE_SERVICES.map((s) => (
                 <li key={s.id}>
                   <Link to={s.path} className="hover:text-brand-blue transition-colors block">
@@ -170,18 +154,18 @@ export const Footer = ({ onOpenQuote }) => {
 
           {/* Column 4: Branch Offices */}
           <div className="space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-2">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-2.5">
               Our Locations
             </h4>
-            <div className="space-y-4 text-xs">
+            <div className="space-y-4 text-xs sm:text-sm">
               {OFFICES.map((office) => (
-                <div key={office.city} className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
-                  <div className="flex items-center gap-1.5 font-bold text-slate-800">
-                    <MapPin className="w-3.5 h-3.5 text-brand-red flex-shrink-0" />
+                <div key={office.city} className="space-y-2 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                  <div className="flex items-center gap-2 font-bold text-slate-900">
+                    <MapPin className="w-4 h-4 text-brand-red flex-shrink-0" />
                     <span>{office.city} Office</span>
                   </div>
-                  <p className="text-slate-600 leading-snug">{office.address}</p>
-                  <div className="pt-1 border-t border-slate-100 flex flex-wrap gap-2 text-[11px]">
+                  <p className="text-slate-600 leading-relaxed text-xs sm:text-sm">{office.address}</p>
+                  <div className="pt-1.5 border-t border-slate-100 flex flex-wrap gap-2 text-xs sm:text-sm">
                     <a href={`tel:${office.phones[0]}`} className="font-bold text-brand-blue hover:underline">
                       {office.phones[0]}
                     </a>
@@ -193,19 +177,22 @@ export const Footer = ({ onOpenQuote }) => {
         </div>
 
         {/* Bottom Legal & Rights */}
-        <div className="border-t border-slate-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="border-t border-slate-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-500">
           <p>
             &copy; {new Date().getFullYear()} <strong className="text-slate-700">Flymingo Logistics</strong>. All rights reserved.
           </p>
-          <div className="flex items-center gap-4 text-[11px]">
-            <span>Maritime Logistics</span>
-            <span>&bull;</span>
-            <span>Air Freight</span>
-            <span>&bull;</span>
-            <span>Ocean Cargo</span>
-            <span>&bull;</span>
-            <span>Customs House Brokerage</span>
-          </div>
+          <p className="text-xs sm:text-sm text-slate-600">
+            Developed by{' '}
+            <a 
+              href="https://saitechnosolutions.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="font-bold text-brand-red hover:underline hover:text-brand-red-dark transition-colors inline-flex items-center gap-1"
+            >
+              <span>Sai Techno Solutions (P) Ltd</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </p>
         </div>
       </div>
     </footer>

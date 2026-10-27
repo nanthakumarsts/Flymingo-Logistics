@@ -299,17 +299,17 @@ export const HomePage = ({ onOpenQuote }) => {
                 loading={idx === 0 ? 'eager' : 'lazy'}
                 decoding="async"
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none contrast-[1.06] brightness-[1.0] ${
-                  isActive ? `${kbClass} opacity-95` : 'scale-100 opacity-0'
+                className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none contrast-[1.05] brightness-[0.90] ${
+                  isActive ? `${kbClass} opacity-90` : 'scale-100 opacity-0'
                 }`}
               />
             </div>
           );
         })}
 
-        {/* Crisp balanced film scrim - gives maximum text contrast without pitch-black darkening */}
-        <div className="absolute inset-0 bg-[#001426]/40 pointer-events-none" aria-hidden="true" />
-        <FlightRouteMap className="opacity-25 z-0" />
+        {/* Balanced dimmed film scrim - comfortable, premium dark contrast without glare */}
+        <div className="absolute inset-0 bg-[#001426]/55 pointer-events-none" aria-hidden="true" />
+        <FlightRouteMap className="opacity-20 z-0" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[360px]">
@@ -362,19 +362,6 @@ export const HomePage = ({ onOpenQuote }) => {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
-
-              {activeSlide.highlights && activeSlide.highlights.length > 0 && (
-                <ul className="fm-s4 flex flex-wrap items-center justify-start gap-2.5 pt-1.5">
-                  {activeSlide.highlights.map((t) => (
-                    <li key={t} className="flex items-center gap-2 pl-2 pr-3.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-md">
-                      <span className="w-4 h-4 rounded-full bg-brand-red flex items-center justify-center shrink-0">
-                        <Check className="w-2.5 h-2.5 text-white stroke-[3]" />
-                      </span>
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              )}
             </div>
 
             {/* RIGHT: slide selector rail (desktop) */}
