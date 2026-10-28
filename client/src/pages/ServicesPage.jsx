@@ -335,9 +335,9 @@ export const ServicesPage = ({ onOpenQuote }) => {
               </div>
             </div>
 
-            {/* Right: Signature Side Design Motif */}
+            {/* Right: orbit of the six channels (click an icon to jump to that service) */}
             <div className="lg:col-span-5 hidden sm:flex items-center justify-center">
-              <BannerSideMotif variant="services" />
+              <OrbitVisual onPick={(i) => pick(i, true)} />
             </div>
 
           </div>
