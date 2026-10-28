@@ -132,3 +132,7 @@ body.nav-drawer-open .floating-actions-container {
   pointer-events: none !important;
 }
 
+body.nav-drawer-open {
+  overflow: hidden;
+}
+

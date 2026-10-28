@@ -249,40 +249,65 @@ export const Navbar = ({ onOpenQuote }) => {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer Menu - Full Screen Height Layout */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-6 space-y-3 animate-fade-in shadow-xl">
-          <div className="space-y-1 font-semibold text-slate-700">
+        <div className="lg:hidden fixed inset-x-0 top-[73px] bottom-0 bg-white z-50 flex flex-col justify-between px-5 pt-4 pb-6 overflow-y-auto animate-fade-in shadow-2xl">
+          <div className="space-y-1.5 font-bold text-base text-slate-800">
             <Link
               to="/"
-              className={`block px-3 py-2 rounded-lg ${isActive('/') ? 'text-brand-blue bg-brand-blue-50 font-bold' : 'hover:bg-slate-50'}`}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-3 rounded-xl transition-colors ${
+                isActive('/') 
+                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red' 
+                  : 'hover:bg-slate-50 text-slate-700'
+              }`}
             >
-              Home
+              <span>Home</span>
+              {isActive('/') && <span className="w-2 h-2 rounded-full bg-brand-red"></span>}
             </Link>
+
             <Link
               to="/about"
-              className={`block px-3 py-2 rounded-lg ${isActive('/about') ? 'text-brand-blue bg-brand-blue-50 font-bold' : 'hover:bg-slate-50'}`}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-3 rounded-xl transition-colors ${
+                isActive('/about') 
+                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red' 
+                  : 'hover:bg-slate-50 text-slate-700'
+              }`}
             >
-              About Us
+              <span>About Us</span>
+              {isActive('/about') && <span className="w-2 h-2 rounded-full bg-brand-red"></span>}
             </Link>
 
             <Link
               to="/services"
-              className={`block px-3 py-2 rounded-lg ${isActive('/services') ? 'text-brand-blue bg-brand-blue-50 font-bold' : 'hover:bg-slate-50'}`}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-3 rounded-xl transition-colors ${
+                isActive('/services') 
+                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red' 
+                  : 'hover:bg-slate-50 text-slate-700'
+              }`}
             >
-              Services
+              <span>Services</span>
+              {isActive('/services') && <span className="w-2 h-2 rounded-full bg-brand-red"></span>}
             </Link>
 
             <Link
               to="/contact"
-              className={`block px-3 py-2 rounded-lg ${isActive('/contact') ? 'text-brand-blue bg-brand-blue-50 font-bold' : 'hover:bg-slate-50'}`}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-3 rounded-xl transition-colors ${
+                isActive('/contact') 
+                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red' 
+                  : 'hover:bg-slate-50 text-slate-700'
+              }`}
             >
-              Contact Us
+              <span>Contact Us</span>
+              {isActive('/contact') && <span className="w-2 h-2 rounded-full bg-brand-red"></span>}
             </Link>
           </div>
 
-          {/* Social Media Links & Quote Action */}
-          <div className="pt-3 space-y-3 border-t border-slate-100">
+          {/* Social Media Links & Quote Action - Pinned to Bottom */}
+          <div className="pt-4 pb-2 space-y-3.5 border-t border-slate-100 mt-auto">
             {/* Social Media Icons */}
             <div className="flex items-center justify-center gap-3 py-1">
               {/* WhatsApp */}
