@@ -255,6 +255,30 @@ export const HomePage = ({ onOpenQuote }) => {
   const nextSector = () => setSectorSlide((prev) => (prev + 1) % sectorCount);
   const prevSector = () => setSectorSlide((prev) => (prev - 1 + sectorCount) % sectorCount);
 
+  /* Mobile scroll refs & controls for Services and Testimonials */
+  const servicesScrollRef = useRef(null);
+  const testimonialsScrollRef = useRef(null);
+
+  const scrollServices = (direction) => {
+    if (servicesScrollRef.current) {
+      const scrollAmount = 300;
+      servicesScrollRef.current.scrollBy({
+        left: direction === 'next' ? scrollAmount : -scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const scrollTestimonials = (direction) => {
+    if (testimonialsScrollRef.current) {
+      const scrollAmount = 300;
+      testimonialsScrollRef.current.scrollBy({
+        left: direction === 'next' ? scrollAmount : -scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   /* scroll progress */
   useEffect(() => {
     const onScroll = () => {
@@ -324,7 +348,7 @@ export const HomePage = ({ onOpenQuote }) => {
         })}
 
         {/* Directional light text scrim: protective white on left for text, completely clear on center/right for video */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 via-42% to-transparent pointer-events-none z-[1]" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/85 to-white/70 sm:bg-gradient-to-r sm:from-white sm:via-white/80 sm:via-42% sm:to-transparent pointer-events-none z-[1]" aria-hidden="true" />
         <FlightRouteMap className="opacity-10 z-[1]" />
 
         <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
@@ -349,13 +373,13 @@ export const HomePage = ({ onOpenQuote }) => {
                 </h1>
 
                 {activeSlide.tagline && (
-                  <p className="fm-s2 text-base sm:text-xl font-bold text-slate-700 tracking-wide">
+                  <p className="fm-s2 text-base sm:text-xl font-bold text-slate-800 tracking-wide">
                     {activeSlide.tagline}
                   </p>
                 )}
               </div>
 
-              <p className="fm-s3 text-sm sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+              <p className="fm-s3 text-sm sm:text-lg text-slate-800 sm:text-slate-600 font-medium sm:font-normal leading-relaxed max-w-2xl bg-white/70 sm:bg-transparent backdrop-blur-[2px] sm:backdrop-blur-none p-3 sm:p-0 rounded-2xl border border-white/80 sm:border-transparent shadow-xs sm:shadow-none">
                 {activeSlide.desc}
               </p>
 
@@ -457,60 +481,87 @@ export const HomePage = ({ onOpenQuote }) => {
         <div className="fm-blob absolute bottom-10 -right-24 w-80 h-80 rounded-full bg-brand-red/10 blur-3xl pointer-events-none" style={{ animationDelay: '-7s' }} aria-hidden="true" />
 
         <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-20 sm:py-28">
-          <SectionHead
-            title="Comprehensive logistics and maritime services"
-            text="Built for reliability, transparent tracking and full compliance across worldwide corridors."
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="flex items-end justify-between mb-8 sm:mb-12">
+            <SectionHead
+              title="Comprehensive logistics and maritime services"
+              text="Built for reliability, transparent tracking and full compliance across worldwide corridors."
+            />
+            {/* Mobile-only arrow controls */}
+            <div className="flex md:hidden items-center gap-2 shrink-0 pb-6">
+              <button
+                type="button"
+                onClick={() => scrollServices('prev')}
+                aria-label="Previous services"
+                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollServices('next')}
+                aria-label="Next services"
+                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          <div
+            ref={servicesScrollRef}
+            className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none"
+          >
             {CORE_SERVICES.map((s, i) => {
               const Icon = SERVICE_ICONS[s.id] || Package;
               return (
-                <Reveal key={s.id} delay={(i % 3) * 90}>
-                  <div
-                    onMouseMove={spot}
-                    className="fm-spot group relative h-full bg-white rounded-3xl border border-slate-200 flex flex-col overflow-hidden shadow-lg shadow-brand-blue/5 hover:border-brand-blue/40 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-blue/15 transition-all duration-300"
-                  >
-                    <div className="relative h-40 bg-brand-blue-dark overflow-hidden">
-                      <img
-                        src={s.image || '/assets/service banner.jpg'}
-                        alt={s.title}
-                        className="w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-75 transition-all duration-500"
-                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      />
-                      <div className="absolute inset-0 bg-slate-950/40" />
-                      <span className="absolute right-4 top-3 text-3xl font-black text-white/20 leading-none select-none font-mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                      <div className="absolute left-6 bottom-4 flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-brand-red text-white flex items-center justify-center shadow-lg shadow-brand-red/40 group-hover:scale-110 transition-all duration-300">
-                          <Icon className="w-6 h-6" />
+                <div key={s.id} className="min-w-[85vw] sm:min-w-[340px] md:min-w-0 snap-center h-full flex flex-col">
+                  <Reveal delay={(i % 3) * 90} className="h-full flex flex-col">
+                    <div
+                      onMouseMove={spot}
+                      className="fm-spot group relative h-full bg-white rounded-3xl border border-slate-200 flex flex-col overflow-hidden shadow-lg shadow-brand-blue/5 hover:border-brand-blue/40 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-blue/15 transition-all duration-300"
+                    >
+                      <div className="relative h-40 bg-brand-blue-dark overflow-hidden">
+                        <img
+                          src={s.image || '/assets/service banner.jpg'}
+                          alt={s.title}
+                          className="w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-75 transition-all duration-500"
+                          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                        />
+                        <div className="absolute inset-0 bg-slate-950/40" />
+                        <span className="absolute right-4 top-3 text-3xl font-black text-white/20 leading-none select-none font-mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                        <div className="absolute left-6 bottom-4 flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-xl bg-brand-red text-white flex items-center justify-center shadow-lg shadow-brand-red/40 group-hover:scale-110 transition-all duration-300">
+                            <Icon className="w-6 h-6" />
+                          </div>
+                          <span className="text-xs font-bold text-white tracking-wide drop-shadow-md bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">{s.badge}</span>
                         </div>
-                        <span className="text-xs font-bold text-white tracking-wide drop-shadow-md bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">{s.badge}</span>
                       </div>
-                    </div>
 
-                    <div className="relative p-6 sm:p-7 flex flex-col flex-1">
-                      <h3 className="text-xl font-bold text-slate-900 mb-2">{s.title}</h3>
-                      <p className="text-sm text-slate-600 leading-relaxed mb-5">{s.shortDesc}</p>
-                      <ul className="space-y-2.5 text-sm text-slate-600 mb-6">
-                        {s.bullets.map((b, bi) => (
-                          <li key={bi} className="flex items-start gap-2.5">
-                            <span className="mt-0.5 w-5 h-5 rounded-full bg-brand-blue-50 text-brand-blue flex items-center justify-center flex-shrink-0 group-hover:bg-brand-blue group-hover:text-white transition-colors">
-                              <Check className="w-3 h-3" />
-                            </span>
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-auto pt-5 border-t border-slate-100 flex items-center justify-between">
-                        <Link to={s.path} className="text-sm font-semibold text-brand-blue hover:text-brand-blue-dark inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                          Explore service <ArrowRight className="w-4 h-4" />
-                        </Link>
-                        <button onClick={() => onOpenQuote(s.id)} className="px-4 py-1.5 rounded-full text-sm font-semibold text-brand-red border border-brand-red/30 hover:bg-brand-red hover:text-white transition-colors cursor-pointer">
-                          Get quote
-                        </button>
+                      <div className="relative p-6 sm:p-7 flex flex-col flex-1">
+                        <h3 className="text-xl font-bold text-slate-900 mb-2">{s.title}</h3>
+                        <p className="text-sm text-slate-600 leading-relaxed mb-5">{s.shortDesc}</p>
+                        <ul className="space-y-2.5 text-sm text-slate-600 mb-6">
+                          {s.bullets.map((b, bi) => (
+                            <li key={bi} className="flex items-start gap-2.5">
+                              <span className="mt-0.5 w-5 h-5 rounded-full bg-brand-blue-50 text-brand-blue flex items-center justify-center flex-shrink-0 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                                <Check className="w-3 h-3" />
+                              </span>
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-auto pt-5 border-t border-slate-100 flex items-center justify-between">
+                          <Link to={s.path} className="text-sm font-semibold text-brand-blue hover:text-brand-blue-dark inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Explore service <ArrowRight className="w-4 h-4" />
+                          </Link>
+                          <button onClick={() => onOpenQuote(s.id)} className="px-4 py-1.5 rounded-full text-sm font-semibold text-brand-red border border-brand-red/30 hover:bg-brand-red hover:text-white transition-colors cursor-pointer">
+                            Get quote
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Reveal>
+                  </Reveal>
+                </div>
               );
             })}
           </div>
@@ -816,28 +867,55 @@ export const HomePage = ({ onOpenQuote }) => {
         <Quote className="absolute left-4 top-24 w-56 h-56 text-brand-blue/[0.05] -rotate-6" aria-hidden="true" />
         <Quote className="absolute right-4 bottom-10 w-56 h-56 text-brand-red/[0.06] rotate-6" aria-hidden="true" />
         <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-20 sm:py-28">
-          <SectionHead title="Trusted by maritime fleets and global families" />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex items-end justify-between mb-8 sm:mb-12">
+            <SectionHead title="Trusted by maritime fleets and global families" />
+            {/* Mobile-only arrow controls */}
+            <div className="flex md:hidden items-center gap-2 shrink-0 pb-6">
+              <button
+                type="button"
+                onClick={() => scrollTestimonials('prev')}
+                aria-label="Previous testimonial"
+                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollTestimonials('next')}
+                aria-label="Next testimonial"
+                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          <div
+            ref={testimonialsScrollRef}
+            className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none"
+          >
             {TESTIMONIALS.map((t, idx) => (
-              <Reveal key={idx} delay={idx * 80}>
-                <figure className="group relative h-full flex flex-col justify-between bg-white rounded-3xl border border-slate-200 p-7 overflow-hidden shadow-lg shadow-brand-blue/5 hover:-translate-y-2 hover:border-brand-blue/30 hover:shadow-2xl hover:shadow-brand-blue/15 transition-all duration-300">
-                  <div className="space-y-4">
-                    <div className="w-12 h-12 rounded-2xl bg-brand-red/10 text-brand-red flex items-center justify-center group-hover:bg-brand-red group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
-                      <Quote className="w-6 h-6" />
+              <div key={idx} className="min-w-[85vw] sm:min-w-[320px] md:min-w-0 snap-center h-full flex flex-col">
+                <Reveal delay={idx * 80} className="h-full flex flex-col">
+                  <figure className="group relative h-full flex flex-col justify-between bg-white rounded-3xl border border-slate-200 p-7 overflow-hidden shadow-lg shadow-brand-blue/5 hover:-translate-y-2 hover:border-brand-blue/30 hover:shadow-2xl hover:shadow-brand-blue/15 transition-all duration-300">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-brand-red/10 text-brand-red flex items-center justify-center group-hover:bg-brand-red group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                        <Quote className="w-6 h-6" />
+                      </div>
+                      <blockquote className="text-slate-700 leading-relaxed text-sm">{t.quote}</blockquote>
                     </div>
-                    <blockquote className="text-slate-700 leading-relaxed text-sm">{t.quote}</blockquote>
-                  </div>
-                  <figcaption className="mt-6 pt-5 border-t border-slate-100 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-brand-blue text-white font-bold flex items-center justify-center text-sm ring-2 ring-brand-red/30 ring-offset-2 shrink-0">
-                      {t.author.charAt(0)}
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-sm font-semibold text-slate-900 truncate">{t.author}</div>
-                      <div className="text-xs text-slate-500 truncate">{t.role}, {t.company}</div>
-                    </div>
-                  </figcaption>
-                </figure>
-              </Reveal>
+                    <figcaption className="mt-6 pt-5 border-t border-slate-100 flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-brand-blue text-white font-bold flex items-center justify-center text-sm ring-2 ring-brand-red/30 ring-offset-2 shrink-0">
+                        {t.author.charAt(0)}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-sm font-semibold text-slate-900 truncate">{t.author}</div>
+                        <div className="text-xs text-slate-500 truncate">{t.role}, {t.company}</div>
+                      </div>
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              </div>
             ))}
           </div>
         </div>

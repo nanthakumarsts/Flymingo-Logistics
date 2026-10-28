@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   ShieldCheck, Award, Globe, ArrowRight, Compass, Check,
-  Anchor, Boxes, TrendingUp, Ship, ArrowUpRight, Phone
+  Anchor, Boxes, TrendingUp, Ship, ArrowUpRight, Phone,
+  ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
 import { FlightRouteMap } from '../components/FlightRouteMap';
@@ -266,6 +267,42 @@ export const AboutPage = ({ onOpenQuote }) => {
   const active = TIMELINE[activeIdx];
   const ActiveIcon = active.icon;
 
+  /* Mobile scroll refs & handlers for Journey Year Rail and Virtues */
+  const journeyScrollRef = useRef(null);
+  const virtuesScrollRef = useRef(null);
+
+  const prevJourney = () => {
+    setActiveYear((cur) => {
+      const i = TIMELINE.findIndex((x) => x.year === cur);
+      const prevIdx = (i - 1 + TIMELINE.length) % TIMELINE.length;
+      return TIMELINE[prevIdx].year;
+    });
+    if (journeyScrollRef.current) {
+      journeyScrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+
+  const nextJourney = () => {
+    setActiveYear((cur) => {
+      const i = TIMELINE.findIndex((x) => x.year === cur);
+      const nextIdx = (i + 1) % TIMELINE.length;
+      return TIMELINE[nextIdx].year;
+    });
+    if (journeyScrollRef.current) {
+      journeyScrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    }
+  };
+
+  const scrollVirtues = (direction) => {
+    if (virtuesScrollRef.current) {
+      const scrollAmount = 300;
+      virtuesScrollRef.current.scrollBy({
+        left: direction === 'next' ? scrollAmount : -scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <div className="space-y-20 sm:space-y-28 pb-20 select-none overflow-x-hidden">
       <style>{css}</style>
@@ -412,12 +449,33 @@ export const AboutPage = ({ onOpenQuote }) => {
         <div className="ab-blob absolute -bottom-24 -right-20 w-96 h-96 rounded-full bg-brand-red/10 blur-3xl pointer-events-none" style={{ animationDelay: '-8s' }} aria-hidden="true" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <SectionHead
-            icon={TrendingUp}
-            eyebrow="Milestone History"
-            title="Our Journey of Growth"
-            text="Connecting the world, one shipment at a time."
-          />
+          <div className="flex items-end justify-between">
+            <SectionHead
+              icon={TrendingUp}
+              eyebrow="Milestone History"
+              title="Our Journey of Growth"
+              text="Connecting the world, one shipment at a time."
+            />
+            {/* Mobile-only year arrow controls */}
+            <div className="flex lg:hidden items-center gap-2 shrink-0 pb-4">
+              <button
+                type="button"
+                onClick={prevJourney}
+                aria-label="Previous milestone"
+                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                onClick={nextJourney}
+                aria-label="Next milestone"
+                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
 
           <div
             className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8"
@@ -432,7 +490,10 @@ export const AboutPage = ({ onOpenQuote }) => {
                 style={{ height: `calc((100% - 3rem) * ${activeIdx / (TIMELINE.length - 1)})` }}
                 aria-hidden="true"
               />
-              <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
+              <div
+                ref={journeyScrollRef}
+                className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 scroll-smooth scrollbar-none snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0"
+              >
                 {TIMELINE.map((item, i) => {
                   const on = item.year === activeYear;
                   const passed = i <= activeIdx;
@@ -441,20 +502,21 @@ export const AboutPage = ({ onOpenQuote }) => {
                       key={item.year}
                       type="button"
                       onClick={() => setActiveYear(item.year)}
-                      className={`relative shrink-0 lg:shrink text-left flex items-center gap-4 pl-3 pr-5 py-3 rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden ${
+                      className={`relative shrink-0 lg:shrink text-left flex items-center gap-3 sm:gap-4 px-4 py-3 rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden snap-start ${
                         on
                           ? 'bg-brand-blue-dark text-white border-brand-blue-dark shadow-xl shadow-brand-blue/25 lg:translate-x-2'
                           : 'bg-white text-slate-800 border-slate-200 hover:border-brand-blue/40 hover:shadow-md'
                       }`}
                     >
-                      <span className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center text-[11px] font-mono font-black shrink-0 border-2 transition-colors ${
+                      {/* Circle shown ONLY on desktop/tablet, hidden on mobile */}
+                      <span className={`hidden sm:flex relative z-10 w-10 h-10 rounded-full items-center justify-center text-[11px] font-mono font-black shrink-0 border-2 transition-colors ${
                         on ? 'bg-brand-red border-white text-white' : passed ? 'bg-brand-red/10 border-brand-red text-brand-red' : 'bg-white border-slate-300 text-slate-500'
                       }`}>
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <span className="min-w-0">
-                        <span className={`block text-xl font-black font-mono leading-none ${on ? 'text-brand-red-light' : 'text-brand-red'}`}>{item.year}</span>
-                        <span className="block text-sm font-bold mt-1 whitespace-nowrap lg:whitespace-normal">{item.title}</span>
+                        <span className={`block text-lg sm:text-xl font-black font-mono leading-none ${on ? 'text-brand-red-light' : 'text-brand-red'}`}>{item.year}</span>
+                        <span className="block text-xs sm:text-sm font-bold mt-1 whitespace-nowrap lg:whitespace-normal">{item.title}</span>
                       </span>
                       {on && (
                         <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-white/20" aria-hidden="true">
@@ -578,51 +640,77 @@ export const AboutPage = ({ onOpenQuote }) => {
       {/* ========================================================= */}
       {/* 5. VALUES, QUALITY & COMMUNICATION                        */}
       {/* ========================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
-        <SectionHead
-          eyebrow="The Flymingo Virtues"
-          title="Values, Quality & Communication"
-          text="The foundational pillars guiding every customer interaction and cargo movement."
-        />
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14">
+        <div className="flex items-end justify-between">
+          <SectionHead
+            eyebrow="The Flymingo Virtues"
+            title="Values, Quality & Communication"
+            text="The foundational pillars guiding every customer interaction and cargo movement."
+          />
+          {/* Mobile-only arrow controls */}
+          <div className="flex md:hidden items-center gap-2 shrink-0 pb-4">
+            <button
+              type="button"
+              onClick={() => scrollVirtues('prev')}
+              aria-label="Previous virtue"
+              className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollVirtues('next')}
+              aria-label="Next virtue"
+              className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div
+          ref={virtuesScrollRef}
+          className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none"
+        >
           {PILLARS.map((p, idx) => (
-            <Reveal key={idx} delay={idx * 100} variant="scale" className="h-full">
-              <div className="group relative h-full bg-white rounded-3xl border border-slate-200 shadow-md hover:shadow-2xl hover:shadow-brand-blue/15 hover:-translate-y-2 transition-all duration-300 flex flex-col overflow-hidden">
-                <div className="relative h-56 bg-slate-100 overflow-hidden">
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    onError={(e) => { e.currentTarget.src = '/assets/about 2.jpg'; }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#001426]/70 via-transparent to-transparent pointer-events-none" />
-                  <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-brand-red text-white text-[11px] font-bold shadow-lg shadow-brand-red/40">
-                    {p.badge}
-                  </div>
-                  <span className="absolute right-5 bottom-8 text-6xl font-black font-mono text-white/25 leading-none select-none" aria-hidden="true">
-                    {String(idx + 1).padStart(2, '0')}
-                  </span>
-                  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" className="absolute left-0 -bottom-[2px] w-full h-8 text-white pointer-events-none">
-                    <path fill="currentColor" d="M0 44 C 240 92 480 0 720 36 S 1200 84 1440 28 V80 H0 Z" />
-                  </svg>
-                </div>
-
-                <div className="relative p-6 sm:p-7 pt-3 space-y-3 flex-1 flex flex-col justify-between text-left">
-                  <div className="space-y-3">
-                    <h3 className="text-2xl font-black text-slate-900">{p.title}</h3>
-                    <span className="block h-1 w-10 rounded-full bg-brand-red group-hover:w-24 transition-all duration-500" aria-hidden="true" />
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{p.desc}</p>
-                  </div>
-                  <div className="pt-4 mt-2 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-brand-blue">
-                    <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                      <Check className="w-3 h-3 stroke-[3]" />
+            <div key={idx} className="min-w-[85vw] sm:min-w-[340px] md:min-w-0 snap-center h-full flex flex-col">
+              <Reveal delay={idx * 100} variant="scale" className="h-full flex flex-col">
+                <div className="group relative h-full bg-white rounded-3xl border border-slate-200 shadow-md hover:shadow-2xl hover:shadow-brand-blue/15 hover:-translate-y-2 transition-all duration-300 flex flex-col overflow-hidden">
+                  <div className="relative h-56 bg-slate-100 overflow-hidden">
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      onError={(e) => { e.currentTarget.src = '/assets/about 2.jpg'; }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#001426]/70 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-brand-red text-white text-[11px] font-bold shadow-lg shadow-brand-red/40">
+                      {p.badge}
+                    </div>
+                    <span className="absolute right-5 bottom-8 text-6xl font-black font-mono text-white/25 leading-none select-none" aria-hidden="true">
+                      {String(idx + 1).padStart(2, '0')}
                     </span>
-                    <span>Flymingo Core Commitment</span>
+                    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" className="absolute left-0 -bottom-[2px] w-full h-8 text-white pointer-events-none">
+                      <path fill="currentColor" d="M0 44 C 240 92 480 0 720 36 S 1200 84 1440 28 V80 H0 Z" />
+                    </svg>
+                  </div>
+
+                  <div className="relative p-6 sm:p-7 pt-3 space-y-3 flex-1 flex flex-col justify-between text-left">
+                    <div className="space-y-3">
+                      <h3 className="text-2xl font-black text-slate-900">{p.title}</h3>
+                      <span className="block h-1 w-10 rounded-full bg-brand-red group-hover:w-24 transition-all duration-500" aria-hidden="true" />
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{p.desc}</p>
+                    </div>
+                    <div className="pt-4 mt-2 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-brand-blue">
+                      <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                        <Check className="w-3 h-3 stroke-[3]" />
+                      </span>
+                      <span>Flymingo Core Commitment</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
           ))}
         </div>
       </section>
