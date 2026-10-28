@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Lock, User, Eye, EyeOff, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
+import { Lock, User, Eye, EyeOff, ShieldCheck, ArrowRight } from 'lucide-react';
 
 export const AdminLogin = ({ onLogin }) => {
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('flamingo2024');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(true);
   const [error, setError] = useState('');
@@ -26,12 +26,6 @@ export const AdminLogin = ({ onLogin }) => {
       }
       setLoading(false);
     }, 400);
-  };
-
-  const handleQuickDemo = () => {
-    setUsername('admin');
-    setPassword('flamingo2024');
-    setError('');
   };
 
   return (
@@ -138,14 +132,6 @@ export const AdminLogin = ({ onLogin }) => {
               />
               <span>Remember this session</span>
             </label>
-            <button
-              type="button"
-              onClick={handleQuickDemo}
-              className="text-xs font-bold text-[#005687] hover:text-[#ed2926] transition-colors cursor-pointer flex items-center gap-1"
-            >
-              <Sparkles className="w-3 h-3" />
-              <span>Demo Fill</span>
-            </button>
           </div>
 
           {/* Sign In Button */}

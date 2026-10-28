@@ -43,7 +43,7 @@ export const QuoteModal = ({ isOpen, onClose, defaultService }) => {
             </div>
             <div>
               <h3 className="text-lg font-bold text-slate-900">Cargo Request Quote</h3>
-              <p className="text-xs text-slate-500">Fast, competitive pricing tailored to your cargo</p>
+              
             </div>
           </div>
           <button 
@@ -254,8 +254,8 @@ export const QuoteModal = ({ isOpen, onClose, defaultService }) => {
 
             <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
               <div className="flex items-center gap-2 text-xs text-slate-500">
-                <ShieldCheck className="w-4 h-4 text-brand-blue" />
-                <span>Zero obligations. Instant quotation.</span>
+                
+                
               </div>
               <button
                 type="submit"

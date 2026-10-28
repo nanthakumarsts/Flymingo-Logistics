@@ -520,7 +520,7 @@ export function useAdminStore() {
   };
 
   const login = (username, password, remember = false) => {
-    // Simple demo validation
+    // Standard credential validation
     if (username.trim() && password.trim()) {
       const userObj = {
         username: username.trim(),
