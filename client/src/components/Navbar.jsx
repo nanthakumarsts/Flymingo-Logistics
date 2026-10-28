@@ -251,7 +251,7 @@ export const Navbar = ({ onOpenQuote }) => {
 
       {/* Mobile Drawer Menu - Full Screen (100dvh) Dedicated View */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-[100] bg-white flex flex-col justify-between overflow-y-auto animate-fade-in">
+        <div className="lg:hidden fixed top-0 left-0 right-0 bottom-0 w-full h-[100dvh] z-[9999] bg-white flex flex-col justify-between overflow-y-auto">
           {/* Top Header inside Full Screen Menu with Logo, Quote & Close Button */}
           <div className="px-4 sm:px-6 py-3 flex items-center justify-between border-b border-slate-100 bg-white sticky top-0 z-10 shrink-0">
             <Link 
