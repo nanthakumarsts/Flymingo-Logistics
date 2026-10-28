@@ -21,7 +21,7 @@ export const DangerousGoodsPage = ({ onOpenQuote }) => {
 
   return (
     <div className="space-y-20 pb-20">
-      <PageBanner eyebrow="IATA & IMDG certified" title="Expert handling of dangerous goods" description="Hazardous cargo logistics across air and sea with UN-certified packaging, DGD documentation and carrier-ready compliance." image="/assets/certification.jpg" action="Consult DG specialist" onAction={() => onOpenQuote('dg-shipping')} />
+      <PageBanner eyebrow="IATA & IMDG certified" title="Expert handling of dangerous goods" description="Hazardous cargo logistics across air and sea with UN-certified packaging, DGD documentation and carrier-ready compliance." image="/assets/dg-hazmat-hd.jpg" action="Consult DG specialist" onAction={() => onOpenQuote('dg-shipping')} />
 
       {/* DG Classes Grid */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-10">

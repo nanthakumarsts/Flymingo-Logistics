@@ -176,7 +176,7 @@ export const BannerSideMotif = ({
         <div className="absolute right-0 top-0 w-[62%] h-[88%]">
           <div className="relative w-full h-full rounded-t-[999px] rounded-b-3xl overflow-hidden border-4 border-white shadow-2xl shadow-brand-blue/30 bg-slate-200">
             <img
-              src="/assets/any size.jpg"
+              src="/assets/ship-spares-hd.jpg"
               alt="Marine Equipment and Vessel Spares"
               className="w-full h-full object-cover"
               onError={(e) => { e.currentTarget.src = '/assets/banner-marine-hd.jpg'; }}
@@ -456,10 +456,10 @@ export const BannerSideMotif = ({
         <div className="absolute right-1 top-0 w-[60%] h-[84%]">
           <div className="relative w-full h-full rounded-3xl overflow-hidden border-4 border-white shadow-2xl shadow-amber-600/20 bg-slate-200">
             <img
-              src="/assets/certification.jpg"
+              src="/assets/dg-hazmat-hd.jpg"
               alt="Dangerous Goods Certification"
               className="w-full h-full object-cover"
-              onError={(e) => { e.currentTarget.src = '/assets/any size.jpg'; }}
+              onError={(e) => { e.currentTarget.src = '/assets/banner-process-hd.jpg'; }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent" />
           </div>

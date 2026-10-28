@@ -107,7 +107,7 @@ const CAPABILITIES = [
     badge: 'Flagship Maritime Service',
     badgeColor: 'bg-brand-red-50 text-brand-red border-brand-red-200',
     icon: Anchor,
-    image: '/assets/any size.jpg',
+    image: '/assets/ship-spares-hd.jpg',
     lead: 'Time-critical marine equipment and engine parts delivered directly on board to vessel masters at outer anchorage berths across 10+ major Indian seaports.',
     features: [
       'Direct supply launch boat delivery to outer anchorage',
@@ -179,7 +179,7 @@ const CAPABILITIES = [
     badge: 'IATA & IMO Certified',
     badgeColor: 'bg-amber-50 text-amber-800 border-amber-200',
     icon: AlertTriangle,
-    image: '/assets/certification.jpg',
+    image: '/assets/dg-hazmat-hd.jpg',
     lead: 'IATA and IMDG certified hazardous cargo logistics covering Classes 1 through 9 with UN-certified protective packaging and DGD filing.',
     features: [
       'Complete coverage of Classes 1 to 9 (flammable, toxic, corrosive)',

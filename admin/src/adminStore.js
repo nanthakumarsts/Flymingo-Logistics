@@ -126,7 +126,7 @@ export const INITIAL_ADMIN_DATA = {
         step: '06',
         title: 'Final Doorstep or Vessel On-Board Delivery',
         desc: 'Direct handover to consignee doorstep across 190+ countries or launch-boat delivery to vessel master at outer port berths.',
-        image: '/assets/any size.jpg',
+        image: '/assets/ship-spares-hd.jpg',
         badge: 'Step 6'
       }
     ],
@@ -151,7 +151,7 @@ export const INITIAL_ADMIN_DATA = {
         id: 'dg-sector',
         title: 'Defense, Chemicals & DG Cargo',
         desc: 'Class 1 through Class 9 hazardous chemicals, lithium battery consignments, flammable solvents, and marine paints certified under IATA/IMO.',
-        image: '/assets/certification.jpg',
+        image: '/assets/dg-hazmat-hd.jpg',
         tag: 'Hazardous Compliance',
         bullets: ['UN-spec container crating', 'DGD certified documentation', 'Trained DG handlers']
       },
@@ -271,7 +271,7 @@ export const INITIAL_ADMIN_DATA = {
       path: '/services/ship-spares-logistics',
       badge: 'Flagship Maritime Service',
       tagline: 'Zero Port Delay Guarantee',
-      image: '/assets/any size.jpg',
+      image: '/assets/ship-spares-hd.jpg',
       lead: 'Time-critical marine equipment and engine parts delivered directly on board to vessel masters at outer anchorage berths across 10+ major Indian seaports.',
       features: [
         'Direct supply launch boat delivery to outer anchorage berths',
@@ -331,7 +331,7 @@ export const INITIAL_ADMIN_DATA = {
       path: '/services/dangerous-goods-shipping',
       badge: 'IATA & IMO Certified',
       tagline: '100% International Safety Compliance',
-      image: '/assets/certification.jpg',
+      image: '/assets/dg-hazmat-hd.jpg',
       lead: 'IATA and IMDG certified hazardous cargo logistics covering Classes 1 through 9 with UN-certified protective packaging and DGD filing.',
       features: [
         'Complete coverage of Classes 1 to 9 (flammable, toxic, corrosive)',
