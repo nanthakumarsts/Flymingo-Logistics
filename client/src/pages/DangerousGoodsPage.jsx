@@ -53,47 +53,59 @@ export const DangerousGoodsPage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* Why Choose Us for DG */}
+      {/* Capabilities & Value Proposition (2-Column Layout matching Ship Spares) */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-8">
-          <div className="max-w-2xl space-y-2">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
-              Compliance Assurance
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-              Why Choose Flymingo for Hazardous Shipments?
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-brand-blue-50 text-brand-blue flex items-center justify-center font-bold">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-slate-900">Certified DG Experts</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                In-house specialists certified under IATA DGR and IMDG codes to properly categorize, classify, and label cargo.
-              </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className="space-y-4">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
+                Compliance Assurance
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                Why Choose Flymingo for Hazardous Shipments?
+              </h2>
+              <ul className="space-y-3 text-xs text-slate-600 leading-relaxed">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Certified DG Experts:</strong> In-house specialists certified under IATA DGR and IMDG codes to properly categorize, classify, and label cargo.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>UN-Certified Packaging:</strong> UN-specification 4G / 4GV packaging boxes, absorbent Vermiculite cushioning, and hazardous hazard labels.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Guaranteed Carrier Acceptance:</strong> Meticulous Dangerous Goods Declaration (DGD) paperwork guaranteeing zero carrier checklist rejections or flight hold-ups.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Emergency Response Protocol:</strong> 24/7 dedicated hazmat desk assisting with MSDS verification and multimodal DG routing.</span>
+                </li>
+              </ul>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
-                <FileCheck className="w-5 h-5" />
+            {/* DG Handling Hubs Card */}
+            <div className="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-amber-600" />
+                <h3 className="text-base font-bold text-slate-900">Certified DG Gateways &amp; Air Terminals</h3>
               </div>
-              <h3 className="text-base font-bold text-slate-900">UN-Certified Packaging</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                UN-specification 4G / 4GV packaging boxes, absorbent Vermiculite cushioning, and hazardous hazard labels.
+              <p className="text-xs text-slate-500">
+                Approved dangerous goods packing stations and direct airline handling desks:
               </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                <CheckCircle2 className="w-5 h-5" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-800">
+                {[
+                  'Chennai Air Cargo Complex (MAA)', 'Kempegowda Bangalore Cargo (BLR)',
+                  'Coimbatore Air Cargo (CJB)', 'Tuticorin Port Hazmat Yard (VOC)',
+                  'Cochin Special Cargo Terminal (COK)', 'Mumbai Air Cargo & JNPT (BOM)',
+                  'Hyderabad Air Cargo (HYD)', 'Delhi Cargo Terminal (DEL)'
+                ].map((hub, i) => (
+                  <div key={i} className="flex items-center gap-2 py-1">
+                    <AlertTriangle className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
+                    <span>{hub}</span>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-base font-bold text-slate-900">Guaranteed Carrier Acceptance</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Meticulous Dangerous Goods Declaration (DGD) paperwork guaranteeing zero carrier checklist rejections or flight hold-ups.
-              </p>
             </div>
           </div>
         </div>

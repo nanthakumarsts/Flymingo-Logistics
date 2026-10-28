@@ -1,4 +1,5 @@
 import React from 'react';
+import { CheckCircle2, Compass, MapPin } from 'lucide-react';
 import { BRAND } from '../data/siteData';
 import { PageBanner } from '../components/PageBanner';
 
@@ -105,6 +106,63 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
               <p className="text-xs text-slate-600 leading-relaxed">
                 Convenient pickup from your doorstep in Coimbatore, Chennai, Tirupur, Erode, Salem, and surrounding regions.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Capabilities & Value Proposition (2-Column Layout matching Ship Spares) */}
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className="space-y-4">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
+                Worldwide Express Value Proposition
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                Why Global Senders &amp; Businesses Choose Flymingo
+              </h2>
+              <ul className="space-y-3 text-xs text-slate-600 leading-relaxed">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Doorstep Pickup Guarantee:</strong> Same-day doorstep collection across Coimbatore, Chennai, Tirupur, Erode, and all South India hubs.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Food-Grade Protective Packing:</strong> Specialized vacuum packaging maintaining freshness of homemade sweets, snacks, and masalas to USA, UK, UAE &amp; Canada.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Express Air Transit:</strong> Priority uplift via top global airline partners with guaranteed 2 to 4 business days transit time.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>End-to-End Tracking:</strong> Transparent live milestone tracking with automated WhatsApp &amp; SMS delivery confirmations with signature proof.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Global Destinations Network Card */}
+            <div className="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
+              <div className="flex items-center gap-2">
+                <Compass className="w-5 h-5 text-brand-blue" />
+                <h3 className="text-base font-bold text-slate-900">Active Global Courier Network (190+ Countries)</h3>
+              </div>
+              <p className="text-xs text-slate-500">
+                Direct express air corridors with daily flights and prompt customs clearance at major destinations:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-800">
+                {[
+                  'United States (USA)', 'United Kingdom (UK)', 'United Arab Emirates (UAE)',
+                  'Canada', 'Australia & NZ', 'Singapore & Malaysia',
+                  'Germany & Europe', 'Saudi Arabia & Qatar', 'Kuwait & Bahrain', 'Sri Lanka & Maldives'
+                ].map((country, i) => (
+                  <div key={i} className="flex items-center gap-2 py-1">
+                    <MapPin className="w-3.5 h-3.5 text-brand-red flex-shrink-0" />
+                    <span>{country}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

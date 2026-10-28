@@ -101,6 +101,63 @@ export const FreightForwardingPage = ({ onOpenQuote }) => {
         </div>
       </section>
 
+      {/* Capabilities & Value Proposition (2-Column Layout matching Ship Spares) */}
+      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className="space-y-4">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
+                Multi-Modal Value Proposition
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                Why Exporters &amp; Importers Choose Flymingo Freight
+              </h2>
+              <ul className="space-y-3 text-xs text-slate-600 leading-relaxed">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Direct Contract Pricing:</strong> Direct volume contracts with top airline and ocean container alliances ensuring competitive landed costs.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>FCL &amp; LCL Consolidation:</strong> Flexible containerized solutions from single pallet groupage to multi-container factory projects.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Priority Booking Desk:</strong> Guaranteed space allocation during peak shipping seasons on both maritime and air cargo lanes.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Zero Demurrage Risk:</strong> Advance customs EDI filing and synchronized terminal drayage for instant port gate release.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Global Corridors & Port Network Card */}
+            <div className="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
+              <div className="flex items-center gap-2">
+                <Globe className="w-5 h-5 text-brand-blue" />
+                <h3 className="text-base font-bold text-slate-900">Active Freight Corridors &amp; Hubs</h3>
+              </div>
+              <p className="text-xs text-slate-500">
+                Direct maritime and air cargo gateways connecting South India to global trade centers:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-800">
+                {[
+                  'Chennai Port & Air Cargo', 'V.O.C. Tuticorin Seaport', 'Cochin ICTT Vallarpadam',
+                  'Kattupalli & Ennore Ports', 'JNPT Mumbai Gateway', 'Kempegowda Bangalore Cargo',
+                  'Gulf & Middle East Routes', 'North America (US East/West)', 'European Main Ports (Rotterdam/Hamburg)', 'Far East & SE Asia Lanes'
+                ].map((hub, i) => (
+                  <div key={i} className="flex items-center gap-2 py-1">
+                    <Anchor className="w-3.5 h-3.5 text-brand-red flex-shrink-0" />
+                    <span>{hub}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Call to action (Light Theme) */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="bg-gradient-to-r from-brand-blue-50 via-white to-brand-blue-50/50 rounded-3xl p-8 sm:p-12 text-slate-900 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-brand-blue-100">

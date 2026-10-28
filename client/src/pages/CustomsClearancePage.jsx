@@ -65,37 +65,59 @@ export const CustomsClearancePage = ({ onOpenQuote }) => {
         </div>
       </section>
 
-      {/* Ports Handled */}
+      {/* Capabilities & Value Proposition (2-Column Layout matching Ship Spares) */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-6">
-          <div className="max-w-2xl space-y-2">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
-              Coverage Gateways
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-              Airports, Seaports &amp; Inland Container Depots (ICD)
-            </h2>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Direct licensed customs representation across South India and primary maritime entry gates:
-            </p>
-          </div>
+        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className="space-y-4">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
+                Customs Value Proposition
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                Why Importers &amp; Exporters Choose Flymingo CHA
+              </h2>
+              <ul className="space-y-3 text-xs text-slate-600 leading-relaxed">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Zero Demurrage Protocol:</strong> Advance bill of entry filing and prior inspection coordination preventing costly port demurrage and container detention.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Accurate HS Classification:</strong> Specialized tariff classification across machinery, electronics, and chemicals with zero misdeclaration risk.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>Government Scheme Benefits:</strong> Maximizing duty exemptions under EPCG, Advance Authorization, and MOOWR bonded schemes.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
+                  <span><strong>On-Ground Field Staff:</strong> Experienced customs brokers stationed full-time at all major port gates and air cargo complexes.</span>
+                </li>
+              </ul>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-semibold text-slate-800">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-              <div className="text-brand-blue font-bold">Chennai Seaport &amp; Airport</div>
-              <p className="text-[11px] font-normal text-slate-500">Customs House Chennai, Meenambakkam Air Cargo Complex &amp; Port Terminals</p>
-            </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-              <div className="text-brand-blue font-bold">Coimbatore ICD &amp; Airport</div>
-              <p className="text-[11px] font-normal text-slate-500">Irugur Inland Container Depot &amp; Peelamedu Air Cargo</p>
-            </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-              <div className="text-brand-blue font-bold">V.O.C. Tuticorin Seaport</div>
-              <p className="text-[11px] font-normal text-slate-500">Tuticorin Custom House &amp; all container freight stations (CFS)</p>
-            </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-              <div className="text-brand-blue font-bold">Cochin &amp; Bangalore Hubs</div>
-              <p className="text-[11px] font-normal text-slate-500">Vallarpadam ICTT Cochin &amp; Kempegowda Bangalore Air Cargo</p>
+            {/* Ports Handled Card */}
+            <div className="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
+              <div className="flex items-center gap-2">
+                <Landmark className="w-5 h-5 text-brand-blue" />
+                <h3 className="text-base font-bold text-slate-900">Licensed Port &amp; Airport Coverage</h3>
+              </div>
+              <p className="text-xs text-slate-500">
+                Direct licensed customs representation across South India and primary maritime entry gates:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-800">
+                {[
+                  'Chennai Seaport & Air Cargo (MAA)', 'Coimbatore ICD & Airport (CJB)',
+                  'V.O.C. Tuticorin Seaport (VOC)', 'Cochin Port & Airport (COK)',
+                  'Kempegowda Bangalore Cargo (BLR)', 'Kattupalli Port & CFS',
+                  'Ennore Port (Kamarajar)', 'Jawaharlal Nehru Port (JNPT)'
+                ].map((port, i) => (
+                  <div key={i} className="flex items-center gap-2 py-1">
+                    <MapPin className="w-3.5 h-3.5 text-brand-red flex-shrink-0" />
+                    <span>{port}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
