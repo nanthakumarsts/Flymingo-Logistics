@@ -3,6 +3,7 @@ import { ArrowUp } from 'lucide-react';
 
 export const FloatingButtons = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const checkScroll = () => {
@@ -13,9 +14,18 @@ export const FloatingButtons = () => {
       }
     };
 
+    // Observe body class for nav-drawer-open
+    const observer = new MutationObserver(() => {
+      setIsMenuOpen(document.body.classList.contains('nav-drawer-open'));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
     window.addEventListener('scroll', checkScroll, { passive: true });
     checkScroll();
-    return () => window.removeEventListener('scroll', checkScroll);
+    return () => {
+      window.removeEventListener('scroll', checkScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const handleScrollToTop = () => {
@@ -25,8 +35,12 @@ export const FloatingButtons = () => {
     });
   };
 
+  if (isMenuOpen) {
+    return null;
+  }
+
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-center gap-3">
+    <div className="floating-actions-container fixed bottom-6 right-6 z-40 flex flex-col items-center gap-3">
       {/* WhatsApp Action with Official WhatsApp Icon */}
       <a
         href="https://wa.me/919087924488?text=Hello%20Flymingo%20Logistics,%20I%20would%20like%20to%20inquire%20about%20cargo%20shipping"

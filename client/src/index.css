@@ -125,3 +125,10 @@ body {
   animation: pulse-subtle 3s ease-in-out infinite;
 }
 
+/* Hide floating actions (WhatsApp & Scroll-top) when mobile navigation drawer is open */
+body.nav-drawer-open .floating-actions-container {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
