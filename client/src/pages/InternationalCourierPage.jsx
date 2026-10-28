@@ -1,7 +1,4 @@
 import React from 'react';
-import { 
-  CheckCircle2
-} from 'lucide-react';
 import { BRAND } from '../data/siteData';
 import { PageBanner } from '../components/PageBanner';
 
@@ -15,21 +12,6 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
     { title: 'Gift Articles', desc: 'Birthday presents, wedding invitations, crafts, and festive mementos.', icon: '/assets/gifts.png' },
     { title: 'Utensils & Cookware', desc: 'Brass, copper, stainless steel, and traditional cooking vessels.', icon: '/assets/utensils.png' },
     { title: 'Legal & Educational Docs', desc: 'Degree certificates, marksheets, power of attorney, and contracts.', icon: '/assets/document.png' }
-  ];
-
-  const DELIVERABLES = [
-    { title: 'University Documents', desc: 'WES transcripts, marksheets, university applications & student I-20 papers with tamper-proof envelopes.' },
-    { title: 'Medicine Delivery', desc: 'Doctor-prescribed allopathic and ayurvedic medicines delivered with necessary customs clearance support.' },
-    { title: 'Homemade Food', desc: 'Specialized vacuum packaging keeping homemade treats fresh to the USA, UK, Canada, Australia, and UAE.' },
-    { title: 'Excess Baggage', desc: 'Ship your excess student luggage and personal travel belongings at up to 70% cheaper than airport excess rates.' },
-    { title: 'Commercial Samples', desc: 'Garment samples, engineering prototypes, yarn, and business demonstration goods with commercial invoices.' }
-  ];
-
-  const STEPS = [
-    { num: '01', title: 'Book a Pickup', desc: 'Schedule a doorstep collection at your home, factory, or office in Coimbatore, Chennai, or across Tamil Nadu.' },
-    { num: '02', title: 'We Pack & Label', desc: 'Our team performs multi-layer corrugated, bubble, or vacuum sealing, along with destination compliant labelling.' },
-    { num: '03', title: 'Global Air Transit', desc: 'Priority uplift via top international airline partners with full real-time milestone tracking.' },
-    { num: '04', title: 'Doorstep Delivery', desc: 'Hassle-free customs clearance and direct delivery into the hands of the consignee with signature proof.' }
   ];
 
   return (
@@ -150,58 +132,6 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
                 <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
               </div>
               <span className="text-[11px] font-bold text-brand-blue">Vacuum Pack Available &rarr;</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Everything We Deliver */}
-      <section className="bg-slate-50 border-y border-slate-200 py-16">
-        <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-10">
-          <div className="text-center space-y-2 max-w-xl mx-auto">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue">
-              All Categories
-            </span>
-            <h2 className="text-3xl font-extrabold text-slate-900">
-              Everything We Deliver Safely
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {DELIVERABLES.map((d, idx) => (
-              <div key={idx} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-2">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <h3 className="text-sm font-bold text-slate-900">{d.title}</h3>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed pl-6">
-                  {d.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-10">
-        <div className="text-center space-y-2 max-w-xl mx-auto">
-          <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
-            Workflow
-          </span>
-          <h2 className="text-3xl font-extrabold text-slate-900">
-            How International Delivery Works
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {STEPS.map((s, idx) => (
-            <div key={idx} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-3 relative">
-              <div className="text-3xl font-black font-mono text-brand-blue/30">
-                {s.num}
-              </div>
-              <h3 className="text-base font-bold text-slate-900">{s.title}</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">{s.desc}</p>
             </div>
           ))}
         </div>
