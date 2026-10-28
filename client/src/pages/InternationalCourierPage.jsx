@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Compass, MapPin } from 'lucide-react';
+import { CheckCircle2, Compass, MapPin, ShieldCheck } from 'lucide-react';
 import { BRAND } from '../data/siteData';
 import { PageBanner } from '../components/PageBanner';
 
@@ -112,54 +112,85 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
       </section>
 
       {/* Capabilities & Value Proposition (2-Column Layout matching Ship Spares) */}
+      {/* Capabilities & Value Proposition (Light Split Card) */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-md space-y-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-            <div className="space-y-4">
-              <span className="text-xs font-extrabold uppercase tracking-widest text-brand-red">
-                Worldwide Express Value Proposition
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-                Why Global Senders &amp; Businesses Choose Flymingo
-              </h2>
-              <ul className="space-y-3 text-xs text-slate-600 leading-relaxed">
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
-                  <span><strong>Doorstep Pickup Guarantee:</strong> Same-day doorstep collection across Coimbatore, Chennai, Tirupur, Erode, and all South India hubs.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
-                  <span><strong>Food-Grade Protective Packing:</strong> Specialized vacuum packaging maintaining freshness of homemade sweets, snacks, and masalas to USA, UK, UAE &amp; Canada.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
-                  <span><strong>Express Air Transit:</strong> Priority uplift via top global airline partners with guaranteed 2 to 4 business days transit time.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-brand-blue mt-0.5 flex-shrink-0" />
-                  <span><strong>End-to-End Tracking:</strong> Transparent live milestone tracking with automated WhatsApp &amp; SMS delivery confirmations with signature proof.</span>
-                </li>
+        <div className="relative overflow-hidden rounded-[2rem] bg-white border border-slate-200/90 shadow-xl">
+          <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 p-7 sm:p-12">
+            {/* Left: Value Points */}
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-blue-50 border border-brand-blue-100 text-xs font-extrabold uppercase tracking-widest text-brand-blue">
+                  <ShieldCheck className="w-3.5 h-3.5 text-brand-blue" />
+                  Worldwide Express Value Proposition
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                  Why Global Senders &amp; Businesses Choose Flymingo
+                </h2>
+                <span className="block h-1 w-14 rounded-full bg-brand-red" aria-hidden="true" />
+              </div>
+
+              <ul className="space-y-3">
+                {[
+                  { t: 'Doorstep Pickup Guarantee:', d: 'Same-day doorstep collection across Coimbatore, Chennai, Tirupur, Erode, and all South India hubs.' },
+                  { t: 'Food-Grade Protective Packing:', d: 'Specialized vacuum packaging maintaining freshness of homemade sweets, snacks, and masalas to USA, UK, UAE & Canada.' },
+                  { t: 'Express Air Transit:', d: 'Priority uplift via top global airline partners with guaranteed 2 to 4 business days transit time.' },
+                  { t: 'End-to-End Tracking:', d: 'Transparent live milestone tracking with automated WhatsApp & SMS delivery confirmations with signature proof.' },
+                ].map((item, i) => (
+                  <li
+                    key={i}
+                    className="group relative flex items-start gap-4 p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:border-brand-blue/40 hover:shadow-md hover:translate-x-1.5 transition-all duration-300 overflow-hidden"
+                  >
+                    <span className="relative w-10 h-10 rounded-xl bg-brand-blue-50 text-brand-blue flex items-center justify-center shrink-0 font-mono font-black group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="relative text-sm text-slate-700 leading-relaxed">
+                      <strong className="text-slate-900 font-bold">{item.t}</strong> {item.d}
+                    </span>
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* Global Destinations Network Card */}
-            <div className="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
-              <div className="flex items-center gap-2">
-                <Compass className="w-5 h-5 text-brand-blue" />
-                <h3 className="text-base font-bold text-slate-900">Active Global Courier Network (190+ Countries)</h3>
+            {/* Right: Global Destinations Network with Code Pills */}
+            <div className="rounded-3xl bg-slate-50 border border-slate-200 shadow-md overflow-hidden self-start">
+              <div className="flex items-center gap-3 px-6 py-5 border-b border-slate-200 bg-white">
+                <div className="w-11 h-11 rounded-xl bg-brand-blue text-white flex items-center justify-center shadow-md shadow-brand-blue/20 shrink-0">
+                  <Compass className="w-6 h-6" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-base sm:text-lg font-black text-slate-900 leading-snug">Active Global Courier Network</h3>
+                </div>
+                <span className="ml-auto hidden sm:inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  190+ Countries
+                </span>
               </div>
-              <p className="text-xs text-slate-500">
+
+              <p className="px-6 pt-5 text-xs sm:text-sm text-slate-600">
                 Direct express air corridors with daily flights and prompt customs clearance at major destinations:
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-800">
+
+              <div className="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {[
-                  'United States (USA)', 'United Kingdom (UK)', 'United Arab Emirates (UAE)',
-                  'Canada', 'Australia & NZ', 'Singapore & Malaysia',
-                  'Germany & Europe', 'Saudi Arabia & Qatar', 'Kuwait & Bahrain', 'Sri Lanka & Maldives'
-                ].map((country, i) => (
-                  <div key={i} className="flex items-center gap-2 py-1">
-                    <MapPin className="w-3.5 h-3.5 text-brand-red flex-shrink-0" />
-                    <span>{country}</span>
+                  { name: 'United States', code: 'USA' },
+                  { name: 'United Kingdom', code: 'GBR' },
+                  { name: 'United Arab Emirates', code: 'UAE' },
+                  { name: 'Canada', code: 'CAN' },
+                  { name: 'Australia & NZ', code: 'AUS' },
+                  { name: 'Singapore & Malaysia', code: 'SGP' },
+                  { name: 'Germany & Europe', code: 'DEU' },
+                  { name: 'Saudi Arabia & Qatar', code: 'SAU' },
+                  { name: 'Kuwait & Bahrain', code: 'KWT' },
+                  { name: 'Sri Lanka & Maldives', code: 'LKA' },
+                ].map((dest, i) => (
+                  <div
+                    key={i}
+                    className="group flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200 hover:border-brand-blue/40 hover:shadow-sm transition-all"
+                  >
+                    <span className="shrink-0 min-w-[52px] text-center px-2 py-1.5 rounded-lg bg-brand-blue/10 text-brand-blue text-xs font-black font-mono tracking-wider">
+                      {dest.code}
+                    </span>
+                    <span className="text-xs font-semibold text-slate-800 leading-snug">{dest.name}</span>
                   </div>
                 ))}
               </div>
