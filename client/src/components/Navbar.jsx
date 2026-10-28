@@ -249,65 +249,101 @@ export const Navbar = ({ onOpenQuote }) => {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu - Full Screen Height Layout */}
+      {/* Mobile Drawer Menu - Full Screen (100dvh) Dedicated View */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[73px] bottom-0 bg-white z-50 flex flex-col justify-between px-5 pt-4 pb-6 overflow-y-auto animate-fade-in shadow-2xl">
-          <div className="space-y-1.5 font-bold text-base text-slate-800">
+        <div className="lg:hidden fixed inset-0 z-[100] bg-white flex flex-col justify-between overflow-y-auto animate-fade-in">
+          {/* Top Header inside Full Screen Menu with Logo, Quote & Close Button */}
+          <div className="px-4 sm:px-6 py-3 flex items-center justify-between border-b border-slate-100 bg-white sticky top-0 z-10 shrink-0">
+            <Link 
+              to="/" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center" 
+              aria-label="Flymingo Logistics"
+            >
+              <img 
+                src={BRAND.logoPath} 
+                alt="Flymingo Logistics" 
+                className="h-14 sm:h-16 w-auto object-contain" 
+              />
+            </Link>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenQuote();
+                }}
+                className="px-3.5 py-1.5 bg-brand-red text-white rounded-lg text-xs font-bold cursor-pointer hover:bg-brand-red-dark transition-colors"
+              >
+                Quote
+              </button>
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+                aria-label="Close menu"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+
+          {/* Navigation Links Area */}
+          <div className="px-5 pt-5 pb-4 space-y-2 font-bold text-base text-slate-800">
             <Link
               to="/"
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-4 py-3 rounded-xl transition-colors ${
+              className={`flex items-center justify-between px-4 py-3.5 rounded-xl transition-colors ${
                 isActive('/') 
-                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red' 
+                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red shadow-2xs' 
                   : 'hover:bg-slate-50 text-slate-700'
               }`}
             >
               <span>Home</span>
-              {isActive('/') && <span className="w-2 h-2 rounded-full bg-brand-red"></span>}
+              {isActive('/') && <span className="w-2.5 h-2.5 rounded-full bg-brand-red"></span>}
             </Link>
 
             <Link
               to="/about"
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-4 py-3 rounded-xl transition-colors ${
+              className={`flex items-center justify-between px-4 py-3.5 rounded-xl transition-colors ${
                 isActive('/about') 
-                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red' 
+                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red shadow-2xs' 
                   : 'hover:bg-slate-50 text-slate-700'
               }`}
             >
               <span>About Us</span>
-              {isActive('/about') && <span className="w-2 h-2 rounded-full bg-brand-red"></span>}
+              {isActive('/about') && <span className="w-2.5 h-2.5 rounded-full bg-brand-red"></span>}
             </Link>
 
             <Link
               to="/services"
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-4 py-3 rounded-xl transition-colors ${
+              className={`flex items-center justify-between px-4 py-3.5 rounded-xl transition-colors ${
                 isActive('/services') 
-                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red' 
+                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red shadow-2xs' 
                   : 'hover:bg-slate-50 text-slate-700'
               }`}
             >
               <span>Services</span>
-              {isActive('/services') && <span className="w-2 h-2 rounded-full bg-brand-red"></span>}
+              {isActive('/services') && <span className="w-2.5 h-2.5 rounded-full bg-brand-red"></span>}
             </Link>
 
             <Link
               to="/contact"
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between px-4 py-3 rounded-xl transition-colors ${
+              className={`flex items-center justify-between px-4 py-3.5 rounded-xl transition-colors ${
                 isActive('/contact') 
-                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red' 
+                  ? 'text-brand-blue bg-brand-blue-50/80 font-extrabold border-l-4 border-brand-red shadow-2xs' 
                   : 'hover:bg-slate-50 text-slate-700'
               }`}
             >
               <span>Contact Us</span>
-              {isActive('/contact') && <span className="w-2 h-2 rounded-full bg-brand-red"></span>}
+              {isActive('/contact') && <span className="w-2.5 h-2.5 rounded-full bg-brand-red"></span>}
             </Link>
           </div>
 
-          {/* Social Media Links & Quote Action - Pinned to Bottom */}
-          <div className="pt-4 pb-2 space-y-3.5 border-t border-slate-100 mt-auto">
+          {/* Social Media Links & Quote Action - Pinned Cleanly to Bottom */}
+          <div className="px-5 pt-4 pb-8 space-y-3.5 border-t border-slate-100 bg-slate-50/50 mt-auto shrink-0">
             {/* Social Media Icons */}
             <div className="flex items-center justify-center gap-3 py-1">
               {/* WhatsApp */}
