@@ -113,10 +113,6 @@ export const CustomsClearancePage = ({ onOpenQuote }) => {
                 <div className="min-w-0">
                   <h3 className="text-base sm:text-lg font-black text-slate-900 leading-snug">Licensed Port &amp; Airport Coverage</h3>
                 </div>
-                <span className="ml-auto hidden sm:inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  EDI Online
-                </span>
               </div>
 
               <p className="px-6 pt-5 text-xs sm:text-sm text-slate-600">
