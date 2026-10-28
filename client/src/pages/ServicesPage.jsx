@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { BRAND, STATS } from '../data/siteData';
 import { FlightRouteMap } from '../components/FlightRouteMap';
+import { BannerSideMotif } from '../components/BannerSideMotif';
 
 /* ---------- local styles (self-contained, prefixed sv-) ---------- */
 const css = `
@@ -334,9 +335,9 @@ export const ServicesPage = ({ onOpenQuote }) => {
               </div>
             </div>
 
-            {/* Right: orbit of the six channels (click an icon to jump to that service) */}
+            {/* Right: Signature Side Design Motif */}
             <div className="lg:col-span-5 hidden sm:flex items-center justify-center">
-              <OrbitVisual onPick={(i) => pick(i, true)} />
+              <BannerSideMotif variant="services" />
             </div>
 
           </div>

@@ -6,7 +6,6 @@ import {
 } from 'lucide-react';
 import { BRAND, OFFICES, CORE_SERVICES, COUNTRIES } from '../data/siteData';
 import { FlightRouteMap } from '../components/FlightRouteMap';
-import { BannerSideMotif } from '../components/BannerSideMotif';
 
 export const ContactPage = () => {
   const [name, setName] = useState('');
@@ -43,7 +42,7 @@ export const ContactPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
             
             {/* Left: Text Content */}
-            <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
+            <div className="lg:col-span-12 space-y-3 sm:space-y-4 text-left max-w-3xl">
               {/* Banner Eyebrow Badge - clean, no '//' */}
               <div>
                 <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
@@ -68,11 +67,6 @@ export const ContactPage = () => {
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
                 Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.
               </p>
-            </div>
-
-            {/* Right: Signature Side Design Motif */}
-            <div className="lg:col-span-5 hidden sm:flex items-center justify-center">
-              <BannerSideMotif variant="contact" />
             </div>
 
           </div>
