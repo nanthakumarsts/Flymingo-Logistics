@@ -31,9 +31,7 @@ export function App() {
     <Router>
       <ScrollToTop />
       <div className="min-h-screen flex flex-col bg-white text-slate-800 font-sans selection:bg-brand-blue selection:text-white">
-        <Navbar 
-          onOpenQuote={handleOpenQuote} 
-        />
+        <Navbar onOpenQuote={handleOpenQuote} />
 
         <main className="flex-1">
           <Routes>
@@ -51,10 +49,7 @@ export function App() {
           </Routes>
         </main>
 
-        <Footer 
-          onOpenQuote={() => handleOpenQuote()} 
-        />
-
+        <Footer onOpenQuote={() => handleOpenQuote()} />
         <FloatingButtons />
 
         {/* Global Interactive Modals */}
