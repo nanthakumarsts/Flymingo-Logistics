@@ -5,7 +5,6 @@ import {
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
 import { FlightRouteMap } from '../components/FlightRouteMap';
-import { BannerSideMotif } from '../components/BannerSideMotif';
 
 /* ---------- local styles (self-contained, prefixed ab-) ---------- */
 const css = `
@@ -15,10 +14,13 @@ const css = `
 @keyframes ab-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes ab-blob { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(24px,-20px) scale(1.08); } }
 @keyframes ab-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes ab-spin { to { transform: rotate(360deg); } }
+@keyframes ab-pop { from { opacity: 0; transform: scale(.85) translateY(14px); } to { opacity: 1; transform: none; } }
 
 .ab-kb { animation: ab-kb 14s ease-in-out infinite alternate; will-change: transform; }
 .ab-float { animation: ab-float 6s ease-in-out infinite; }
 .ab-blob { animation: ab-blob 16s ease-in-out infinite; }
+.ab-spin { animation: ab-spin 40s linear infinite; }
 .ab-swap { animation: ab-fade .55s cubic-bezier(.2,.7,.2,1) both; }
 .ab-bar { transform-origin: left; animation: ab-bar 6s linear forwards; }
 .ab-bar-paused { animation-play-state: paused; }
@@ -26,6 +28,10 @@ const css = `
 .ab-h2 { opacity: 0; animation: ab-rise .8s .18s cubic-bezier(.2,.7,.2,1) forwards; }
 .ab-h3 { opacity: 0; animation: ab-rise .8s .30s cubic-bezier(.2,.7,.2,1) forwards; }
 .ab-h4 { opacity: 0; animation: ab-rise .8s .42s cubic-bezier(.2,.7,.2,1) forwards; }
+.ab-p1 { opacity: 0; animation: ab-pop .8s .25s cubic-bezier(.2,.7,.2,1) forwards; }
+.ab-p2 { opacity: 0; animation: ab-pop .8s .45s cubic-bezier(.2,.7,.2,1) forwards; }
+.ab-p3 { opacity: 0; animation: ab-pop .8s .65s cubic-bezier(.2,.7,.2,1) forwards; }
+.ab-p4 { opacity: 0; animation: ab-pop .8s .85s cubic-bezier(.2,.7,.2,1) forwards; }
 
 .ab-reveal { opacity: 0; transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
 .ab-up { transform: translateY(28px); }
@@ -35,8 +41,8 @@ const css = `
 .ab-reveal.ab-in { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .ab-kb, .ab-float, .ab-blob, .ab-swap, .ab-bar { animation: none; }
-  .ab-h1, .ab-h2, .ab-h3, .ab-h4, .ab-reveal { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+  .ab-kb, .ab-float, .ab-blob, .ab-swap, .ab-bar, .ab-spin { animation: none; }
+  .ab-h1, .ab-h2, .ab-h3, .ab-h4, .ab-p1, .ab-p2, .ab-p3, .ab-p4, .ab-reveal { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
 }
 `;
 
@@ -63,13 +69,6 @@ const Reveal = ({ children, delay = 0, className = '', variant = 'up' }) => {
   );
 };
 
-const Wave = ({ className = '' }) => (
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"
-    className={`absolute left-0 -bottom-[2px] w-full h-10 sm:h-16 pointer-events-none ${className}`}>
-    <path fill="currentColor" d="M0 44 C 240 92 480 0 720 36 S 1200 84 1440 28 V80 H0 Z" />
-  </svg>
-);
-
 const SectionHead = ({ eyebrow, title, text, light = false, icon: Icon }) => (
   <Reveal className="max-w-2xl mx-auto text-center space-y-4">
     <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-extrabold uppercase tracking-widest border ${
@@ -84,6 +83,75 @@ const SectionHead = ({ eyebrow, title, text, light = false, icon: Icon }) => (
     <span className="mx-auto block h-1 w-14 rounded-full bg-brand-red" aria-hidden="true" />
     {text && <p className={`text-sm sm:text-base leading-relaxed ${light ? 'text-white/75' : 'text-slate-600'}`}>{text}</p>}
   </Reveal>
+);
+
+/* Hero right-side visual: photo collage + floating info chips (replaces the old 3D cubes motif) */
+const HeroCollage = () => (
+  <div className="relative w-full max-w-md h-[300px] lg:h-[340px]">
+    {/* rotating dashed ring */}
+    <div className="ab-spin absolute -right-3 -top-3 w-44 h-44 rounded-full border-2 border-dashed border-brand-red/40" aria-hidden="true" />
+    <div className="absolute left-6 top-10 w-24 h-24 rounded-full bg-brand-blue/10 blur-xl" aria-hidden="true" />
+
+    {/* main arch photo */}
+    <div className="ab-p1 absolute right-0 top-0 w-[60%] h-[90%]">
+      <div className="absolute inset-0 translate-x-2.5 translate-y-2.5 rounded-t-[999px] rounded-b-3xl border-2 border-brand-red/50" aria-hidden="true" />
+      <div className="relative w-full h-full rounded-t-[999px] rounded-b-3xl overflow-hidden border-4 border-white shadow-2xl shadow-brand-blue/30 bg-slate-200">
+        <img
+          src="/assets/sea cargo.jpg"
+          alt="Flymingo sea cargo"
+          className="w-full h-full object-cover"
+          onError={(e) => { e.currentTarget.src = '/assets/about 2.jpg'; }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark/50 via-transparent to-transparent" />
+      </div>
+    </div>
+
+    {/* small rounded photo, overlapping bottom-left */}
+    <div className="ab-p2 absolute left-0 bottom-0 w-[42%] h-[46%]">
+      <div className="relative w-full h-full rounded-3xl overflow-hidden border-4 border-white shadow-xl shadow-black/20 -rotate-3 bg-slate-200">
+        <img
+          src="/assets/movers.jpg"
+          alt="Flymingo door to door"
+          className="w-full h-full object-cover"
+          onError={(e) => { e.currentTarget.src = '/assets/about 2.jpg'; }}
+        />
+      </div>
+    </div>
+
+    {/* floating chip: countries */}
+    <div className="ab-p3 absolute left-0 top-6">
+      <div className="ab-float flex items-center gap-3 pl-2.5 pr-4 py-2.5 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200 shadow-xl shadow-brand-blue/15">
+        <div className="w-10 h-10 rounded-xl bg-brand-blue text-white flex items-center justify-center">
+          <Globe className="w-5 h-5" />
+        </div>
+        <div>
+          <div className="text-lg font-black font-mono text-slate-900 leading-none">220+</div>
+          <div className="text-[11px] font-bold text-slate-500 mt-0.5">Countries Served</div>
+        </div>
+      </div>
+    </div>
+
+    {/* floating chip: on-time */}
+    <div className="ab-p4 absolute right-2 -bottom-2 sm:right-4">
+      <div className="ab-float flex items-center gap-3 pl-2.5 pr-4 py-2.5 rounded-2xl bg-brand-red text-white shadow-xl shadow-brand-red/40" style={{ animationDelay: '-3s' }}>
+        <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+          <ShieldCheck className="w-5 h-5" />
+        </div>
+        <div>
+          <div className="text-lg font-black font-mono leading-none">99%</div>
+          <div className="text-[11px] font-bold text-white/85 mt-0.5">On-Time Clearance</div>
+        </div>
+      </div>
+    </div>
+
+    {/* est pill */}
+    <div className="ab-p4 absolute left-[34%] top-[46%]">
+      <div className="ab-float inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-blue-dark text-white text-[11px] font-mono font-bold tracking-wider shadow-lg" style={{ animationDelay: '-5s' }}>
+        <Compass className="w-3.5 h-3.5 text-brand-red-light" />
+        EST. 2018
+      </div>
+    </div>
+  </div>
 );
 
 /* Authentic Growth Journey from flamingonew.saitechnosolutions.in/about.php */
@@ -219,8 +287,8 @@ export const AboutPage = ({ onOpenQuote }) => {
 
         <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-            
-            {/* Left: Text Content - fits within screen height */}
+
+            {/* Left: Text Content */}
             <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
               <div className="ab-h1">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
@@ -264,9 +332,9 @@ export const AboutPage = ({ onOpenQuote }) => {
               </div>
             </div>
 
-            {/* Right: Signature Side Design Motif (Like Oneloop in Reference Screenshot) */}
-            <div className="lg:col-span-5 hidden sm:flex items-center justify-center">
-              <BannerSideMotif variant="about" />
+            {/* Right: photo collage with floating info chips */}
+            <div className="lg:col-span-5 hidden sm:flex items-center justify-center lg:justify-end pr-2 lg:pr-6">
+              <HeroCollage />
             </div>
 
           </div>
