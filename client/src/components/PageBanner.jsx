@@ -1,37 +1,101 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { 
+  Anchor, Plane, Package, ShieldCheck, AlertTriangle, Truck 
+} from 'lucide-react';
 import { FlightRouteMap } from './FlightRouteMap';
 import { BannerSideMotif } from './BannerSideMotif';
+
+const ORBIT_SERVICES = [
+  { id: 'ship-spares', short: 'Ship Spares', path: '/services/ship-spares-logistics', icon: Anchor },
+  { id: 'freight-forwarding', short: 'Freight', path: '/services/freight-forwarding', icon: Plane },
+  { id: 'international-courier', short: 'Courier', path: '/services/international-courier', icon: Package },
+  { id: 'customs-clearance', short: 'Customs', path: '/services/customs-clearance', icon: ShieldCheck },
+  { id: 'dg-shipping', short: 'DG Cargo', path: '/services/dangerous-goods-shipping', icon: AlertTriangle },
+  { id: 'international-relocation', short: 'Relocation', path: '/services/international-relocation', icon: Truck },
+];
+
+const css = `
+@keyframes bnr-spin { to { transform: rotate(360deg); } }
+@keyframes bnr-spin-rev { to { transform: rotate(-360deg); } }
+@keyframes bnr-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes bnr-pulse { 0% { box-shadow: 0 0 0 0 rgba(232,41,31,.45); } 100% { box-shadow: 0 0 0 24px rgba(232,41,31,0); } }
+
+.bnr-orbit { animation: bnr-spin 36s linear infinite; }
+.bnr-counter { animation: bnr-spin-rev 36s linear infinite; }
+.bnr-slow { animation: bnr-spin 60s linear infinite; }
+.bnr-float { animation: bnr-float 6s ease-in-out infinite; }
+.bnr-pulse { animation: bnr-pulse 2.2s ease-out infinite; }
+`;
+
+export const ServicesOrbitVisual = () => (
+  <div className="relative w-[280px] h-[280px] lg:w-[330px] lg:h-[330px] m-4 select-none">
+    <style>{css}</style>
+    <div className="absolute inset-0 rounded-full border-2 border-dashed border-brand-blue/30 bnr-slow" aria-hidden="true" />
+    <div className="absolute inset-10 rounded-full border border-brand-red/25" aria-hidden="true" />
+    <div className="absolute inset-16 rounded-full bg-gradient-to-br from-brand-blue/10 to-brand-red/10 blur-md" aria-hidden="true" />
+
+    {/* spinning wheel with six nodes (icons stay upright) */}
+    <div className="bnr-orbit absolute inset-0">
+      {ORBIT_SERVICES.map((c, i) => {
+        const a = i * 60;
+        const Icon = c.icon;
+        return (
+          <div key={c.id} className="absolute inset-0" style={{ transform: `rotate(${a}deg)` }}>
+            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+              <div style={{ transform: `rotate(${-a}deg)` }}>
+                <div className="bnr-counter">
+                  <a
+                    href={c.path}
+                    title={c.short}
+                    aria-label={c.short}
+                    className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-xl border-2 border-white hover:scale-110 transition-transform cursor-pointer ${
+                      i % 2 === 0 ? 'bg-brand-blue text-white shadow-brand-blue/30' : 'bg-brand-red text-white shadow-brand-red/30'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    {/* hub */}
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="bnr-pulse bnr-float w-32 h-32 lg:w-36 lg:h-36 rounded-full bg-white border border-slate-200 shadow-2xl shadow-brand-blue/25 flex flex-col items-center justify-center text-center">
+        <span className="text-3xl lg:text-4xl font-black font-mono text-brand-red leading-none">190+</span>
+        <span className="mt-1 px-3 text-[10px] font-extrabold uppercase tracking-wider text-slate-700 leading-tight">Countries Delivered</span>
+      </div>
+    </div>
+  </div>
+);
 
 /** 
  * Executive Image-Led Banner for Services & Inner Pages.
  * Compact height that fits comfortably within screen resolution.
- * Clean badge without '//', with bespoke side motif per category.
+ * Displays the signature services orbit wheel by default on service pages.
  */
 export function PageBanner({ 
   eyebrow, 
   title, 
-  highlight,
-  tagline,
+  highlight, 
+  tagline, 
   description, 
   image, 
   action, 
   onAction, 
   secondaryAction, 
-  variant,
+  variant = 'orbit', 
+  sideVisual, 
   children 
 }) {
   // Derive variant automatically if not explicitly passed
   const getVariant = () => {
     if (variant) return variant;
-    const str = `${title || ''} ${highlight || ''} ${eyebrow || ''}`.toLowerCase();
-    if (str.includes('spare') || str.includes('marine')) return 'ship-spares';
-    if (str.includes('freight') || str.includes('forward')) return 'freight-forwarding';
-    if (str.includes('courier') || str.includes('express')) return 'international-courier';
-    if (str.includes('custom')) return 'customs-clearance';
-    if (str.includes('danger') || str.includes('dg') || str.includes('hazardous')) return 'dg-shipping';
-    if (str.includes('relocation') || str.includes('mover')) return 'international-relocation';
-    return 'services';
+    return 'orbit';
   };
 
   const currentVariant = getVariant();
@@ -109,9 +173,15 @@ export function PageBanner({
             {children}
           </div>
 
-          {/* Right: Signature Side Design Motif */}
+          {/* Right: Signature Side Design Motif (Services Orbit Wheel by default) */}
           <div className="lg:col-span-5 hidden sm:flex items-center justify-center">
-            <BannerSideMotif variant={currentVariant} />
+            {sideVisual ? (
+              sideVisual
+            ) : currentVariant === 'orbit' || currentVariant === 'services' ? (
+              <ServicesOrbitVisual />
+            ) : (
+              <BannerSideMotif variant={currentVariant} />
+            )}
           </div>
 
         </div>
