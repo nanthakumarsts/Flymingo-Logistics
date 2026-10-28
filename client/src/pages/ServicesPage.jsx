@@ -212,10 +212,10 @@ const CAPABILITIES = [
 
 /* Hero right-side visual: rotating orbit of the six service icons around a hub */
 const OrbitVisual = ({ onPick }) => (
-  <div className="sv-pop relative w-[280px] h-[280px] lg:w-[330px] lg:h-[330px] m-8">
+  <div className="sv-pop relative w-[250px] h-[250px] sm:w-[280px] sm:h-[280px] lg:w-[330px] lg:h-[330px] my-4 mx-auto select-none">
     <div className="absolute inset-0 rounded-full border-2 border-dashed border-brand-blue/30 sv-slow" aria-hidden="true" />
-    <div className="absolute inset-10 rounded-full border border-brand-red/25" aria-hidden="true" />
-    <div className="absolute inset-16 rounded-full bg-gradient-to-br from-brand-blue/10 to-brand-red/10 blur-md" aria-hidden="true" />
+    <div className="absolute inset-8 sm:inset-10 rounded-full border border-brand-red/25" aria-hidden="true" />
+    <div className="absolute inset-12 sm:inset-16 rounded-full bg-gradient-to-br from-brand-blue/10 to-brand-red/10 blur-md" aria-hidden="true" />
 
     {/* spinning wheel with six nodes (icons stay upright) */}
     <div className="sv-orbit absolute inset-0">
@@ -232,11 +232,11 @@ const OrbitVisual = ({ onPick }) => (
                     onClick={() => onPick(i)}
                     title={c.short}
                     aria-label={c.short}
-                    className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-xl border-2 border-white hover:scale-110 transition-transform cursor-pointer ${
+                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-xl border-2 border-white hover:scale-110 transition-transform cursor-pointer ${
                       i % 2 === 0 ? 'bg-brand-blue text-white shadow-brand-blue/30' : 'bg-brand-red text-white shadow-brand-red/30'
                     }`}
                   >
-                    <Icon className="w-5 h-5" />
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                 </div>
               </div>
@@ -248,9 +248,9 @@ const OrbitVisual = ({ onPick }) => (
 
     {/* hub */}
     <div className="absolute inset-0 flex items-center justify-center">
-      <div className="sv-pulse sv-float w-32 h-32 lg:w-36 lg:h-36 rounded-full bg-white border border-slate-200 shadow-2xl shadow-brand-blue/25 flex flex-col items-center justify-center text-center">
-        <span className="text-3xl lg:text-4xl font-black font-mono text-brand-red leading-none">190+</span>
-        <span className="mt-1 px-3 text-[10px] font-extrabold uppercase tracking-wider text-slate-700 leading-tight">Countries Delivered</span>
+      <div className="sv-pulse sv-float w-26 h-26 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rounded-full bg-white border border-slate-200 shadow-2xl shadow-brand-blue/25 flex flex-col items-center justify-center text-center">
+        <span className="text-2xl sm:text-3xl lg:text-4xl font-black font-mono text-brand-red leading-none">190+</span>
+        <span className="mt-1 px-2 sm:px-3 text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-slate-700 leading-tight">Countries Delivered</span>
       </div>
     </div>
   </div>

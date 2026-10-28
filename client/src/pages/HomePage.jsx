@@ -588,10 +588,10 @@ export const HomePage = ({ onOpenQuote }) => {
           />
 
           {/* journey track: a plane flies along the line to the active stage */}
-          <div className="relative mx-4 sm:mx-10 h-24 sm:h-32 mb-6">
+          <div className="relative mx-6 sm:mx-10 h-24 sm:h-32 mb-6">
             {/* pickup / delivery end labels */}
-            <span className="absolute -left-2 sm:-left-6 -top-1 text-[10px] sm:text-xs font-mono font-extrabold tracking-widest text-slate-500 uppercase">Pickup</span>
-            <span className="absolute -right-2 sm:-right-6 -top-1 text-[10px] sm:text-xs font-mono font-extrabold tracking-widest text-slate-500 uppercase">Delivery</span>
+            <span className="absolute -left-3 sm:-left-6 -top-1 text-[10px] sm:text-xs font-mono font-extrabold tracking-widest text-slate-500 uppercase">Pickup</span>
+            <span className="absolute -right-3 sm:-right-6 -top-1 text-[10px] sm:text-xs font-mono font-extrabold tracking-widest text-slate-500 uppercase">Delivery</span>
 
             {/* base line + progress fill */}
             <div className="absolute left-0 right-0 top-[56px] h-1 rounded-full bg-slate-200" aria-hidden="true" />
