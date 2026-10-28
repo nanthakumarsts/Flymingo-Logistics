@@ -328,12 +328,12 @@ export const HomePage = ({ onOpenQuote }) => {
         <FlightRouteMap className="opacity-10 z-[1]" />
 
         <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[360px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[380px]">
 
-            {/* LEFT: content */}
+            {/* Content Section */}
             <div
               key={activeSlide.id}
-              className="lg:col-span-8 space-y-4 sm:space-y-5 text-left"
+              className="lg:col-span-10 xl:col-span-8 space-y-4 sm:space-y-5 text-left"
             >
               <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
                 {activeSlide.badge}
@@ -378,51 +378,6 @@ export const HomePage = ({ onOpenQuote }) => {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
-            </div>
-
-            {/* RIGHT: slide selector rail (desktop) */}
-            <div className="hidden lg:flex lg:col-span-4 flex-col gap-3">
-              {HERO_SLIDES.map((slide, idx) => {
-                const active = idx === currentSlide;
-                return (
-                  <button
-                    key={slide.id}
-                    type="button"
-                    onClick={() => setCurrentSlide(idx)}
-                    aria-label={`Go to slide ${idx + 1}: ${slide.badge}`}
-                    className={`group relative overflow-hidden flex items-center gap-3.5 p-3 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
-                      active
-                        ? 'bg-white border-brand-red/80 shadow-xl ring-2 ring-brand-red/30 scale-[1.02]'
-                        : 'bg-white/80 border-slate-200 hover:bg-white hover:border-slate-300 shadow-sm'
-                    }`}
-                  >
-                    <img
-                      src={slide.image}
-                      alt=""
-                      aria-hidden="true"
-                      loading="lazy"
-                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      className="w-14 h-14 rounded-xl object-cover bg-slate-100 shrink-0 border border-slate-200 shadow-sm"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <div className="text-[10px] font-mono tracking-widest text-brand-red font-bold uppercase">
-                        CORRIDOR {String(idx + 1).padStart(2, '0')}
-                      </div>
-                      <div className={`text-xs sm:text-sm font-bold leading-snug truncate ${active ? 'text-slate-900 font-extrabold' : 'text-slate-700'}`}>
-                        {slide.badge}
-                      </div>
-                    </div>
-                    {active && (
-                      <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-slate-200" aria-hidden="true">
-                        <span
-                          key={currentSlide}
-                          className={`fm-bar block h-full bg-brand-red ${isPaused ? 'fm-bar-paused' : ''}`}
-                        />
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
             </div>
           </div>
 
