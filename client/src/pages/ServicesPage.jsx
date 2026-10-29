@@ -318,7 +318,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
               <div className="sv-h4 flex flex-wrap items-center gap-3 pt-1">
                 <button
                   onClick={() => onOpenQuote()}
-                  className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                  className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
                 >
                   <Calculator className="w-4 h-4" />
                   <span>Request Instant Fare Quote</span>
@@ -326,12 +326,6 @@ export const ServicesPage = ({ onOpenQuote }) => {
                     <ArrowRight className="h-3.5 w-3.5 text-white" />
                   </span>
                 </button>
-                <a
-                  href={`tel:${BRAND.primaryPhone}`}
-                  className="px-6 py-3 bg-white border border-slate-300 text-slate-800 hover:text-brand-blue hover:border-brand-blue rounded-full text-xs sm:text-sm font-bold transition-all shadow-sm flex items-center gap-2"
-                >
-                  <span>Speak To Logistics Desk</span>
-                </a>
               </div>
             </div>
 

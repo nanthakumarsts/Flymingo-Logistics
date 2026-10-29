@@ -47,7 +47,7 @@ export const ShipSparesLogisticsPage = ({ onOpenQuote }) => {
 
   return (
     <div className="space-y-20 pb-20">
-      <PageBanner eyebrow="24/7 maritime logistics" title="Ship spares & on-board delivery" description="Time-critical marine replacement parts cleared through customs and delivered direct to the vessel deck, without port detention." image="/assets/ship-spares-hd.jpg" action="Request spares delivery" onAction={() => onOpenQuote('ship-spares')} secondaryAction={<a href={`tel:${BRAND.primaryPhone}`} className="rounded-xl border border-white/40 bg-white/10 px-6 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white hover:text-brand-blue">Call 24/7 port hotline</a>} />
+      <PageBanner eyebrow="24/7 maritime logistics" title="Ship spares & on-board delivery" description="Time-critical marine replacement parts cleared through customs and delivered direct to the vessel deck, without port detention." image="/assets/ship-spares-hd.jpg" action="Request spares delivery" onAction={() => onOpenQuote('ship-spares')} />
 
       {/* Integrated Import & Vessel Delivery Management */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-10">

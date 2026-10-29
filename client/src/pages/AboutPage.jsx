@@ -87,14 +87,15 @@ const SectionHead = ({ eyebrow, title, text, light = false, icon: Icon }) => (
 );
 
 /* Hero right-side visual: photo collage + floating info chips (replaces the old 3D cubes motif) */
+/* Hero right-side visual: single photo with floating info chips */
 const HeroCollage = () => (
   <div className="relative w-full max-w-md h-[300px] lg:h-[340px]">
     {/* rotating dashed ring */}
     <div className="ab-spin absolute -right-3 -top-3 w-44 h-44 rounded-full border-2 border-dashed border-brand-red/40" aria-hidden="true" />
     <div className="absolute left-6 top-10 w-24 h-24 rounded-full bg-brand-blue/10 blur-xl" aria-hidden="true" />
 
-    {/* main arch photo */}
-    <div className="ab-p1 absolute right-0 top-0 w-[60%] h-[90%]">
+    {/* single main arch photo */}
+    <div className="ab-p1 absolute right-2 top-0 w-[76%] h-[92%]">
       <div className="absolute inset-0 translate-x-2.5 translate-y-2.5 rounded-t-[999px] rounded-b-3xl border-2 border-brand-red/50" aria-hidden="true" />
       <div className="relative w-full h-full rounded-t-[999px] rounded-b-3xl overflow-hidden border-4 border-white shadow-2xl shadow-brand-blue/30 bg-slate-200">
         <img
@@ -107,21 +108,9 @@ const HeroCollage = () => (
       </div>
     </div>
 
-    {/* small rounded photo, overlapping bottom-left */}
-    <div className="ab-p2 absolute left-0 bottom-0 w-[42%] h-[46%]">
-      <div className="relative w-full h-full rounded-3xl overflow-hidden border-4 border-white shadow-xl shadow-black/20 -rotate-3 bg-slate-200">
-        <img
-          src="/assets/movers.jpg"
-          alt="Flymingo door to door"
-          className="w-full h-full object-cover"
-          onError={(e) => { e.currentTarget.src = '/assets/about 2.jpg'; }}
-        />
-      </div>
-    </div>
-
     {/* floating chip: countries */}
     <div className="ab-p3 absolute left-0 top-6">
-      <div className="ab-float flex items-center gap-3 pl-2.5 pr-4 py-2.5 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200 shadow-xl shadow-brand-blue/15">
+      <div className="ab-float flex items-center gap-3 pl-2.5 pr-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl shadow-brand-blue/15">
         <div className="w-10 h-10 rounded-xl bg-brand-blue text-white flex items-center justify-center">
           <Globe className="w-5 h-5" />
         </div>
@@ -133,7 +122,7 @@ const HeroCollage = () => (
     </div>
 
     {/* floating chip: on-time */}
-    <div className="ab-p4 absolute right-2 -bottom-2 sm:right-4">
+    <div className="ab-p4 absolute right-0 -bottom-2 sm:right-2">
       <div className="ab-float flex items-center gap-3 pl-2.5 pr-4 py-2.5 rounded-2xl bg-brand-red text-white shadow-xl shadow-brand-red/40" style={{ animationDelay: '-3s' }}>
         <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
           <ShieldCheck className="w-5 h-5" />
@@ -146,7 +135,7 @@ const HeroCollage = () => (
     </div>
 
     {/* est pill */}
-    <div className="ab-p4 absolute left-[34%] top-[46%]">
+    <div className="ab-p4 absolute left-[10%] bottom-[10%]">
       <div className="ab-float inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-blue-dark text-white text-[11px] font-mono font-bold tracking-wider shadow-lg" style={{ animationDelay: '-5s' }}>
         <Compass className="w-3.5 h-3.5 text-brand-red-light" />
         EST. 2018
@@ -353,19 +342,13 @@ export const AboutPage = ({ onOpenQuote }) => {
                 <button
                   type="button"
                   onClick={() => onOpenQuote()}
-                  className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                  className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
                 >
                   <span>Explore Our Services</span>
                   <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
                     <ArrowRight className="h-3.5 w-3.5 text-white" />
                   </span>
                 </button>
-                <a
-                  href={`tel:${BRAND.primaryPhone}`}
-                  className="px-6 py-3 bg-white border border-slate-300 text-slate-800 hover:text-brand-blue hover:border-brand-blue rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 shadow-sm"
-                >
-                  Speak To Logistics Desk
-                </a>
               </div>
             </div>
 

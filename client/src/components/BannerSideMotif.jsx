@@ -23,7 +23,7 @@ export const BannerSideMotif = ({
   variant = 'services',
   className = ''
 }) => {
-  // 1. SERVICES PAGE - Multimodal Cargo Split Composition
+  // 1. SERVICES PAGE - Multimodal Cargo Single Image Composition
   if (variant === 'services') {
     return (
       <div className={`relative w-full max-w-md h-[290px] lg:h-[330px] select-none ${className}`}>
@@ -32,8 +32,8 @@ export const BannerSideMotif = ({
         <div className="bsm-spin absolute -right-2 -top-2 w-40 h-40 rounded-full border-2 border-dashed border-brand-blue/30 pointer-events-none" aria-hidden="true" />
         <div className="absolute right-8 top-12 w-28 h-28 rounded-full bg-brand-red/10 blur-xl pointer-events-none" aria-hidden="true" />
 
-        {/* Main photo 1: Air Cargo loading */}
-        <div className="absolute right-2 top-0 w-[58%] h-[82%]">
+        {/* Single Main photo: Air Cargo loading */}
+        <div className="absolute right-2 top-1 w-[76%] h-[90%]">
           <div className="relative w-full h-full rounded-3xl overflow-hidden border-4 border-white shadow-2xl shadow-brand-blue/20 bg-slate-200">
             <img
               src="/assets/air cargo.jpg"
@@ -42,18 +42,6 @@ export const BannerSideMotif = ({
               onError={(e) => { e.currentTarget.src = '/assets/service banner.jpg'; }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-brand-blue-dark/50 via-transparent to-transparent" />
-          </div>
-        </div>
-
-        {/* Overlapping photo 2: Courier & Logistics delivery */}
-        <div className="absolute left-1 bottom-1 w-[46%] h-[50%]">
-          <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl shadow-black/15 -rotate-2 bg-slate-200">
-            <img
-              src="/assets/courier.jpg"
-              alt="Express Logistics"
-              className="w-full h-full object-cover"
-              onError={(e) => { e.currentTarget.src = '/assets/why_choose.jpg'; }}
-            />
           </div>
         </div>
 
@@ -84,7 +72,7 @@ export const BannerSideMotif = ({
         </div>
 
         {/* Floating badge 3: Multimodal badge */}
-        <div className="bsm-float absolute left-[32%] top-[48%]" style={{ animationDelay: '-4s' }}>
+        <div className="bsm-float absolute left-[10%] bottom-[10%]" style={{ animationDelay: '-4s' }}>
           <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 text-white text-[10px] font-mono font-bold tracking-wider shadow-lg">
             <Plane className="w-3.5 h-3.5 text-brand-red" />
             AIR &bull; OCEAN &bull; LAND
@@ -102,8 +90,8 @@ export const BannerSideMotif = ({
         <div className="bsm-spin absolute -left-2 -top-2 w-36 h-36 rounded-full border-2 border-dashed border-emerald-500/30 pointer-events-none" aria-hidden="true" />
         <div className="absolute right-6 top-8 w-28 h-28 rounded-full bg-brand-blue/10 blur-xl pointer-events-none" aria-hidden="true" />
 
-        {/* Main Photo: Operations & Communications Coordinator */}
-        <div className="absolute right-3 top-2 w-[62%] h-[84%]">
+        {/* Single Main Photo: Operations & Communications Coordinator */}
+        <div className="absolute right-2 top-1 w-[76%] h-[90%]">
           <div className="relative w-full h-full rounded-[32px] overflow-hidden border-4 border-white shadow-2xl shadow-brand-blue/20 bg-slate-200">
             <img
               src="/assets/communication.jpg"
@@ -112,18 +100,6 @@ export const BannerSideMotif = ({
               onError={(e) => { e.currentTarget.src = '/assets/about 2.jpg'; }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent" />
-          </div>
-        </div>
-
-        {/* Secondary Photo: Global Logistics Center */}
-        <div className="absolute left-2 bottom-2 w-[42%] h-[48%]">
-          <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl shadow-black/15 rotate-2 bg-slate-200">
-            <img
-              src="/assets/why_choose.jpg"
-              alt="Flymingo Hub Office"
-              className="w-full h-full object-cover"
-              onError={(e) => { e.currentTarget.src = '/assets/about 2.jpg'; }}
-            />
           </div>
         </div>
 
@@ -154,7 +130,7 @@ export const BannerSideMotif = ({
         </div>
 
         {/* Floating badge 3: Hub location */}
-        <div className="bsm-float absolute left-[30%] top-[46%]" style={{ animationDelay: '-4.5s' }}>
+        <div className="bsm-float absolute left-[10%] bottom-[10%]" style={{ animationDelay: '-4.5s' }}>
           <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-blue text-white text-[10px] font-mono font-bold tracking-wider shadow-lg">
             <MapPin className="w-3.5 h-3.5 text-brand-red-light" />
             TAMIL NADU HUBS

@@ -153,13 +153,13 @@ export function PageBanner({
               {description}
             </p>
 
-            {/* Action buttons */}
+            {/* Action button */}
             <div className="flex flex-wrap items-center gap-3 pt-1">
               {action && (
                 <button 
                   type="button"
                   onClick={onAction} 
-                  className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/20 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                  className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/20 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
                 >
                   <span>{action}</span>
                   <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
@@ -167,7 +167,6 @@ export function PageBanner({
                   </span>
                 </button>
               )}
-              {secondaryAction}
             </div>
 
             {children}
