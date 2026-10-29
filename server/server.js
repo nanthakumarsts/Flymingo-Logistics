@@ -5,6 +5,8 @@ const fs = require('fs');
 const multer = require('multer');
 require('dotenv').config();
 
+const { initDb, getBannerFromDb, saveBannerToDb } = require('./db');
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -35,19 +37,18 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 250 * 1024 * 1024 } // 250MB limit for high-res videos
+  limits: { fileSize: 250 * 1024 * 1024 } // 250MB limit
 });
 
 const BANNER_FILE = path.join(dataDir, 'bannerData.json');
 
-// Helper to get banner data
-const getBannerData = () => {
+// File fallback helper
+const getBannerFromFile = () => {
   if (fs.existsSync(BANNER_FILE)) {
     try {
-      const raw = fs.readFileSync(BANNER_FILE, 'utf-8');
-      return JSON.parse(raw);
+      return JSON.parse(fs.readFileSync(BANNER_FILE, 'utf-8'));
     } catch (e) {
-      console.error('Error reading banner data:', e);
+      console.error('Error reading banner data file:', e);
     }
   }
   return {
@@ -59,10 +60,10 @@ const getBannerData = () => {
 
 // Health Check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', service: 'Flymingo Logistics Backend API' });
+  res.json({ status: 'ok', service: 'Flymingo Logistics Backend API with MySQL' });
 });
 
-// File Upload Endpoint (Drag & Drop support for video & images)
+// File Upload Endpoint (Drag & Drop support)
 app.post('/api/upload', upload.single('file'), (req, res) => {
   try {
     if (!req.file) {
@@ -85,46 +86,81 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
   }
 });
 
-// Banner Endpoints
-app.get('/api/banner', (req, res) => {
+// GET Banner Data - Fetches dynamically from MySQL Database
+app.get('/api/banner', async (req, res) => {
   try {
-    const data = getBannerData();
-    res.json({ success: true, data });
+    const data = await getBannerFromDb();
+    res.json({ success: true, source: 'mysql', data });
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    console.warn('MySQL read failed, serving from file backup:', err.message);
+    const data = getBannerFromFile();
+    res.json({ success: true, source: 'file_fallback', data });
   }
 });
 
-app.put('/api/banner', (req, res) => {
+// PUT Banner Data - Updates MySQL Database dynamically
+app.put('/api/banner', async (req, res) => {
   try {
     const update = req.body;
     if (!update || typeof update !== 'object') {
       return res.status(400).json({ success: false, error: 'Invalid data payload' });
     }
-    const current = getBannerData();
-    const merged = {
-      ...current,
-      ...update,
-      updatedAt: new Date().toISOString()
-    };
-    fs.writeFileSync(BANNER_FILE, JSON.stringify(merged, null, 2), 'utf-8');
-    res.json({ success: true, message: 'Banner settings updated successfully', data: merged });
+
+    // 1. Save directly into MySQL Database
+    try {
+      await saveBannerToDb(update);
+    } catch (dbErr) {
+      console.error('Failed to save to MySQL:', dbErr.message);
+    }
+
+    // 2. Also sync to local JSON backup
+    try {
+      const current = getBannerFromFile();
+      const merged = { ...current, ...update, updatedAt: new Date().toISOString() };
+      fs.writeFileSync(BANNER_FILE, JSON.stringify(merged, null, 2), 'utf-8');
+    } catch (fsErr) {
+      console.error('Failed to sync JSON backup:', fsErr.message);
+    }
+
+    // Return latest data from DB
+    const latestData = await getBannerFromDb().catch(() => update);
+    res.json({
+      success: true,
+      message: 'Banner settings updated dynamically in MySQL Database!',
+      data: latestData
+    });
   } catch (err) {
     console.error('Error saving banner data:', err);
     res.status(500).json({ success: false, error: err.message });
   }
 });
 
-// Legacy endpoints
-app.get('/api/sliders', (req, res) => {
-  const data = getBannerData();
-  res.json({ success: true, slides: data.heroSlides || [] });
+// Sliders endpoint
+app.get('/api/sliders', async (req, res) => {
+  try {
+    const data = await getBannerFromDb();
+    res.json({ success: true, slides: data.heroSlides || [] });
+  } catch (e) {
+    const data = getBannerFromFile();
+    res.json({ success: true, slides: data.heroSlides || [] });
+  }
 });
+
 app.get('/api/services', (req, res) => res.json({ message: 'Services endpoint ready' }));
 app.get('/api/about', (req, res) => res.json({ message: 'About content endpoint ready' }));
 app.get('/api/inquiries', (req, res) => res.json({ message: 'Inquiries endpoint ready' }));
 app.post('/api/inquiries', (req, res) => res.json({ message: 'Inquiry received' }));
 
-app.listen(PORT, () => {
-  console.log('Flymingo Server running on port ' + PORT);
-});
+// Initialize MySQL and start server
+initDb()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 Flymingo Server running on port ${PORT} connected to MySQL (flymingo)`);
+    });
+  })
+  .catch((err) => {
+    console.error('Could not connect to MySQL at startup:', err.message);
+    app.listen(PORT, () => {
+      console.log(`⚠️ Flymingo Server running on port ${PORT} (offline DB mode)`);
+    });
+  });
