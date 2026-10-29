@@ -452,8 +452,6 @@ export const HomePage = ({ onOpenQuote }) => {
             </a>
           </div>
         </div>
-
-        <Wave className="text-white h-6 sm:h-8" />
       </section>
 
       {/* ============ BRAND MOTTO MARQUEE / TICKER RIBBON ============ */}

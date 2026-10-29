@@ -40,7 +40,7 @@ export const AdminLayout = ({ data, onUpdate, auth, onLogout, onResetDefault }) 
   };
 
   return (
-    <div className="min-h-screen bg-slate-100/90 text-slate-800 flex flex-col lg:flex-row font-sans">
+    <div className="min-h-screen lg:h-screen lg:overflow-hidden bg-slate-100/90 text-slate-800 flex flex-col lg:flex-row font-sans">
       
       {/* Mobile Top Header */}
       <div className="lg:hidden bg-slate-900 text-white p-4 flex items-center justify-between border-b border-slate-800 sticky top-0 z-40">
@@ -63,7 +63,7 @@ export const AdminLayout = ({ data, onUpdate, auth, onLogout, onResetDefault }) 
 
       {/* Left Sidebar (Desktop Fixed, Mobile Drawer) */}
       <aside className={`
-        fixed inset-y-0 left-0 z-50 w-72 bg-gradient-to-b from-[#082846] via-[#004369] to-[#003050] text-white flex flex-col justify-between transition-transform duration-300 lg:static lg:translate-x-0
+        fixed inset-y-0 left-0 z-50 w-72 bg-gradient-to-b from-[#082846] via-[#004369] to-[#003050] text-white flex flex-col justify-between transition-transform duration-300 lg:static lg:translate-x-0 lg:h-screen lg:flex-shrink-0 lg:overflow-y-auto
         ${mobileMenuOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
       `}>
         
@@ -81,9 +81,7 @@ export const AdminLayout = ({ data, onUpdate, auth, onLogout, onResetDefault }) 
               </div>
               <div>
                 <h2 className="font-black text-sm tracking-tight text-white leading-tight">Flymingo Logistics</h2>
-                <span className="text-[10px] font-mono font-bold text-[#ed2926] tracking-wider uppercase block">
-                  Admin Workspace
-                </span>
+                
               </div>
             </div>
             <button
@@ -152,10 +150,10 @@ export const AdminLayout = ({ data, onUpdate, auth, onLogout, onResetDefault }) 
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 lg:h-screen lg:overflow-hidden">
         
-        {/* Top Desktop Bar */}
-        <header className="hidden lg:flex items-center justify-between px-8 py-4 bg-white border-b border-slate-200/80 sticky top-0 z-30 shadow-xs">
+        {/* Top Desktop Bar (Fixed at top, never scrolls away) */}
+        <header className="hidden lg:flex items-center justify-between px-8 py-4 bg-white border-b border-slate-200/80 flex-shrink-0 z-30 shadow-xs">
           <div className="flex items-center gap-3">
             <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest">
               Admin Portal
@@ -178,8 +176,8 @@ export const AdminLayout = ({ data, onUpdate, auth, onLogout, onResetDefault }) 
           </div>
         </header>
 
-        {/* Tab Content Display */}
-        <main className="p-4 sm:p-6 lg:p-8 flex-1 max-w-7xl mx-auto w-full">
+        {/* Tab Content Display (Independently scrollable) */}
+        <main className="p-4 sm:p-6 lg:p-8 flex-1 lg:overflow-y-auto max-w-7xl mx-auto w-full">
           {activeTab === 'overview' && <OverviewTab data={data} onSelectTab={handleTabChange} />}
           {activeTab === 'sliders' && <SlidersBannersTab data={data} onUpdate={onUpdate} />}
           {activeTab === 'home' && <HomePageTab data={data} onUpdate={onUpdate} />}

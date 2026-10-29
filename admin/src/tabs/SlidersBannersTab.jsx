@@ -252,7 +252,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
       {/* ========================================================= */}
       {/* 1. TOP HEADER & NAVIGATION TABS (MATCHING IMAGES 3 & 4)    */}
       {/* ========================================================= */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 z-20 bg-slate-100/95 backdrop-blur-md py-2 -mt-2">
         {/* Navigation Tabs Pill Bar */}
         <div className="flex flex-wrap items-center gap-2">
           <button
