@@ -109,7 +109,7 @@ export function PageBanner({
       .catch(() => {});
   }, [pageKey]);
 
-  const displayBadge = (dbData && dbData.badge !== undefined) ? dbData.badge : (eyebrow || 'SOUTH INDIA \u2192 THE WORLD');
+  const displayBadge = (dbData && dbData.badge !== undefined) ? dbData.badge : (eyebrow || 'ANY SIZE • ANY WEIGHT • ANYWHERE');
   const displayTitle = (dbData && dbData.title) ? dbData.title : title;
   const displayHighlight = (dbData && dbData.highlight !== undefined) ? dbData.highlight : highlight;
   const displayDesc = (dbData && dbData.description) ? dbData.description : description;

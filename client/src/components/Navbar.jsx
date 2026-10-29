@@ -67,6 +67,12 @@ export const Navbar = ({ onOpenQuote }) => {
 
           {/* Quick utility actions */}
           <div className="flex items-center gap-3 ml-auto">
+            {/* Brand Slogan Pill */}
+            <div className="hidden lg:inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-brand-red/10 border border-brand-red/20 text-brand-red text-[11px] font-extrabold uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse" />
+              <span>Any Size &bull; Any Weight &bull; Anywhere</span>
+            </div>
+            <span className="text-slate-300 hidden lg:inline">|</span>
             <a
               href={BRAND.brochurePath}
               download

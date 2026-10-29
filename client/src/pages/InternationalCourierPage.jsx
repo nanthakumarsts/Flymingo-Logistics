@@ -19,7 +19,7 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
               B2B &amp; B2C International Express
             </h2>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Any size, any weight, we provide custom shipping solutions with end-to-end customs support.
+              Any size, any weight, anywhere – we provide bespoke global shipping solutions with end-to-end customs support.
             </p>
           </div>
 
@@ -32,9 +32,9 @@ export const InternationalCourierPage = ({ onOpenQuote }) => {
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">Flexible Capacity</span>
               </div>
-              <h3 className="text-base font-extrabold text-slate-900 group-hover:text-brand-blue transition-colors">Any Size, Any Weight</h3>
+              <h3 className="text-base font-extrabold text-slate-900 group-hover:text-brand-blue transition-colors">Any Size, Any Weight, Anywhere</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                From small envelope documents of 0.5 kg to multi-carton commercial export consignments of 500+ kg.
+                From small envelope documents of 0.5 kg to multi-carton commercial export consignments of 500+ kg delivered to 190+ countries.
               </p>
             </div>
 

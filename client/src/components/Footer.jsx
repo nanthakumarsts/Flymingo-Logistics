@@ -63,6 +63,11 @@ export const Footer = ({ onOpenQuote }) => {
               />
             </Link>
 
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-red/10 border border-brand-red/25 text-brand-red text-xs font-mono font-extrabold uppercase tracking-widest shadow-2xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse" />
+              <span>Any Size &bull; Any Weight &bull; Anywhere</span>
+            </div>
+
             <p className="text-sm sm:text-base leading-relaxed text-slate-600 max-w-md">
               Flymingo Logistics is an International Logistics company offering high-quality international courier services, ocean &amp; air freight forwarding, time-critical ship spares delivery, dangerous goods (DG) logistics, overseas household relocation, and customs clearance brokerage.
             </p>

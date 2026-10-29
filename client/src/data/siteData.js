@@ -1,7 +1,8 @@
 export const BRAND = {
   name: 'Flymingo Logistics',
   shortName: 'Flymingo',
-  tagline: 'Six ways we get your cargo from origin to destination.',
+  tagline: 'Any Size, Any Weight, Anywhere',
+  motto: 'Any Size, Any Weight, Anywhere',
   subTagline: 'Global Marine Logistics, International Couriers & Freight Forwarding',
   primaryPhone: '+91 90879 24488',
   supportPhones: ['+91 90872 54488', '+91 95662 54488', '+91 96006 44889'],

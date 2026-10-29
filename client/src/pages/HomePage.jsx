@@ -82,6 +82,10 @@ const css = `
 .fm-s3 { opacity: 0; animation: fm-slide-in .7s .30s cubic-bezier(.2,.7,.2,1) forwards; }
 .fm-s4 { opacity: 0; animation: fm-slide-in .7s .42s cubic-bezier(.2,.7,.2,1) forwards; }
 
+@keyframes fm-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.fm-ticker { display: flex; width: max-content; animation: fm-ticker 26s linear infinite; will-change: transform; }
+.fm-ticker:hover { animation-play-state: paused; }
+
 /* vertical text for collapsed sector panels (desktop only) */
 @media (min-width: 1024px) { .fm-vert { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; } }
 
@@ -450,6 +454,29 @@ export const HomePage = ({ onOpenQuote }) => {
         </div>
 
         <Wave className="text-white h-6 sm:h-8" />
+      </section>
+
+      {/* ============ BRAND MOTTO MARQUEE / TICKER RIBBON ============ */}
+      <section className="bg-gradient-to-r from-slate-900 via-[#001d36] to-slate-900 text-white py-3 border-y border-slate-800 overflow-hidden select-none relative z-20 shadow-md">
+        <div className="fm-ticker flex items-center gap-8 whitespace-nowrap">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="flex items-center gap-8 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-slate-300">
+              <span className="inline-flex items-center gap-2 text-white font-black bg-brand-red/20 px-3 py-1 rounded-full border border-brand-red/30">
+                <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
+                ANY SIZE &bull; ANY WEIGHT &bull; ANYWHERE
+              </span>
+              <span className="text-brand-red font-mono">★</span>
+              <span>190+ COUNTRIES CONNECTED</span>
+              <span className="text-brand-red font-mono">★</span>
+              <span>24/7 SHIP SPARES MARITIME BERTH</span>
+              <span className="text-brand-red font-mono">★</span>
+              <span>FREE DOORSTEP PICKUP IN COIMBATORE &amp; CHENNAI</span>
+              <span className="text-brand-red font-mono">★</span>
+              <span>ZERO DEMURRAGE PROTOCOL</span>
+              <span className="text-brand-red font-mono">★</span>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* ============ STATS ============ */}
