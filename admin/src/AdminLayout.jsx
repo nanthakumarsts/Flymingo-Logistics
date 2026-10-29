@@ -129,26 +129,9 @@ export const AdminLayout = ({ data, onUpdate, auth, onLogout, onResetDefault }) 
           </nav>
         </div>
 
-        {/* Bottom User Profile & Actions */}
-        <div className="p-4 border-t border-white/10 space-y-3 bg-black/15">
-          <div className="flex items-center justify-between px-2">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-xs text-white">
-                AD
-              </div>
-              <div>
-                <div className="text-xs font-bold text-white leading-tight">
-                  {auth.user?.username || 'Admin User'}
-                </div>
-                <div className="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  Super Admin
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 pt-1">
+        {/* Bottom Actions */}
+        <div className="p-4 border-t border-white/10 space-y-2 bg-black/15">
+          <div className="grid grid-cols-2 gap-2">
             <button
               onClick={handleResetConfirm}
               className="px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-[11px] font-bold text-white/90 flex items-center justify-center gap-1 transition-colors cursor-pointer"
@@ -183,29 +166,15 @@ export const AdminLayout = ({ data, onUpdate, auth, onLogout, onResetDefault }) 
             </h2>
           </div>
 
-          <div className="flex items-center gap-4">
-            <a
-              href="/"
-              target="_blank"
-              rel="noreferrer"
-              className="px-3.5 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-bold text-[#005687] flex items-center gap-1.5 transition-colors"
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onLogout}
+              className="px-3.5 py-1.5 rounded-xl bg-red-50 hover:bg-[#ed2926] text-slate-600 hover:text-white border border-red-200/80 text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
+              title="Log out"
             >
-              <span>View Live Website</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-
-            <div className="h-6 w-px bg-slate-200" />
-
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-slate-700">{auth.user?.username || 'admin'}</span>
-              <button
-                onClick={onLogout}
-                className="p-1.5 hover:bg-red-50 text-slate-400 hover:text-[#ed2926] rounded-lg transition-colors cursor-pointer"
-                title="Log out"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            </div>
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Sign Out</span>
+            </button>
           </div>
         </header>
 
