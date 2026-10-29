@@ -1,0 +1,61 @@
+{
+  "bannerVideo": "/assets/fliqmarine-hero.mov",
+  "heroSlides": [
+    {
+      "id": "marine-logistics",
+      "titlePrefix": "Your Global ",
+      "highlight": "Logistics Partner",
+      "titleSuffix": "",
+      "desc": "End-to-end logistics and courier solutions with operational excellence, global reach and a commitment to trust, safety and timely delivery across 190+ countries.",
+      "primaryCta": "Explore Our Services",
+      "primarySlug": "/services",
+      "secondaryCta": "Get Fare Rate",
+      "secondarySlug": "/contact",
+      "isActive": true
+    },
+    {
+      "id": "worldwide-courier",
+      "titlePrefix": "Rapid Door-to-Door ",
+      "highlight": "Worldwide Delivery",
+      "titleSuffix": "",
+      "desc": "Connecting 190+ countries with priority doorstep pickup across South India for commercial samples, urgent documents, and specialized NRI parcels.",
+      "primaryCta": "Explore Courier Rates",
+      "primarySlug": "/services/international-courier",
+      "secondaryCta": "Get Instant Quote",
+      "secondarySlug": "/quote",
+      "isActive": true
+    },
+    {
+      "id": "customs-brokerage",
+      "titlePrefix": "Seamless Ocean & Air ",
+      "highlight": "Freight Clearance",
+      "titleSuffix": "",
+      "desc": "Dedicated seaport and airport customs house brokerage with direct ICEGATE EDI filing, bonded warehousing, and multi-modal freight transport.",
+      "primaryCta": "Consult Customs Broker",
+      "primarySlug": "/services/customs-clearance",
+      "secondaryCta": "Contact Team",
+      "secondarySlug": "/contact",
+      "isActive": true
+    }
+  ],
+  "pageBanners": {
+    "about": {
+      "title": "We Are The Bridge Between You And Your Relations.",
+      "highlight": "Across Oceans & Continents.",
+      "tagline": "Connecting Families. Empowering Global Trade.",
+      "image": "/assets/banner-marine-hd.jpg"
+    },
+    "services": {
+      "title": "Six Proven Channels.",
+      "highlight": "Zero Cargo Gaps.",
+      "tagline": "Connecting Businesses. Delivering Possibilities.",
+      "image": "/assets/banner-courier-hd.jpg"
+    },
+    "contact": {
+      "title": "Direct Lines.",
+      "highlight": "Immediate Logistics Response.",
+      "tagline": "Always On Call. Ready For Rapid Dispatch.",
+      "image": "/assets/banner-contact-hd.jpg"
+    }
+  }
+}

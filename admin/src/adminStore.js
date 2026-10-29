@@ -3,49 +3,44 @@ import { useState, useEffect } from 'react';
 // Default initial data for all admin modules
 export const INITIAL_ADMIN_DATA = {
   // 1. SLIDERS & BANNERS
+  bannerVideo: '/assets/fliqmarine-hero.mov',
   heroSlides: [
     {
       id: 'marine-logistics',
-      badge: 'SOUTH INDIA → THE WORLD',
       titlePrefix: 'Your Global ',
       highlight: 'Logistics Partner',
       titleSuffix: '',
-      tagline: 'Connecting Businesses. Delivering Possibilities.',
       desc: 'End-to-end logistics and courier solutions with operational excellence, global reach and a commitment to trust, safety and timely delivery across 190+ countries.',
-      image: '/assets/banner-marine-hd.jpg',
       primaryCta: 'Explore Our Services',
+      primarySlug: '/services',
       secondaryCta: 'Get Fare Rate',
-      secondaryLink: '/services',
+      secondarySlug: '/contact',
       serviceId: 'ship-spares',
       isActive: true
     },
     {
       id: 'worldwide-courier',
-      badge: 'SOUTH INDIA → THE WORLD',
       titlePrefix: 'Rapid Door-to-Door ',
       highlight: 'Worldwide Delivery',
       titleSuffix: '',
-      tagline: 'Delivering Packages. Connecting Families.',
       desc: 'Connecting 190+ countries with priority doorstep pickup across South India for commercial samples, urgent documents, and specialized NRI parcels.',
-      image: '/assets/banner-aircargo-hd.jpg',
       primaryCta: 'Explore Courier Rates',
-      secondaryCta: 'Calculate Fare',
-      secondaryLink: '/services/international-courier',
+      primarySlug: '/services/international-courier',
+      secondaryCta: 'Get Instant Quote',
+      secondarySlug: '/quote',
       serviceId: 'international-courier',
       isActive: true
     },
     {
       id: 'multimodal-freight',
-      badge: 'SOUTH INDIA → THE WORLD',
       titlePrefix: 'Critical Air & ',
       highlight: 'Ocean Freight Forwarding',
       titleSuffix: '',
-      tagline: 'Precision Transit. Zero Port Delays.',
       desc: 'High-speed air cargo charters, consolidated FCL/LCL container shipping, and emergency vessel spares delivery right on board at outer anchorage berths.',
-      image: '/assets/banner-sectors-hd.jpg',
       primaryCta: 'Explore Freight Solutions',
-      secondaryCta: 'Track Cargo',
-      secondaryLink: '/services/freight-forwarding',
+      primarySlug: '/services/freight-forwarding',
+      secondaryCta: 'Contact Team',
+      secondarySlug: '/contact',
       serviceId: 'freight-forwarding',
       isActive: true
     }
@@ -505,6 +500,25 @@ export function useAdminStore() {
     }
     return { isAuthenticated: false, user: null };
   });
+
+  // Sync banner configuration from backend API if available
+  useEffect(() => {
+    fetch('http://localhost:5000/api/banner')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (res && res.success && res.data) {
+          setData((prev) => ({
+            ...prev,
+            bannerVideo: res.data.bannerVideo || prev.bannerVideo || '/assets/fliqmarine-hero.mov',
+            heroSlides: res.data.heroSlides?.length ? res.data.heroSlides : prev.heroSlides,
+            pageBanners: res.data.pageBanners || prev.pageBanners
+          }));
+        }
+      })
+      .catch(() => {
+        // Standalone fallback: keep localStorage data if server is offline
+      });
+  }, []);
 
   // Save to localStorage whenever data changes
   const updateData = (updater) => {

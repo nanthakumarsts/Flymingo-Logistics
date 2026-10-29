@@ -205,9 +205,26 @@ const STAT_ICONS = [Globe, Plane, ShieldCheck, Clock];
 
 export const HomePage = ({ onOpenQuote }) => {
   const barRef = useRef(null);
+  const [slides, setSlides] = useState(HERO_SLIDES);
+  const [bannerVideo, setBannerVideo] = useState('/assets/fliqmarine-hero.mov');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const slideCount = HERO_SLIDES.length;
+  const slideCount = slides.length || 1;
+
+  // Fetch banner data from backend API
+  useEffect(() => {
+    fetch('http://localhost:5000/api/banner')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (res && res.success && res.data) {
+          if (res.data.bannerVideo) setBannerVideo(res.data.bannerVideo);
+          if (res.data.heroSlides && res.data.heroSlides.length > 0) {
+            setSlides(res.data.heroSlides.filter((s) => s.isActive !== false));
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (isPaused) return;
@@ -219,7 +236,7 @@ export const HomePage = ({ onOpenQuote }) => {
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slideCount);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slideCount) % slideCount);
-  const activeSlide = HERO_SLIDES[currentSlide] || HERO_SLIDES[0] || {};
+  const activeSlide = slides[currentSlide] || slides[0] || {};
 
   /* Process (pickup to delivery) state */
   const [processSlide, setProcessSlide] = useState(0);
@@ -304,9 +321,10 @@ export const HomePage = ({ onOpenQuote }) => {
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        {/* Continuous cinematic logistics motion video - clearly visible in background from fliqmarine */}
+        {/* Continuous cinematic logistics motion video - 1 single video across all slides */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <video
+            key={bannerVideo}
             autoPlay
             loop
             muted
@@ -314,38 +332,11 @@ export const HomePage = ({ onOpenQuote }) => {
             preload="auto"
             className="w-full h-full object-cover object-center opacity-90 contrast-[1.08] brightness-[1.02]"
           >
+            <source src={bannerVideo} type="video/mp4" />
+            <source src={bannerVideo} type="video/quicktime" />
             <source src="/assets/fliqmarine-hero.mov" type="video/mp4" />
-            <source src="/assets/fliqmarine-hero.mov" type="video/quicktime" />
-            <source src="/assets/hero-banner-video.mp4" type="video/mp4" />
           </video>
         </div>
-
-        {/* full-bleed slide images - dynamic Ken Burns subtle ambient layer */}
-        {HERO_SLIDES.map((slide, idx) => {
-          const isActive = idx === currentSlide;
-          const kbClass = idx % 3 === 0 ? 'fm-kb-0' : idx % 3 === 1 ? 'fm-kb-1' : 'fm-kb-2';
-          return (
-            <div
-              key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out pointer-events-none ${
-                isActive ? 'opacity-25 z-0' : 'opacity-0'
-              }`}
-            >
-              <img
-                key={isActive ? `${slide.id}-active` : `${slide.id}-idle`}
-                src={slide.image}
-                alt=""
-                aria-hidden="true"
-                loading={idx === 0 ? 'eager' : 'lazy'}
-                decoding="async"
-                onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                className={`absolute inset-0 w-full h-full object-cover object-center ${
-                  isActive ? `${kbClass}` : 'scale-100'
-                }`}
-              />
-            </div>
-          );
-        })}
 
         {/* Directional light text scrim: protective white on left for text, completely clear on center/right for video */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/85 to-white/70 sm:bg-gradient-to-r sm:from-white sm:via-white/80 sm:via-42% sm:to-transparent pointer-events-none z-[1]" aria-hidden="true" />
@@ -359,10 +350,6 @@ export const HomePage = ({ onOpenQuote }) => {
               key={activeSlide.id}
               className="lg:col-span-10 xl:col-span-8 space-y-4 sm:space-y-5 text-left"
             >
-              <div className="fm-s1 inline-flex items-center px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
-                {activeSlide.badge}
-              </div>
-
               <div className="space-y-2">
                 <h1 className="fm-s2 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-slate-900">
                   {activeSlide.titlePrefix}
@@ -371,12 +358,6 @@ export const HomePage = ({ onOpenQuote }) => {
                   </span>
                   {activeSlide.titleSuffix}
                 </h1>
-
-                {activeSlide.tagline && (
-                  <p className="fm-s2 text-base sm:text-xl font-bold text-slate-800 tracking-wide">
-                    {activeSlide.tagline}
-                  </p>
-                )}
               </div>
 
               <p className="fm-s3 text-sm sm:text-lg text-slate-800 sm:text-slate-600 font-medium sm:font-normal leading-relaxed max-w-2xl bg-white/70 sm:bg-transparent backdrop-blur-[2px] sm:backdrop-blur-none p-3 sm:p-0 rounded-2xl border border-white/80 sm:border-transparent shadow-xs sm:shadow-none">
@@ -384,23 +365,49 @@ export const HomePage = ({ onOpenQuote }) => {
               </p>
 
               <div className="fm-s4 flex flex-wrap items-center justify-start gap-3.5 pt-1">
-                <button
-                  type="button"
-                  onClick={() => onOpenQuote(activeSlide.serviceId)}
-                  className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
-                >
-                  <span>{activeSlide.primaryCta}</span>
-                  <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                    <ArrowRight className="w-3.5 h-3.5 text-white" />
-                  </span>
-                </button>
-                <Link
-                  to={activeSlide.secondaryLink}
-                  className="px-7 py-3.5 bg-white border border-slate-300 hover:border-brand-blue hover:text-brand-blue text-slate-800 rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm"
-                >
-                  {activeSlide.secondaryCta}
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
+                {/* Button 1 */}
+                {(activeSlide.primarySlug === '/quote' || activeSlide.primarySlug === 'quote') ? (
+                  <button
+                    type="button"
+                    onClick={() => onOpenQuote && onOpenQuote(activeSlide.serviceId)}
+                    className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                  >
+                    <span>{activeSlide.primaryCta || 'Explore Services'}</span>
+                    <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                      <ArrowRight className="w-3.5 h-3.5 text-white" />
+                    </span>
+                  </button>
+                ) : (
+                  <Link
+                    to={activeSlide.primarySlug || '/services'}
+                    className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                  >
+                    <span>{activeSlide.primaryCta || 'Explore Services'}</span>
+                    <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                      <ArrowRight className="w-3.5 h-3.5 text-white" />
+                    </span>
+                  </Link>
+                )}
+
+                {/* Button 2 */}
+                {(activeSlide.secondarySlug === '/quote' || activeSlide.secondarySlug === 'quote') ? (
+                  <button
+                    type="button"
+                    onClick={() => onOpenQuote && onOpenQuote(activeSlide.serviceId)}
+                    className="px-7 py-3.5 bg-white border border-slate-300 hover:border-brand-blue hover:text-brand-blue text-slate-800 rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm cursor-pointer"
+                  >
+                    <span>{activeSlide.secondaryCta || 'Get Fare Rate'}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                ) : (
+                  <Link
+                    to={activeSlide.secondarySlug || '/contact'}
+                    className="px-7 py-3.5 bg-white border border-slate-300 hover:border-brand-blue hover:text-brand-blue text-slate-800 rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm"
+                  >
+                    <span>{activeSlide.secondaryCta || 'Get Fare Rate'}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
