@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
-import { Sliders, Plus, Trash2, Save, ArrowRight, Video, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Sliders, Plus, Trash2, Save, ArrowRight, Video, AlertCircle, CheckCircle2, Layers, FileText } from 'lucide-react';
 import { DragDropUploader } from '../components/DragDropUploader';
 
 const API_BASE = 'http://localhost:5000';
+
+const SERVICE_KEYS = [
+  { key: 'ship-spares', label: 'Ship Spares Logistics' },
+  { key: 'freight-forwarding', label: 'Freight Forwarding' },
+  { key: 'international-courier', label: 'International Courier' },
+  { key: 'customs-clearance', label: 'Customs Clearance (CHA)' },
+  { key: 'dg-shipping', label: 'Dangerous Goods Cargo' },
+  { key: 'international-relocation', label: 'International Relocation' }
+];
 
 export const SlidersBannersTab = ({ data, onUpdate }) => {
   const [bannerVideo, setBannerVideo] = useState(data.bannerVideo || '/assets/fliqmarine-hero.mov');
@@ -12,7 +21,23 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [invalidSlideId, setInvalidSlideId] = useState(null);
 
-  const handleSaveSlides = async () => {
+  // Active sub-tabs for inner banners
+  const [activeCoreTab, setActiveCoreTab] = useState('about');
+  const [activeServiceTab, setActiveServiceTab] = useState('ship-spares');
+
+  // Load latest page banners from MySQL API on mount
+  useEffect(() => {
+    fetch(`${API_BASE}/api/page-banners`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (res && res.success && res.banners) {
+          setBanners((prev) => ({ ...prev, ...res.banners }));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleSaveAll = async () => {
     setErrorMsg('');
     setSavedMsg('');
     setInvalidSlideId(null);
@@ -31,7 +56,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
         return;
       }
       if (!slide.desc?.trim()) {
-        setErrorMsg(`Slide "${slide.titlePrefix} ${slide.highlight}" is missing the description text.`);
+        setErrorMsg(`Slide "${slide.titlePrefix} ${slide.highlight}" is missing description text.`);
         setInvalidSlideId(slide.id);
         return;
       }
@@ -47,7 +72,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
       }
     }
 
-    // Attempt save to Express Backend API
+    // Attempt save to Express Backend API (MySQL flymingo)
     const payload = {
       bannerVideo,
       heroSlides: slides,
@@ -65,7 +90,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
         backendSaved = true;
       }
     } catch (err) {
-      console.warn('Backend server unreachable, saved to browser storage:', err);
+      console.warn('Backend server unreachable, saved to local cache:', err);
     }
 
     // Update frontend state & localStorage
@@ -77,11 +102,56 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
     }));
 
     if (backendSaved) {
-      setSavedMsg('Saved to Backend Server & Local Store successfully!');
+      setSavedMsg('All Banners & Slides Saved to MySQL Database (flymingo)!');
     } else {
-      setSavedMsg('Saved to Local Store (Backend offline)');
+      setSavedMsg('Saved to Local Cache (MySQL Server Offline)');
     }
     setTimeout(() => setSavedMsg(''), 4000);
+  };
+
+  const handleSaveSingleBanner = async (pageKey) => {
+    setErrorMsg('');
+    setSavedMsg('');
+    const bannerToSave = banners[pageKey];
+    if (!bannerToSave) return;
+
+    if (!bannerToSave.title?.trim() || !bannerToSave.highlight?.trim()) {
+      setErrorMsg(`Title and Red Highlight are required for ${pageKey} banner!`);
+      return;
+    }
+    if (!bannerToSave.bgImage?.trim()) {
+      setErrorMsg(`Background image is required for ${pageKey} banner!`);
+      return;
+    }
+
+    let saved = false;
+    try {
+      const res = await fetch(`${API_BASE}/api/page-banners/${pageKey}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bannerToSave)
+      });
+      if (res.ok) {
+        saved = true;
+      }
+    } catch (err) {
+      console.warn('Backend error:', err);
+    }
+
+    onUpdate((prev) => ({
+      ...prev,
+      pageBanners: {
+        ...prev.pageBanners,
+        [pageKey]: bannerToSave
+      }
+    }));
+
+    if (saved) {
+      setSavedMsg(`✅ ${bannerToSave.pageName || pageKey} banner saved to MySQL!`);
+    } else {
+      setSavedMsg(`Saved to local cache (${pageKey})`);
+    }
+    setTimeout(() => setSavedMsg(''), 3500);
   };
 
   const handleAddSlide = () => {
@@ -110,28 +180,37 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
   };
 
   const handleBannerChange = (page, field, value) => {
-    setBanners({
-      ...banners,
+    setBanners((prev) => ({
+      ...prev,
       [page]: {
-        ...banners[page],
+        ...(prev[page] || {}),
         [field]: value
       }
-    });
+    }));
   };
+
+  const currentCoreBanner = banners[activeCoreTab] || {};
+  const currentServiceBanner = banners[activeServiceTab] || {};
 
   return (
     <div className="space-y-8 select-none">
-      {/* Header with Save Button */}
+      {/* Top Header with Save Button */}
       <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200">
         <div>
-          <h1 className="text-xl font-black text-slate-900">Hero Sliders & Page Banners</h1>
-          <p className="text-xs text-slate-500">
-            Configure single continuous video background, slide headlines with custom button links, and inner page banners.
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-black text-slate-900">Hero Sliders & Page Banners</h1>
+            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+              MySQL flymingo Live
+            </span>
+          </div>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Dynamic banner configuration for Homepage Carousel, Core Pages (About, Contact, Services), and 6 Services Detail pages.
           </p>
         </div>
         <div className="flex items-center gap-3">
           {savedMsg && (
-            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200">
+            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200 flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5" />
               {savedMsg}
             </span>
           )}
@@ -151,16 +230,16 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
           </button>
           <button
             type="button"
-            onClick={handleSaveSlides}
+            onClick={handleSaveAll}
             className="px-5 py-2.5 bg-[#005687] hover:bg-[#ed2926] text-white rounded-xl text-xs font-bold shadow-md transition-all flex items-center gap-2 cursor-pointer"
           >
             <Save className="w-4 h-4" />
-            <span>Save All Banners</span>
+            <span>Save All to MySQL</span>
           </button>
         </div>
       </div>
 
-      {/* Part 1: Single Continuous Video for all Home Sliders */}
+      {/* Part 1: Homepage Hero Video */}
       <div className="bg-white rounded-3xl border border-slate-200 p-6 space-y-4 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2.5">
@@ -172,13 +251,10 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                 Global Homepage Hero Background Video (1 Single Video for all Slides)
               </h2>
               <p className="text-[11px] text-slate-500">
-                This continuous video plays smoothly in the background while slide headlines rotate over it.
+                Stored in MySQL database table <span className="font-mono text-[#005687]">banner_settings</span>
               </p>
             </div>
           </div>
-          <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
-            Shared Video
-          </span>
         </div>
 
         <DragDropUploader
@@ -196,9 +272,9 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-            <span>Hero Slide Headlines & Action Buttons</span>
+            <span>Homepage Hero Carousel Slides</span>
             <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">
-              {slides.length} Slides
+              {slides.length} Slides &bull; MySQL table hero_slides
             </span>
           </h2>
           <span className="text-xs text-slate-400 font-medium">
@@ -262,9 +338,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                       placeholder="e.g. Your Global "
                       value={slide.titlePrefix || ''}
                       onChange={(e) => handleSlideChange(slide.id, 'titlePrefix', e.target.value)}
-                      className={`w-full px-3 py-2 bg-slate-50 border rounded-lg text-xs font-semibold focus:ring-2 focus:ring-[#005687] outline-none ${
-                        !slide.titlePrefix ? 'border-red-300' : 'border-slate-200'
-                      }`}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:ring-2 focus:ring-[#005687] outline-none"
                     />
                   </div>
 
@@ -279,9 +353,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                       placeholder="e.g. Logistics Partner"
                       value={slide.highlight || ''}
                       onChange={(e) => handleSlideChange(slide.id, 'highlight', e.target.value)}
-                      className={`w-full px-3 py-2 bg-red-50/50 border rounded-lg text-xs font-bold text-[#ed2926] focus:ring-2 focus:ring-[#ed2926] outline-none ${
-                        !slide.highlight ? 'border-red-300' : 'border-red-200'
-                      }`}
+                      className="w-full px-3 py-2 bg-red-50/50 border border-red-200 rounded-lg text-xs font-bold text-[#ed2926] focus:ring-2 focus:ring-[#ed2926] outline-none"
                     />
                   </div>
 
@@ -309,13 +381,11 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                     placeholder="Enter slide description text..."
                     value={slide.desc || ''}
                     onChange={(e) => handleSlideChange(slide.id, 'desc', e.target.value)}
-                    className={`w-full px-3 py-2 bg-slate-50 border rounded-lg text-xs font-medium text-slate-700 focus:ring-2 focus:ring-[#005687] outline-none ${
-                      !slide.desc ? 'border-red-300' : 'border-slate-200'
-                    }`}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 focus:ring-2 focus:ring-[#005687] outline-none"
                   />
                 </div>
 
-                {/* Two Action Buttons with Custom Labels and Slugs */}
+                {/* Two Action Buttons with Custom Slugs */}
                 <div className="p-4 bg-slate-50/80 rounded-xl border border-slate-200/80 space-y-3">
                   <span className="text-xs font-black uppercase text-slate-600 tracking-wider flex items-center gap-1.5">
                     <ArrowRight className="w-3.5 h-3.5 text-[#005687]" />
@@ -325,30 +395,22 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Button 1 */}
                     <div className="bg-white p-3 rounded-lg border border-slate-200 space-y-2">
-                      <span className="text-[11px] font-bold text-[#ed2926] uppercase">Primary Button (Solid Red)</span>
+                      <span className="text-[11px] font-bold text-[#ed2926] uppercase">Button 1 (Solid Red)</span>
                       <div className="space-y-1">
-                        <label className="text-[11px] font-bold text-slate-600 flex items-center gap-1">
-                          <span>Button 1 Label</span>
-                          <span className="text-red-500 font-black">*</span>
-                        </label>
+                        <label className="text-[11px] font-bold text-slate-600">Button 1 Label *</label>
                         <input
                           type="text"
                           required
-                          placeholder="e.g. Explore Services"
                           value={slide.primaryCta || ''}
                           onChange={(e) => handleSlideChange(slide.id, 'primaryCta', e.target.value)}
                           className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-xs font-bold"
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-[11px] font-bold text-slate-600 flex items-center gap-1">
-                          <span>Button 1 Slug / Path</span>
-                          <span className="text-red-500 font-black">*</span>
-                        </label>
+                        <label className="text-[11px] font-bold text-slate-600">Button 1 Slug / Path *</label>
                         <input
                           type="text"
                           required
-                          placeholder="/services or /quote or /contact"
                           value={slide.primarySlug || ''}
                           onChange={(e) => handleSlideChange(slide.id, 'primarySlug', e.target.value)}
                           className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-xs font-mono"
@@ -358,30 +420,22 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
 
                     {/* Button 2 */}
                     <div className="bg-white p-3 rounded-lg border border-slate-200 space-y-2">
-                      <span className="text-[11px] font-bold text-[#005687] uppercase">Secondary Button (White Outline)</span>
+                      <span className="text-[11px] font-bold text-[#005687] uppercase">Button 2 (White Outline)</span>
                       <div className="space-y-1">
-                        <label className="text-[11px] font-bold text-slate-600 flex items-center gap-1">
-                          <span>Button 2 Label</span>
-                          <span className="text-red-500 font-black">*</span>
-                        </label>
+                        <label className="text-[11px] font-bold text-slate-600">Button 2 Label *</label>
                         <input
                           type="text"
                           required
-                          placeholder="e.g. Get Fare Quote"
                           value={slide.secondaryCta || ''}
                           onChange={(e) => handleSlideChange(slide.id, 'secondaryCta', e.target.value)}
                           className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-xs font-bold"
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-[11px] font-bold text-slate-600 flex items-center gap-1">
-                          <span>Button 2 Slug / Path</span>
-                          <span className="text-red-500 font-black">*</span>
-                        </label>
+                        <label className="text-[11px] font-bold text-slate-600">Button 2 Slug / Path *</label>
                         <input
                           type="text"
                           required
-                          placeholder="/contact or /quote or /services"
                           value={slide.secondarySlug || ''}
                           onChange={(e) => handleSlideChange(slide.id, 'secondarySlug', e.target.value)}
                           className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded text-xs font-mono"
@@ -396,56 +450,349 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
         </div>
       </div>
 
-      {/* Part 3: Inner Page Banners */}
+      {/* Part 3: Core Page Banners (About, Contact, Services Hub) */}
       <div className="space-y-4 pt-4 border-t border-slate-200">
-        <h2 className="text-base font-extrabold text-slate-900">
-          Inner Page Banners (About, Services, Contact)
-        </h2>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+              <Layers className="w-4 h-4 text-[#005687]" />
+              <span>Core Page Banners (About, Contact, Services Hub)</span>
+            </h2>
+            <p className="text-xs text-slate-500">
+              CRUD banner management stored in MySQL table <span className="font-mono text-[#005687]">page_banners</span>
+            </p>
+          </div>
+          {/* Sub-tab pills */}
+          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-2xl">
+            {['about', 'contact', 'services'].map((key) => {
+              const label = key === 'about' ? 'About Us' : key === 'contact' ? 'Contact Us' : 'Services Hub';
+              const isActive = activeCoreTab === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setActiveCoreTab(key)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    isActive ? 'bg-[#005687] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          {Object.entries(banners).map(([pageKey, b]) => (
-            <div key={pageKey} className="bg-white rounded-2xl border border-slate-200 p-5 space-y-3 shadow-sm">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                <span className="text-xs font-black uppercase text-[#005687] tracking-wider">{pageKey} Page Banner</span>
-                <span className="text-[10px] font-mono font-bold bg-slate-100 px-2 py-0.5 rounded text-slate-500">Live</span>
-              </div>
-              <div className="space-y-1">
-                <label className="text-[11px] font-bold text-slate-600">Banner Heading</label>
-                <input
-                  type="text"
-                  value={b.title || ''}
-                  onChange={(e) => handleBannerChange(pageKey, 'title', e.target.value)}
-                  className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-bold"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[11px] font-bold text-[#ed2926]">Red Highlight Part</label>
-                <input
-                  type="text"
-                  value={b.highlight || ''}
-                  onChange={(e) => handleBannerChange(pageKey, 'highlight', e.target.value)}
-                  className="w-full px-2.5 py-1.5 bg-red-50/50 border border-red-200 rounded-md text-xs font-bold text-[#ed2926]"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[11px] font-bold text-slate-600">Tagline / Subheading</label>
-                <input
-                  type="text"
-                  value={b.tagline || ''}
-                  onChange={(e) => handleBannerChange(pageKey, 'tagline', e.target.value)}
-                  className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-md text-xs"
-                />
-              </div>
-              <DragDropUploader
-                label="Banner Background Image"
-                value={b.image || ''}
-                onChange={(val) => handleBannerChange(pageKey, 'image', val)}
-                accept="image/*"
-                isVideo={false}
-                helpText="Drop image or click browse"
+        {/* Selected Core Banner Editor */}
+        <div className="bg-white rounded-3xl border border-slate-200 p-6 space-y-5 shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <span className="text-xs font-black uppercase text-[#005687] tracking-wider">
+                {currentCoreBanner.pageName || activeCoreTab.toUpperCase()} BANNER
+              </span>
+              <p className="text-[11px] text-slate-400">
+                {activeCoreTab === 'services'
+                  ? 'Configures: Background Image, Eyebrow Badge, Headline, Paragraph, and Action Button'
+                  : 'Configures: Background Image, Eyebrow Badge, Headline, Paragraph, Action Button, and Side Image'}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleSaveSingleBanner(activeCoreTab)}
+              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <Save className="w-3.5 h-3.5" />
+              <span>Save {currentCoreBanner.pageName || activeCoreTab} to MySQL</span>
+            </button>
+          </div>
+
+          {/* Form fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
+                <span>Eyebrow Badge</span>
+                <span className="text-red-500 font-black">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. SOUTH INDIA → THE WORLD"
+                value={currentCoreBanner.badge || ''}
+                onChange={(e) => handleBannerChange(activeCoreTab, 'badge', e.target.value)}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:ring-2 focus:ring-[#005687] outline-none"
               />
             </div>
-          ))}
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
+                <span>Banner Heading</span>
+                <span className="text-red-500 font-black">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. We Are The Bridge..."
+                value={currentCoreBanner.title || ''}
+                onChange={(e) => handleBannerChange(activeCoreTab, 'title', e.target.value)}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold focus:ring-2 focus:ring-[#005687] outline-none"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-[#ed2926] flex items-center gap-1">
+                <span>Red Highlight Text</span>
+                <span className="text-red-500 font-black">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. Across Oceans & Continents."
+                value={currentCoreBanner.highlight || ''}
+                onChange={(e) => handleBannerChange(activeCoreTab, 'highlight', e.target.value)}
+                className="w-full px-3 py-2 bg-red-50/50 border border-red-200 rounded-lg text-xs font-bold text-[#ed2926] focus:ring-2 focus:ring-[#ed2926] outline-none"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
+                <span>Button Label</span>
+                <span className="text-red-500 font-black">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. Explore Our Services"
+                value={currentCoreBanner.buttonLabel || ''}
+                onChange={(e) => handleBannerChange(activeCoreTab, 'buttonLabel', e.target.value)}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:ring-2 focus:ring-[#005687] outline-none"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
+                <span>Button Slug / Path</span>
+                <span className="text-red-500 font-black">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="/services or /quote or /contact"
+                value={currentCoreBanner.buttonSlug || ''}
+                onChange={(e) => handleBannerChange(activeCoreTab, 'buttonSlug', e.target.value)}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono focus:ring-2 focus:ring-[#005687] outline-none"
+              />
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className="space-y-1">
+            <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
+              <span>Paragraph Description</span>
+              <span className="text-red-500 font-black">*</span>
+            </label>
+            <textarea
+              rows="2"
+              required
+              placeholder="Enter banner narrative description..."
+              value={currentCoreBanner.description || ''}
+              onChange={(e) => handleBannerChange(activeCoreTab, 'description', e.target.value)}
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 focus:ring-2 focus:ring-[#005687] outline-none"
+            />
+          </div>
+
+          {/* Uploaders Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
+            <DragDropUploader
+              label="Banner Background Image"
+              value={currentCoreBanner.bgImage || currentCoreBanner.image || ''}
+              onChange={(val) => {
+                handleBannerChange(activeCoreTab, 'bgImage', val);
+                handleBannerChange(activeCoreTab, 'image', val);
+              }}
+              accept="image/*"
+              isVideo={false}
+              helpText="Drag & drop background image or click browse"
+              required={true}
+            />
+
+            {(activeCoreTab === 'about' || activeCoreTab === 'contact') && (
+              <DragDropUploader
+                label={`Side Feature Image (${activeCoreTab === 'about' ? 'Arch Photo' : 'Contact Photo'})`}
+                value={currentCoreBanner.sideImage || ''}
+                onChange={(val) => handleBannerChange(activeCoreTab, 'sideImage', val)}
+                accept="image/*"
+                isVideo={false}
+                helpText="Drag & drop side image or click browse"
+                required={true}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Part 4: Services Detail Pages Banners (6 Services) */}
+      <div className="space-y-4 pt-4 border-t border-slate-200">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#ed2926]" />
+              <span>Services Detail Pages Banners (6 Individual Services)</span>
+            </h2>
+            <p className="text-xs text-slate-500">
+              Configure Background Image, Eyebrow Badge, Headline, Paragraph, and Button with Slug for each service
+            </p>
+          </div>
+        </div>
+
+        {/* 6 Services Selector Tabs */}
+        <div className="flex flex-wrap items-center gap-2">
+          {SERVICE_KEYS.map((s) => {
+            const isActive = activeServiceTab === s.key;
+            return (
+              <button
+                key={s.key}
+                type="button"
+                onClick={() => setActiveServiceTab(s.key)}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                  isActive
+                    ? 'bg-[#ed2926] text-white border-[#ed2926] shadow-sm'
+                    : 'bg-white text-slate-700 border-slate-200 hover:border-[#ed2926] hover:text-[#ed2926]'
+                }`}
+              >
+                {s.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Active Service Detail Banner Editor */}
+        <div className="bg-white rounded-3xl border border-slate-200 p-6 space-y-5 shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <span className="text-xs font-black uppercase text-[#ed2926] tracking-wider">
+                {currentServiceBanner.pageName || activeServiceTab} BANNER
+              </span>
+              <p className="text-[11px] text-slate-400">
+                Route: /services/{activeServiceTab} &bull; Stored in MySQL table page_banners
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleSaveSingleBanner(activeServiceTab)}
+              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <Save className="w-3.5 h-3.5" />
+              <span>Save {currentServiceBanner.pageName || activeServiceTab} to MySQL</span>
+            </button>
+          </div>
+
+          {/* Form fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
+                <span>Eyebrow Badge</span>
+                <span className="text-red-500 font-black">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. 24/7 MARITIME LOGISTICS"
+                value={currentServiceBanner.badge || ''}
+                onChange={(e) => handleBannerChange(activeServiceTab, 'badge', e.target.value)}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:ring-2 focus:ring-[#005687] outline-none"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
+                <span>Title Prefix</span>
+                <span className="text-red-500 font-black">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. Ship Spares & "
+                value={currentServiceBanner.title || ''}
+                onChange={(e) => handleBannerChange(activeServiceTab, 'title', e.target.value)}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold focus:ring-2 focus:ring-[#005687] outline-none"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-[#ed2926] flex items-center gap-1">
+                <span>Red Highlight Part</span>
+                <span className="text-red-500 font-black">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. On-Board Delivery"
+                value={currentServiceBanner.highlight || ''}
+                onChange={(e) => handleBannerChange(activeServiceTab, 'highlight', e.target.value)}
+                className="w-full px-3 py-2 bg-red-50/50 border border-red-200 rounded-lg text-xs font-bold text-[#ed2926] focus:ring-2 focus:ring-[#ed2926] outline-none"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
+                <span>Button Label</span>
+                <span className="text-red-500 font-black">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="e.g. Request Spares Delivery"
+                value={currentServiceBanner.buttonLabel || ''}
+                onChange={(e) => handleBannerChange(activeServiceTab, 'buttonLabel', e.target.value)}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:ring-2 focus:ring-[#005687] outline-none"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
+                <span>Button Slug / Path</span>
+                <span className="text-red-500 font-black">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="/quote or /contact or /services"
+                value={currentServiceBanner.buttonSlug || ''}
+                onChange={(e) => handleBannerChange(activeServiceTab, 'buttonSlug', e.target.value)}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono focus:ring-2 focus:ring-[#005687] outline-none"
+              />
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className="space-y-1">
+            <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
+              <span>Paragraph Description</span>
+              <span className="text-red-500 font-black">*</span>
+            </label>
+            <textarea
+              rows="2"
+              required
+              placeholder="Enter service banner description..."
+              value={currentServiceBanner.description || ''}
+              onChange={(e) => handleBannerChange(activeServiceTab, 'description', e.target.value)}
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 focus:ring-2 focus:ring-[#005687] outline-none"
+            />
+          </div>
+
+          {/* Background Image Drag & Drop */}
+          <DragDropUploader
+            label="Service Banner Background Image"
+            value={currentServiceBanner.bgImage || currentServiceBanner.image || ''}
+            onChange={(val) => {
+              handleBannerChange(activeServiceTab, 'bgImage', val);
+              handleBannerChange(activeServiceTab, 'image', val);
+            }}
+            accept="image/*"
+            isVideo={false}
+            helpText="Drag & drop high-definition banner photo or click browse"
+            required={true}
+          />
         </div>
       </div>
     </div>

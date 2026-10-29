@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Phone, Mail, MapPin, Clock, Send, CheckCircle2, ArrowRight,
@@ -9,6 +9,7 @@ import { FlightRouteMap } from '../components/FlightRouteMap';
 import { BannerSideMotif } from '../components/BannerSideMotif';
 
 export const ContactPage = () => {
+  const [bannerData, setBannerData] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -17,10 +18,40 @@ export const ContactPage = () => {
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    fetch('http://localhost:5000/api/page-banners/contact')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (res && res.success && res.data) {
+          setBannerData(res.data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleBannerAction = () => {
+    const slug = bannerData?.buttonSlug;
+    if (slug) {
+      if (slug.startsWith('#')) {
+        const el = document.querySelector(slug);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      window.location.href = slug;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
   };
+
+  const displayBadge = (bannerData && bannerData.badge !== undefined) ? bannerData.badge : 'SOUTH INDIA \u2192 THE WORLD';
+  const displayTitle = (bannerData && bannerData.title) ? bannerData.title : 'Direct Lines.';
+  const displayHighlight = (bannerData && bannerData.highlight !== undefined) ? bannerData.highlight : 'Immediate Logistics Response.';
+  const displayDesc = (bannerData && bannerData.description) ? bannerData.description : 'Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.';
+  const displayImage = (bannerData && bannerData.bgImage) ? bannerData.bgImage : '/assets/banner-contact-hd.jpg';
+  const displayBtnLabel = bannerData?.buttonLabel;
 
   return (
     <div className="space-y-16 pb-20">
@@ -31,7 +62,7 @@ export const ContactPage = () => {
         {/* Photographic Background Texture with continuous Ken Burns motion */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img 
-            src="/assets/banner-contact-hd.jpg" 
+            src={displayImage} 
             alt="Flymingo Logistics Global Operations Desk" 
             className="w-full h-full object-cover object-center opacity-65 contrast-[1.05] brightness-[1.05] scale-100 fm-kb-0"
           />
@@ -45,30 +76,51 @@ export const ContactPage = () => {
             {/* Left: Text Content */}
             <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
               {/* Banner Eyebrow Badge - clean, no '//' */}
-              <div>
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
-                  SOUTH INDIA &rarr; THE WORLD
+              {displayBadge && (
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
+                    {displayBadge}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Banner Title & Subtext */}
               <div className="space-y-1 sm:space-y-1.5">
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-                  Direct Lines.<br />
-                  <span className="text-brand-red font-black">
-                    Immediate Logistics Response.
-                  </span>
+                  {displayTitle}{' '}
+                  {displayHighlight && (
+                    <span className="text-brand-red font-black">
+                      {displayHighlight}
+                    </span>
+                  )}
                 </h1>
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
-                Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.
-              </p>
+              {displayDesc && (
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
+                  {displayDesc}
+                </p>
+              )}
+
+              {displayBtnLabel && (
+                <div className="flex flex-wrap items-center gap-3 pt-1">
+                  <button 
+                    type="button"
+                    onClick={handleBannerAction} 
+                    className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/20 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                  >
+                    <span>{displayBtnLabel}</span>
+                    <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                      <ArrowRight className="h-3.5 w-3.5 text-white" />
+                    </span>
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Right: Signature Side Design Motif */}
             <div className="lg:col-span-5 hidden sm:flex items-center justify-center">
-              <BannerSideMotif variant="contact" />
+              <BannerSideMotif variant="contact" sideImage={bannerData?.sideImage} />
             </div>
 
           </div>

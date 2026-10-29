@@ -6,7 +6,7 @@ import { PageBanner } from '../components/PageBanner';
 export const InternationalCourierPage = ({ onOpenQuote }) => {
   return (
     <div className="space-y-20 pb-20">
-      <PageBanner eyebrow="Doorstep express service" title="Fast, reliable global courier delivery" description="B2B commercial dispatches, B2C e-commerce and C2C personal packages delivered worldwide with speed and care." image="/assets/international_courier_banner.jpg" action="Get courier fare rate" onAction={() => onOpenQuote('international-courier')} />
+      <PageBanner pageKey="international-courier" eyebrow="Doorstep express service" title="Fast, reliable global courier delivery" description="B2B commercial dispatches, B2C e-commerce and C2C personal packages delivered worldwide with speed and care." image="/assets/international_courier_banner.jpg" action="Get courier fare rate" onAction={() => onOpenQuote('international-courier')} />
 
       {/* B2B & B2C Enterprise Features */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">

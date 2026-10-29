@@ -257,10 +257,35 @@ const OrbitVisual = ({ onPick }) => (
 );
 
 export const ServicesPage = ({ onOpenQuote }) => {
+  const [bannerData, setBannerData] = useState(null);
   const [activeIdx, setActiveIdx] = useState(0);
   const active = CAPABILITIES[activeIdx];
   const ActiveIcon = active.icon;
   const stageRef = useRef(null);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/page-banners/services')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (res && res.success && res.data) {
+          setBannerData(res.data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleBannerAction = () => {
+    const slug = bannerData?.buttonSlug;
+    if (slug) {
+      if (slug.startsWith('#') && onOpenQuote) {
+        onOpenQuote();
+        return;
+      }
+      window.location.href = slug;
+    } else if (onOpenQuote) {
+      onOpenQuote();
+    }
+  };
 
   const pick = (i, scroll = false) => {
     setActiveIdx(i);
@@ -268,6 +293,13 @@ export const ServicesPage = ({ onOpenQuote }) => {
   };
   const next = () => setActiveIdx((p) => (p + 1) % CAPABILITIES.length);
   const prev = () => setActiveIdx((p) => (p - 1 + CAPABILITIES.length) % CAPABILITIES.length);
+
+  const displayBadge = (bannerData && bannerData.badge !== undefined) ? bannerData.badge : 'SOUTH INDIA \u2192 THE WORLD';
+  const displayTitle = (bannerData && bannerData.title) ? bannerData.title : 'Six Proven Channels.';
+  const displayHighlight = (bannerData && bannerData.highlight !== undefined) ? bannerData.highlight : 'Zero Cargo Gaps.';
+  const displayDesc = (bannerData && bannerData.description) ? bannerData.description : 'From time-critical vessel spares delivery on-board at outer anchorage berths to worldwide express courier and heavy air/ocean freight forwarders, Flymingo Logistics handles every consignment with shipowner precision.';
+  const displayImage = (bannerData && bannerData.bgImage) ? bannerData.bgImage : '/assets/banner-courier-hd.jpg';
+  const displayBtnLabel = (bannerData && bannerData.buttonLabel !== undefined) ? bannerData.buttonLabel : 'Request Instant Fare Quote';
 
   return (
     <div className="space-y-16 lg:space-y-24 pb-20 overflow-x-hidden">
@@ -279,7 +311,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
       <section className="relative overflow-hidden bg-slate-50 text-slate-900 border-b border-slate-200 py-8 sm:py-10 lg:py-12 select-none">
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img
-            src="/assets/banner-courier-hd.jpg"
+            src={displayImage}
             alt="Flymingo Logistics Global Multimodal Operations"
             className="w-full h-full object-cover object-center opacity-65 contrast-[1.05] brightness-[1.05] sv-kb"
           />
@@ -293,37 +325,45 @@ export const ServicesPage = ({ onOpenQuote }) => {
 
             {/* Left: Text Content */}
             <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
-              <div className="sv-h1">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
-                  SOUTH INDIA &rarr; THE WORLD
+              {displayBadge && (
+                <div className="sv-h1">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
+                    {displayBadge}
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="sv-h2 space-y-1 sm:space-y-1.5">
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-                  Six Proven Channels.<br />
-                  <span className="text-brand-red font-black">
-                    Zero Cargo Gaps.
-                  </span>
+                  {displayTitle}{' '}
+                  {displayHighlight && (
+                    <span className="text-brand-red font-black">
+                      {displayHighlight}
+                    </span>
+                  )}
                 </h1>
               </div>
 
-              <p className="sv-h3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
-                From time-critical vessel spares delivery on-board at outer anchorage berths to worldwide express courier and heavy air/ocean freight forwarders, Flymingo Logistics handles every consignment with shipowner precision.
-              </p>
+              {displayDesc && (
+                <p className="sv-h3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
+                  {displayDesc}
+                </p>
+              )}
 
-              <div className="sv-h4 flex flex-wrap items-center gap-3 pt-1">
-                <button
-                  onClick={() => onOpenQuote()}
-                  className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
-                >
-                  <Calculator className="w-4 h-4" />
-                  <span>Request Instant Fare Quote</span>
-                  <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                    <ArrowRight className="h-3.5 w-3.5 text-white" />
-                  </span>
-                </button>
-              </div>
+              {displayBtnLabel && (
+                <div className="sv-h4 flex flex-wrap items-center gap-3 pt-1">
+                  <button
+                    onClick={handleBannerAction}
+                    className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                  >
+                    <Calculator className="w-4 h-4" />
+                    <span>{displayBtnLabel}</span>
+                    <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                      <ArrowRight className="h-3.5 w-3.5 text-white" />
+                    </span>
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Right: orbit of the six channels (click an icon to jump to that service) */}

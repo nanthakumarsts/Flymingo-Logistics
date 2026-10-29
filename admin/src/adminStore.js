@@ -48,28 +48,121 @@ export const INITIAL_ADMIN_DATA = {
 
   pageBanners: {
     about: {
-      eyebrow: 'SOUTH INDIA → THE WORLD',
+      pageKey: 'about',
+      pageName: 'About Us Page',
+      pageType: 'main_page',
+      badge: 'SOUTH INDIA → THE WORLD',
       title: 'We Are The Bridge Between You And Your Relations.',
       highlight: 'Across Oceans & Continents.',
-      tagline: 'Connecting Families. Empowering Global Trade.',
       description: "Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.",
-      image: '/assets/banner-marine-hd.jpg'
-    },
-    services: {
-      eyebrow: 'SOUTH INDIA → THE WORLD',
-      title: 'Six Proven Channels.',
-      highlight: 'Zero Cargo Gaps.',
-      tagline: 'Connecting Businesses. Delivering Possibilities.',
-      description: 'From time-critical vessel spares delivery on-board at outer anchorage berths to worldwide express courier and heavy air/ocean freight forwarders, Flymingo Logistics handles every consignment with shipowner precision.',
-      image: '/assets/banner-courier-hd.jpg'
+      buttonLabel: 'Explore Our Services',
+      buttonSlug: '/services',
+      bgImage: '/assets/banner-marine-hd.jpg',
+      sideImage: '/assets/sea cargo.jpg'
     },
     contact: {
-      eyebrow: 'SOUTH INDIA → THE WORLD',
+      pageKey: 'contact',
+      pageName: 'Contact Us Page',
+      pageType: 'main_page',
+      badge: 'SOUTH INDIA → THE WORLD',
       title: 'Direct Lines.',
       highlight: 'Immediate Logistics Response.',
-      tagline: 'Always On Call. Ready For Rapid Dispatch.',
       description: 'Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.',
-      image: '/assets/banner-contact-hd.jpg'
+      buttonLabel: 'Speak To Logistics Desk',
+      buttonSlug: 'tel:+919087924488',
+      bgImage: '/assets/banner-contact-hd.jpg',
+      sideImage: '/assets/communication.jpg'
+    },
+    services: {
+      pageKey: 'services',
+      pageName: 'Services Hub Page',
+      pageType: 'main_page',
+      badge: 'SOUTH INDIA → THE WORLD',
+      title: 'Six Proven Channels.',
+      highlight: 'Zero Cargo Gaps.',
+      description: 'From time-critical vessel spares delivery on-board at outer anchorage berths to worldwide express courier and heavy air/ocean freight forwarders, Flymingo Logistics handles every consignment with shipowner precision.',
+      buttonLabel: 'Request Instant Fare Quote',
+      buttonSlug: '/quote',
+      bgImage: '/assets/banner-courier-hd.jpg',
+      sideImage: ''
+    },
+    'ship-spares': {
+      pageKey: 'ship-spares',
+      pageName: 'Ship Spares Logistics',
+      pageType: 'service_detail',
+      badge: '24/7 MARITIME LOGISTICS',
+      title: 'Ship Spares & ',
+      highlight: 'On-Board Delivery',
+      description: 'Time-critical marine replacement parts cleared through customs and delivered direct to the vessel deck, without port detention.',
+      buttonLabel: 'Request Spares Delivery',
+      buttonSlug: '/quote',
+      bgImage: '/assets/ship-spares-hd.jpg',
+      sideImage: ''
+    },
+    'freight-forwarding': {
+      pageKey: 'freight-forwarding',
+      pageName: 'Freight Forwarding',
+      pageType: 'service_detail',
+      badge: 'FCL / LCL & AIR CHARTER',
+      title: 'Air & Ocean ',
+      highlight: 'Freight Forwarding',
+      description: 'Direct contracts with premier airlines and ocean carriers for expedited air cargo and full container loads across major global trade lanes.',
+      buttonLabel: 'Book Freight Consignment',
+      buttonSlug: '/quote',
+      bgImage: '/assets/air cargo.jpg',
+      sideImage: ''
+    },
+    'international-courier': {
+      pageKey: 'international-courier',
+      pageName: 'International Courier',
+      pageType: 'service_detail',
+      badge: 'DOORSTEP EXPRESS WORLDWIDE',
+      title: 'Worldwide Priority ',
+      highlight: 'Door-to-Door Courier',
+      description: 'Express transit to USA, UK, Europe, UAE, and 190+ countries with door pickup across Tamil Nadu, automated tracking, and transparent rates.',
+      buttonLabel: 'Check Courier Rates',
+      buttonSlug: '/quote',
+      bgImage: '/assets/courier.jpg',
+      sideImage: ''
+    },
+    'customs-clearance': {
+      pageKey: 'customs-clearance',
+      pageName: 'Customs Clearance (CHA)',
+      pageType: 'service_detail',
+      badge: 'LICENSED CHA BROKERAGE',
+      title: 'Seaport & Airport ',
+      highlight: 'Customs Clearance (CHA)',
+      description: 'In-house licensed customs house agent filing direct EDI through ICEGATE, handling export-import clearance, bonded warehousing, and duty drawback.',
+      buttonLabel: 'Consult Customs Broker',
+      buttonSlug: '/contact',
+      bgImage: '/assets/customs clearance.jpg',
+      sideImage: ''
+    },
+    'dg-shipping': {
+      pageKey: 'dg-shipping',
+      pageName: 'Dangerous Goods (DG) Cargo',
+      pageType: 'service_detail',
+      badge: 'IATA & IMO COMPLIANT',
+      title: 'Certified ',
+      highlight: 'Dangerous Goods (DG) Cargo',
+      description: "Certified hazmat logistics complying with IATA-DGR and IMDG codes, featuring UN-certified packaging, shipper's declaration (DGD), and safe transport.",
+      buttonLabel: 'Request DG Consultation',
+      buttonSlug: '/quote',
+      bgImage: '/assets/dg-hazmat-hd.jpg',
+      sideImage: ''
+    },
+    'international-relocation': {
+      pageKey: 'international-relocation',
+      pageName: 'International Relocation',
+      pageType: 'service_detail',
+      badge: 'HOUSEHOLD PACKERS & MOVERS',
+      title: 'Turnkey Overseas ',
+      highlight: 'Relocation Services',
+      description: 'Door-to-door overseas moving with multi-layer export crating, transfer of residence (TR) customs documentation, container shipping, and destination delivery.',
+      buttonLabel: 'Request Moving Survey',
+      buttonSlug: '/quote',
+      bgImage: '/assets/movers.jpg',
+      sideImage: ''
     }
   },
 
@@ -501,7 +594,7 @@ export function useAdminStore() {
     return { isAuthenticated: false, user: null };
   });
 
-  // Sync banner configuration from backend API if available
+  // Sync banner configuration from backend MySQL API if available
   useEffect(() => {
     fetch('http://localhost:5000/api/banner')
       .then((res) => (res.ok ? res.json() : null))
@@ -511,13 +604,23 @@ export function useAdminStore() {
             ...prev,
             bannerVideo: res.data.bannerVideo || prev.bannerVideo || '/assets/fliqmarine-hero.mov',
             heroSlides: res.data.heroSlides?.length ? res.data.heroSlides : prev.heroSlides,
-            pageBanners: res.data.pageBanners || prev.pageBanners
+            pageBanners: { ...prev.pageBanners, ...(res.data.pageBanners || {}) }
           }));
         }
       })
-      .catch(() => {
-        // Standalone fallback: keep localStorage data if server is offline
-      });
+      .catch(() => {});
+
+    fetch('http://localhost:5000/api/page-banners')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (res && res.success && res.banners) {
+          setData((prev) => ({
+            ...prev,
+            pageBanners: { ...prev.pageBanners, ...res.banners }
+          }));
+        }
+      })
+      .catch(() => {});
   }, []);
 
   // Save to localStorage whenever data changes

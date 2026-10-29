@@ -5,7 +5,14 @@ const fs = require('fs');
 const multer = require('multer');
 require('dotenv').config();
 
-const { initDb, getBannerFromDb, saveBannerToDb } = require('./db');
+const {
+  initDb,
+  getBannerFromDb,
+  saveBannerToDb,
+  getAllPageBannersFromDb,
+  getPageBannerFromDb,
+  updatePageBannerInDb
+} = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -131,6 +138,43 @@ app.put('/api/banner', async (req, res) => {
     });
   } catch (err) {
     console.error('Error saving banner data:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// --- PAGE BANNERS CRUD ENDPOINTS (MySQL flymingo) ---
+
+// GET all page banners from MySQL
+app.get('/api/page-banners', async (req, res) => {
+  try {
+    const banners = await getAllPageBannersFromDb();
+    res.json({ success: true, banners });
+  } catch (err) {
+    console.error('Error fetching page banners from DB:', err.message);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// GET specific page banner by pageKey
+app.get('/api/page-banners/:pageKey', async (req, res) => {
+  try {
+    const banner = await getPageBannerFromDb(req.params.pageKey);
+    if (!banner) {
+      return res.status(404).json({ success: false, error: 'Banner not found for page: ' + req.params.pageKey });
+    }
+    res.json({ success: true, banner });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// PUT update single page banner in MySQL
+app.put('/api/page-banners/:pageKey', async (req, res) => {
+  try {
+    const updated = await updatePageBannerInDb(req.params.pageKey, req.body);
+    res.json({ success: true, message: `Banner for ${req.params.pageKey} updated in MySQL`, banner: updated });
+  } catch (err) {
+    console.error(`Error updating banner for ${req.params.pageKey}:`, err);
     res.status(500).json({ success: false, error: err.message });
   }
 });

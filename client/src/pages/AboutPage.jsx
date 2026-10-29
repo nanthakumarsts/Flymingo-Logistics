@@ -88,7 +88,7 @@ const SectionHead = ({ eyebrow, title, text, light = false, icon: Icon }) => (
 
 /* Hero right-side visual: photo collage + floating info chips (replaces the old 3D cubes motif) */
 /* Hero right-side visual: single photo with floating info chips */
-const HeroCollage = () => (
+const HeroCollage = ({ sideImage }) => (
   <div className="relative w-full max-w-md h-[300px] lg:h-[340px]">
     {/* rotating dashed ring */}
     <div className="ab-spin absolute -right-3 -top-3 w-44 h-44 rounded-full border-2 border-dashed border-brand-red/40" aria-hidden="true" />
@@ -99,7 +99,7 @@ const HeroCollage = () => (
       <div className="absolute inset-0 translate-x-2.5 translate-y-2.5 rounded-t-[999px] rounded-b-3xl border-2 border-brand-red/50" aria-hidden="true" />
       <div className="relative w-full h-full rounded-t-[999px] rounded-b-3xl overflow-hidden border-4 border-white shadow-2xl shadow-brand-blue/30 bg-slate-200">
         <img
-          src="/assets/sea cargo.jpg"
+          src={sideImage || "/assets/sea cargo.jpg"}
           alt="Flymingo sea cargo"
           className="w-full h-full object-cover"
           onError={(e) => { e.currentTarget.src = '/assets/about 2.jpg'; }}
@@ -237,8 +237,33 @@ const GOALS_POINTS = [
 ];
 
 export const AboutPage = ({ onOpenQuote }) => {
+  const [bannerData, setBannerData] = useState(null);
   const [activeYear, setActiveYear] = useState('2024');
   const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/page-banners/about')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (res && res.success && res.data) {
+          setBannerData(res.data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleBannerAction = () => {
+    const slug = bannerData?.buttonSlug;
+    if (slug) {
+      if (slug.startsWith('#') && onOpenQuote) {
+        onOpenQuote();
+        return;
+      }
+      window.location.href = slug;
+    } else if (onOpenQuote) {
+      onOpenQuote();
+    }
+  };
 
   /* auto-cycle the journey, pause on hover */
   useEffect(() => {
@@ -292,6 +317,13 @@ export const AboutPage = ({ onOpenQuote }) => {
     }
   };
 
+  const displayBadge = (bannerData && bannerData.badge !== undefined) ? bannerData.badge : 'SOUTH INDIA \u2192 THE WORLD';
+  const displayTitle = (bannerData && bannerData.title) ? bannerData.title : 'We Are The Bridge Between You And Your Relations.';
+  const displayHighlight = (bannerData && bannerData.highlight !== undefined) ? bannerData.highlight : 'Across Oceans & Continents.';
+  const displayDesc = (bannerData && bannerData.description) ? bannerData.description : "Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.";
+  const displayImage = (bannerData && bannerData.bgImage) ? bannerData.bgImage : '/assets/banner-marine-hd.jpg';
+  const displayBtnLabel = bannerData ? bannerData.buttonLabel : 'Explore Our Services';
+
   return (
     <div className="space-y-20 sm:space-y-28 pb-20 select-none overflow-x-hidden">
       <style>{css}</style>
@@ -302,7 +334,7 @@ export const AboutPage = ({ onOpenQuote }) => {
       <section className="relative overflow-hidden bg-slate-50 text-slate-900 border-b border-slate-200 py-8 sm:py-10 lg:py-12 select-none">
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img
-            src="/assets/banner-marine-hd.jpg"
+            src={displayImage}
             alt="Flymingo Logistics Global Operations"
             className="w-full h-full object-cover object-center opacity-65 contrast-[1.05] brightness-[1.05] ab-kb"
           />
@@ -316,42 +348,50 @@ export const AboutPage = ({ onOpenQuote }) => {
 
             {/* Left: Text Content */}
             <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
-              <div className="ab-h1">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
-                  SOUTH INDIA &rarr; THE WORLD
+              {displayBadge && (
+                <div className="ab-h1">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-sm">
+                    {displayBadge}
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="ab-h2 space-y-1 sm:space-y-1.5">
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-                  We Are The Bridge Between You And Your Relations.<br />
-                  <span className="text-brand-red font-black">
-                    Across Oceans &amp; Continents.
-                  </span>
+                  {displayTitle}{' '}
+                  {displayHighlight && (
+                    <span className="text-brand-red font-black">
+                      {displayHighlight}
+                    </span>
+                  )}
                 </h1>
               </div>
 
-              <p className="ab-h3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
-                Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.
-              </p>
+              {displayDesc && (
+                <p className="ab-h3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
+                  {displayDesc}
+                </p>
+              )}
 
-              <div className="ab-h4 flex flex-wrap items-center gap-3 pt-1">
-                <button
-                  type="button"
-                  onClick={() => onOpenQuote()}
-                  className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
-                >
-                  <span>Explore Our Services</span>
-                  <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                    <ArrowRight className="h-3.5 w-3.5 text-white" />
-                  </span>
-                </button>
-              </div>
+              {displayBtnLabel && (
+                <div className="ab-h4 flex flex-wrap items-center gap-3 pt-1">
+                  <button
+                    type="button"
+                    onClick={handleBannerAction}
+                    className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                  >
+                    <span>{displayBtnLabel}</span>
+                    <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                      <ArrowRight className="h-3.5 w-3.5 text-white" />
+                    </span>
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Right: photo collage with floating info chips */}
             <div className="lg:col-span-5 hidden sm:flex items-center justify-center lg:justify-end pr-2 lg:pr-6">
-              <HeroCollage />
+              <HeroCollage sideImage={bannerData?.sideImage} />
             </div>
 
           </div>

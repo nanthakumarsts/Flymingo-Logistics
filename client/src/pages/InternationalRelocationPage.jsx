@@ -51,7 +51,7 @@ export const InternationalRelocationPage = ({ onOpenQuote }) => {
 
   return (
     <div className="space-y-20 pb-20">
-      <PageBanner eyebrow="Packers & movers" title="International relocation & moving services" description="Stress-free overseas home moves with export-grade packing, all-risk marine insurance and Transfer of Residence customs support." image="/assets/movers.jpg" action="Request relocation survey" onAction={() => onOpenQuote('international-relocation')} />
+      <PageBanner pageKey="international-relocation" eyebrow="Packers & movers" title="International relocation & moving services" description="Stress-free overseas home moves with export-grade packing, all-risk marine insurance and Transfer of Residence customs support." image="/assets/movers.jpg" action="Request relocation survey" onAction={() => onOpenQuote('international-relocation')} />
 
       {/* 6 Step Moving Workflow */}
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 space-y-10">

@@ -21,6 +21,7 @@ const css = `
  */
 export const BannerSideMotif = ({
   variant = 'services',
+  sideImage,
   className = ''
 }) => {
   // 1. SERVICES PAGE - Multimodal Cargo Single Image Composition
@@ -36,7 +37,7 @@ export const BannerSideMotif = ({
         <div className="absolute right-2 top-1 w-[76%] h-[90%]">
           <div className="relative w-full h-full rounded-3xl overflow-hidden border-4 border-white shadow-2xl shadow-brand-blue/20 bg-slate-200">
             <img
-              src="/assets/air cargo.jpg"
+              src={sideImage || "/assets/air cargo.jpg"}
               alt="Air Cargo Freight"
               className="w-full h-full object-cover"
               onError={(e) => { e.currentTarget.src = '/assets/service banner.jpg'; }}
@@ -94,7 +95,7 @@ export const BannerSideMotif = ({
         <div className="absolute right-2 top-1 w-[76%] h-[90%]">
           <div className="relative w-full h-full rounded-[32px] overflow-hidden border-4 border-white shadow-2xl shadow-brand-blue/20 bg-slate-200">
             <img
-              src="/assets/communication.jpg"
+              src={sideImage || "/assets/communication.jpg"}
               alt="Flymingo Operations Coordinator"
               className="w-full h-full object-cover"
               onError={(e) => { e.currentTarget.src = '/assets/about 2.jpg'; }}

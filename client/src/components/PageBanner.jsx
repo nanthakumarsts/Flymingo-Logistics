@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { 
   Anchor, Plane, Package, ShieldCheck, AlertTriangle, Truck 
@@ -77,8 +77,10 @@ export const ServicesOrbitVisual = () => (
  * Executive Image-Led Banner for Services & Inner Pages.
  * Compact height that fits comfortably within screen resolution.
  * Displays the signature services orbit wheel by default on service pages.
+ * Supports dynamic loading from MySQL via `pageKey`.
  */
 export function PageBanner({ 
+  pageKey,
   eyebrow, 
   title, 
   highlight, 
@@ -86,12 +88,47 @@ export function PageBanner({
   description, 
   image, 
   action, 
+  actionSlug,
   onAction, 
   secondaryAction, 
   variant = 'orbit', 
   sideVisual, 
   children 
 }) {
+  const [dbData, setDbData] = useState(null);
+
+  useEffect(() => {
+    if (!pageKey) return;
+    fetch(`http://localhost:5000/api/page-banners/${pageKey}`)
+      .then(res => res.ok ? res.json() : null)
+      .then(res => {
+        if (res && res.success && res.data) {
+          setDbData(res.data);
+        }
+      })
+      .catch(() => {});
+  }, [pageKey]);
+
+  const displayBadge = (dbData && dbData.badge !== undefined) ? dbData.badge : (eyebrow || 'SOUTH INDIA \u2192 THE WORLD');
+  const displayTitle = (dbData && dbData.title) ? dbData.title : title;
+  const displayHighlight = (dbData && dbData.highlight !== undefined) ? dbData.highlight : highlight;
+  const displayDesc = (dbData && dbData.description) ? dbData.description : description;
+  const displayImage = (dbData && dbData.bgImage) ? dbData.bgImage : (image || '/assets/banner-marine-hd.jpg');
+  const displayAction = (dbData && dbData.buttonLabel !== undefined) ? dbData.buttonLabel : action;
+  const displaySlug = (dbData && dbData.buttonSlug !== undefined) ? dbData.buttonSlug : (actionSlug || '');
+
+  const handleActionClick = () => {
+    if (displaySlug) {
+      if (displaySlug.startsWith('#') && onAction) {
+        onAction();
+        return;
+      }
+      window.location.href = displaySlug;
+    } else if (onAction) {
+      onAction();
+    }
+  };
+
   // Derive variant automatically if not explicitly passed
   const getVariant = () => {
     if (variant) return variant;
@@ -105,7 +142,7 @@ export function PageBanner({
       {/* High-clarity background photo with bright luminous aesthetic */}
       <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
         <img 
-          src={image || '/assets/banner-marine-hd.jpg'} 
+          src={displayImage} 
           alt="" 
           onError={(e) => { e.currentTarget.src = '/assets/banner-marine-hd.jpg'; }}
           className="w-full h-full object-cover object-center opacity-65 contrast-[1.05] brightness-[1.05] scale-100 fm-kb-0" 
@@ -124,44 +161,48 @@ export function PageBanner({
           {/* Left: Content */}
           <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
             {/* Eyebrow badge - clean, no '//' */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-xs">
-                SOUTH INDIA &rarr; THE WORLD
+            {displayBadge && (
+              <div>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-red shadow-xs">
+                  {displayBadge}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Main Title & Brand-Red Highlight */}
             <div className="space-y-1 sm:space-y-1.5">
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-tight text-slate-900">
-                {title}{' '}
-                {highlight && (
+                {displayTitle}{' '}
+                {displayHighlight && (
                   <span className="text-brand-red font-black">
-                    {highlight}
+                    {displayHighlight}
                   </span>
                 )}
               </h1>
             </div>
 
             {/* Descriptive narrative */}
-            <p className="text-xs sm:text-sm leading-relaxed text-slate-600 max-w-2xl font-normal pt-0.5">
-              {description}
-            </p>
+            {displayDesc && (
+              <p className="text-xs sm:text-sm leading-relaxed text-slate-600 max-w-2xl font-normal pt-0.5">
+                {displayDesc}
+              </p>
+            )}
 
             {/* Action button */}
-            <div className="flex flex-wrap items-center gap-3 pt-1">
-              {action && (
+            {displayAction && (
+              <div className="flex flex-wrap items-center gap-3 pt-1">
                 <button 
                   type="button"
-                  onClick={onAction} 
+                  onClick={handleActionClick} 
                   className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-brand-red/20 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
                 >
-                  <span>{action}</span>
+                  <span>{displayAction}</span>
                   <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
                     <ArrowRight className="h-3.5 w-3.5 text-white" />
                   </span>
                 </button>
-              )}
-            </div>
+              </div>
+            )}
 
             {children}
           </div>

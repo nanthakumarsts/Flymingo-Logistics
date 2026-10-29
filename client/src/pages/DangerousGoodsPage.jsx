@@ -39,7 +39,7 @@ const splitHub = (s) => {
 export const DangerousGoodsPage = ({ onOpenQuote }) => {
   return (
     <div className="space-y-20 pb-20">
-      <PageBanner eyebrow="IATA & IMDG certified" title="Expert handling of dangerous goods" description="Hazardous cargo logistics across air and sea with UN-certified packaging, DGD documentation and carrier-ready compliance." image="/assets/dg-hazmat-hd.jpg" action="Consult DG specialist" onAction={() => onOpenQuote('dg-shipping')} />
+      <PageBanner pageKey="dg-shipping" eyebrow="IATA & IMDG certified" title="Expert handling of dangerous goods" description="Hazardous cargo logistics across air and sea with UN-certified packaging, DGD documentation and carrier-ready compliance." image="/assets/dg-hazmat-hd.jpg" action="Consult DG specialist" onAction={() => onOpenQuote('dg-shipping')} />
 
       {/* ========================================================= */}
       {/* DG CLASSES: Clean numbered cards matching other services pages */}
