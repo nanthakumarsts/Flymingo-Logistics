@@ -1,15 +1,154 @@
+const { Sequelize, DataTypes } = require('sequelize');
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || '127.0.0.1',
-  port: process.env.DB_PORT || 3306,
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'flymingo',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+const dbHost = process.env.DB_HOST || '127.0.0.1';
+const dbPort = process.env.DB_PORT || 3306;
+const dbUser = process.env.DB_USER || 'root';
+const dbPassword = process.env.DB_PASSWORD || '';
+const dbName = process.env.DB_NAME || 'flymingo';
+
+// Initialize Sequelize
+const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
+  host: dbHost,
+  port: dbPort,
+  dialect: 'mysql',
+  logging: false,
+  pool: {
+    max: 10,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  }
+});
+
+// Model 1: BannerSetting (Hero Video, Global Settings)
+const BannerSetting = sequelize.define('BannerSetting', {
+  setting_key: {
+    type: DataTypes.STRING(64),
+    primaryKey: true
+  },
+  setting_value: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  }
+}, {
+  tableName: 'banner_settings',
+  timestamps: true,
+  updatedAt: 'updated_at',
+  createdAt: false
+});
+
+// Model 2: HeroSlide (Carousel Slides for Home)
+const HeroSlide = sequelize.define('HeroSlide', {
+  slide_id: {
+    type: DataTypes.STRING(64),
+    primaryKey: true
+  },
+  title_prefix: {
+    type: DataTypes.STRING(255),
+    defaultValue: ''
+  },
+  highlight: {
+    type: DataTypes.STRING(255),
+    defaultValue: ''
+  },
+  title_suffix: {
+    type: DataTypes.STRING(255),
+    defaultValue: ''
+  },
+  description: {
+    type: DataTypes.TEXT,
+    defaultValue: ''
+  },
+  primary_cta: {
+    type: DataTypes.STRING(128),
+    defaultValue: 'Explore Services'
+  },
+  primary_slug: {
+    type: DataTypes.STRING(255),
+    defaultValue: '/services'
+  },
+  secondary_cta: {
+    type: DataTypes.STRING(128),
+    defaultValue: 'Get Quote'
+  },
+  secondary_slug: {
+    type: DataTypes.STRING(255),
+    defaultValue: '/contact'
+  },
+  is_active: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  },
+  sort_order: {
+    type: DataTypes.INTEGER,
+    defaultValue: 1
+  }
+}, {
+  tableName: 'hero_slides',
+  timestamps: true,
+  updatedAt: 'updated_at',
+  createdAt: false
+});
+
+// Model 3: PageBanner (All Inner and Detail Pages)
+const PageBanner = sequelize.define('PageBanner', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  page_key: {
+    type: DataTypes.STRING(64),
+    unique: true,
+    allowNull: false
+  },
+  page_name: {
+    type: DataTypes.STRING(128),
+    defaultValue: ''
+  },
+  page_type: {
+    type: DataTypes.STRING(64),
+    defaultValue: 'service_detail'
+  },
+  badge: {
+    type: DataTypes.STRING(128),
+    defaultValue: 'SOUTH INDIA → THE WORLD'
+  },
+  title: {
+    type: DataTypes.STRING(255),
+    defaultValue: ''
+  },
+  highlight: {
+    type: DataTypes.STRING(255),
+    defaultValue: ''
+  },
+  description: {
+    type: DataTypes.TEXT,
+    defaultValue: ''
+  },
+  button_label: {
+    type: DataTypes.STRING(128),
+    defaultValue: ''
+  },
+  button_slug: {
+    type: DataTypes.STRING(255),
+    defaultValue: ''
+  },
+  bg_image: {
+    type: DataTypes.TEXT,
+    defaultValue: ''
+  },
+  side_image: {
+    type: DataTypes.TEXT,
+    defaultValue: ''
+  }
+}, {
+  tableName: 'page_banners',
+  timestamps: true,
+  updatedAt: 'updated_at',
+  createdAt: false
 });
 
 // Seed data definitions for all 9 page banners
@@ -122,368 +261,318 @@ const DEFAULT_PAGE_BANNERS = [
     page_key: 'international-relocation',
     page_name: 'International Relocation',
     page_type: 'service_detail',
-    badge: 'HOUSEHOLD PACKERS & MOVERS',
-    title: 'Turnkey Overseas ',
-    highlight: 'Relocation Services',
-    description: 'Door-to-door overseas moving with multi-layer export crating, transfer of residence (TR) customs documentation, container shipping, and destination delivery.',
-    button_label: 'Request Moving Survey',
-    button_slug: '/quote',
+    badge: 'GLOBAL HOUSEHOLD PACKERS',
+    title: 'Door-to-Door ',
+    highlight: 'International Relocation',
+    description: 'Bespoke overseas home relocation with export crating, comprehensive marine transit cover, and Transfer of Residence (TR) customs documentation.',
+    button_label: 'Book Moving Survey',
+    button_slug: '/contact',
     bg_image: '/assets/movers.jpg',
     side_image: ''
   }
 ];
 
-// Initialize database schema and ensure full structure
+// Default hero slides
+const DEFAULT_HERO_SLIDES = [
+  {
+    slide_id: 'marine-logistics',
+    title_prefix: 'Your Global ',
+    highlight: 'Logistics Partner',
+    title_suffix: ' worldwide',
+    description: 'End-to-end logistics and courier solutions with maritime precision, airport customs clearance, and global air cargo reach.',
+    primary_cta: 'Explore Our Services',
+    primary_slug: '/services',
+    secondary_cta: 'Request Fast Fare Quote',
+    secondary_slug: '/quote',
+    is_active: true,
+    sort_order: 1
+  },
+  {
+    slide_id: 'doorstep-courier',
+    title_prefix: 'Rapid Door-to-Door ',
+    highlight: 'International Courier',
+    title_suffix: ' across 190+ countries',
+    description: 'Reliable parcel delivery, commercial sample transit, and household shipping with real-time tracking and free doorstep pickup.',
+    primary_cta: 'Book Courier Pickup',
+    primary_slug: '/quote',
+    secondary_cta: 'Check Country Transit Times',
+    secondary_slug: '/services/international-courier',
+    is_active: true,
+    sort_order: 2
+  },
+  {
+    slide_id: 'ship-spares',
+    title_prefix: 'Critical Marine ',
+    highlight: 'Ship Spares Logistics',
+    title_suffix: ' on-board 24/7',
+    description: 'Emergency vessel parts clearance and direct delivery on board at Indian seaports with zero demurrage and zero downtime.',
+    primary_cta: 'Maritime Dispatch Desk',
+    primary_slug: '/contact',
+    secondary_cta: 'View Seaport Coverage',
+    secondary_slug: '/services/ship-spares-logistics',
+    is_active: true,
+    sort_order: 3
+  }
+];
+
+// Initialize Database & Tables via Sequelize
 async function initDb() {
   try {
-    const conn = await pool.getConnection();
+    // 1. Ensure the MySQL database exists
+    const tempConn = await mysql.createConnection({
+      host: dbHost,
+      port: dbPort,
+      user: dbUser,
+      password: dbPassword
+    });
+    await tempConn.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
+    await tempConn.end();
 
-    // 1. Settings Table
-    await conn.query(`
-      CREATE TABLE IF NOT EXISTS banner_settings (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        setting_key VARCHAR(100) NOT NULL UNIQUE,
-        setting_value TEXT NOT NULL,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-    `);
+    // 2. Authenticate Sequelize
+    await sequelize.authenticate();
+    console.log('Sequelize connected to MySQL database:', dbName);
 
-    // 2. Hero Slides Table
-    await conn.query(`
-      CREATE TABLE IF NOT EXISTS hero_slides (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        slide_id VARCHAR(100) NOT NULL UNIQUE,
-        title_prefix VARCHAR(255) NOT NULL,
-        highlight VARCHAR(255) NOT NULL,
-        title_suffix VARCHAR(255) DEFAULT '',
-        description TEXT NOT NULL,
-        primary_cta VARCHAR(100) NOT NULL,
-        primary_slug VARCHAR(255) NOT NULL,
-        secondary_cta VARCHAR(100) NOT NULL,
-        secondary_slug VARCHAR(255) NOT NULL,
-        is_active TINYINT(1) DEFAULT 1,
-        sort_order INT DEFAULT 0,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-    `);
+    // 3. Sync Models
+    await sequelize.sync({ alter: true });
+    console.log('Sequelize models synchronized successfully.');
 
-    // Check if page_banners has the upgraded columns (badge, button_slug, side_image)
-    const [cols] = await conn.query('SHOW COLUMNS FROM page_banners LIKE "button_slug"').catch(() => [[]]);
-    if (cols.length === 0) {
-      // Re-create page_banners with complete schema
-      await conn.query('DROP TABLE IF EXISTS page_banners');
-      await conn.query(`
-        CREATE TABLE page_banners (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          page_key VARCHAR(100) NOT NULL UNIQUE,
-          page_name VARCHAR(100) NOT NULL,
-          page_type VARCHAR(50) NOT NULL DEFAULT 'main_page',
-          badge VARCHAR(255) DEFAULT 'SOUTH INDIA → THE WORLD',
-          title VARCHAR(255) NOT NULL,
-          highlight VARCHAR(255) NOT NULL,
-          description TEXT NOT NULL,
-          button_label VARCHAR(100) DEFAULT 'Explore Our Services',
-          button_slug VARCHAR(255) DEFAULT '/services',
-          bg_image VARCHAR(255) NOT NULL,
-          side_image VARCHAR(255) DEFAULT '',
-          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-      `);
+    // 4. Seed banner_video if not present
+    const videoSetting = await BannerSetting.findByPk('banner_video');
+    if (!videoSetting) {
+      await BannerSetting.create({
+        setting_key: 'banner_video',
+        setting_value: '/assets/fliqmarine-hero.mov'
+      });
+      console.log('Seeded default banner_video.');
     }
 
-    // Check banner_settings
-    const [settingsRows] = await conn.query('SELECT * FROM banner_settings WHERE setting_key = "banner_video"');
-    if (settingsRows.length === 0) {
-      await conn.query(
-        'INSERT INTO banner_settings (setting_key, setting_value) VALUES (?, ?)',
-        ['banner_video', '/assets/fliqmarine-hero.mov']
-      );
+    // 5. Seed hero_slides if empty
+    const slideCount = await HeroSlide.count();
+    if (slideCount === 0) {
+      await HeroSlide.bulkCreate(DEFAULT_HERO_SLIDES);
+      console.log('Seeded default hero_slides.');
     }
 
-    // Check hero_slides
-    const [slidesRows] = await conn.query('SELECT COUNT(*) as count FROM hero_slides');
-    if (slidesRows[0].count === 0) {
-      const initialSlides = [
-        {
-          slide_id: 'marine-logistics',
-          title_prefix: 'Your Global ',
-          highlight: 'Logistics Partner',
-          title_suffix: '',
-          description: 'End-to-end logistics and courier solutions with operational excellence, global reach and a commitment to trust, safety and timely delivery across 190+ countries.',
-          primary_cta: 'Explore Our Services',
-          primary_slug: '/services',
-          secondary_cta: 'Get Fare Rate',
-          secondary_slug: '/contact',
-          is_active: 1,
-          sort_order: 1
-        },
-        {
-          slide_id: 'worldwide-courier',
-          title_prefix: 'Rapid Door-to-Door ',
-          highlight: 'Worldwide Delivery',
-          title_suffix: '',
-          description: 'Connecting 190+ countries with priority doorstep pickup across South India for commercial samples, urgent documents, and specialized NRI parcels.',
-          primary_cta: 'Explore Courier Rates',
-          primary_slug: '/services/international-courier',
-          secondary_cta: 'Get Instant Quote',
-          secondary_slug: '/quote',
-          is_active: 1,
-          sort_order: 2
-        },
-        {
-          slide_id: 'customs-brokerage',
-          title_prefix: 'Seamless Ocean & Air ',
-          highlight: 'Freight Clearance',
-          title_suffix: '',
-          description: 'Dedicated seaport and airport customs house brokerage with direct ICEGATE EDI filing, bonded warehousing, and multi-modal freight transport.',
-          primary_cta: 'Consult Customs Broker',
-          primary_slug: '/services/customs-clearance',
-          secondary_cta: 'Contact Team',
-          secondary_slug: '/contact',
-          is_active: 1,
-          sort_order: 3
-        }
-      ];
-
-      for (const s of initialSlides) {
-        await conn.query(
-          `INSERT INTO hero_slides 
-           (slide_id, title_prefix, highlight, title_suffix, description, primary_cta, primary_slug, secondary_cta, secondary_slug, is_active, sort_order)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [
-            s.slide_id, s.title_prefix, s.highlight, s.title_suffix,
-            s.description, s.primary_cta, s.primary_slug, s.secondary_cta,
-            s.secondary_slug, s.is_active, s.sort_order
-          ]
-        );
+    // 6. Seed page_banners if missing
+    for (const pb of DEFAULT_PAGE_BANNERS) {
+      const existing = await PageBanner.findOne({ where: { page_key: pb.page_key } });
+      if (!existing) {
+        await PageBanner.create(pb);
       }
     }
+    console.log('Page banners verified/seeded in Sequelize.');
 
-    // Seed/upsert all 9 page banners
-    for (const p of DEFAULT_PAGE_BANNERS) {
-      await conn.query(`
-        INSERT INTO page_banners 
-        (page_key, page_name, page_type, badge, title, highlight, description, button_label, button_slug, bg_image, side_image)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ON DUPLICATE KEY UPDATE 
-          page_name = VALUES(page_name),
-          page_type = VALUES(page_type)
-      `, [
-        p.page_key, p.page_name, p.page_type, p.badge,
-        p.title, p.highlight, p.description, p.button_label,
-        p.button_slug, p.bg_image, p.side_image || ''
-      ]);
-    }
-
-    conn.release();
-    console.log('✅ MySQL Database Schema & All 9 Page Banners Initialized');
+    return true;
   } catch (err) {
-    console.error('❌ Error initializing MySQL tables:', err.message);
+    console.error('Error during Sequelize initDb:', err);
+    throw err;
   }
 }
 
-// Format row helper
-const formatBannerRow = (row) => ({
-  pageKey: row.page_key,
-  pageName: row.page_name,
-  pageType: row.page_type,
-  badge: row.badge,
-  title: row.title,
-  highlight: row.highlight,
-  description: row.description,
-  buttonLabel: row.button_label,
-  buttonSlug: row.button_slug,
-  bgImage: row.bg_image,
-  sideImage: row.side_image || ''
-});
-
-// Fetch all page banners (returns as dictionary keyed by page_key)
+// Helper: Get all page banners
 async function getAllPageBannersFromDb() {
-  const conn = await pool.getConnection();
-  try {
-    const [rows] = await conn.query('SELECT * FROM page_banners ORDER BY id ASC');
-    const banners = {};
-    rows.forEach((r) => {
-      banners[r.page_key] = formatBannerRow(r);
-    });
-    return banners;
-  } finally {
-    conn.release();
+  const records = await PageBanner.findAll({
+    order: [['id', 'ASC']]
+  });
+
+  const result = {};
+  for (const r of records) {
+    result[r.page_key] = {
+      id: r.id,
+      pageKey: r.page_key,
+      pageName: r.page_name,
+      pageType: r.page_type,
+      badge: r.badge,
+      title: r.title,
+      highlight: r.highlight,
+      description: r.description,
+      buttonLabel: r.button_label,
+      buttonSlug: r.button_slug,
+      bgImage: r.bg_image,
+      sideImage: r.side_image,
+      updatedAt: r.updated_at
+    };
   }
+  return result;
 }
 
-// Fetch single page banner
+// Helper: Get single page banner by key
 async function getPageBannerFromDb(pageKey) {
-  const conn = await pool.getConnection();
-  try {
-    const [rows] = await conn.query('SELECT * FROM page_banners WHERE page_key = ? LIMIT 1', [pageKey]);
-    if (rows.length === 0) return null;
-    return formatBannerRow(rows[0]);
-  } finally {
-    conn.release();
-  }
+  const r = await PageBanner.findOne({ where: { page_key: pageKey } });
+  if (!r) return null;
+  return {
+    id: r.id,
+    pageKey: r.page_key,
+    pageName: r.page_name,
+    pageType: r.page_type,
+    badge: r.badge,
+    title: r.title,
+    highlight: r.highlight,
+    description: r.description,
+    buttonLabel: r.button_label,
+    buttonSlug: r.button_slug,
+    bgImage: r.bg_image,
+    sideImage: r.side_image,
+    updatedAt: r.updated_at
+  };
 }
 
-// Update single page banner
+// Helper: Update a single page banner
 async function updatePageBannerInDb(pageKey, data) {
-  const conn = await pool.getConnection();
-  try {
-    await conn.query(`
-      INSERT INTO page_banners 
-      (page_key, page_name, page_type, badge, title, highlight, description, button_label, button_slug, bg_image, side_image)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      ON DUPLICATE KEY UPDATE
-        badge = VALUES(badge),
-        title = VALUES(title),
-        highlight = VALUES(highlight),
-        description = VALUES(description),
-        button_label = VALUES(button_label),
-        button_slug = VALUES(button_slug),
-        bg_image = VALUES(bg_image),
-        side_image = VALUES(side_image)
-    `, [
-      pageKey,
-      data.pageName || pageKey,
-      data.pageType || 'main_page',
-      data.badge || 'SOUTH INDIA → THE WORLD',
-      data.title || '',
-      data.highlight || '',
-      data.description || '',
-      data.buttonLabel || 'Explore Services',
-      data.buttonSlug || '/services',
-      data.bgImage || '',
-      data.sideImage || ''
-    ]);
-    return await getPageBannerFromDb(pageKey);
-  } finally {
-    conn.release();
+  let record = await PageBanner.findOne({ where: { page_key: pageKey } });
+  
+  const updatePayload = {
+    badge: data.badge !== undefined ? data.badge : (data.eyebrow || 'SOUTH INDIA → THE WORLD'),
+    title: data.title !== undefined ? data.title : '',
+    highlight: data.highlight !== undefined ? data.highlight : '',
+    description: data.description !== undefined ? data.description : (data.desc || ''),
+    button_label: data.buttonLabel !== undefined ? data.buttonLabel : (data.button_label || ''),
+    button_slug: data.buttonSlug !== undefined ? data.buttonSlug : (data.button_slug || ''),
+    bg_image: data.bgImage !== undefined ? data.bgImage : (data.bg_image || data.image || ''),
+    side_image: data.sideImage !== undefined ? data.sideImage : (data.side_image || '')
+  };
+
+  if (data.pageName) updatePayload.page_name = data.pageName;
+  if (data.pageType) updatePayload.page_type = data.pageType;
+
+  if (record) {
+    await record.update(updatePayload);
+  } else {
+    record = await PageBanner.create({
+      page_key: pageKey,
+      page_name: data.pageName || pageKey,
+      page_type: data.pageType || (['about', 'contact', 'services'].includes(pageKey) ? 'main_page' : 'service_detail'),
+      ...updatePayload
+    });
   }
+
+  return getPageBannerFromDb(pageKey);
 }
 
-// Fetch combined home banner + slides + legacy page banners for SlidersBannersTab
+// Helper: Get combined banner settings, hero slides, and page banners
 async function getBannerFromDb() {
-  const conn = await pool.getConnection();
-  try {
-    // 1. Banner video
-    const [settings] = await conn.query('SELECT setting_value FROM banner_settings WHERE setting_key = "banner_video" LIMIT 1');
-    const bannerVideo = settings.length > 0 ? settings[0].setting_value : '/assets/fliqmarine-hero.mov';
+  // 1. Video
+  const videoRec = await BannerSetting.findByPk('banner_video');
+  const bannerVideo = videoRec ? videoRec.setting_value : '/assets/fliqmarine-hero.mov';
 
-    // 2. Hero slides
-    const [slides] = await conn.query('SELECT * FROM hero_slides ORDER BY sort_order ASC, id ASC');
-    const heroSlides = slides.map(s => ({
-      id: s.slide_id,
-      titlePrefix: s.title_prefix,
-      highlight: s.highlight,
-      titleSuffix: s.title_suffix || '',
-      desc: s.description,
-      primaryCta: s.primary_cta,
-      primarySlug: s.primary_slug,
-      secondaryCta: s.secondary_cta,
-      secondarySlug: s.secondary_slug,
-      isActive: Boolean(s.is_active)
-    }));
+  // 2. Hero slides
+  const slideRecs = await HeroSlide.findAll({
+    order: [['sort_order', 'ASC']]
+  });
+  const heroSlides = slideRecs.map((s) => ({
+    id: s.slide_id,
+    titlePrefix: s.title_prefix,
+    highlight: s.highlight,
+    titleSuffix: s.title_suffix,
+    desc: s.description,
+    primaryCta: s.primary_cta,
+    primarySlug: s.primary_slug,
+    secondaryCta: s.secondary_cta,
+    secondarySlug: s.secondary_slug,
+    isActive: Boolean(s.is_active)
+  }));
 
-    // 3. Page banners
-    const pageBanners = await getAllPageBannersFromDb();
+  // 3. Page banners
+  const pageBanners = await getAllPageBannersFromDb();
 
-    return { bannerVideo, heroSlides, pageBanners };
-  } finally {
-    conn.release();
-  }
+  return { bannerVideo, heroSlides, pageBanners };
 }
 
-// Save combined banner data
+// Helper: Save combined banner data
 async function saveBannerToDb(data) {
-  const conn = await pool.getConnection();
+  const transaction = await sequelize.transaction();
   try {
-    await conn.beginTransaction();
-
     // 1. Video
     if (data.bannerVideo) {
-      await conn.query(
-        `INSERT INTO banner_settings (setting_key, setting_value) 
-         VALUES ('banner_video', ?) 
-         ON DUPLICATE KEY UPDATE setting_value = ?`,
-        [data.bannerVideo, data.bannerVideo]
-      );
+      await BannerSetting.upsert({
+        setting_key: 'banner_video',
+        setting_value: data.bannerVideo
+      }, { transaction });
     }
 
     // 2. Hero slides
     if (Array.isArray(data.heroSlides)) {
-      await conn.query('DELETE FROM hero_slides');
-      for (let i = 0; i < data.heroSlides.length; i++) {
-        const s = data.heroSlides[i];
-        await conn.query(
-          `INSERT INTO hero_slides 
-           (slide_id, title_prefix, highlight, title_suffix, description, primary_cta, primary_slug, secondary_cta, secondary_slug, is_active, sort_order)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [
-            s.id || `slide-${Date.now()}-${i}`,
-            s.titlePrefix || '',
-            s.highlight || '',
-            s.titleSuffix || '',
-            s.desc || '',
-            s.primaryCta || 'Explore Services',
-            s.primarySlug || '/services',
-            s.secondaryCta || 'Get Quote',
-            s.secondarySlug || '/contact',
-            s.isActive !== false ? 1 : 0,
-            i + 1
-          ]
-        );
-      }
+      await HeroSlide.destroy({ where: {}, truncate: true, transaction });
+      const slidesToInsert = data.heroSlides.map((s, i) => ({
+        slide_id: s.id || `slide-${Date.now()}-${i}`,
+        title_prefix: s.titlePrefix || '',
+        highlight: s.highlight || '',
+        title_suffix: s.titleSuffix || '',
+        description: s.desc || '',
+        primary_cta: s.primaryCta || 'Explore Services',
+        primary_slug: s.primarySlug || '/services',
+        secondary_cta: s.secondaryCta || 'Get Quote',
+        secondary_slug: s.secondarySlug || '/contact',
+        is_active: s.isActive !== false,
+        sort_order: i + 1
+      }));
+      await HeroSlide.bulkCreate(slidesToInsert, { transaction });
     }
 
     // 3. Page banners
     if (data.pageBanners && typeof data.pageBanners === 'object') {
       for (const [pageKey, p] of Object.entries(data.pageBanners)) {
-        await conn.query(`
-          INSERT INTO page_banners 
-          (page_key, page_name, page_type, badge, title, highlight, description, button_label, button_slug, bg_image, side_image)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-          ON DUPLICATE KEY UPDATE
-            badge = VALUES(badge),
-            title = VALUES(title),
-            highlight = VALUES(highlight),
-            description = VALUES(description),
-            button_label = VALUES(button_label),
-            button_slug = VALUES(button_slug),
-            bg_image = VALUES(bg_image),
-            side_image = VALUES(side_image)
-        `, [
-          pageKey,
-          p.pageName || pageKey,
-          p.pageType || (['about', 'contact', 'services'].includes(pageKey) ? 'main_page' : 'service_detail'),
-          p.badge || 'SOUTH INDIA → THE WORLD',
-          p.title || '',
-          p.highlight || '',
-          p.description || '',
-          p.buttonLabel || 'Explore Services',
-          p.buttonSlug || '/services',
-          p.bgImage || p.image || '',
-          p.sideImage || ''
-        ]);
+        await PageBanner.upsert({
+          page_key: pageKey,
+          page_name: p.pageName || pageKey,
+          page_type: p.pageType || (['about', 'contact', 'services'].includes(pageKey) ? 'main_page' : 'service_detail'),
+          badge: p.badge || 'SOUTH INDIA → THE WORLD',
+          title: p.title || '',
+          highlight: p.highlight || '',
+          description: p.description || '',
+          button_label: p.buttonLabel || '',
+          button_slug: p.buttonSlug || '',
+          bg_image: p.bgImage || p.image || '',
+          side_image: p.sideImage || ''
+        }, { transaction });
       }
     }
 
-    await conn.commit();
+    await transaction.commit();
     return true;
   } catch (err) {
-    await conn.rollback();
+    await transaction.rollback();
     throw err;
-  } finally {
-    conn.release();
   }
 }
 
+// Create single hero slide
+async function createHeroSlideInDb(slideData) {
+  const count = await HeroSlide.count();
+  const slideId = slideData.id || `slide-${Date.now()}`;
+  return HeroSlide.create({
+    slide_id: slideId,
+    title_prefix: slideData.titlePrefix || '',
+    highlight: slideData.highlight || '',
+    title_suffix: slideData.titleSuffix || '',
+    description: slideData.desc || '',
+    primary_cta: slideData.primaryCta || 'Explore Services',
+    primary_slug: slideData.primarySlug || '/services',
+    secondary_cta: slideData.secondaryCta || 'Get Quote',
+    secondary_slug: slideData.secondarySlug || '/contact',
+    is_active: slideData.isActive !== false,
+    sort_order: count + 1
+  });
+}
+
+// Delete single hero slide
+async function deleteHeroSlideFromDb(slideId) {
+  return HeroSlide.destroy({ where: { slide_id: slideId } });
+}
+
 module.exports = {
-  pool,
+  sequelize,
+  Sequelize,
+  BannerSetting,
+  HeroSlide,
+  PageBanner,
   initDb,
   getBannerFromDb,
   saveBannerToDb,
   getAllPageBannersFromDb,
   getPageBannerFromDb,
   updatePageBannerInDb,
+  createHeroSlideInDb,
+  deleteHeroSlideFromDb,
   DEFAULT_PAGE_BANNERS
 };

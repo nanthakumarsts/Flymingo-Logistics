@@ -11,7 +11,9 @@ const {
   saveBannerToDb,
   getAllPageBannersFromDb,
   getPageBannerFromDb,
-  updatePageBannerInDb
+  updatePageBannerInDb,
+  createHeroSlideInDb,
+  deleteHeroSlideFromDb
 } = require('./db');
 
 const app = express();
@@ -162,7 +164,7 @@ app.get('/api/page-banners/:pageKey', async (req, res) => {
     if (!banner) {
       return res.status(404).json({ success: false, error: 'Banner not found for page: ' + req.params.pageKey });
     }
-    res.json({ success: true, banner });
+    res.json({ success: true, banner, data: banner });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -172,14 +174,14 @@ app.get('/api/page-banners/:pageKey', async (req, res) => {
 app.put('/api/page-banners/:pageKey', async (req, res) => {
   try {
     const updated = await updatePageBannerInDb(req.params.pageKey, req.body);
-    res.json({ success: true, message: `Banner for ${req.params.pageKey} updated in MySQL`, banner: updated });
+    res.json({ success: true, message: `Banner for ${req.params.pageKey} updated successfully`, banner: updated, data: updated });
   } catch (err) {
     console.error(`Error updating banner for ${req.params.pageKey}:`, err);
     res.status(500).json({ success: false, error: err.message });
   }
 });
 
-// Sliders endpoint
+// Hero Slides Endpoints
 app.get('/api/sliders', async (req, res) => {
   try {
     const data = await getBannerFromDb();
@@ -187,6 +189,26 @@ app.get('/api/sliders', async (req, res) => {
   } catch (e) {
     const data = getBannerFromFile();
     res.json({ success: true, slides: data.heroSlides || [] });
+  }
+});
+
+app.post('/api/hero-slides', async (req, res) => {
+  try {
+    const created = await createHeroSlideInDb(req.body);
+    res.json({ success: true, message: 'Slide created successfully', slide: created });
+  } catch (err) {
+    console.error('Error creating slide:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.delete('/api/hero-slides/:id', async (req, res) => {
+  try {
+    await deleteHeroSlideFromDb(req.params.id);
+    res.json({ success: true, message: 'Slide deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting slide:', err);
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
