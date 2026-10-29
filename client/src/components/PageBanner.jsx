@@ -140,12 +140,6 @@ export function PageBanner({
                   </span>
                 )}
               </h1>
-              
-              {tagline && (
-                <p className="text-sm sm:text-base font-bold text-slate-700 tracking-wide">
-                  {tagline}
-                </p>
-              )}
             </div>
 
             {/* Descriptive narrative */}

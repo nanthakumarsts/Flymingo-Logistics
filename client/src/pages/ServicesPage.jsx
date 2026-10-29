@@ -306,9 +306,6 @@ export const ServicesPage = ({ onOpenQuote }) => {
                     Zero Cargo Gaps.
                   </span>
                 </h1>
-                <p className="text-sm sm:text-base font-bold text-slate-700 tracking-wide">
-                  Connecting Businesses. Delivering Possibilities.
-                </p>
               </div>
 
               <p className="sv-h3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">

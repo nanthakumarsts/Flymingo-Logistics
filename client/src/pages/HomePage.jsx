@@ -342,16 +342,16 @@ export const HomePage = ({ onOpenQuote }) => {
         <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/85 to-white/70 sm:bg-gradient-to-r sm:from-white sm:via-white/80 sm:via-42% sm:to-transparent pointer-events-none z-[1]" aria-hidden="true" />
         <FlightRouteMap className="opacity-10 z-[1]" />
 
-        <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-8 lg:pb-12 z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[340px] lg:min-h-[380px]">
+        <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-4 pb-6 sm:pt-6 sm:pb-7 lg:pt-7 lg:pb-8 z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-center min-h-[220px] sm:min-h-[240px] lg:min-h-[260px]">
 
             {/* Content Section */}
             <div
               key={activeSlide.id}
-              className="lg:col-span-10 xl:col-span-8 space-y-4 sm:space-y-5 text-left"
+              className="lg:col-span-10 xl:col-span-8 space-y-3 sm:space-y-3.5 text-left"
             >
-              <div className="space-y-2">
-                <h1 className="fm-s2 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-slate-900">
+              <div>
+                <h1 className="fm-s2 text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] text-slate-900">
                   {activeSlide.titlePrefix}
                   <span className="text-brand-red font-black">
                     {activeSlide.highlight}
@@ -360,31 +360,31 @@ export const HomePage = ({ onOpenQuote }) => {
                 </h1>
               </div>
 
-              <p className="fm-s3 text-sm sm:text-lg text-slate-800 sm:text-slate-600 font-medium sm:font-normal leading-relaxed max-w-2xl bg-white/70 sm:bg-transparent backdrop-blur-[2px] sm:backdrop-blur-none p-3 sm:p-0 rounded-2xl border border-white/80 sm:border-transparent shadow-xs sm:shadow-none">
+              <p className="fm-s3 text-xs sm:text-base text-slate-800 sm:text-slate-600 font-medium sm:font-normal leading-relaxed max-w-2xl bg-white/70 sm:bg-transparent backdrop-blur-[2px] sm:backdrop-blur-none p-2 sm:p-0 rounded-xl border border-white/80 sm:border-transparent shadow-xs sm:shadow-none">
                 {activeSlide.desc}
               </p>
 
-              <div className="fm-s4 flex flex-wrap items-center justify-start gap-3.5 pt-1">
+              <div className="fm-s4 flex flex-wrap items-center justify-start gap-3 pt-0.5">
                 {/* Button 1 */}
                 {(activeSlide.primarySlug === '/quote' || activeSlide.primarySlug === 'quote') ? (
                   <button
                     type="button"
                     onClick={() => onOpenQuote && onOpenQuote(activeSlide.serviceId)}
-                    className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                    className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-2.5"
                   >
                     <span>{activeSlide.primaryCta || 'Explore Services'}</span>
-                    <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                      <ArrowRight className="w-3.5 h-3.5 text-white" />
+                    <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                      <ArrowRight className="w-3 h-3 text-white" />
                     </span>
                   </button>
                 ) : (
                   <Link
                     to={activeSlide.primarySlug || '/services'}
-                    className="group px-7 py-3.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-3"
+                    className="group px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-brand-red/30 hover:-translate-y-0.5 transition-all cursor-pointer flex items-center gap-2.5"
                   >
                     <span>{activeSlide.primaryCta || 'Explore Services'}</span>
-                    <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-                      <ArrowRight className="w-3.5 h-3.5 text-white" />
+                    <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                      <ArrowRight className="w-3 h-3 text-white" />
                     </span>
                   </Link>
                 )}
@@ -394,18 +394,18 @@ export const HomePage = ({ onOpenQuote }) => {
                   <button
                     type="button"
                     onClick={() => onOpenQuote && onOpenQuote(activeSlide.serviceId)}
-                    className="px-7 py-3.5 bg-white border border-slate-300 hover:border-brand-blue hover:text-brand-blue text-slate-800 rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm cursor-pointer"
+                    className="px-6 py-3 bg-white border border-slate-300 hover:border-brand-blue hover:text-brand-blue text-slate-800 rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm cursor-pointer"
                   >
                     <span>{activeSlide.secondaryCta || 'Get Fare Rate'}</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 ) : (
                   <Link
                     to={activeSlide.secondarySlug || '/contact'}
-                    className="px-7 py-3.5 bg-white border border-slate-300 hover:border-brand-blue hover:text-brand-blue text-slate-800 rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm"
+                    className="px-6 py-3 bg-white border border-slate-300 hover:border-brand-blue hover:text-brand-blue text-slate-800 rounded-full text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5 flex items-center gap-2 shadow-sm"
                   >
                     <span>{activeSlide.secondaryCta || 'Get Fare Rate'}</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 )}
               </div>
@@ -413,43 +413,43 @@ export const HomePage = ({ onOpenQuote }) => {
           </div>
 
           {/* bottom controls */}
-          <div className="mt-7 pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4 relative z-20">
-            <div className="flex items-center gap-2 p-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
+          <div className="mt-4 sm:mt-5 pt-3 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-3 relative z-20">
+            <div className="flex items-center gap-2 p-1 rounded-full bg-white border border-slate-200 shadow-sm">
               <button
                 type="button"
                 onClick={prevSlide}
                 aria-label="Previous slide"
-                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-brand-red text-slate-700 hover:text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-brand-red text-slate-700 hover:text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-4 h-4" />
               </button>
-              <div className="px-3 text-xs font-mono font-bold tracking-wider text-slate-900 select-none">
-                <span className="text-brand-red font-black text-sm">{String(currentSlide + 1).padStart(2, '0')}</span>
+              <div className="px-2.5 text-xs font-mono font-bold tracking-wider text-slate-900 select-none">
+                <span className="text-brand-red font-black text-xs sm:text-sm">{String(currentSlide + 1).padStart(2, '0')}</span>
                 <span className="text-slate-400"> / {String(slideCount).padStart(2, '0')}</span>
               </div>
               <button
                 type="button"
                 onClick={nextSlide}
                 aria-label="Next slide"
-                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-brand-red text-slate-700 hover:text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-brand-red text-slate-700 hover:text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-4 h-4" />
               </button>
             </div>
 
             <a
               href={BRAND.brochurePath}
               download
-              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white hover:bg-brand-red text-slate-800 hover:text-white border border-slate-200 hover:border-brand-red text-xs sm:text-sm font-bold transition-all shadow-sm group cursor-pointer hover:scale-105 active:scale-95"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white hover:bg-brand-red text-slate-800 hover:text-white border border-slate-200 hover:border-brand-red text-xs sm:text-sm font-bold transition-all shadow-sm group cursor-pointer hover:scale-105 active:scale-95"
             >
-              <FileText className="w-4 h-4 text-brand-red group-hover:text-white transition-colors" />
+              <FileText className="w-3.5 h-3.5 text-brand-red group-hover:text-white transition-colors" />
               <span>Download Brochure (PDF)</span>
-              <Download className="w-3.5 h-3.5 text-slate-500 group-hover:text-white group-hover:translate-y-0.5 transition-transform" />
+              <Download className="w-3 h-3 text-slate-500 group-hover:text-white group-hover:translate-y-0.5 transition-transform" />
             </a>
           </div>
         </div>
 
-        <Wave className="text-white" />
+        <Wave className="text-white h-6 sm:h-8" />
       </section>
 
       {/* ============ STATS ============ */}

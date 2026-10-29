@@ -59,10 +59,6 @@ export const ContactPage = () => {
                     Immediate Logistics Response.
                   </span>
                 </h1>
-
-                <p className="text-sm sm:text-base font-bold text-slate-700 tracking-wide">
-                  Always On Call. Ready For Rapid Dispatch.
-                </p>
               </div>
 
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">

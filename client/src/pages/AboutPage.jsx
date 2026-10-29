@@ -329,9 +329,6 @@ export const AboutPage = ({ onOpenQuote }) => {
                     Across Oceans &amp; Continents.
                   </span>
                 </h1>
-                <p className="text-sm sm:text-base font-bold text-slate-700 tracking-wide">
-                  Connecting Families. Empowering Global Trade.
-                </p>
               </div>
 
               <p className="ab-h3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 max-w-2xl">
