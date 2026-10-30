@@ -475,7 +475,16 @@ async function getBannerFromDb() {
   // 3. Page banners
   const pageBanners = await getAllPageBannersFromDb();
 
-  return { bannerVideo, heroSlides, pageBanners };
+  // 4. Home sections
+  let homeSections = null;
+  const homeSectionsRecord = await BannerSetting.findByPk('home_sections');
+  if (homeSectionsRecord?.setting_value) {
+    try {
+      homeSections = JSON.parse(homeSectionsRecord.setting_value);
+    } catch (e) {}
+  }
+
+  return { bannerVideo, heroSlides, pageBanners, homeSections };
 }
 
 // Helper: Save combined banner data
@@ -526,6 +535,14 @@ async function saveBannerToDb(data) {
           side_image: p.sideImage || ''
         }, { transaction });
       }
+    }
+
+    // 4. Home sections
+    if (data.homeSections && typeof data.homeSections === 'object') {
+      await BannerSetting.upsert({
+        setting_key: 'home_sections',
+        setting_value: JSON.stringify(data.homeSections)
+      }, { transaction });
     }
 
     await transaction.commit();

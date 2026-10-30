@@ -215,8 +215,43 @@ export const HomePage = ({ onOpenQuote }) => {
   const [isPaused, setIsPaused] = useState(false);
   const slideCount = slides.length || 1;
 
-  // Fetch banner data from backend API
+  const DEFAULT_TICKER = [
+    { id: '1', text: 'ANY SIZE • ANY WEIGHT • ANYWHERE', isHighlight: true },
+    { id: '2', text: '190+ COUNTRIES CONNECTED', isHighlight: false },
+    { id: '3', text: '24/7 SHIP SPARES MARITIME BERTH', isHighlight: false },
+    { id: '4', text: 'FREE DOORSTEP PICKUP IN COIMBATORE & CHENNAI', isHighlight: false },
+    { id: '5', text: 'ZERO DEMURRAGE PROTOCOL', isHighlight: false }
+  ];
+
+  const [tickerItems, setTickerItems] = useState(DEFAULT_TICKER);
+  const [statsList, setStatsList] = useState(STATS);
+  const [processSteps, setProcessSteps] = useState(SIX_WAYS_CARGO);
+  const [sectorsList, setSectorsList] = useState(INDUSTRIES_SERVED);
+
+  // Fetch banner & homeSections data from backend API
   useEffect(() => {
+    // Check localStorage fallback for instant client/admin reflection
+    try {
+      const local = localStorage.getItem('flamingo_admin_data_v1');
+      if (local) {
+        const parsed = JSON.parse(local);
+        if (parsed.homeSections?.tickerItems?.length) setTickerItems(parsed.homeSections.tickerItems);
+        if (parsed.homeSections?.stats?.length) setStatsList(parsed.homeSections.stats);
+        if (parsed.homeSections?.pickupToDeliverySteps?.length) {
+          setProcessSteps(parsed.homeSections.pickupToDeliverySteps);
+        }
+        if (parsed.homeSections?.criticalSectors?.length) {
+          setSectorsList(parsed.homeSections.criticalSectors.map((s, idx) => ({
+            name: s.title,
+            desc: s.desc,
+            image: s.image,
+            icon: INDUSTRIES_SERVED[idx]?.icon || 'Ship',
+            bullets: s.bullets
+          })));
+        }
+      }
+    } catch (e) {}
+
     fetch('http://localhost:5000/api/banner')
       .then((res) => (res.ok ? res.json() : null))
       .then((res) => {
@@ -224,6 +259,21 @@ export const HomePage = ({ onOpenQuote }) => {
           if (res.data.bannerVideo) setBannerVideo(res.data.bannerVideo);
           if (res.data.heroSlides && res.data.heroSlides.length > 0) {
             setSlides(res.data.heroSlides.filter((s) => s.isActive !== false));
+          }
+          if (res.data.homeSections) {
+            const hs = res.data.homeSections;
+            if (hs.tickerItems?.length) setTickerItems(hs.tickerItems);
+            if (hs.stats?.length) setStatsList(hs.stats);
+            if (hs.pickupToDeliverySteps?.length) setProcessSteps(hs.pickupToDeliverySteps);
+            if (hs.criticalSectors?.length) {
+              setSectorsList(hs.criticalSectors.map((s, idx) => ({
+                name: s.title,
+                desc: s.desc,
+                image: s.image,
+                icon: INDUSTRIES_SERVED[idx]?.icon || 'Ship',
+                bullets: s.bullets
+              })));
+            }
           }
         }
       })
@@ -245,7 +295,7 @@ export const HomePage = ({ onOpenQuote }) => {
   /* Process (pickup to delivery) state */
   const [processSlide, setProcessSlide] = useState(0);
   const [isProcessPaused, setIsProcessPaused] = useState(false);
-  const processCount = SIX_WAYS_CARGO.length;
+  const processCount = processSteps.length;
 
   useEffect(() => {
     if (isProcessPaused) return;
@@ -258,12 +308,12 @@ export const HomePage = ({ onOpenQuote }) => {
   const nextProcess = () => setProcessSlide((prev) => (prev + 1) % processCount);
   const prevProcess = () => setProcessSlide((prev) => (prev - 1 + processCount) % processCount);
   const processPct = processCount > 1 ? (processSlide / (processCount - 1)) * 100 : 0;
-  const activeStep = SIX_WAYS_CARGO[processSlide];
+  const activeStep = processSteps[processSlide] || processSteps[0] || {};
 
   /* Sectors state */
   const [sectorSlide, setSectorSlide] = useState(0);
   const [isSectorPaused, setIsSectorPaused] = useState(false);
-  const sectorCount = INDUSTRIES_SERVED.length;
+  const sectorCount = sectorsList.length;
 
   useEffect(() => {
     if (isSectorPaused) return;
@@ -459,19 +509,19 @@ export const HomePage = ({ onOpenQuote }) => {
         <div className="fm-ticker flex items-center gap-8 whitespace-nowrap">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="flex items-center gap-8 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-slate-300">
-              <span className="inline-flex items-center gap-2 text-white font-black bg-brand-red/20 px-3 py-1 rounded-full border border-brand-red/30">
-                <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
-                ANY SIZE &bull; ANY WEIGHT &bull; ANYWHERE
-              </span>
-              <span className="text-brand-red font-mono">★</span>
-              <span>190+ COUNTRIES CONNECTED</span>
-              <span className="text-brand-red font-mono">★</span>
-              <span>24/7 SHIP SPARES MARITIME BERTH</span>
-              <span className="text-brand-red font-mono">★</span>
-              <span>FREE DOORSTEP PICKUP IN COIMBATORE &amp; CHENNAI</span>
-              <span className="text-brand-red font-mono">★</span>
-              <span>ZERO DEMURRAGE PROTOCOL</span>
-              <span className="text-brand-red font-mono">★</span>
+              {tickerItems.map((it, itIdx) => (
+                <React.Fragment key={`${i}-${it.id || itIdx}`}>
+                  {it.isHighlight ? (
+                    <span className="inline-flex items-center gap-2 text-white font-black bg-brand-red/20 px-3 py-1 rounded-full border border-brand-red/30">
+                      <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
+                      {it.text}
+                    </span>
+                  ) : (
+                    <span>{it.text}</span>
+                  )}
+                  <span className="text-brand-red font-mono">★</span>
+                </React.Fragment>
+              ))}
             </div>
           ))}
         </div>
@@ -481,7 +531,7 @@ export const HomePage = ({ onOpenQuote }) => {
       <section className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 mt-4 sm:mt-6 mb-12 sm:mb-16 relative z-10">
         <div className="bg-white rounded-2xl shadow-xl shadow-slate-900/6 border border-slate-200/80 p-4 sm:p-5">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 divide-y sm:divide-y-0 lg:divide-x divide-slate-100">
-            {STATS.map((st, i) => {
+            {statsList.map((st, i) => {
               const StatIcon = STAT_ICONS[i % STAT_ICONS.length];
               return (
                 <div key={i} className={`flex items-center gap-3.5 sm:gap-4 ${i > 0 ? 'lg:pl-6' : ''} ${i >= 2 ? 'pt-3.5 sm:pt-0' : ''}`}>
@@ -651,7 +701,7 @@ export const HomePage = ({ onOpenQuote }) => {
             </div>
 
             {/* stage nodes */}
-            {SIX_WAYS_CARGO.map((item, idx) => {
+            {processSteps.map((item, idx) => {
               const done = idx < processSlide;
               const active = idx === processSlide;
               const left = processCount > 1 ? (idx / (processCount - 1)) * 100 : 0;
@@ -798,7 +848,7 @@ export const HomePage = ({ onOpenQuote }) => {
           />
 
           <div className="flex flex-col lg:flex-row gap-3 lg:h-[460px]">
-            {INDUSTRIES_SERVED.map((ind, idx) => {
+            {sectorsList.map((ind, idx) => {
               const active = idx === sectorSlide;
               const Icon = INDUSTRY_ICONS[ind.icon] || Ship;
               return (

@@ -168,6 +168,13 @@ export const INITIAL_ADMIN_DATA = {
 
   // 2. HOME PAGE SECTIONS
   homeSections: {
+    tickerItems: [
+      { id: '1', text: 'ANY SIZE • ANY WEIGHT • ANYWHERE', isHighlight: true },
+      { id: '2', text: '190+ COUNTRIES CONNECTED', isHighlight: false },
+      { id: '3', text: '24/7 SHIP SPARES MARITIME BERTH', isHighlight: false },
+      { id: '4', text: 'FREE DOORSTEP PICKUP IN COIMBATORE & CHENNAI', isHighlight: false },
+      { id: '5', text: 'ZERO DEMURRAGE PROTOCOL', isHighlight: false }
+    ],
     stats: [
       { id: '1', label: 'Packages Delivered', value: '4,000+', desc: 'Active road, rail & maritime corridors' },
       { id: '2', label: 'Countries Covered', value: '190+', desc: 'Direct international delivery countries' },
@@ -577,7 +584,20 @@ export function useAdminStore() {
   const [data, setData] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          ...INITIAL_ADMIN_DATA,
+          ...parsed,
+          homeSections: {
+            ...INITIAL_ADMIN_DATA.homeSections,
+            ...(parsed.homeSections || {}),
+            tickerItems: (parsed.homeSections?.tickerItems && parsed.homeSections.tickerItems.length > 0)
+              ? parsed.homeSections.tickerItems
+              : INITIAL_ADMIN_DATA.homeSections.tickerItems
+          }
+        };
+      }
     } catch (e) {
       console.error('Error loading admin data from localStorage:', e);
     }
@@ -604,7 +624,12 @@ export function useAdminStore() {
             ...prev,
             bannerVideo: res.data.bannerVideo || prev.bannerVideo || '/assets/fliqmarine-hero.mov',
             heroSlides: res.data.heroSlides?.length ? res.data.heroSlides : prev.heroSlides,
-            pageBanners: { ...prev.pageBanners, ...(res.data.pageBanners || {}) }
+            pageBanners: { ...prev.pageBanners, ...(res.data.pageBanners || {}) },
+            homeSections: res.data.homeSections ? {
+              ...prev.homeSections,
+              ...res.data.homeSections,
+              tickerItems: res.data.homeSections.tickerItems || prev.homeSections?.tickerItems || INITIAL_ADMIN_DATA.homeSections.tickerItems
+            } : prev.homeSections
           }));
         }
       })

@@ -16,6 +16,7 @@ import {
   Layers
 } from 'lucide-react';
 import { DragDropUploader } from '../components/DragDropUploader';
+import { SlugInput } from '../components/SlugInput';
 
 const API_BASE = 'http://localhost:5000';
 
@@ -695,18 +696,12 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                     className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blue focus:outline-hidden"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-700">
-                    Target Slug / Link <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={bannerFormData.buttonSlug}
-                    onChange={(e) => setBannerFormData({ ...bannerFormData, buttonSlug: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-mono focus:border-brand-blue focus:outline-hidden"
-                  />
-                </div>
+                <SlugInput
+                  label="Target Slug / Link"
+                  required
+                  value={bannerFormData.buttonSlug}
+                  onChange={(val) => setBannerFormData({ ...bannerFormData, buttonSlug: val })}
+                />
               </div>
 
               {/* Modal Footer */}
@@ -834,13 +829,11 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                     />
                   </div>
                   <div>
-                    <label className="text-[11px] font-bold text-slate-600">Navigation Slug *</label>
-                    <input
-                      type="text"
+                    <SlugInput
+                      label="Navigation Slug"
                       required
                       value={slideFormData.primarySlug}
-                      onChange={(e) => setSlideFormData({ ...slideFormData, primarySlug: e.target.value })}
-                      className="w-full mt-1 px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-mono focus:outline-hidden"
+                      onChange={(val) => setSlideFormData({ ...slideFormData, primarySlug: val })}
                     />
                   </div>
                 </div>
@@ -863,13 +856,11 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                     />
                   </div>
                   <div>
-                    <label className="text-[11px] font-bold text-slate-600">Navigation Slug *</label>
-                    <input
-                      type="text"
+                    <SlugInput
+                      label="Navigation Slug"
                       required
                       value={slideFormData.secondarySlug}
-                      onChange={(e) => setSlideFormData({ ...slideFormData, secondarySlug: e.target.value })}
-                      className="w-full mt-1 px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-mono focus:outline-hidden"
+                      onChange={(val) => setSlideFormData({ ...slideFormData, secondarySlug: val })}
                     />
                   </div>
                 </div>

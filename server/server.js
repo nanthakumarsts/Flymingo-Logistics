@@ -63,7 +63,8 @@ const getBannerFromFile = () => {
   return {
     bannerVideo: '/assets/fliqmarine-hero.mov',
     heroSlides: [],
-    pageBanners: {}
+    pageBanners: {},
+    homeSections: null
   };
 };
 

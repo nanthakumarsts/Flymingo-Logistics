@@ -131,14 +131,6 @@ export const AdminLayout = ({ data, onUpdate, auth, onLogout, onResetDefault }) 
         <div className="p-4 border-t border-white/10 space-y-2 bg-black/15">
           <div className="grid grid-cols-2 gap-2">
             <button
-              onClick={handleResetConfirm}
-              className="px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-[11px] font-bold text-white/90 flex items-center justify-center gap-1 transition-colors cursor-pointer"
-              title="Reset data to defaults"
-            >
-              <RotateCcw className="w-3 h-3" />
-              <span>Reset Data</span>
-            </button>
-            <button
               onClick={onLogout}
               className="px-2.5 py-1.5 rounded-lg bg-[#ed2926]/20 hover:bg-[#ed2926] text-[11px] font-bold text-white flex items-center justify-center gap-1 transition-colors cursor-pointer"
             >
