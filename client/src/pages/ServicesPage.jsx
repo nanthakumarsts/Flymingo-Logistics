@@ -7,6 +7,7 @@ import {
 import { BRAND, STATS } from '../data/siteData';
 import { FlightRouteMap } from '../components/FlightRouteMap';
 import { BannerSideMotif } from '../components/BannerSideMotif';
+import DEFAULT_BANNER_DATA from '../data/bannerData.json';
 
 /* ---------- local styles (self-contained, prefixed sv-) ---------- */
 const css = `
@@ -294,12 +295,14 @@ export const ServicesPage = ({ onOpenQuote }) => {
   const next = () => setActiveIdx((p) => (p + 1) % CAPABILITIES.length);
   const prev = () => setActiveIdx((p) => (p - 1 + CAPABILITIES.length) % CAPABILITIES.length);
 
-  const displayBadge = (bannerData && bannerData.badge !== undefined) ? bannerData.badge : 'SOUTH INDIA \u2192 THE WORLD';
-  const displayTitle = (bannerData && bannerData.title) ? bannerData.title : 'Six Proven Channels.';
-  const displayHighlight = (bannerData && bannerData.highlight !== undefined) ? bannerData.highlight : 'Zero Cargo Gaps.';
-  const displayDesc = (bannerData && bannerData.description) ? bannerData.description : 'From time-critical vessel spares delivery on-board at outer anchorage berths to worldwide express courier and heavy air/ocean freight forwarders, Flymingo Logistics handles every consignment with shipowner precision.';
-  const displayImage = (bannerData && bannerData.bgImage) ? bannerData.bgImage : '/assets/banner-courier-hd.jpg';
-  const displayBtnLabel = (bannerData && bannerData.buttonLabel !== undefined) ? bannerData.buttonLabel : 'Request Instant Fare Quote';
+  const fallback = DEFAULT_BANNER_DATA?.pageBanners?.services || {};
+  const activeBanner = bannerData || fallback;
+  const displayBadge = (activeBanner && activeBanner.badge !== undefined) ? activeBanner.badge : (fallback.badge || 'Any Weight');
+  const displayTitle = (activeBanner && activeBanner.title) ? activeBanner.title : (fallback.title || 'Six Proven Channels.');
+  const displayHighlight = (activeBanner && activeBanner.highlight !== undefined) ? activeBanner.highlight : (fallback.highlight || 'Zero Cargo Gaps.');
+  const displayDesc = (activeBanner && activeBanner.description) ? activeBanner.description : fallback.description;
+  const displayImage = (activeBanner && activeBanner.bgImage) ? activeBanner.bgImage : (fallback.bgImage || '/assets/banner-courier-hd.jpg');
+  const displayBtnLabel = (activeBanner && activeBanner.buttonLabel !== undefined) ? activeBanner.buttonLabel : (fallback.buttonLabel || 'Request Instant Fare Quote');
 
   return (
     <div className="space-y-16 lg:space-y-24 pb-20 overflow-x-hidden">

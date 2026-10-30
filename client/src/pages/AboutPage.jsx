@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { BRAND } from '../data/siteData';
 import { FlightRouteMap } from '../components/FlightRouteMap';
+import DEFAULT_BANNER_DATA from '../data/bannerData.json';
 
 /* ---------- local styles (self-contained, prefixed ab-) ---------- */
 const css = `
@@ -317,12 +318,14 @@ export const AboutPage = ({ onOpenQuote }) => {
     }
   };
 
-  const displayBadge = (bannerData && bannerData.badge !== undefined) ? bannerData.badge : 'SOUTH INDIA \u2192 THE WORLD';
-  const displayTitle = (bannerData && bannerData.title) ? bannerData.title : 'We Are The Bridge Between You And Your Relations.';
-  const displayHighlight = (bannerData && bannerData.highlight !== undefined) ? bannerData.highlight : 'Across Oceans & Continents.';
-  const displayDesc = (bannerData && bannerData.description) ? bannerData.description : "Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.";
-  const displayImage = (bannerData && bannerData.bgImage) ? bannerData.bgImage : '/assets/banner-marine-hd.jpg';
-  const displayBtnLabel = bannerData ? bannerData.buttonLabel : 'Explore Our Services';
+  const fallback = DEFAULT_BANNER_DATA?.pageBanners?.about || {};
+  const activeBanner = bannerData || fallback;
+  const displayBadge = (activeBanner && activeBanner.badge !== undefined) ? activeBanner.badge : (fallback.badge || 'Any Size');
+  const displayTitle = (activeBanner && activeBanner.title) ? activeBanner.title : (fallback.title || 'We Are The Bridge Between You And Your Relations.');
+  const displayHighlight = (activeBanner && activeBanner.highlight !== undefined) ? activeBanner.highlight : (fallback.highlight || 'Across Oceans & Continents.');
+  const displayDesc = (activeBanner && activeBanner.description) ? activeBanner.description : fallback.description;
+  const displayImage = (activeBanner && activeBanner.bgImage) ? activeBanner.bgImage : (fallback.bgImage || '/assets/banner-marine-hd.jpg');
+  const displayBtnLabel = (activeBanner && activeBanner.buttonLabel) ? activeBanner.buttonLabel : (fallback.buttonLabel || 'Explore Our Services');
 
   return (
     <div className="space-y-20 sm:space-y-28 pb-20 select-none overflow-x-hidden">

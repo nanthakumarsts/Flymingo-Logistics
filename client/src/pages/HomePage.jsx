@@ -13,6 +13,7 @@ import {
   SPECIALIZED_EXPRESS, INDUSTRIES_SERVED, TESTIMONIALS
 } from '../data/siteData';
 import HERO_SLIDES from '../data/heroSlides.json';
+import DEFAULT_BANNER_DATA from '../data/bannerData.json';
 import { FlightRouteMap } from '../components/FlightRouteMap';
 
 /* Background photos. Swap any URL for your own file, e.g. '/images/process-bg.jpg' in /public.
@@ -216,7 +217,7 @@ export const HomePage = ({ onOpenQuote }) => {
   const [isPaused, setIsPaused] = useState(false);
   const slideCount = slides.length || 1;
 
-  const DEFAULT_TICKER = [
+  const DEFAULT_TICKER = DEFAULT_BANNER_DATA?.homeSections?.tickerItems || [
     { id: '1', text: 'ANY SIZE • ANY WEIGHT • ANYWHERE', isHighlight: true },
     { id: '2', text: '190+ COUNTRIES CONNECTED', isHighlight: false },
     { id: '3', text: '24/7 SHIP SPARES MARITIME BERTH', isHighlight: false },
@@ -225,9 +226,21 @@ export const HomePage = ({ onOpenQuote }) => {
   ];
 
   const [tickerItems, setTickerItems] = useState(DEFAULT_TICKER);
-  const [statsList, setStatsList] = useState(STATS);
-  const [processSteps, setProcessSteps] = useState(SIX_WAYS_CARGO);
-  const [sectorsList, setSectorsList] = useState(INDUSTRIES_SERVED);
+  const [statsList, setStatsList] = useState(DEFAULT_BANNER_DATA?.homeSections?.stats || STATS);
+  const [processSteps, setProcessSteps] = useState(DEFAULT_BANNER_DATA?.homeSections?.pickupToDeliverySteps || SIX_WAYS_CARGO);
+  const [sectorsList, setSectorsList] = useState(() => {
+    if (DEFAULT_BANNER_DATA?.homeSections?.criticalSectors?.length) {
+      return DEFAULT_BANNER_DATA.homeSections.criticalSectors.map((s, idx) => ({
+        name: s.title,
+        desc: s.desc,
+        image: s.image,
+        icon: INDUSTRIES_SERVED[idx]?.icon || 'Ship',
+        buttonLabel: s.buttonLabel || 'Request industry rate',
+        buttonSlug: s.buttonSlug || '/quote'
+      }));
+    }
+    return INDUSTRIES_SERVED;
+  });
 
   // Testimonials moderation state & review modal
   const [testimonialsList, setTestimonialsList] = useState(() => {

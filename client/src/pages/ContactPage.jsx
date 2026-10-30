@@ -7,6 +7,7 @@ import {
 import { BRAND, OFFICES, CORE_SERVICES, COUNTRIES } from '../data/siteData';
 import { FlightRouteMap } from '../components/FlightRouteMap';
 import { BannerSideMotif } from '../components/BannerSideMotif';
+import DEFAULT_BANNER_DATA from '../data/bannerData.json';
 
 export const ContactPage = () => {
   const [bannerData, setBannerData] = useState(null);
@@ -46,12 +47,14 @@ export const ContactPage = () => {
     setSubmitted(true);
   };
 
-  const displayBadge = (bannerData && bannerData.badge !== undefined) ? bannerData.badge : 'SOUTH INDIA \u2192 THE WORLD';
-  const displayTitle = (bannerData && bannerData.title) ? bannerData.title : 'Direct Lines.';
-  const displayHighlight = (bannerData && bannerData.highlight !== undefined) ? bannerData.highlight : 'Immediate Logistics Response.';
-  const displayDesc = (bannerData && bannerData.description) ? bannerData.description : 'Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.';
-  const displayImage = (bannerData && bannerData.bgImage) ? bannerData.bgImage : '/assets/banner-contact-hd.jpg';
-  const displayBtnLabel = bannerData?.buttonLabel;
+  const fallback = DEFAULT_BANNER_DATA?.pageBanners?.contact || {};
+  const activeBanner = bannerData || fallback;
+  const displayBadge = (activeBanner && activeBanner.badge !== undefined) ? activeBanner.badge : (fallback.badge || 'Any Where');
+  const displayTitle = (activeBanner && activeBanner.title) ? activeBanner.title : (fallback.title || 'Direct Lines.');
+  const displayHighlight = (activeBanner && activeBanner.highlight !== undefined) ? activeBanner.highlight : (fallback.highlight || 'Immediate Logistics Response.');
+  const displayDesc = (activeBanner && activeBanner.description) ? activeBanner.description : fallback.description;
+  const displayImage = (activeBanner && activeBanner.bgImage) ? activeBanner.bgImage : (fallback.bgImage || '/assets/banner-contact-hd.jpg');
+  const displayBtnLabel = activeBanner?.buttonLabel || fallback.buttonLabel;
 
   return (
     <div className="space-y-16 pb-20">

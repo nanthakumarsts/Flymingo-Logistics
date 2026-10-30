@@ -5,7 +5,7 @@
       "id": "marine-logistics",
       "titlePrefix": "Your Global ",
       "highlight": "Logistics Partner",
-      "titleSuffix": "helo",
+      "titleSuffix": "",
       "desc": "End-to-end logistics and courier solutions with operational excellence, global reach and a commitment to trust, safety and timely delivery across 190+ countries.",
       "primaryCta": "Explore Our Services",
       "primarySlug": "/services",
@@ -40,49 +40,43 @@
   ],
   "pageBanners": {
     "about": {
-      "id": 1,
       "pageKey": "about",
       "pageName": "About Us Page",
       "pageType": "main_page",
-      "badge": "SOUTH INDIA → THE WORLD",
+      "badge": "Any Size",
       "title": "We Are The Bridge Between You And Your Relations.",
       "highlight": "Across Oceans & Continents.",
       "description": "Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.",
       "buttonLabel": "Explore Our Services",
       "buttonSlug": "/services",
       "bgImage": "/assets/banner-marine-hd.jpg",
-      "sideImage": "/assets/sea cargo.jpg",
-      "updatedAt": "2026-10-29T06:43:37.000Z"
+      "sideImage": "/assets/sea cargo.jpg"
     },
     "services": {
-      "id": 3,
       "pageKey": "services",
       "pageName": "Services Hub Page",
       "pageType": "main_page",
-      "badge": "SOUTH INDIA → THE WORLD",
+      "badge": "Any Weight",
       "title": "Six Proven Channels.",
       "highlight": "Zero Cargo Gaps.",
       "description": "From time-critical vessel spares delivery on-board at outer anchorage berths to worldwide express courier and heavy air/ocean freight forwarders, Flymingo Logistics handles every consignment with shipowner precision.",
       "buttonLabel": "Request Instant Fare Quote",
       "buttonSlug": "/quote",
       "bgImage": "/assets/banner-courier-hd.jpg",
-      "sideImage": "",
-      "updatedAt": "2026-10-29T06:43:37.000Z"
+      "sideImage": ""
     },
     "contact": {
-      "id": 2,
       "pageKey": "contact",
       "pageName": "Contact Us Page",
       "pageType": "main_page",
-      "badge": "SOUTH INDIA → THE WORLD",
+      "badge": "Any Where",
       "title": "Direct Lines.",
       "highlight": "Immediate Logistics Response.",
       "description": "Reach our logistics coordinators directly for emergency vessel spare dispatches, international door courier pickups, dangerous goods compliance, and air cargo bookings.",
       "buttonLabel": "Speak To Logistics Desk",
       "buttonSlug": "tel:+919087924488",
       "bgImage": "/assets/banner-contact-hd.jpg",
-      "sideImage": "/assets/communication.jpg",
-      "updatedAt": "2026-10-29T06:43:37.000Z"
+      "sideImage": "/assets/communication.jpg"
     },
     "ship-spares": {
       "id": 4,
@@ -97,7 +91,7 @@
       "buttonSlug": "/quote",
       "bgImage": "/assets/ship-spares-hd.jpg",
       "sideImage": "",
-      "updatedAt": "2026-10-29T06:43:37.000Z"
+      "updatedAt": "2026-10-29T08:01:01.000Z"
     },
     "freight-forwarding": {
       "id": 5,
@@ -112,7 +106,7 @@
       "buttonSlug": "/quote",
       "bgImage": "/assets/air cargo.jpg",
       "sideImage": "",
-      "updatedAt": "2026-10-29T06:43:37.000Z"
+      "updatedAt": "2026-10-29T08:01:01.000Z"
     },
     "international-courier": {
       "id": 6,
@@ -127,7 +121,7 @@
       "buttonSlug": "/quote",
       "bgImage": "/assets/courier.jpg",
       "sideImage": "",
-      "updatedAt": "2026-10-29T06:43:37.000Z"
+      "updatedAt": "2026-10-29T08:01:01.000Z"
     },
     "customs-clearance": {
       "id": 7,
@@ -142,7 +136,7 @@
       "buttonSlug": "/contact",
       "bgImage": "/assets/customs clearance.jpg",
       "sideImage": "",
-      "updatedAt": "2026-10-29T06:43:37.000Z"
+      "updatedAt": "2026-10-29T08:01:01.000Z"
     },
     "dg-shipping": {
       "id": 8,
@@ -157,7 +151,7 @@
       "buttonSlug": "/quote",
       "bgImage": "/assets/dg-hazmat-hd.jpg",
       "sideImage": "",
-      "updatedAt": "2026-10-29T06:43:37.000Z"
+      "updatedAt": "2026-10-29T08:01:01.000Z"
     },
     "international-relocation": {
       "id": 9,
@@ -172,10 +166,10 @@
       "buttonSlug": "/quote",
       "bgImage": "/assets/movers.jpg",
       "sideImage": "",
-      "updatedAt": "2026-10-29T06:43:37.000Z"
+      "updatedAt": "2026-10-29T08:01:01.000Z"
     }
   },
-  "updatedAt": "2026-10-30T05:39:00.649Z",
+  "updatedAt": "2026-10-30T06:11:30.692Z",
   "homeSections": {
     "tickerItems": [
       {
@@ -202,6 +196,11 @@
         "id": "5",
         "text": "ZERO DEMURRAGE PROTOCOL",
         "isHighlight": true
+      },
+      {
+        "id": "tick-1793340668641",
+        "text": "10+ Years Of Experience",
+        "isHighlight": false
       }
     ],
     "stats": [
@@ -286,48 +285,72 @@
         "title": "Marine Shipowners & Vessel Managers",
         "desc": "Outer anchorage berth delivery of critical main engine valves, governors, turbochargers, radar parts, and safety spares under 45 minutes.",
         "image": "/assets/banner-marine-hd.jpg",
-        "buttonLabel": "Request Industry Rate",
-        "buttonSlug": "/quote"
+        "tag": "Maritime Priority",
+        "bullets": [
+          "Berth launch boat logistics",
+          "Bonded transit clearance",
+          "24/7 Port master access"
+        ]
       },
       {
         "id": "auto-sector",
         "title": "Automotive & Heavy Engineering",
         "desc": "Just-in-Time (JIT) delivery of precision casting moulds, CNC machine assemblies, engine blocks, and assembly-line spares.",
         "image": "/assets/banner-aircargo-hd.jpg",
-        "buttonLabel": "Request Industry Rate",
-        "buttonSlug": "/quote"
+        "tag": "Industrial Logistics",
+        "bullets": [
+          "Zero assembly halt policy",
+          "Heavy-lift wooden crating",
+          "Air charter expedite"
+        ]
       },
       {
         "id": "dg-sector",
         "title": "Defense, Chemicals & DG Cargo",
         "desc": "Class 1 through Class 9 hazardous chemicals, lithium battery consignments, flammable solvents, and marine paints certified under IATA/IMO.",
         "image": "/assets/dg-hazmat-hd.jpg",
-        "buttonLabel": "Request Industry Rate",
-        "buttonSlug": "/quote"
+        "tag": "Hazardous Compliance",
+        "bullets": [
+          "UN-spec container crating",
+          "DGD certified documentation",
+          "Trained DG handlers"
+        ]
       },
       {
         "id": "pharma-sector",
         "title": "Pharmaceuticals & Medical Devices",
         "desc": "Temperature-monitored refrigerated transport for life-saving medicines, medical machinery, surgical kits, and diagnostic reagents.",
         "image": "/assets/loading.jpg",
-        "buttonLabel": "Request Industry Rate",
-        "buttonSlug": "/quote"
+        "tag": "Life Sciences",
+        "bullets": [
+          "Cold-chain integrity",
+          "Express 2-4 day transit",
+          "Tamper-evident seals"
+        ]
       },
       {
         "id": "nri-sector",
         "title": "NRI Diaspora & International Students",
         "desc": "Reliable doorstep shipping of South Indian sweets, homemade spice masalas, student luggage, traditional clothing, and gifts worldwide.",
         "image": "/assets/banner-courier-hd.jpg",
-        "buttonLabel": "Request Industry Rate",
-        "buttonSlug": "/quote"
+        "tag": "NRI Express Parcels",
+        "bullets": [
+          "Free door pickup across TN",
+          "Specialized food packaging",
+          "Transparent flat rates"
+        ]
       },
       {
         "id": "ecommerce-sector",
         "title": "Cross-Border E-Commerce & Retail",
         "desc": "End-to-end B2C and B2B express parcel delivery for Indian merchants selling textiles, handicrafts, jewellery, and books globally.",
         "image": "/assets/courier.jpg",
-        "buttonLabel": "Request Industry Rate",
-        "buttonSlug": "/quote"
+        "tag": "Cross-Border Trade",
+        "bullets": [
+          "Automated tracking APIs",
+          "Bulk volume discounts",
+          "Customs duty advisory"
+        ]
       }
     ]
   }

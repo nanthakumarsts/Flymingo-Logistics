@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { FlightRouteMap } from './FlightRouteMap';
 import { BannerSideMotif } from './BannerSideMotif';
+import DEFAULT_BANNER_DATA from '../data/bannerData.json';
 
 const ORBIT_SERVICES = [
   { id: 'ship-spares', short: 'Ship Spares', path: '/services/ship-spares-logistics', icon: Anchor },
@@ -109,13 +110,16 @@ export function PageBanner({
       .catch(() => {});
   }, [pageKey]);
 
-  const displayBadge = (dbData && dbData.badge !== undefined) ? dbData.badge : (eyebrow || 'ANY SIZE • ANY WEIGHT • ANYWHERE');
-  const displayTitle = (dbData && dbData.title) ? dbData.title : title;
-  const displayHighlight = (dbData && dbData.highlight !== undefined) ? dbData.highlight : highlight;
-  const displayDesc = (dbData && dbData.description) ? dbData.description : description;
-  const displayImage = (dbData && dbData.bgImage) ? dbData.bgImage : (image || '/assets/banner-marine-hd.jpg');
-  const displayAction = (dbData && dbData.buttonLabel !== undefined) ? dbData.buttonLabel : action;
-  const displaySlug = (dbData && dbData.buttonSlug !== undefined) ? dbData.buttonSlug : (actionSlug || '');
+  const fallbackData = (pageKey && DEFAULT_BANNER_DATA?.pageBanners?.[pageKey]) || null;
+  const data = dbData || fallbackData;
+
+  const displayBadge = (data && data.badge !== undefined) ? data.badge : (eyebrow || 'ANY SIZE • ANY WEIGHT • ANYWHERE');
+  const displayTitle = (data && data.title) ? data.title : title;
+  const displayHighlight = (data && data.highlight !== undefined) ? data.highlight : highlight;
+  const displayDesc = (data && data.description) ? data.description : description;
+  const displayImage = (data && data.bgImage) ? data.bgImage : (image || '/assets/banner-marine-hd.jpg');
+  const displayAction = (data && data.buttonLabel !== undefined) ? data.buttonLabel : action;
+  const displaySlug = (data && data.buttonSlug !== undefined) ? data.buttonSlug : (actionSlug || '');
 
   const handleActionClick = () => {
     if (displaySlug) {
