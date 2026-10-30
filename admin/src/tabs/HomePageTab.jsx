@@ -14,16 +14,33 @@ import {
   Layers,
   Image as ImageIcon,
   Flame,
-  ArrowRight
+  ArrowRight,
+  Check
 } from 'lucide-react';
 import { DragDropUploader } from '../components/DragDropUploader';
 
 const API_BASE = 'http://localhost:5000';
 
+const DEFAULT_TICKER_ITEMS = [
+  { id: '1', text: 'ANY SIZE • ANY WEIGHT • ANYWHERE', isHighlight: true },
+  { id: '2', text: '190+ COUNTRIES CONNECTED', isHighlight: false },
+  { id: '3', text: '24/7 SHIP SPARES MARITIME BERTH', isHighlight: false },
+  { id: '4', text: 'FREE DOORSTEP PICKUP IN COIMBATORE & CHENNAI', isHighlight: false },
+  { id: '5', text: 'ZERO DEMURRAGE PROTOCOL', isHighlight: false }
+];
+
 export const HomePageTab = ({ data, onUpdate }) => {
   // Navigation tabs for Home sections: Ticker, Metrics, Steps, Sectors
   const [activeTab, setActiveTab] = useState('ticker');
-  const [home, setHome] = useState(data.homeSections || {});
+  const [home, setHome] = useState(() => {
+    const raw = data.homeSections || {};
+    return {
+      ...raw,
+      tickerItems: (raw.tickerItems && raw.tickerItems.length > 0)
+        ? raw.tickerItems
+        : DEFAULT_TICKER_ITEMS
+    };
+  });
   const [savedMsg, setSavedMsg] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
@@ -40,7 +57,13 @@ export const HomePageTab = ({ data, onUpdate }) => {
   // Sync state if external data updates
   useEffect(() => {
     if (data.homeSections) {
-      setHome(data.homeSections);
+      setHome((prev) => ({
+        ...prev,
+        ...data.homeSections,
+        tickerItems: (data.homeSections.tickerItems && data.homeSections.tickerItems.length > 0)
+          ? data.homeSections.tickerItems
+          : (prev.tickerItems && prev.tickerItems.length > 0 ? prev.tickerItems : DEFAULT_TICKER_ITEMS)
+      }));
     }
   }, [data.homeSections]);
 
@@ -73,7 +96,10 @@ export const HomePageTab = ({ data, onUpdate }) => {
 
   // --- 1. Ticker Ribbon Handlers ---
   const handleTickerChange = (id, field, value) => {
-    const updated = (home.tickerItems || []).map((item) =>
+    const currentList = (home.tickerItems && home.tickerItems.length > 0)
+      ? home.tickerItems
+      : DEFAULT_TICKER_ITEMS;
+    const updated = currentList.map((item) =>
       item.id === id ? { ...item, [field]: value } : item
     );
     const updatedHome = { ...home, tickerItems: updated };
@@ -81,6 +107,9 @@ export const HomePageTab = ({ data, onUpdate }) => {
   };
 
   const handleAddTickerItem = () => {
+    const currentList = (home.tickerItems && home.tickerItems.length > 0)
+      ? home.tickerItems
+      : DEFAULT_TICKER_ITEMS;
     const newItem = {
       id: `tick-${Date.now()}`,
       text: 'NEW ANNOUNCEMENT / PROMO MESSAGE',
@@ -88,29 +117,40 @@ export const HomePageTab = ({ data, onUpdate }) => {
     };
     const updatedHome = {
       ...home,
-      tickerItems: [...(home.tickerItems || []), newItem]
+      tickerItems: [...currentList, newItem]
     };
     setHome(updatedHome);
   };
 
   const handleDeleteTickerItem = (id) => {
-    const updated = (home.tickerItems || []).filter((item) => item.id !== id);
+    const currentList = (home.tickerItems && home.tickerItems.length > 0)
+      ? home.tickerItems
+      : DEFAULT_TICKER_ITEMS;
+    const updated = currentList.filter((item) => item.id !== id);
     const updatedHome = { ...home, tickerItems: updated };
     setHome(updatedHome);
   };
 
   // --- 2. Step Modal Handlers ---
   const openStepModal = (index) => {
+    const s = home.pickupToDeliverySteps?.[index] || {};
     setEditingStepIndex(index);
-    setStepFormData({ ...home.pickupToDeliverySteps[index] });
+    setStepFormData({
+      step: s.step || String(index + 1).padStart(2, '0'),
+      badge: s.badge || `Step ${index + 1}`,
+      title: s.title || '',
+      desc: s.desc || '',
+      tick1: s.tick1 || 'Real-time milestone logging',
+      tick2: s.tick2 || 'Zero-delay customs pre-check'
+    });
   };
 
   const saveStepModal = () => {
     if (!stepFormData.title?.trim() || !stepFormData.desc?.trim()) {
-      alert('Step title and description are required!');
+      alert('Step heading and description are required!');
       return;
     }
-    const updatedSteps = [...home.pickupToDeliverySteps];
+    const updatedSteps = [...(home.pickupToDeliverySteps || [])];
     updatedSteps[editingStepIndex] = stepFormData;
     const updatedHome = { ...home, pickupToDeliverySteps: updatedSteps };
     setHome(updatedHome);
@@ -160,6 +200,10 @@ export const HomePageTab = ({ data, onUpdate }) => {
     handleSaveAll(updatedHome);
   };
 
+  const effectiveTickerItems = (home.tickerItems && home.tickerItems.length > 0)
+    ? home.tickerItems
+    : DEFAULT_TICKER_ITEMS;
+
   return (
     <div className="space-y-6 select-none max-w-7xl mx-auto pb-16">
       {/* Top Action Header */}
@@ -208,7 +252,7 @@ export const HomePageTab = ({ data, onUpdate }) => {
           <Sparkles className="w-4 h-4 text-brand-red" />
           <span>Brand Ticker Ribbon</span>
           <span className="px-1.5 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-600">
-            {home.tickerItems?.length || 0}
+            {effectiveTickerItems.length}
           </span>
         </button>
 
@@ -264,41 +308,17 @@ export const HomePageTab = ({ data, onUpdate }) => {
       {/* ================= TAB 1: BRAND TICKER RIBBON ================= */}
       {activeTab === 'ticker' && (
         <div className="space-y-6 animate-fadeIn">
-          {/* Live Preview Ribbon */}
-          <div className="bg-gradient-to-r from-slate-900 via-[#001d36] to-slate-900 rounded-3xl p-4 sm:p-5 border border-slate-800 shadow-md overflow-hidden space-y-3">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-400 border-b border-slate-800/80 pb-2">
-              <span className="flex items-center gap-2 text-white">
-                <Sparkles className="w-3.5 h-3.5 text-brand-red" />
-                Live Marquee Ticker Preview (Client View)
-              </span>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
-                Running Loop
-              </span>
-            </div>
-
-            <div className="py-2 overflow-x-auto whitespace-nowrap flex items-center gap-6 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-slate-300">
-              {home.tickerItems?.map((it) => (
-                <React.Fragment key={it.id}>
-                  {it.isHighlight ? (
-                    <span className="inline-flex items-center gap-2 text-white font-black bg-brand-red/20 px-3.5 py-1.5 rounded-full border border-brand-red/30 shadow-xs">
-                      <span className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
-                      {it.text}
-                    </span>
-                  ) : (
-                    <span>{it.text}</span>
-                  )}
-                  <span className="text-brand-red font-mono font-bold">★</span>
-                </React.Fragment>
-              ))}
-            </div>
-          </div>
-
-          {/* Ticker Items Editor Card */}
+          {/* Ticker Items Editor Card (No dark preview box) */}
           <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-5">
             <div className="flex items-center justify-between border-b border-slate-100 pb-4">
               <div>
-                <h2 className="text-base font-extrabold text-slate-900">Configure Running Ribbon Messages</h2>
-                <p className="text-xs text-slate-500">Add, edit, or highlight brand announcements that scroll continuously across the homepage</p>
+                <h2 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-brand-red" />
+                  <span>Configure Running Ribbon Messages</span>
+                </h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  These announcements scroll continuously across the client homepage ribbon.
+                </p>
               </div>
               <button
                 type="button"
@@ -311,7 +331,7 @@ export const HomePageTab = ({ data, onUpdate }) => {
             </div>
 
             <div className="space-y-3">
-              {home.tickerItems?.map((item, idx) => (
+              {effectiveTickerItems.map((item, idx) => (
                 <div
                   key={item.id}
                   className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors"
@@ -398,77 +418,71 @@ export const HomePageTab = ({ data, onUpdate }) => {
         </div>
       )}
 
-      {/* ================= TAB 3: FROM PICKUP TO DELIVERY (6 STEPS) ================= */}
+      {/* ================= TAB 3: FROM PICKUP TO DELIVERY (6 STEPS) - NO IMAGES ================= */}
       {activeTab === 'steps' && (
         <div className="space-y-6 animate-fadeIn">
           <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-6">
             <div className="border-b border-slate-100 pb-4">
-              <h2 className="text-base font-extrabold text-slate-900">
-                From Pickup To Delivery: 6-Step Cargo Consignment Journey
+              <h2 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                <Truck className="w-4 h-4 text-brand-red" />
+                <span>From Pickup To Delivery: 6-Step Cargo Consignment Journey</span>
               </h2>
-              <p className="text-xs text-slate-500">
-                Click "Edit Step" on any card to update its title, description, and upload images with drag & drop uploader
+              <p className="text-xs text-slate-500 mt-0.5">
+                Manage step badge, heading, subhead description, and 2 feature tick marks for each stage
               </p>
             </div>
 
-            {/* Box Cards (Matching Sliders & Banners / Image 3 & 4 style) */}
+            {/* Box Cards without Images (Clean Heading, Subhead, 2 Tick marks) */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {home.pickupToDeliverySteps?.map((step, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-3xl border border-slate-200 shadow-xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group"
+                  className="bg-white rounded-3xl border border-slate-200 shadow-xs hover:shadow-md transition-all p-6 flex flex-col justify-between gap-5 group"
                 >
-                  {/* Card Header & Badge */}
-                  <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-red/10 text-brand-red text-xs font-black">
-                      Step {step.step}
-                    </span>
-                    <span className="text-[11px] font-mono font-bold text-slate-500 bg-white px-2 py-0.5 rounded-md border border-slate-200">
-                      {step.badge || `Stage ${idx + 1}`}
-                    </span>
-                  </div>
+                  <div className="space-y-3.5">
+                    {/* Card Header & Badge */}
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-red/10 text-brand-red text-xs font-black">
+                        Step {step.step}
+                      </span>
+                      <span className="text-[11px] font-mono font-bold text-slate-600 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200">
+                        {step.badge || `Step ${idx + 1}`}
+                      </span>
+                    </div>
 
-                  {/* Thumbnail Preview */}
-                  <div className="relative aspect-video w-full bg-slate-100 overflow-hidden border-b border-slate-100">
-                    {step.image ? (
-                      <img
-                        src={step.image}
-                        alt={step.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        onError={(e) => {
-                          e.currentTarget.src = '/assets/banner-process-hd.jpg';
-                        }}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center text-slate-400 gap-1">
-                        <ImageIcon className="w-8 h-8 opacity-40" />
-                        <span className="text-[11px] font-bold">No Image Selected</span>
+                    {/* Step Heading */}
+                    <h3 className="text-base font-extrabold text-slate-900 group-hover:text-brand-blue transition-colors leading-tight">
+                      {step.title}
+                    </h3>
+
+                    {/* Step Subheading / Description */}
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      {step.desc}
+                    </p>
+
+                    {/* 2 Tick Marks */}
+                    <div className="space-y-2 pt-2 border-t border-slate-100">
+                      <div className="flex items-center gap-2 text-xs font-bold text-slate-700 bg-slate-50 px-3 py-2 rounded-xl border border-slate-150">
+                        <Check className="w-3.5 h-3.5 text-brand-red shrink-0" />
+                        <span className="truncate">{step.tick1 || 'Real-time milestone logging'}</span>
                       </div>
-                    )}
+                      <div className="flex items-center gap-2 text-xs font-bold text-slate-700 bg-slate-50 px-3 py-2 rounded-xl border border-slate-150">
+                        <Check className="w-3.5 h-3.5 text-brand-red shrink-0" />
+                        <span className="truncate">{step.tick2 || 'Zero-delay customs pre-check'}</span>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Body Content */}
-                  <div className="p-5 space-y-2 flex-1 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-base font-extrabold text-slate-900 group-hover:text-brand-blue transition-colors leading-tight">
-                        {step.title}
-                      </h3>
-                      <p className="text-xs text-slate-600 leading-relaxed mt-2 line-clamp-3">
-                        {step.desc}
-                      </p>
-                    </div>
-
-                    {/* ONLY EDIT BUTTON (No Add, No Delete) */}
-                    <div className="pt-4 border-t border-slate-100 mt-4">
-                      <button
-                        type="button"
-                        onClick={() => openStepModal(idx)}
-                        className="w-full py-2.5 bg-slate-50 hover:bg-brand-red hover:text-white border border-slate-200 hover:border-brand-red text-slate-700 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
-                      >
-                        <Edit3 className="w-3.5 h-3.5" />
-                        <span>Edit Step</span>
-                      </button>
-                    </div>
+                  {/* ONLY EDIT BUTTON (No Add, No Delete) */}
+                  <div className="pt-2">
+                    <button
+                      type="button"
+                      onClick={() => openStepModal(idx)}
+                      className="w-full py-2.5 bg-slate-50 hover:bg-brand-red hover:text-white border border-slate-200 hover:border-brand-red text-slate-700 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>Edit Step</span>
+                    </button>
                   </div>
                 </div>
               ))}
@@ -490,7 +504,7 @@ export const HomePageTab = ({ data, onUpdate }) => {
               </p>
             </div>
 
-            {/* Box Cards (Matching Sliders & Banners / Image 3 & 4 style) */}
+            {/* Box Cards with Drag & Drop Images */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {home.criticalSectors?.map((sec, idx) => (
                 <div
@@ -570,10 +584,10 @@ export const HomePageTab = ({ data, onUpdate }) => {
         </div>
       )}
 
-      {/* ================= MODAL: EDIT STEP (WITH DRAG & DROP UPLOADER) ================= */}
+      {/* ================= MODAL: EDIT STEP (NO IMAGE, HEADING + SUBHEAD + 2 TICK MARKS) ================= */}
       {editingStepIndex !== null && stepFormData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4 overflow-y-auto">
-          <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-fadeIn my-8">
+          <div className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-fadeIn my-8">
             <div className="flex items-center justify-between p-6 border-b border-slate-200 bg-slate-50/50">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center font-black text-sm">
@@ -584,7 +598,7 @@ export const HomePageTab = ({ data, onUpdate }) => {
                     Edit Step {stepFormData.step}: {stepFormData.title}
                   </h3>
                   <p className="text-xs text-slate-500">
-                    From Pickup to Delivery Consignment Pipeline
+                    Consignment Journey Stage Details
                   </p>
                 </div>
               </div>
@@ -600,12 +614,27 @@ export const HomePageTab = ({ data, onUpdate }) => {
               </button>
             </div>
 
-            <div className="p-6 space-y-5 max-h-[75vh] overflow-y-auto">
-              {/* Step Title & Badge */}
+            <div className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+              {/* Badge Text & Heading */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700">
+                    Badge Text <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={stepFormData.badge}
+                    onChange={(e) =>
+                      setStepFormData({ ...stepFormData, badge: e.target.value })
+                    }
+                    placeholder="e.g. Step 1"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blue focus:outline-hidden"
+                  />
+                </div>
                 <div className="sm:col-span-2 space-y-1">
                   <label className="text-xs font-bold text-slate-700">
-                    Step Title <span className="text-red-500">*</span>
+                    Step Heading <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -614,38 +643,16 @@ export const HomePageTab = ({ data, onUpdate }) => {
                     onChange={(e) =>
                       setStepFormData({ ...stepFormData, title: e.target.value })
                     }
-                    placeholder="e.g. Booking & Dispatch Order"
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blue focus:outline-hidden"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-700">
-                    Stage Badge
-                  </label>
-                  <input
-                    type="text"
-                    value={stepFormData.badge}
-                    onChange={(e) =>
-                      setStepFormData({ ...stepFormData, badge: e.target.value })
-                    }
-                    placeholder="e.g. Step 1"
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blue focus:outline-hidden"
+                    placeholder="e.g. End-to-End Packing"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blue focus:outline-hidden"
                   />
                 </div>
               </div>
 
-              {/* Drag & Drop Image Uploader */}
-              <DragDropUploader
-                label="Step Image"
-                value={stepFormData.image}
-                onChange={(url) => setStepFormData({ ...stepFormData, image: url })}
-                helpText="Drag & drop step photo here, or click to browse (JPG, PNG, WebP)"
-              />
-
-              {/* Description */}
+              {/* Subhead / Description */}
               <div className="space-y-1">
                 <label className="text-xs font-bold text-slate-700">
-                  Step Description <span className="text-red-500">*</span>
+                  Step Subhead / Description <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   rows="3"
@@ -655,8 +662,44 @@ export const HomePageTab = ({ data, onUpdate }) => {
                     setStepFormData({ ...stepFormData, desc: e.target.value })
                   }
                   placeholder="Detailed operational workflow for this consignment stage..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs leading-relaxed focus:border-brand-blue focus:outline-hidden"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs leading-relaxed focus:border-brand-blue focus:outline-hidden"
                 />
+              </div>
+
+              {/* 2 Tick Mark Feature Points */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-brand-red" />
+                    <span>Tick Mark 1 (Point 1) *</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={stepFormData.tick1}
+                    onChange={(e) =>
+                      setStepFormData({ ...stepFormData, tick1: e.target.value })
+                    }
+                    placeholder="e.g. Real-time milestone logging"
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:border-brand-blue focus:outline-hidden"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-brand-red" />
+                    <span>Tick Mark 2 (Point 2) *</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={stepFormData.tick2}
+                    onChange={(e) =>
+                      setStepFormData({ ...stepFormData, tick2: e.target.value })
+                    }
+                    placeholder="e.g. Zero-delay customs pre-check"
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:border-brand-blue focus:outline-hidden"
+                  />
+                </div>
               </div>
             </div>
 

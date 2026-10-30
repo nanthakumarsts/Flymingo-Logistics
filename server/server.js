@@ -6,6 +6,7 @@ const multer = require('multer');
 require('dotenv').config();
 
 const {
+  BannerSetting,
   initDb,
   getBannerFromDb,
   saveBannerToDb,
@@ -217,6 +218,146 @@ app.get('/api/services', (req, res) => res.json({ message: 'Services endpoint re
 app.get('/api/about', (req, res) => res.json({ message: 'About content endpoint ready' }));
 app.get('/api/inquiries', (req, res) => res.json({ message: 'Inquiries endpoint ready' }));
 app.post('/api/inquiries', (req, res) => res.json({ message: 'Inquiry received' }));
+
+// --- TESTIMONIALS CRUD & MODERATION ENDPOINTS ---
+const TESTIMONIALS_FILE = path.join(dataDir, 'testimonials.json');
+
+const getTestimonialsData = async () => {
+  try {
+    const rec = await BannerSetting.findByPk('testimonials');
+    if (rec?.setting_value) {
+      return JSON.parse(rec.setting_value);
+    }
+  } catch (e) {}
+
+  if (fs.existsSync(TESTIMONIALS_FILE)) {
+    try {
+      return JSON.parse(fs.readFileSync(TESTIMONIALS_FILE, 'utf-8'));
+    } catch (e) {}
+  }
+
+  return [
+    {
+      id: 't1',
+      name: 'Capt. Rajesh Varma',
+      company: 'Pacific Marine Technical Fleet',
+      role: 'Fleet Technical Director',
+      rating: 5,
+      service: 'Ship Spares Logistics',
+      quote: 'Flymingo delivered our main engine cylinder head directly on-board at Tuticorin outer anchorage within 4 hours of flight arrival. Zero port delay saved our vessel over $18,000 in demurrage.',
+      date: '12 Oct 2024',
+      status: 'approved'
+    },
+    {
+      id: 't2',
+      name: 'Dr. Meenakshi Sundaram',
+      company: 'NRI Health Services',
+      role: 'Physician, UK',
+      rating: 5,
+      service: 'International Courier',
+      quote: 'Sent urgent Ayurvedic medication and homemade sweets from Coimbatore to Manchester. Delivered in just 3 business days with flawless food packaging and real-time tracking updates.',
+      date: '28 Sep 2024',
+      status: 'approved'
+    },
+    {
+      id: 't3',
+      name: 'Anand Chandrasekar',
+      company: 'Apex Precision Engineering Ltd',
+      role: 'VP Global Supply Chain',
+      rating: 5,
+      service: 'Freight Forwarding',
+      quote: 'Their contract airline rates and multimodal transit from our factory in Peelamedu to Hamburg saved our quarterly export budget by 22%. Outstanding CHA clearance speed.',
+      date: '15 Sep 2024',
+      status: 'approved'
+    },
+    {
+      id: 't4',
+      name: 'Suresh Kumar',
+      company: 'Chemicals & Coatings India',
+      role: 'Logistics Head',
+      rating: 5,
+      service: 'Dangerous Goods Logistics',
+      quote: 'Handling Class 3 flammable paints is complex due to strict airline DGD regulations. Flymingo certified inspectors handled UN packaging and DGD filing without a single hitch.',
+      date: '02 Aug 2024',
+      status: 'approved'
+    }
+  ];
+};
+
+const saveTestimonialsData = async (list) => {
+  try {
+    await BannerSetting.upsert({
+      setting_key: 'testimonials',
+      setting_value: JSON.stringify(list)
+    });
+  } catch (e) {
+    console.error('MySQL save testimonials error:', e.message);
+  }
+  try {
+    fs.writeFileSync(TESTIMONIALS_FILE, JSON.stringify(list, null, 2), 'utf-8');
+  } catch (e) {}
+};
+
+// GET all testimonials (client filters by status: approved)
+app.get('/api/testimonials', async (req, res) => {
+  try {
+    const list = await getTestimonialsData();
+    res.json({ success: true, testimonials: list });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// POST submit a review from client UI (defaults to status: pending)
+app.post('/api/testimonials', async (req, res) => {
+  try {
+    const { name, position, role, company, rating, quote, review } = req.body;
+    if (!name || (!quote && !review)) {
+      return res.status(400).json({ success: false, error: 'Name and review are required' });
+    }
+    const list = await getTestimonialsData();
+    const newT = {
+      id: 't-' + Date.now(),
+      name: name.trim(),
+      company: (position || company || role || 'Verified Customer').trim(),
+      role: (position || role || 'Client').trim(),
+      rating: Number(rating) || 5,
+      quote: (quote || review || '').trim(),
+      date: 'Just Now',
+      status: 'pending' // Pending admin approval!
+    };
+    list.unshift(newT);
+    await saveTestimonialsData(list);
+    res.json({ success: true, message: 'Review submitted and pending administrator approval!', testimonial: newT });
+  } catch (err) {
+    console.error('Error submitting review:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// PUT update testimonial status (approve / pending) or content
+app.put('/api/testimonials/:id', async (req, res) => {
+  try {
+    const list = await getTestimonialsData();
+    const updated = list.map((t) => (t.id === req.params.id ? { ...t, ...req.body } : t));
+    await saveTestimonialsData(updated);
+    res.json({ success: true, message: 'Testimonial updated successfully', testimonials: updated });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// DELETE testimonial
+app.delete('/api/testimonials/:id', async (req, res) => {
+  try {
+    const list = await getTestimonialsData();
+    const filtered = list.filter((t) => t.id !== req.params.id);
+    await saveTestimonialsData(filtered);
+    res.json({ success: true, message: 'Testimonial deleted successfully', testimonials: filtered });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
 
 // Initialize MySQL and start server
 initDb()

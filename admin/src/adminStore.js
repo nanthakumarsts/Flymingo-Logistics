@@ -184,45 +184,51 @@ export const INITIAL_ADMIN_DATA = {
     pickupToDeliverySteps: [
       {
         step: '01',
-        title: 'Booking & Dispatch Order',
-        desc: 'Customer submits origin, destination, cargo specs, and urgency tier through our online fare calculator or direct 24/7 hotline.',
-        image: '/assets/banner-process-hd.jpg',
-        badge: 'Step 1'
+        title: 'End-to-End Packing',
+        desc: 'Multi-layer industrial grade materials tailored for fragile, moisture-sensitive, and high-value cargo.',
+        badge: 'Step 1',
+        tick1: 'Industrial export-grade crating',
+        tick2: 'Moisture-barrier protection seal'
       },
       {
         step: '02',
-        title: 'Doorstep Pickup & Consolidation',
-        desc: 'Our dispatch team arrives at your doorstep in Coimbatore, Chennai, or across South India with digital scales and security sealing.',
-        image: '/assets/movers.jpg',
-        badge: 'Step 2'
+        title: 'Hassle-Free Documentation',
+        desc: 'Expert generation of commercial invoices, certificates of origin, airway bills, and customs forms.',
+        badge: 'Step 2',
+        tick1: 'Direct commercial invoice verification',
+        tick2: 'Consular certification compliance'
       },
       {
         step: '03',
-        title: 'Export-Grade Protective Packaging',
-        desc: 'Custom wooden crating, moisture-barrier wrapping, DG compliance labeling, and food-grade insulation applied at our hub.',
-        image: '/assets/packing.jpg',
-        badge: 'Step 3'
+        title: 'Seamless Transportation',
+        desc: 'Multimodal air, ocean, rail, and dedicated road fleets synchronized for punctual transit.',
+        badge: 'Step 3',
+        tick1: 'Dedicated air charter connections',
+        tick2: 'Express highway convoy routes'
       },
       {
         step: '04',
-        title: 'Customs ICEGATE EDI Filing',
-        desc: 'In-house licensed Customs House Brokerage (CHA) handles immediate Bill of Entry / Shipping Bill submission and zero-delay clearance.',
-        image: '/assets/customs clearance.jpg',
-        badge: 'Step 4'
+        title: 'Secure Warehousing',
+        desc: 'Temperature-controlled and bonded storage facilities strategically situated near ports and hubs.',
+        badge: 'Step 4',
+        tick1: 'Bonded seaport transit storage',
+        tick2: 'Climate-controlled warehouse bays'
       },
       {
         step: '05',
-        title: 'Global Multimodal Transit',
-        desc: 'Consignment departs on priority air charter or ocean vessel liner with satellite live GPS tracking and automated milestone notifications.',
-        image: '/assets/air cargo.jpg',
-        badge: 'Step 5'
+        title: 'Smart Space Booking',
+        desc: 'Direct allocations with leading airlines and vessel liners ensuring confirmed cargo uplift.',
+        badge: 'Step 5',
+        tick1: 'Zero demurrage priority allocation',
+        tick2: 'Direct ocean & air liner space'
       },
       {
         step: '06',
-        title: 'Final Doorstep or Vessel On-Board Delivery',
-        desc: 'Direct handover to consignee doorstep across 190+ countries or launch-boat delivery to vessel master at outer port berths.',
-        image: '/assets/ship-spares-hd.jpg',
-        badge: 'Step 6'
+        title: 'End-to-End Tracking',
+        desc: 'Live milestone updates and tracking from initial warehouse pickup all the way to final delivery.',
+        badge: 'Step 6',
+        tick1: 'Real-time satellite GPS tracking',
+        tick2: 'Direct consignee signature delivery'
       }
     ],
     criticalSectors: [
@@ -462,7 +468,8 @@ export const INITIAL_ADMIN_DATA = {
       rating: 5,
       service: 'Ship Spares Logistics',
       quote: 'Flymingo delivered our main engine cylinder head directly on-board at Tuticorin outer anchorage within 4 hours of flight arrival. Zero port delay saved our vessel over $18,000 in demurrage.',
-      date: '12 Oct 2024'
+      date: '12 Oct 2024',
+      status: 'approved'
     },
     {
       id: 't2',
@@ -472,7 +479,8 @@ export const INITIAL_ADMIN_DATA = {
       rating: 5,
       service: 'International Courier',
       quote: 'Sent urgent Ayurvedic medication and homemade sweets from Coimbatore to Manchester. Delivered in just 3 business days with flawless food packaging and real-time tracking updates.',
-      date: '28 Sep 2024'
+      date: '28 Sep 2024',
+      status: 'approved'
     },
     {
       id: 't3',
@@ -482,7 +490,8 @@ export const INITIAL_ADMIN_DATA = {
       rating: 5,
       service: 'Freight Forwarding',
       quote: 'Their contract airline rates and multimodal transit from our factory in Peelamedu to Hamburg saved our quarterly export budget by 22%. Outstanding CHA clearance speed.',
-      date: '15 Sep 2024'
+      date: '15 Sep 2024',
+      status: 'approved'
     },
     {
       id: 't4',
@@ -492,7 +501,8 @@ export const INITIAL_ADMIN_DATA = {
       rating: 5,
       service: 'Dangerous Goods Logistics',
       quote: 'Handling Class 3 flammable paints is complex due to strict airline DGD regulations. Flymingo certified inspectors handled UN packaging and DGD filing without a single hitch.',
-      date: '02 Aug 2024'
+      date: '02 Aug 2024',
+      status: 'approved'
     }
   ],
 
@@ -589,12 +599,18 @@ export function useAdminStore() {
         return {
           ...INITIAL_ADMIN_DATA,
           ...parsed,
+          testimonials: (parsed.testimonials && parsed.testimonials.length > 0)
+            ? parsed.testimonials.map((t) => ({ ...t, status: t.status || 'approved' }))
+            : INITIAL_ADMIN_DATA.testimonials,
           homeSections: {
             ...INITIAL_ADMIN_DATA.homeSections,
             ...(parsed.homeSections || {}),
             tickerItems: (parsed.homeSections?.tickerItems && parsed.homeSections.tickerItems.length > 0)
               ? parsed.homeSections.tickerItems
-              : INITIAL_ADMIN_DATA.homeSections.tickerItems
+              : INITIAL_ADMIN_DATA.homeSections.tickerItems,
+            pickupToDeliverySteps: (parsed.homeSections?.pickupToDeliverySteps && parsed.homeSections.pickupToDeliverySteps[0]?.tick1)
+              ? parsed.homeSections.pickupToDeliverySteps
+              : INITIAL_ADMIN_DATA.homeSections.pickupToDeliverySteps
           }
         };
       }

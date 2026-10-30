@@ -5,7 +5,8 @@ import {
   ArrowRight, Calculator, Check, Quote,
   Boxes, FileText, Coffee, Luggage, HeartPulse, Flame,
   Ship, Radio, Utensils, Atom, Activity, Car,
-  ArrowUpRight, Globe, Clock, ChevronLeft, ChevronRight, Download
+  ArrowUpRight, Globe, Clock, ChevronLeft, ChevronRight, Download,
+  Star, X, CheckCircle2
 } from 'lucide-react';
 import {
   BRAND, STATS, CORE_SERVICES, SIX_WAYS_CARGO,
@@ -228,6 +229,74 @@ export const HomePage = ({ onOpenQuote }) => {
   const [processSteps, setProcessSteps] = useState(SIX_WAYS_CARGO);
   const [sectorsList, setSectorsList] = useState(INDUSTRIES_SERVED);
 
+  // Testimonials moderation state & review modal
+  const [testimonialsList, setTestimonialsList] = useState(() => {
+    try {
+      const local = localStorage.getItem('flamingo_admin_data_v1');
+      if (local) {
+        const parsed = JSON.parse(local);
+        if (parsed.testimonials?.length) return parsed.testimonials;
+      }
+    } catch (e) {}
+    return TESTIMONIALS.map((t, idx) => ({
+      id: `t-init-${idx}`,
+      name: t.author,
+      role: t.role,
+      company: t.company,
+      quote: t.quote,
+      rating: 5,
+      status: 'approved'
+    }));
+  });
+
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
+  const [reviewForm, setReviewForm] = useState({
+    name: '',
+    position: '',
+    rating: 5,
+    review: ''
+  });
+
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    if (!reviewForm.name.trim() || !reviewForm.review.trim()) {
+      alert('Please fill out your name and review.');
+      return;
+    }
+    const newReview = {
+      id: 't-' + Date.now(),
+      name: reviewForm.name.trim(),
+      role: reviewForm.position.trim() || 'Verified Client',
+      company: reviewForm.position.trim() || 'Client',
+      rating: Number(reviewForm.rating) || 5,
+      quote: reviewForm.review.trim(),
+      date: 'Just Now',
+      status: 'pending' // STRICTLY PENDING UNTIL ADMIN APPROVES!
+    };
+
+    // 1. Post to API
+    try {
+      await fetch('http://localhost:5000/api/testimonials', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newReview)
+      });
+    } catch (err) {}
+
+    // 2. Local storage sync for instant reflection in admin
+    try {
+      const local = localStorage.getItem('flamingo_admin_data_v1');
+      const parsed = local ? JSON.parse(local) : {};
+      const currentList = parsed.testimonials || [];
+      const updatedList = [newReview, ...currentList];
+      localStorage.setItem('flamingo_admin_data_v1', JSON.stringify({ ...parsed, testimonials: updatedList }));
+    } catch (err) {}
+
+    setReviewSubmitted(true);
+    setReviewForm({ name: '', position: '', rating: 5, review: '' });
+  };
+
   // Fetch banner & homeSections data from backend API
   useEffect(() => {
     // Check localStorage fallback for instant client/admin reflection
@@ -248,6 +317,9 @@ export const HomePage = ({ onOpenQuote }) => {
             icon: INDUSTRIES_SERVED[idx]?.icon || 'Ship',
             bullets: s.bullets
           })));
+        }
+        if (parsed.testimonials?.length) {
+          setTestimonialsList(parsed.testimonials);
         }
       }
     } catch (e) {}
@@ -275,6 +347,16 @@ export const HomePage = ({ onOpenQuote }) => {
               })));
             }
           }
+        }
+      })
+      .catch(() => {});
+
+    // Fetch live testimonials from API
+    fetch('http://localhost:5000/api/testimonials')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (json && json.success && json.testimonials) {
+          setTestimonialsList(json.testimonials);
         }
       })
       .catch(() => {});
@@ -749,9 +831,6 @@ export const HomePage = ({ onOpenQuote }) => {
 
             <div key={processSlide} className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
               <div className="lg:col-span-8 space-y-4 text-left">
-                <div className="fm-s1 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-blue-50 border border-brand-blue-100 text-xs font-mono font-extrabold uppercase tracking-widest text-brand-blue">
-                  Stage {String(processSlide + 1).padStart(2, '0')} of {String(processCount).padStart(2, '0')}
-                </div>
                 <h3 className="fm-s2 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-slate-900">
                   {activeStep.title}
                 </h3>
@@ -760,10 +839,10 @@ export const HomePage = ({ onOpenQuote }) => {
                 </p>
                 <div className="fm-s4 flex flex-wrap gap-2.5 pt-1">
                   <span className="px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 flex items-center gap-2">
-                    <Check className="w-4 h-4 text-brand-red" /> Real-time milestone logging
+                    <Check className="w-4 h-4 text-brand-red" /> {activeStep.tick1 || 'Real-time milestone logging'}
                   </span>
                   <span className="px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 flex items-center gap-2">
-                    <Check className="w-4 h-4 text-brand-red" /> Zero-delay customs pre-check
+                    <Check className="w-4 h-4 text-brand-red" /> {activeStep.tick2 || 'Zero-delay customs pre-check'}
                   </span>
                 </div>
               </div>
@@ -949,26 +1028,36 @@ export const HomePage = ({ onOpenQuote }) => {
         <Quote className="absolute left-4 top-24 w-56 h-56 text-brand-blue/[0.05] -rotate-6" aria-hidden="true" />
         <Quote className="absolute right-4 bottom-10 w-56 h-56 text-brand-red/[0.06] rotate-6" aria-hidden="true" />
         <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-20 sm:py-28">
-          <div className="flex items-end justify-between mb-8 sm:mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12">
             <SectionHead title="Trusted by maritime fleets and global families" />
-            {/* Mobile-only arrow controls */}
-            <div className="flex md:hidden items-center gap-2 shrink-0 pb-6">
+            <div className="flex items-center gap-3 self-start sm:self-auto shrink-0 pb-4 sm:pb-0">
               <button
                 type="button"
-                onClick={() => scrollTestimonials('prev')}
-                aria-label="Previous testimonial"
-                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+                onClick={() => { setIsReviewModalOpen(true); setReviewSubmitted(false); }}
+                className="px-5 py-2.5 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95 shrink-0"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <Star className="w-4 h-4 fill-white" />
+                <span>Write a Review</span>
               </button>
-              <button
-                type="button"
-                onClick={() => scrollTestimonials('next')}
-                aria-label="Next testimonial"
-                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
+              {/* Mobile-only arrow controls */}
+              <div className="flex md:hidden items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => scrollTestimonials('prev')}
+                  aria-label="Previous testimonial"
+                  className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollTestimonials('next')}
+                  aria-label="Next testimonial"
+                  className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </div>
 
@@ -976,32 +1065,180 @@ export const HomePage = ({ onOpenQuote }) => {
             ref={testimonialsScrollRef}
             className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none"
           >
-            {TESTIMONIALS.map((t, idx) => (
-              <div key={idx} className="min-w-[85vw] sm:min-w-[320px] md:min-w-0 snap-center h-full flex flex-col">
-                <Reveal delay={idx * 80} className="h-full flex flex-col">
-                  <figure className="group relative h-full flex flex-col justify-between bg-white rounded-3xl border border-slate-200 p-7 overflow-hidden shadow-lg shadow-brand-blue/5 hover:-translate-y-2 hover:border-brand-blue/30 hover:shadow-2xl hover:shadow-brand-blue/15 transition-all duration-300">
-                    <div className="space-y-4">
-                      <div className="w-12 h-12 rounded-2xl bg-brand-red/10 text-brand-red flex items-center justify-center group-hover:bg-brand-red group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
-                        <Quote className="w-6 h-6" />
-                      </div>
-                      <blockquote className="text-slate-700 leading-relaxed text-sm">{t.quote}</blockquote>
-                    </div>
-                    <figcaption className="mt-6 pt-5 border-t border-slate-100 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-brand-blue text-white font-bold flex items-center justify-center text-sm ring-2 ring-brand-red/30 ring-offset-2 shrink-0">
-                        {t.author.charAt(0)}
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-sm font-semibold text-slate-900 truncate">{t.author}</div>
-                        <div className="text-xs text-slate-500 truncate">{t.role}, {t.company}</div>
-                      </div>
-                    </figcaption>
-                  </figure>
-                </Reveal>
-              </div>
-            ))}
+            {testimonialsList
+              .filter((t) => t.status === 'approved' || (!t.status && t.status !== 'pending'))
+              .map((t, idx) => {
+                const authorName = t.name || t.author || 'Client';
+                const roleText = t.role || 'Verified Customer';
+                const companyText = t.company || '';
+                return (
+                  <div key={t.id || idx} className="min-w-[85vw] sm:min-w-[320px] md:min-w-0 snap-center h-full flex flex-col">
+                    <Reveal delay={idx * 80} className="h-full flex flex-col">
+                      <figure className="group relative h-full flex flex-col justify-between bg-white rounded-3xl border border-slate-200 p-7 overflow-hidden shadow-lg shadow-brand-blue/5 hover:-translate-y-2 hover:border-brand-blue/30 hover:shadow-2xl hover:shadow-brand-blue/15 transition-all duration-300">
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between">
+                            <div className="w-12 h-12 rounded-2xl bg-brand-red/10 text-brand-red flex items-center justify-center group-hover:bg-brand-red group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
+                              <Quote className="w-6 h-6" />
+                            </div>
+                            <div className="flex items-center gap-1 text-amber-400">
+                              {[...Array(5)].map((_, i) => (
+                                <Star
+                                  key={i}
+                                  className={`w-3.5 h-3.5 ${
+                                    i < (t.rating || 5) ? 'fill-amber-400 text-amber-400' : 'text-slate-200'
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                          <blockquote className="text-slate-700 leading-relaxed text-sm">
+                            {t.quote || t.review}
+                          </blockquote>
+                        </div>
+                        <figcaption className="mt-6 pt-5 border-t border-slate-100 flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-brand-blue text-white font-bold flex items-center justify-center text-sm ring-2 ring-brand-red/30 ring-offset-2 shrink-0">
+                            {authorName.charAt(0)}
+                          </div>
+                          <div className="min-w-0">
+                            <div className="text-sm font-semibold text-slate-900 truncate">{authorName}</div>
+                            <div className="text-xs text-slate-500 truncate">
+                              {roleText}{companyText && roleText !== companyText ? `, ${companyText}` : ''}
+                            </div>
+                          </div>
+                        </figcaption>
+                      </figure>
+                    </Reveal>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </section>
+
+      {/* ============ WRITE A REVIEW MODAL ============ */}
+      {isReviewModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4 overflow-y-auto">
+          <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-fadeIn my-8">
+            <div className="flex items-center justify-between p-6 border-b border-slate-200 bg-slate-50/50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-brand-red/10 text-brand-red flex items-center justify-center font-black">
+                  <Star className="w-5 h-5 fill-brand-red" />
+                </div>
+                <div>
+                  <h3 className="text-base font-black text-slate-900">Share Your Experience</h3>
+                  <p className="text-xs text-slate-500">Your feedback helps us maintain global logistics excellence</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsReviewModalOpen(false)}
+                className="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {reviewSubmitted ? (
+              <div className="p-8 text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-8 h-8" />
+                </div>
+                <h4 className="text-lg font-black text-slate-900">Thank You For Your Review!</h4>
+                <p className="text-xs text-slate-600 leading-relaxed max-w-sm mx-auto">
+                  Your feedback has been submitted successfully and is pending administrator verification. Once approved, it will be displayed on our homepage.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setIsReviewModalOpen(false)}
+                  className="px-6 py-2.5 bg-brand-blue hover:bg-brand-red text-white text-xs font-bold rounded-xl shadow-md transition-all cursor-pointer"
+                >
+                  Done
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleReviewSubmit} className="p-6 space-y-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700">Your Full Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={reviewForm.name}
+                    onChange={(e) => setReviewForm({ ...reviewForm, name: e.target.value })}
+                    placeholder="e.g. Anand Kumar"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blue focus:outline-hidden"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700">Company / Designation / Location *</label>
+                  <input
+                    type="text"
+                    required
+                    value={reviewForm.position}
+                    onChange={(e) => setReviewForm({ ...reviewForm, position: e.target.value })}
+                    placeholder="e.g. Operations Manager, Chennai Ports or NRI Family, UK"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blue focus:outline-hidden"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-700">Overall Rating</label>
+                  <div className="flex items-center gap-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                        className="p-1 cursor-pointer transition-transform hover:scale-125 focus:outline-hidden"
+                      >
+                        <Star
+                          className={`w-6 h-6 ${
+                            star <= reviewForm.rating
+                              ? 'fill-amber-400 text-amber-400'
+                              : 'text-slate-300 hover:text-amber-300'
+                          }`}
+                        />
+                      </button>
+                    ))}
+                    <span className="text-xs font-mono font-bold text-slate-600 ml-2">
+                      {reviewForm.rating} of 5 Stars
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700">Your Review / Testimonial *</label>
+                  <textarea
+                    rows="4"
+                    required
+                    value={reviewForm.review}
+                    onChange={(e) => setReviewForm({ ...reviewForm, review: e.target.value })}
+                    placeholder="Describe your delivery speed, cargo handling, customs clearance, or customer service experience..."
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs leading-relaxed focus:border-brand-blue focus:outline-hidden"
+                  />
+                </div>
+
+                <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
+                  <button
+                    type="button"
+                    onClick={() => setIsReviewModalOpen(false)}
+                    className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-xs hover:bg-slate-50 transition-colors cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 rounded-xl bg-brand-red hover:bg-brand-red-dark text-white font-bold text-xs shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>Submit Review</span>
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
