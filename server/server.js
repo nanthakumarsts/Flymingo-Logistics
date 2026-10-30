@@ -215,7 +215,49 @@ app.delete('/api/hero-slides/:id', async (req, res) => {
 });
 
 app.get('/api/services', (req, res) => res.json({ message: 'Services endpoint ready' }));
-app.get('/api/about', (req, res) => res.json({ message: 'About content endpoint ready' }));
+
+// --- ABOUT CONTENT ENDPOINTS ---
+app.get('/api/about', async (req, res) => {
+  try {
+    const rec = await BannerSetting.findByPk('aboutContent');
+    if (rec?.setting_value) {
+      return res.json({ success: true, data: JSON.parse(rec.setting_value) });
+    }
+  } catch (e) {}
+
+  const bannerData = getBannerFromFile();
+  if (bannerData.aboutContent) {
+    return res.json({ success: true, data: bannerData.aboutContent });
+  }
+
+  res.json({ success: true, data: null });
+});
+
+app.post('/api/about', async (req, res) => {
+  try {
+    const { aboutContent } = req.body;
+    if (!aboutContent) {
+      return res.status(400).json({ success: false, error: 'aboutContent is required' });
+    }
+
+    try {
+      await BannerSetting.upsert({
+        setting_key: 'aboutContent',
+        setting_value: JSON.stringify(aboutContent)
+      });
+    } catch (e) {}
+
+    const bannerData = getBannerFromFile();
+    bannerData.aboutContent = aboutContent;
+    fs.writeFileSync(BANNER_FILE, JSON.stringify(bannerData, null, 2), 'utf-8');
+
+    res.json({ success: true, message: 'About content saved successfully', data: aboutContent });
+  } catch (err) {
+    console.error('Error saving about content:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 app.get('/api/inquiries', (req, res) => res.json({ message: 'Inquiries endpoint ready' }));
 app.post('/api/inquiries', (req, res) => res.json({ message: 'Inquiry received' }));
 

@@ -6,7 +6,6 @@ export const COMMON_ROUTES = [
     group: '⚡ Fare Rate & Instant Forms',
     items: [
       { label: 'Fare Rate Quote Form (/quote)', value: '/quote' },
-      { label: 'Fare Rate Modal Popup (#quote)', value: '#quote' },
       { label: 'Contact Us Inquiry (/contact)', value: '/contact' },
     ]
   },
@@ -105,7 +104,7 @@ export const SlugInput = ({
           title="Pick a preset route or form"
         >
           <option value="" disabled>
-            {value ? `⚡ Preset: ${matchedPreset ? matchedPreset.label.split(' (')[0] : 'Custom URL'}` : '⚡ Pick Preset Route / Form ▾'}
+            {value ? (matchedPreset ? matchedPreset.label.split(' (')[0] : value) : '-- Select Route / Form ▾ --'}
           </option>
           {COMMON_ROUTES.map((grp) => (
             <optgroup key={grp.group} label={grp.group}>

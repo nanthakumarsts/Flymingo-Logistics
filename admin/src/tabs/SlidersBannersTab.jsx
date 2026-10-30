@@ -261,7 +261,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
             onClick={() => setActiveMainTab('slides')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
               activeMainTab === 'slides'
-                ? 'bg-[#107c41] text-white shadow-md'
+                ? 'bg-[#005687] text-white shadow-md'
                 : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-300 shadow-xs'
             }`}
           >
@@ -274,7 +274,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
             onClick={() => setActiveMainTab('banners')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
               activeMainTab === 'banners'
-                ? 'bg-[#107c41] text-white shadow-md'
+                ? 'bg-[#005687] text-white shadow-md'
                 : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-300 shadow-xs'
             }`}
           >
@@ -287,7 +287,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
             onClick={() => setActiveMainTab('video')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
               activeMainTab === 'video'
-                ? 'bg-[#107c41] text-white shadow-md'
+                ? 'bg-[#005687] text-white shadow-md'
                 : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-300 shadow-xs'
             }`}
           >
@@ -309,7 +309,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
             <button
               type="button"
               onClick={handleOpenAddSlide}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#107c41] hover:bg-[#0e6b37] text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#ed2926] hover:bg-[#cc1e1b] text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Add Hero Slide</span>
@@ -408,7 +408,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                 <button
                   type="button"
                   onClick={() => handleOpenEditSlide(slide)}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#107c41] hover:bg-[#0e6b37] text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#005687] hover:bg-[#ed2926] text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
                 >
                   <Edit3 className="w-3.5 h-3.5" />
                   <span>Edit Slide</span>
@@ -527,11 +527,11 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                   </div>
                 </div>
 
-                {/* Bottom Action Button (Full Width Green Button Matching Image 4) */}
+                {/* Bottom Action Button (Full Width Button) */}
                 <button
                   type="button"
                   onClick={() => handleOpenEditBanner(pageKey)}
-                  className="w-full mt-5 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#107c41] hover:bg-[#0e6b37] text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
+                  className="w-full mt-5 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#005687] hover:bg-[#ed2926] text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
                 >
                   <Edit3 className="w-3.5 h-3.5" />
                   <span>Edit Page Banner</span>
@@ -567,7 +567,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
             <button
               type="button"
               onClick={handleSaveAll}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#107c41] hover:bg-[#0e6b37] text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#005687] hover:bg-[#ed2926] text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
             >
               <Save className="w-4 h-4" />
               <span>Save Video</span>
@@ -715,7 +715,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                 </button>
                 <button
                   type="submit"
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#107c41] hover:bg-[#0e6b37] text-white font-bold text-xs shadow-md transition-all cursor-pointer"
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#005687] hover:bg-[#ed2926] text-white font-bold text-xs shadow-md transition-all cursor-pointer"
                 >
                   <Save className="w-4 h-4" />
                   <span>Save Banner</span>
@@ -891,7 +891,7 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
                 </button>
                 <button
                   type="submit"
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#107c41] hover:bg-[#0e6b37] text-white font-bold text-xs shadow-md transition-all cursor-pointer"
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#005687] hover:bg-[#ed2926] text-white font-bold text-xs shadow-md transition-all cursor-pointer"
                 >
                   <Save className="w-4 h-4" />
                   <span>Save Slide</span>

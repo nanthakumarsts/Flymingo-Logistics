@@ -285,82 +285,126 @@ export const INITIAL_ADMIN_DATA = {
 
   // 3. ABOUT PAGE CONTENT
   aboutContent: {
-    hero: {
-      eyebrow: 'SOUTH INDIA → THE WORLD',
-      title: 'We Are The Bridge Between You And Your Relations.',
-      highlight: 'Across Oceans & Continents.',
-      tagline: 'Connecting Families. Empowering Global Trade.',
-      description: "Delivering uncompromised trust, maritime operational rigor, and door-to-door courier precision connecting South India's industrial and family roots to 190+ countries worldwide.",
-      image: '/assets/banner-marine-hd.jpg'
+    // Section 1: Who We Are / About Flymingo Logistics (Image 3)
+    whoWeAre: {
+      badge: 'About Flymingo Logistics',
+      title: 'We Are The Bridge Between You And',
+      highlight: 'Your Relations',
+      paragraph1: 'Flymingo Logistics is an International Logistics company that offers high quality international courier services, packers and movers services and all mode international shipping within budget worldwide. Our primary objective is to provide quick delivery, clearance and door to door delivery worldwide. We are based out of Coimbatore.',
+      paragraph2: 'Flymingo Logistics has an excellent track record of success in delivering packages both on time and damage free. We have partnered with leading international companies worldwide to reach each corner of the world. We are glad to mention that our services are best leading in position within the present market.',
+      metrics: [
+        { id: '1', value: '220+', label: 'Countries Served', desc: 'Global air & ocean routes', color: 'text-brand-blue' },
+        { id: '2', value: '99%', label: 'On-Time Clearance', desc: 'Zero damage track record', color: 'text-brand-red' },
+        { id: '3', value: '2018', label: 'Year Established', desc: 'Founded in Coimbatore', color: 'text-slate-900' }
+      ],
+      sideImage: '/assets/about page  first relation image.jpg',
+      sideCardTag: 'DELIVERING WITH CARE',
+      sideCardTitle: 'Trusted Doorstep International Courier'
     },
-    highlightBoxes: [
-      { id: '1', number: '220+', label: 'Countries Served', icon: 'Globe' },
-      { id: '2', number: 'EST. 2018', label: 'Coimbatore Inception', icon: 'Compass' },
-      { id: '3', number: '99%', label: 'On-Time Clearance', icon: 'ShieldCheck' }
-    ],
-    timeline: [
-      {
-        year: '2018',
-        title: 'Foundation in Coimbatore',
-        desc: 'Flymingo Logistics was established in Coimbatore with a vision to simplify international logistics for individuals and regional manufacturers.',
-        metric: 'Coimbatore Hub Established',
-        image: '/assets/movers.jpg'
-      },
-      {
-        year: '2020',
-        title: 'Pan-India Port Network',
-        desc: 'Expanded port operations across Chennai, Tuticorin, and Cochin with licensed customs house brokerage (CHA) clearance teams.',
-        metric: '5 Major Port Hubs',
-        image: '/assets/customs clearance.jpg'
-      },
-      {
-        year: '2022',
-        title: 'Air Charter & Fleet Expansion',
-        desc: 'Introduced dedicated air cargo space allocations and 24/7 emergency ship spares delivery boat operations at outer anchorage berths.',
-        metric: '150+ Direct Destinations',
-        image: '/assets/air cargo.jpg'
-      },
-      {
-        year: '2024',
-        title: 'Global Multimodal Leader',
-        desc: 'Now serving 220+ countries with specialized IATA/IMO Dangerous Goods certifications and zero port delay delivery commitments.',
-        metric: '220+ Countries Served',
-        image: '/assets/international_courier_banner.jpg'
-      }
-    ],
+
+    // Section 2: Our Journey of Growth (Milestones)
+    journey: {
+      eyebrow: 'Milestone History',
+      title: 'Our Journey of Growth',
+      subtitle: 'Connecting the world, one shipment at a time.',
+      timeline: [
+        {
+          id: '2018',
+          year: '2018',
+          name: 'Foundation',
+          head: 'Foundation in Coimbatore',
+          tag: 'Coimbatore Inception',
+          metric: 'Coimbatore Hub Established',
+          desc: 'Flymingo Logistics was established in Coimbatore with a vision to simplify international logistics for individuals and regional manufacturers.',
+          image: '/assets/movers.jpg',
+          features: ['Personal Courier Focus', 'Doorstep Pickup In Coimbatore', 'Transparent Direct Pricing']
+        },
+        {
+          id: '2019',
+          year: '2019',
+          name: 'Expanding Horizons',
+          head: 'Expanding Horizons Worldwide',
+          tag: 'Global Scale',
+          metric: '50+ Countries Connected',
+          desc: 'Expanded our network to cover 50+ countries, partnering with major global carriers to offer seamless courier services.',
+          image: '/assets/movers.jpg',
+          features: ['Major Global Airline Partnerships', 'Commercial Samples Transit', 'Rapid Document Courier']
+        },
+        {
+          id: '2021',
+          year: '2021',
+          name: 'Multi-Modal Logistics',
+          head: 'Air & Sea Freight Divisions',
+          tag: 'Intermodal Expansion',
+          metric: 'Air & Ocean Freight Divisions',
+          desc: 'Launched dedicated Sea and Air Freight divisions, enabling us to handle heavy cargo and commercial shipments efficiently.',
+          image: '/assets/sea cargo.jpg',
+          features: ['FCL & LCL Ocean Freight', 'Heavy Commercial Air Cargo', 'Multi-Layer Packing Standards']
+        },
+        {
+          id: '2023',
+          year: '2023',
+          name: 'Technological Leap',
+          head: 'Automated Customs & Real-Time Tracking',
+          tag: 'Digital Automation',
+          metric: '99% On-Time Delivery Benchmark',
+          desc: 'Implemented advanced tracking systems and automated customs clearance processes to ensure 99% on-time delivery.',
+          image: '/assets/service banner.jpg',
+          features: ['Real-Time GPS Tracking', 'Direct Seaport EDI Clearance', 'Zero-Delay Clearance Protocol']
+        },
+        {
+          id: '2024',
+          year: '2024',
+          name: 'Global Leader',
+          head: '220+ Countries & Outer Anchorage Berth Services',
+          tag: 'Worldwide Maritime Leader',
+          metric: '220+ Countries & Berth Services',
+          desc: 'Now serving 220+ countries with specialized services like Ship Spares Logistics and DG Shipping, setting new industry standards.',
+          image: '/assets/international_courier_banner.jpg',
+          features: ['24/7 Ship Spares Deck Delivery', 'IMO / IATA Certified DG Handling', 'Full International Network']
+        }
+      ]
+    },
+
+    // Section 3: Core Pillars (Values, Quality, Communication)
     pillars: [
       {
+        id: '1',
         title: 'Values',
         badge: 'Core Identity',
-        desc: 'Values are what bind us together to move towards our vision with integrity, transparency, and deep customer relationships.',
+        desc: 'Values us unit what bind us together to move towards our vision with integrity and trust.',
         image: '/assets/value.jpg'
       },
       {
+        id: '2',
         title: 'Quality',
         badge: 'Zero Defect',
-        desc: 'Attention to detail and balanced perfection are accomplished through rigorous staff training and operational excellence standards.',
+        desc: 'Attention to detail and attributes of balanced perfection are accomplished from Quality. Quality could also be a true concern for finishing work well and is gained through education, training, and information. We, at Flymingo Logistics, lay durable stress on work our workers, as we tend to believe that the absolute best levels of consumer satisfaction and operational excellence unit achieved only with this worth.',
         image: '/assets/quality.jpg'
       },
       {
+        id: '3',
         title: 'Communication',
         badge: '24/7 Responsiveness',
-        desc: 'Effective communication is the cornerstone of trust. We maintain direct language, active listening, and instant coordination.',
+        desc: "Effective communication is the key for sustained business relationships. At Flymingo Logistics, we tend to trust that language supported effective listening; understanding other's points of browse, and applicable discretion would cause durable teams and partnerships.",
         image: '/assets/communication.jpg'
       }
     ],
+
+    // Section 4: Why Choose Us & Goals
     whyChooseUs: [
-      'We Carry anything globally with 100% safety protocol',
-      'Most Competitive Prices! Unmatched liner contract rates',
-      'Door Pickup – Door delivery – Free Export Packing',
+      'We Carry anything globally',
+      'Most Competitive Prices! Unmatched',
+      'Door Pickup – Door delivery – Free Packing',
       'Your packages will be delivered in 4 to 6 business days',
-      'We ship with DHL, FEDEX, TNT & world renown global air carriers',
-      'You save up to 50% due to our high volume shipping tiers',
-      'Each shipment carries comprehensive transit insurance'
+      'We ship with DHL, FEDEX, TNT & ETC world renown companies',
+      'You save up to 50% due to our high volume of shipping',
+      'Each shipment carries insurance'
     ],
     ourGoals: [
-      'Rendering uncompromised quality services at your doorstep',
-      'Maintaining complete genuineness and transparency with every client',
-      'Maintaining lifelong good rapport with our customer community'
+      'Rendering quality services at your door step',
+      'We maintain genuineness with our service',
+      'We maintain good rapport with our customer'
     ]
   },
 
@@ -611,6 +655,21 @@ export function useAdminStore() {
             pickupToDeliverySteps: (parsed.homeSections?.pickupToDeliverySteps && parsed.homeSections.pickupToDeliverySteps[0]?.tick1)
               ? parsed.homeSections.pickupToDeliverySteps
               : INITIAL_ADMIN_DATA.homeSections.pickupToDeliverySteps
+          },
+          aboutContent: {
+            ...INITIAL_ADMIN_DATA.aboutContent,
+            ...(parsed.aboutContent || {}),
+            whoWeAre: {
+              ...INITIAL_ADMIN_DATA.aboutContent.whoWeAre,
+              ...(parsed.aboutContent?.whoWeAre || {})
+            },
+            journey: {
+              ...INITIAL_ADMIN_DATA.aboutContent.journey,
+              ...(parsed.aboutContent?.journey || {}),
+              timeline: (parsed.aboutContent?.journey?.timeline && parsed.aboutContent.journey.timeline.length > 0)
+                ? parsed.aboutContent.journey.timeline
+                : INITIAL_ADMIN_DATA.aboutContent.journey.timeline
+            }
           }
         };
       }

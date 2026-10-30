@@ -169,7 +169,7 @@
       "updatedAt": "2026-10-29T08:01:01.000Z"
     }
   },
-  "updatedAt": "2026-10-30T06:11:30.692Z",
+  "updatedAt": "2026-10-30T07:11:19.064Z",
   "homeSections": {
     "tickerItems": [
       {
@@ -219,14 +219,14 @@
       {
         "id": "3",
         "label": "Happy Customers",
-        "value": "101k+",
+        "value": "100k+",
         "desc": "Cargo safely delivered on deck & doorstep"
       },
       {
         "id": "4",
         "label": "Years Of Experience",
         "value": "10+",
-        "desc": "Decade of trusted maritime & freight expertise"
+        "desc": "Decade of trusted maritime "
       }
     ],
     "pickupToDeliverySteps": [
@@ -353,5 +353,61 @@
         ]
       }
     ]
-  }
+  },
+  "testimonials": [
+    {
+      "id": "t-1793344239336",
+      "name": "nandy",
+      "company": "chennai",
+      "role": "chennai",
+      "rating": 3,
+      "quote": "this is demo",
+      "date": "Just Now",
+      "status": "approved"
+    },
+    {
+      "id": "t1",
+      "name": "Capt. Rajesh Varma",
+      "company": "Pacific Marine Technical Fleet",
+      "role": "Fleet Technical Director",
+      "rating": 5,
+      "service": "Ship Spares Logistics",
+      "quote": "Flymingo delivered our main engine cylinder head directly on-board at Tuticorin outer anchorage within 4 hours of flight arrival. Zero port delay saved our vessel over $18,000 in demurrage.",
+      "date": "12 Oct 2024",
+      "status": "approved"
+    },
+    {
+      "id": "t2",
+      "name": "Dr. Meenakshi Sundaram",
+      "company": "NRI Health Services",
+      "role": "Physician, UK",
+      "rating": 5,
+      "service": "International Courier",
+      "quote": "Sent urgent Ayurvedic medication and homemade sweets from Coimbatore to Manchester. Delivered in just 3 business days with flawless food packaging and real-time tracking updates.",
+      "date": "28 Sep 2024",
+      "status": "approved"
+    },
+    {
+      "id": "t3",
+      "name": "Anand Chandrasekar",
+      "company": "Apex Precision Engineering Ltd",
+      "role": "VP Global Supply Chain",
+      "rating": 5,
+      "service": "Freight Forwarding",
+      "quote": "Their contract airline rates and multimodal transit from our factory in Peelamedu to Hamburg saved our quarterly export budget by 22%. Outstanding CHA clearance speed.",
+      "date": "15 Sep 2024",
+      "status": "approved"
+    },
+    {
+      "id": "t4",
+      "name": "Suresh Kumar",
+      "company": "Chemicals & Coatings India",
+      "role": "Logistics Head",
+      "rating": 5,
+      "service": "Dangerous Goods Logistics",
+      "quote": "Handling Class 3 flammable paints is complex due to strict airline DGD regulations. Flymingo certified inspectors handled UN packaging and DGD filing without a single hitch.",
+      "date": "02 Aug 2024",
+      "status": "approved"
+    }
+  ]
 }
