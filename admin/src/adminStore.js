@@ -689,8 +689,9 @@ export function useAdminStore() {
     return { isAuthenticated: false, user: null };
   });
 
-  // Sync banner configuration from backend MySQL API if available
+  // Sync all configurations from backend MySQL API on mount
   useEffect(() => {
+    // 1. Sliders & Banners
     fetch('http://localhost:5000/api/banner')
       .then((res) => (res.ok ? res.json() : null))
       .then((res) => {
@@ -710,6 +711,7 @@ export function useAdminStore() {
       })
       .catch(() => {});
 
+    // 2. Page Banners
     fetch('http://localhost:5000/api/page-banners')
       .then((res) => (res.ok ? res.json() : null))
       .then((res) => {
@@ -721,17 +723,74 @@ export function useAdminStore() {
         }
       })
       .catch(() => {});
+
+    // 3. Multimodal Services from MySQL
+    fetch('http://localhost:5000/api/services')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (res && res.success && Array.isArray(res.services) && res.services.length > 0) {
+          setData((prev) => ({
+            ...prev,
+            services: res.services
+          }));
+        }
+      })
+      .catch(() => {});
+
+    // 4. Testimonials from MySQL
+    fetch('http://localhost:5000/api/testimonials')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (res && res.success && Array.isArray(res.testimonials)) {
+          setData((prev) => ({
+            ...prev,
+            testimonials: res.testimonials
+          }));
+        }
+      })
+      .catch(() => {});
+
+    // 5. About Content from MySQL
+    fetch('http://localhost:5000/api/about')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((res) => {
+        if (res && res.success && res.data) {
+          setData((prev) => ({
+            ...prev,
+            aboutContent: {
+              ...prev.aboutContent,
+              ...res.data
+            }
+          }));
+        }
+      })
+      .catch(() => {});
   }, []);
 
-  // Save to localStorage whenever data changes
+  // Save to localStorage and automatically sync to backend MySQL Database
   const updateData = (updater) => {
     setData((prev) => {
       const next = typeof updater === 'function' ? updater(prev) : updater;
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       } catch (e) {
-        console.error('Error saving admin data:', e);
+        console.error('Error saving admin data to localStorage:', e);
       }
+
+      // Persist to MySQL via Sequelize
+      fetch('http://localhost:5000/api/admin/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          services: next.services,
+          homeSections: next.homeSections,
+          aboutContent: next.aboutContent,
+          pageBanners: next.pageBanners,
+          bannerVideo: next.bannerVideo,
+          testimonials: next.testimonials
+        })
+      }).catch(() => {});
+
       return next;
     });
   };

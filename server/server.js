@@ -7,6 +7,10 @@ require('dotenv').config();
 
 const {
   BannerSetting,
+  HeroSlide,
+  PageBanner,
+  Service,
+  Testimonial,
   initDb,
   getBannerFromDb,
   saveBannerToDb,
@@ -14,7 +18,18 @@ const {
   getPageBannerFromDb,
   updatePageBannerInDb,
   createHeroSlideInDb,
-  deleteHeroSlideFromDb
+  deleteHeroSlideFromDb,
+  getAllServicesFromDb,
+  createServiceInDb,
+  updateServiceInDb,
+  deleteServiceInDb,
+  saveServicesBatchToDb,
+  getAllTestimonialsFromDb,
+  createTestimonialInDb,
+  updateTestimonialInDb,
+  deleteTestimonialInDb,
+  DEFAULT_SERVICES,
+  DEFAULT_TESTIMONIALS
 } = require('./db');
 
 const app = express();
@@ -214,7 +229,98 @@ app.delete('/api/hero-slides/:id', async (req, res) => {
   }
 });
 
-app.get('/api/services', (req, res) => res.json({ message: 'Services endpoint ready' }));
+// --- SERVICES CRUD ENDPOINTS (MySQL via Sequelize) ---
+app.get('/api/services', async (req, res) => {
+  try {
+    const services = await getAllServicesFromDb();
+    res.json({ success: true, services });
+  } catch (err) {
+    console.error('Error fetching services from DB:', err.message);
+    res.status(500).json({ success: false, error: err.message, services: DEFAULT_SERVICES });
+  }
+});
+
+app.post('/api/services', async (req, res) => {
+  try {
+    const created = await createServiceInDb(req.body);
+    res.json({ success: true, message: 'Service created successfully in MySQL', service: created });
+  } catch (err) {
+    console.error('Error creating service:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.put('/api/services/:id', async (req, res) => {
+  try {
+    const updated = await updateServiceInDb(req.params.id, req.body);
+    if (!updated) {
+      return res.status(404).json({ success: false, error: 'Service not found' });
+    }
+    res.json({ success: true, message: 'Service updated successfully in MySQL', service: updated });
+  } catch (err) {
+    console.error('Error updating service:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.delete('/api/services/:id', async (req, res) => {
+  try {
+    await deleteServiceInDb(req.params.id);
+    res.json({ success: true, message: 'Service deleted successfully from MySQL' });
+  } catch (err) {
+    console.error('Error deleting service:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.put('/api/services', async (req, res) => {
+  try {
+    const { services } = req.body;
+    if (!Array.isArray(services)) {
+      return res.status(400).json({ success: false, error: 'services array is required' });
+    }
+    const updated = await saveServicesBatchToDb(services);
+    res.json({ success: true, message: 'All services saved successfully to MySQL', services: updated });
+  } catch (err) {
+    console.error('Error batch saving services:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// --- HOME SECTIONS ENDPOINTS (MySQL via Sequelize) ---
+app.get('/api/home-sections', async (req, res) => {
+  try {
+    const rec = await BannerSetting.findByPk('home_sections');
+    if (rec?.setting_value) {
+      return res.json({ success: true, data: JSON.parse(rec.setting_value) });
+    }
+  } catch (e) {}
+
+  const bannerData = getBannerFromFile();
+  if (bannerData.homeSections) {
+    return res.json({ success: true, data: bannerData.homeSections });
+  }
+  res.json({ success: true, data: null });
+});
+
+app.put('/api/home-sections', async (req, res) => {
+  try {
+    const sections = req.body;
+    await BannerSetting.upsert({
+      setting_key: 'home_sections',
+      setting_value: JSON.stringify(sections)
+    });
+
+    const bannerData = getBannerFromFile();
+    bannerData.homeSections = sections;
+    fs.writeFileSync(BANNER_FILE, JSON.stringify(bannerData, null, 2), 'utf-8');
+
+    res.json({ success: true, message: 'Home sections saved successfully to MySQL', data: sections });
+  } catch (err) {
+    console.error('Error saving home sections:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
 
 // --- ABOUT CONTENT ENDPOINTS ---
 app.get('/api/about', async (req, res) => {
@@ -261,115 +367,32 @@ app.post('/api/about', async (req, res) => {
 app.get('/api/inquiries', (req, res) => res.json({ message: 'Inquiries endpoint ready' }));
 app.post('/api/inquiries', (req, res) => res.json({ message: 'Inquiry received' }));
 
-// --- TESTIMONIALS CRUD & MODERATION ENDPOINTS ---
-const TESTIMONIALS_FILE = path.join(dataDir, 'testimonials.json');
-
-const getTestimonialsData = async () => {
-  try {
-    const rec = await BannerSetting.findByPk('testimonials');
-    if (rec?.setting_value) {
-      return JSON.parse(rec.setting_value);
-    }
-  } catch (e) {}
-
-  if (fs.existsSync(TESTIMONIALS_FILE)) {
-    try {
-      return JSON.parse(fs.readFileSync(TESTIMONIALS_FILE, 'utf-8'));
-    } catch (e) {}
-  }
-
-  return [
-    {
-      id: 't1',
-      name: 'Capt. Rajesh Varma',
-      company: 'Pacific Marine Technical Fleet',
-      role: 'Fleet Technical Director',
-      rating: 5,
-      service: 'Ship Spares Logistics',
-      quote: 'Flymingo delivered our main engine cylinder head directly on-board at Tuticorin outer anchorage within 4 hours of flight arrival. Zero port delay saved our vessel over $18,000 in demurrage.',
-      date: '12 Oct 2024',
-      status: 'approved'
-    },
-    {
-      id: 't2',
-      name: 'Dr. Meenakshi Sundaram',
-      company: 'NRI Health Services',
-      role: 'Physician, UK',
-      rating: 5,
-      service: 'International Courier',
-      quote: 'Sent urgent Ayurvedic medication and homemade sweets from Coimbatore to Manchester. Delivered in just 3 business days with flawless food packaging and real-time tracking updates.',
-      date: '28 Sep 2024',
-      status: 'approved'
-    },
-    {
-      id: 't3',
-      name: 'Anand Chandrasekar',
-      company: 'Apex Precision Engineering Ltd',
-      role: 'VP Global Supply Chain',
-      rating: 5,
-      service: 'Freight Forwarding',
-      quote: 'Their contract airline rates and multimodal transit from our factory in Peelamedu to Hamburg saved our quarterly export budget by 22%. Outstanding CHA clearance speed.',
-      date: '15 Sep 2024',
-      status: 'approved'
-    },
-    {
-      id: 't4',
-      name: 'Suresh Kumar',
-      company: 'Chemicals & Coatings India',
-      role: 'Logistics Head',
-      rating: 5,
-      service: 'Dangerous Goods Logistics',
-      quote: 'Handling Class 3 flammable paints is complex due to strict airline DGD regulations. Flymingo certified inspectors handled UN packaging and DGD filing without a single hitch.',
-      date: '02 Aug 2024',
-      status: 'approved'
-    }
-  ];
-};
-
-const saveTestimonialsData = async (list) => {
-  try {
-    await BannerSetting.upsert({
-      setting_key: 'testimonials',
-      setting_value: JSON.stringify(list)
-    });
-  } catch (e) {
-    console.error('MySQL save testimonials error:', e.message);
-  }
-  try {
-    fs.writeFileSync(TESTIMONIALS_FILE, JSON.stringify(list, null, 2), 'utf-8');
-  } catch (e) {}
-};
-
-// GET all testimonials (client filters by status: approved)
+// --- TESTIMONIALS CRUD & MODERATION ENDPOINTS (MySQL via Sequelize) ---
 app.get('/api/testimonials', async (req, res) => {
   try {
-    const list = await getTestimonialsData();
+    const list = await getAllTestimonialsFromDb();
     res.json({ success: true, testimonials: list });
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    console.error('Error fetching testimonials:', err.message);
+    res.status(500).json({ success: false, error: err.message, testimonials: DEFAULT_TESTIMONIALS });
   }
 });
 
-// POST submit a review from client UI (defaults to status: pending)
 app.post('/api/testimonials', async (req, res) => {
   try {
     const { name, position, role, company, rating, quote, review } = req.body;
     if (!name || (!quote && !review)) {
       return res.status(400).json({ success: false, error: 'Name and review are required' });
     }
-    const list = await getTestimonialsData();
-    const newT = {
-      id: 't-' + Date.now(),
+    const newT = await createTestimonialInDb({
       name: name.trim(),
-      company: (position || company || role || 'Verified Customer').trim(),
+      company: (company || position || role || 'Verified Customer').trim(),
       role: (position || role || 'Client').trim(),
       rating: Number(rating) || 5,
       quote: (quote || review || '').trim(),
       date: 'Just Now',
-      status: 'pending' // Pending admin approval!
-    };
-    list.unshift(newT);
-    await saveTestimonialsData(list);
+      status: 'pending' // Pending admin approval
+    });
     res.json({ success: true, message: 'Review submitted and pending administrator approval!', testimonial: newT });
   } catch (err) {
     console.error('Error submitting review:', err);
@@ -377,26 +400,72 @@ app.post('/api/testimonials', async (req, res) => {
   }
 });
 
-// PUT update testimonial status (approve / pending) or content
 app.put('/api/testimonials/:id', async (req, res) => {
   try {
-    const list = await getTestimonialsData();
-    const updated = list.map((t) => (t.id === req.params.id ? { ...t, ...req.body } : t));
-    await saveTestimonialsData(updated);
-    res.json({ success: true, message: 'Testimonial updated successfully', testimonials: updated });
+    const updated = await updateTestimonialInDb(req.params.id, req.body);
+    const list = await getAllTestimonialsFromDb();
+    res.json({ success: true, message: 'Testimonial updated successfully in MySQL', testimonial: updated, testimonials: list });
   } catch (err) {
+    console.error('Error updating testimonial:', err);
     res.status(500).json({ success: false, error: err.message });
   }
 });
 
-// DELETE testimonial
 app.delete('/api/testimonials/:id', async (req, res) => {
   try {
-    const list = await getTestimonialsData();
-    const filtered = list.filter((t) => t.id !== req.params.id);
-    await saveTestimonialsData(filtered);
-    res.json({ success: true, message: 'Testimonial deleted successfully', testimonials: filtered });
+    await deleteTestimonialInDb(req.params.id);
+    const list = await getAllTestimonialsFromDb();
+    res.json({ success: true, message: 'Testimonial deleted successfully from MySQL', testimonials: list });
   } catch (err) {
+    console.error('Error deleting testimonial:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// --- UNIFIED ADMIN DATA SYNC ENDPOINT (Syncs full state to MySQL DB) ---
+app.post('/api/admin/sync', async (req, res) => {
+  try {
+    const payload = req.body || {};
+    // 1. Sync Services
+    if (Array.isArray(payload.services)) {
+      await saveServicesBatchToDb(payload.services);
+    }
+    // 2. Sync Home Sections
+    if (payload.homeSections) {
+      await BannerSetting.upsert({
+        setting_key: 'home_sections',
+        setting_value: JSON.stringify(payload.homeSections)
+      });
+    }
+    // 3. Sync About Content
+    if (payload.aboutContent) {
+      await BannerSetting.upsert({
+        setting_key: 'aboutContent',
+        setting_value: JSON.stringify(payload.aboutContent)
+      });
+    }
+    // 4. Sync Page Banners
+    if (payload.pageBanners && typeof payload.pageBanners === 'object') {
+      for (const [pageKey, p] of Object.entries(payload.pageBanners)) {
+        await updatePageBannerInDb(pageKey, p);
+      }
+    }
+    // 5. Sync Banner Video
+    if (payload.bannerVideo) {
+      await BannerSetting.upsert({
+        setting_key: 'banner_video',
+        setting_value: payload.bannerVideo
+      });
+    }
+
+    // Also update local JSON backup
+    const current = getBannerFromFile();
+    const merged = { ...current, ...payload, updatedAt: new Date().toISOString() };
+    fs.writeFileSync(BANNER_FILE, JSON.stringify(merged, null, 2), 'utf-8');
+
+    res.json({ success: true, message: 'All admin changes synchronized directly into MySQL database!' });
+  } catch (err) {
+    console.error('Error in /api/admin/sync:', err);
     res.status(500).json({ success: false, error: err.message });
   }
 });

@@ -242,6 +242,17 @@ export const HomePage = ({ onOpenQuote }) => {
     return INDUSTRIES_SERVED;
   });
 
+  const [servicesList, setServicesList] = useState(() => {
+    try {
+      const local = localStorage.getItem('flamingo_admin_data_v1');
+      if (local) {
+        const parsed = JSON.parse(local);
+        if (parsed.services?.length) return parsed.services;
+      }
+    } catch (e) {}
+    return CORE_SERVICES;
+  });
+
   // Testimonials moderation state & review modal
   const [testimonialsList, setTestimonialsList] = useState(() => {
     try {
@@ -335,8 +346,21 @@ export const HomePage = ({ onOpenQuote }) => {
         if (parsed.testimonials?.length) {
           setTestimonialsList(parsed.testimonials);
         }
+        if (parsed.services?.length) {
+          setServicesList(parsed.services);
+        }
       }
     } catch (e) {}
+
+    // Fetch live services from MySQL API
+    fetch('http://localhost:5000/api/services')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (json && json.success && Array.isArray(json.services) && json.services.length > 0) {
+          setServicesList(json.services);
+        }
+      })
+      .catch(() => {});
 
     fetch('http://localhost:5000/api/banner')
       .then((res) => (res.ok ? res.json() : null))
@@ -665,13 +689,13 @@ export const HomePage = ({ onOpenQuote }) => {
               title="Comprehensive logistics and maritime services"
               text="Built for reliability, transparent tracking and full compliance across worldwide corridors."
             />
-            {/* Mobile-only arrow controls */}
-            <div className="flex md:hidden items-center gap-2 shrink-0 pb-6">
+            {/* Carousel arrow controls visible on all screen sizes */}
+            <div className="flex items-center gap-2 shrink-0 pb-6">
               <button
                 type="button"
                 onClick={() => scrollServices('prev')}
                 aria-label="Previous services"
-                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+                className="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -679,7 +703,7 @@ export const HomePage = ({ onOpenQuote }) => {
                 type="button"
                 onClick={() => scrollServices('next')}
                 aria-label="Next services"
-                className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+                className="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -688,18 +712,22 @@ export const HomePage = ({ onOpenQuote }) => {
 
           <div
             ref={servicesScrollRef}
-            className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none"
+            className="flex flex-nowrap gap-6 lg:gap-8 overflow-x-auto pb-6 snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none"
           >
-            {CORE_SERVICES.map((s, i) => {
-              const Icon = SERVICE_ICONS[s.id] || Package;
+            {servicesList.map((s, i) => {
+              const bullets = Array.isArray(s.bullets) && s.bullets.length ? s.bullets : (Array.isArray(s.features) ? s.features : []);
+              const shortDesc = s.shortDesc || s.short_desc || s.lead || '';
+              const path = s.path || `/services/${s.id || s.service_id}`;
+              const serviceId = s.id || s.service_id;
+
               return (
-                <div key={s.id} className="min-w-[85vw] sm:min-w-[340px] md:min-w-0 snap-center h-full flex flex-col">
-                  <Reveal delay={(i % 3) * 90} className="h-full flex flex-col">
+                <div key={serviceId || i} className="w-[85vw] sm:w-[350px] lg:w-[380px] shrink-0 snap-start h-full flex flex-col">
+                  <Reveal delay={(i % 4) * 90} className="h-full flex flex-col">
                     <div
                       onMouseMove={spot}
                       className="fm-spot group relative h-full bg-white rounded-3xl border border-slate-200 flex flex-col overflow-hidden shadow-lg shadow-brand-blue/5 hover:border-brand-blue/40 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-blue/15 transition-all duration-300"
                     >
-                      <div className="relative h-40 bg-brand-blue-dark overflow-hidden">
+                      <div className="relative h-44 bg-brand-blue-dark overflow-hidden">
                         <img
                           src={s.image || '/assets/service banner.jpg'}
                           alt={s.title}
@@ -709,31 +737,28 @@ export const HomePage = ({ onOpenQuote }) => {
                         <div className="absolute inset-0 bg-slate-950/40" />
                         <span className="absolute right-4 top-3 text-3xl font-black text-white/20 leading-none select-none font-mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                         <div className="absolute left-6 bottom-4 flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-xl bg-brand-red text-white flex items-center justify-center shadow-lg shadow-brand-red/40 group-hover:scale-110 transition-all duration-300">
-                            <Icon className="w-6 h-6" />
-                          </div>
-                          <span className="text-xs font-bold text-white tracking-wide drop-shadow-md bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">{s.badge}</span>
+                          <span className="text-xs font-bold text-white tracking-wide drop-shadow-md bg-black/50 px-3.5 py-1.5 rounded-full backdrop-blur-sm border border-white/15">{s.badge || 'SPECIALIZED'}</span>
                         </div>
                       </div>
 
                       <div className="relative p-6 sm:p-7 flex flex-col flex-1">
                         <h3 className="text-xl font-bold text-slate-900 mb-2">{s.title}</h3>
-                        <p className="text-sm text-slate-600 leading-relaxed mb-5">{s.shortDesc}</p>
+                        <p className="text-sm text-slate-600 leading-relaxed mb-5">{shortDesc}</p>
                         <ul className="space-y-2.5 text-sm text-slate-600 mb-6">
-                          {s.bullets.map((b, bi) => (
+                          {bullets.slice(0, 4).map((b, bi) => (
                             <li key={bi} className="flex items-start gap-2.5">
                               <span className="mt-0.5 w-5 h-5 rounded-full bg-brand-blue-50 text-brand-blue flex items-center justify-center flex-shrink-0 group-hover:bg-brand-blue group-hover:text-white transition-colors">
                                 <Check className="w-3 h-3" />
                               </span>
-                              <span>{b}</span>
+                              <span className="text-xs sm:text-sm">{b}</span>
                             </li>
                           ))}
                         </ul>
                         <div className="mt-auto pt-5 border-t border-slate-100 flex items-center justify-between">
-                          <Link to={s.path} className="text-sm font-semibold text-brand-blue hover:text-brand-blue-dark inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                          <Link to={path} className="text-sm font-semibold text-brand-blue hover:text-brand-blue-dark inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                             Explore service <ArrowRight className="w-4 h-4" />
                           </Link>
-                          <button onClick={() => onOpenQuote(s.id)} className="px-4 py-1.5 rounded-full text-sm font-semibold text-brand-red border border-brand-red/30 hover:bg-brand-red hover:text-white transition-colors cursor-pointer">
+                          <button onClick={() => onOpenQuote(serviceId)} className="px-4 py-1.5 rounded-full text-sm font-semibold text-brand-red border border-brand-red/30 hover:bg-brand-red hover:text-white transition-colors cursor-pointer">
                             Get quote
                           </button>
                         </div>
@@ -1072,13 +1097,13 @@ export const HomePage = ({ onOpenQuote }) => {
                 <Star className="w-4 h-4 fill-white" />
                 <span>Write a Review</span>
               </button>
-              {/* Mobile-only arrow controls */}
-              <div className="flex md:hidden items-center gap-2">
+              {/* Carousel arrow controls visible on all screen sizes */}
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => scrollTestimonials('prev')}
                   aria-label="Previous testimonial"
-                  className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+                  className="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
@@ -1086,7 +1111,7 @@ export const HomePage = ({ onOpenQuote }) => {
                   type="button"
                   onClick={() => scrollTestimonials('next')}
                   aria-label="Next testimonial"
-                  className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+                  className="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-brand-red hover:text-white text-slate-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
@@ -1096,7 +1121,7 @@ export const HomePage = ({ onOpenQuote }) => {
 
           <div
             ref={testimonialsScrollRef}
-            className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none"
+            className="flex flex-nowrap gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none"
           >
             {testimonialsList
               .filter((t) => t.status === 'approved' || (!t.status && t.status !== 'pending'))
@@ -1105,7 +1130,7 @@ export const HomePage = ({ onOpenQuote }) => {
                 const roleText = t.role || 'Verified Customer';
                 const companyText = t.company || '';
                 return (
-                  <div key={t.id || idx} className="min-w-[85vw] sm:min-w-[320px] md:min-w-0 snap-center h-full flex flex-col">
+                  <div key={t.id || idx} className="w-[85vw] sm:w-[350px] md:w-[380px] shrink-0 snap-start h-full flex flex-col">
                     <Reveal delay={idx * 80} className="h-full flex flex-col">
                       <figure className="group relative h-full flex flex-col justify-between bg-white rounded-3xl border border-slate-200 p-7 overflow-hidden shadow-lg shadow-brand-blue/5 hover:-translate-y-2 hover:border-brand-blue/30 hover:shadow-2xl hover:shadow-brand-blue/15 transition-all duration-300">
                         <div className="space-y-4">

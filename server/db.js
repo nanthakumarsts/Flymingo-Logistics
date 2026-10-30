@@ -151,6 +151,112 @@ const PageBanner = sequelize.define('PageBanner', {
   createdAt: false
 });
 
+// Model 4: Service (Multimodal Cargo & Logistics Services)
+const Service = sequelize.define('Service', {
+  service_id: {
+    type: DataTypes.STRING(64),
+    primaryKey: true
+  },
+  title: {
+    type: DataTypes.STRING(255),
+    allowNull: false
+  },
+  tagline: {
+    type: DataTypes.STRING(255),
+    defaultValue: ''
+  },
+  badge: {
+    type: DataTypes.STRING(128),
+    defaultValue: 'SPECIALIZED LOGISTICS'
+  },
+  badge_color: {
+    type: DataTypes.STRING(128),
+    defaultValue: 'bg-brand-blue-50 text-brand-blue border-brand-blue-200'
+  },
+  image: {
+    type: DataTypes.TEXT,
+    defaultValue: '/assets/service banner.jpg'
+  },
+  lead: {
+    type: DataTypes.TEXT,
+    defaultValue: ''
+  },
+  short_desc: {
+    type: DataTypes.TEXT,
+    defaultValue: ''
+  },
+  features: {
+    type: DataTypes.TEXT,
+    defaultValue: '[]'
+  },
+  bullets: {
+    type: DataTypes.TEXT,
+    defaultValue: '[]'
+  },
+  path: {
+    type: DataTypes.STRING(255),
+    defaultValue: '/services'
+  },
+  sort_order: {
+    type: DataTypes.INTEGER,
+    defaultValue: 1
+  },
+  is_active: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  }
+}, {
+  tableName: 'services',
+  timestamps: true,
+  updatedAt: 'updated_at',
+  createdAt: 'created_at'
+});
+
+// Model 5: Testimonial (Moderated Client Reviews)
+const Testimonial = sequelize.define('Testimonial', {
+  id: {
+    type: DataTypes.STRING(64),
+    primaryKey: true
+  },
+  name: {
+    type: DataTypes.STRING(128),
+    allowNull: false
+  },
+  role: {
+    type: DataTypes.STRING(128),
+    defaultValue: 'Verified Customer'
+  },
+  company: {
+    type: DataTypes.STRING(128),
+    defaultValue: ''
+  },
+  rating: {
+    type: DataTypes.INTEGER,
+    defaultValue: 5
+  },
+  quote: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  service: {
+    type: DataTypes.STRING(128),
+    defaultValue: 'Logistics Service'
+  },
+  date: {
+    type: DataTypes.STRING(64),
+    defaultValue: 'Recent'
+  },
+  status: {
+    type: DataTypes.STRING(32),
+    defaultValue: 'pending' // 'pending', 'approved', 'rejected'
+  }
+}, {
+  tableName: 'testimonials',
+  timestamps: true,
+  updatedAt: 'updated_at',
+  createdAt: 'created_at'
+});
+
 // Seed data definitions for all 9 page banners
 const DEFAULT_PAGE_BANNERS = [
   {
@@ -315,6 +421,208 @@ const DEFAULT_HERO_SLIDES = [
   }
 ];
 
+// Default 6 Multimodal Services
+const DEFAULT_SERVICES = [
+  {
+    service_id: 'ship-spares',
+    title: 'Ship Spares Logistics & 24/7 Port Berth Delivery',
+    tagline: 'Zero Port Delay Guarantee',
+    badge: 'Flagship Maritime Service',
+    badge_color: 'bg-brand-red-50 text-brand-red border-brand-red-200',
+    image: '/assets/ship-spares-hd.jpg',
+    lead: 'Time-critical marine equipment and engine parts delivered directly on board to vessel masters at outer anchorage berths across 10+ major Indian seaports.',
+    short_desc: 'Urgent ship spare parts clearance and direct on-board launch delivery across major Indian and global sea ports.',
+    features: JSON.stringify([
+      'Direct supply launch boat delivery to outer anchorage',
+      'Customs boarding passes & bonded gate passes pre-cleared',
+      'Emergency response mobilization in under 45 minutes',
+      'Coverage: Chennai, Tuticorin, Cochin, Ennore, Kattupalli, JNPT'
+    ]),
+    bullets: JSON.stringify([
+      'Customs bonded in-transit provisions',
+      'Direct on-board vessel delivery',
+      'AOG & vessel-in-port emergency 24/7',
+      'Port authority & launch coordination'
+    ]),
+    path: '/services/ship-spares-logistics',
+    sort_order: 1,
+    is_active: true
+  },
+  {
+    service_id: 'freight-forwarding',
+    title: 'Ocean & Air Freight Forwarding',
+    tagline: 'Direct Airline & Shipping Line Rates',
+    badge: 'FCL / LCL & Priority Air Charter',
+    badge_color: 'bg-brand-blue-50 text-brand-blue border-brand-blue-200',
+    image: '/assets/air cargo.jpg',
+    lead: 'Comprehensive ocean container shipping (FCL/LCL) and expedited air cargo forwarding with aggressive airline and ocean liner contract pricing.',
+    short_desc: 'Comprehensive ocean container shipping and air cargo logistics with aggressive airline/carrier rate negotiation.',
+    features: JSON.stringify([
+      'Full container load (FCL) & consolidated less container (LCL)',
+      'Priority flight allocation with Next Flight Out (NFO) routing',
+      'End-to-end multimodal transit from inland factory to destination dock',
+      'Direct port-to-port and door-to-door global logistics'
+    ]),
+    bullets: JSON.stringify([
+      'Full & Less container loads (FCL/LCL)',
+      'Priority flight routing & space booking',
+      'Port-to-port and door-to-door transit',
+      'Fragile & oversized cargo handling'
+    ]),
+    path: '/services/freight-forwarding',
+    sort_order: 2,
+    is_active: true
+  },
+  {
+    service_id: 'international-courier',
+    title: 'International Courier Express',
+    tagline: '190+ Countries Delivered',
+    badge: 'B2B, B2C & NRI Parcels',
+    badge_color: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    image: '/assets/courier.jpg',
+    lead: 'Door-to-door express worldwide courier delivery connecting Indian diaspora across 190+ countries for NRI food sweets, medicines, university luggage, and gifts.',
+    short_desc: 'Fast, secure doorstep delivery worldwide for urgent parcels, food, medicine, university docs, and personal luggage.',
+    features: JSON.stringify([
+      'Free doorstep pickup across Coimbatore, Chennai & Tamil Nadu',
+      'Food-grade protective multi-layer packaging for homemade masalas',
+      'Real-time milestone tracking with automated SMS/email alerts',
+      'Express 2 to 4 business days transit to USA, UK, UAE & Europe'
+    ]),
+    bullets: JSON.stringify([
+      'Door-to-door express delivery',
+      'Complete customs documentation',
+      'Real-time online tracking',
+      'Custom protective packaging'
+    ]),
+    path: '/services/international-courier',
+    sort_order: 3,
+    is_active: true
+  },
+  {
+    service_id: 'customs-clearance',
+    title: 'Licensed Customs House Brokerage (CHA)',
+    tagline: 'Direct ICEGATE EDI Filing',
+    badge: 'Licensed Brokerage (CHA)',
+    badge_color: 'bg-purple-50 text-purple-700 border-purple-200',
+    image: '/assets/customs clearance.jpg',
+    lead: 'In-house licensed customs brokerage filing real-time EDI entries through ICEGATE at sea ports, air cargo complexes, and Inland Container Depots (ICDs).',
+    short_desc: 'Licensed customs brokerage team ensuring exact HS code classification, rapid duty clearance, and zero port detention.',
+    features: JSON.stringify([
+      'Accurate 8-digit HS classification and preferential tariff benefits',
+      'Pre-arrival import documentation filing for green-channel delivery',
+      'Export shipping bill processing with duty drawback optimization',
+      'Bonded warehouse clearance, EPCG scheme, and ATA Carnet assistance'
+    ]),
+    bullets: JSON.stringify([
+      'Exact HS code classification',
+      'Duty calculation & optimization',
+      'Bill of entry & shipping bill filing',
+      'Post-clearance bonded delivery'
+    ]),
+    path: '/services/customs-clearance',
+    sort_order: 4,
+    is_active: true
+  },
+  {
+    service_id: 'dg-shipping',
+    title: 'Dangerous Goods (DG) Cargo Shipping',
+    tagline: '100% International Safety Compliance',
+    badge: 'IATA & IMO Certified',
+    badge_color: 'bg-amber-50 text-amber-800 border-amber-200',
+    image: '/assets/dg-hazmat-hd.jpg',
+    lead: 'IATA and IMDG certified hazardous cargo logistics covering Classes 1 through 9 with UN-certified protective packaging and DGD filing.',
+    short_desc: 'Certified compliant transportation for hazardous materials across Class 1 to Class 9 chemicals and substances.',
+    features: JSON.stringify([
+      'Complete coverage of Classes 1 to 9 (flammable, toxic, corrosive)',
+      'UN-approved packaging certification and UN-spec labeling',
+      "Shipper's Declaration for Dangerous Goods (DGD) preparation",
+      'Dangerous goods trained personnel handling every shipment'
+    ]),
+    bullets: JSON.stringify([
+      'Certified IATA/IMO cargo specialists',
+      'UN-specification packaging & labeling',
+      'Dangerous goods declaration (DGD)',
+      'Guaranteed carrier acceptance'
+    ]),
+    path: '/services/dangerous-goods-shipping',
+    sort_order: 5,
+    is_active: true
+  },
+  {
+    service_id: 'international-relocation',
+    title: 'International Household Relocation',
+    tagline: 'Zero-Damage Moving Guarantee',
+    badge: 'Packers & Movers',
+    badge_color: 'bg-teal-50 text-teal-800 border-teal-200',
+    image: '/assets/movers.jpg',
+    lead: 'Turnkey overseas moving services for families, corporate transfers, and NRI returnees with custom wooden crating and destination customs clearance.',
+    short_desc: 'Complete overseas household relocation, transfer of residency customs duty optimization, and safe unpacking.',
+    features: JSON.stringify([
+      'Specialized export-grade multi-layer packaging & custom crates',
+      'Transfer of Residence (TR) customs facilitation and checklist',
+      'Complete destination door-to-door unpacking and debris removal',
+      'Comprehensive marine cargo transit insurance coverage'
+    ]),
+    bullets: JSON.stringify([
+      'Pre-move physical/virtual survey',
+      'Multi-layer export quality packaging',
+      'Comprehensive marine transit insurance',
+      'Transfer of Residence (TR) paperwork'
+    ]),
+    path: '/services/international-relocation',
+    sort_order: 6,
+    is_active: true
+  }
+];
+
+// Default Testimonials
+const DEFAULT_TESTIMONIALS = [
+  {
+    id: 't1',
+    name: 'Capt. Rajesh Varma',
+    company: 'Pacific Marine Technical Fleet',
+    role: 'Fleet Technical Director',
+    rating: 5,
+    service: 'Ship Spares Logistics',
+    quote: 'Flymingo delivered our main engine cylinder head directly on-board at Tuticorin outer anchorage within 4 hours of flight arrival. Zero port delay saved our vessel over $18,000 in demurrage.',
+    date: '12 Oct 2024',
+    status: 'approved'
+  },
+  {
+    id: 't2',
+    name: 'Dr. Meenakshi Sundaram',
+    company: 'NRI Health Services',
+    role: 'Physician, UK',
+    rating: 5,
+    service: 'International Courier',
+    quote: 'Sent urgent Ayurvedic medication and homemade sweets from Coimbatore to Manchester. Delivered in just 3 business days with flawless food packaging and real-time tracking updates.',
+    date: '28 Sep 2024',
+    status: 'approved'
+  },
+  {
+    id: 't3',
+    name: 'Anand Chandrasekar',
+    company: 'Apex Precision Engineering Ltd',
+    role: 'VP Global Supply Chain',
+    rating: 5,
+    service: 'Freight Forwarding',
+    quote: 'Their contract airline rates and multimodal transit from our factory in Peelamedu to Hamburg saved our quarterly export budget by 22%. Outstanding CHA clearance speed.',
+    date: '15 Sep 2024',
+    status: 'approved'
+  },
+  {
+    id: 't4',
+    name: 'Suresh Kumar',
+    company: 'Chemicals & Coatings India',
+    role: 'Logistics Head',
+    rating: 5,
+    service: 'Dangerous Goods Logistics',
+    quote: 'Handling Class 3 flammable paints is complex due to strict airline DGD regulations. Flymingo certified inspectors handled UN packaging and DGD filing without a single hitch.',
+    date: '02 Aug 2024',
+    status: 'approved'
+  }
+];
+
 // Initialize Database & Tables via Sequelize
 async function initDb() {
   try {
@@ -361,6 +669,20 @@ async function initDb() {
       }
     }
     console.log('Page banners verified/seeded in Sequelize.');
+
+    // 7. Seed services if empty
+    const serviceCount = await Service.count();
+    if (serviceCount === 0) {
+      await Service.bulkCreate(DEFAULT_SERVICES);
+      console.log('Seeded default services in Sequelize.');
+    }
+
+    // 8. Seed testimonials if empty
+    const testimonialCount = await Testimonial.count();
+    if (testimonialCount === 0) {
+      await Testimonial.bulkCreate(DEFAULT_TESTIMONIALS);
+      console.log('Seeded default testimonials in Sequelize.');
+    }
 
     return true;
   } catch (err) {
@@ -577,12 +899,198 @@ async function deleteHeroSlideFromDb(slideId) {
   return HeroSlide.destroy({ where: { slide_id: slideId } });
 }
 
+// Helper: Format service record
+function formatServiceRecord(r) {
+  let features = [];
+  let bullets = [];
+  try {
+    features = JSON.parse(r.features || '[]');
+  } catch (e) {
+    features = [];
+  }
+  try {
+    bullets = JSON.parse(r.bullets || '[]');
+  } catch (e) {
+    bullets = [];
+  }
+  return {
+    id: r.service_id,
+    service_id: r.service_id,
+    title: r.title,
+    tagline: r.tagline,
+    badge: r.badge,
+    badgeColor: r.badge_color,
+    badge_color: r.badge_color,
+    image: r.image,
+    lead: r.lead,
+    shortDesc: r.short_desc,
+    short_desc: r.short_desc,
+    features: features,
+    bullets: bullets,
+    path: r.path,
+    sortOrder: r.sort_order,
+    sort_order: r.sort_order,
+    isActive: r.is_active,
+    is_active: r.is_active,
+    createdAt: r.created_at,
+    updatedAt: r.updated_at
+  };
+}
+
+// Service CRUD Helpers
+async function getAllServicesFromDb() {
+  const records = await Service.findAll({
+    order: [['sort_order', 'ASC']]
+  });
+  return records.map(formatServiceRecord);
+}
+
+async function createServiceInDb(data) {
+  const count = await Service.count();
+  const serviceId = data.id || data.service_id || `service-${Date.now()}`;
+  const featuresStr = Array.isArray(data.features) ? JSON.stringify(data.features) : (typeof data.features === 'string' ? data.features : '[]');
+  const bulletsStr = Array.isArray(data.bullets) ? JSON.stringify(data.bullets) : (typeof data.bullets === 'string' ? data.bullets : '[]');
+
+  const created = await Service.create({
+    service_id: serviceId,
+    title: data.title || 'New Service',
+    tagline: data.tagline || '',
+    badge: data.badge || 'SPECIALIZED LOGISTICS',
+    badge_color: data.badgeColor || data.badge_color || 'bg-brand-blue-50 text-brand-blue border-brand-blue-200',
+    image: data.image || '/assets/service banner.jpg',
+    lead: data.lead || '',
+    short_desc: data.shortDesc || data.short_desc || data.lead || '',
+    features: featuresStr,
+    bullets: bulletsStr,
+    path: data.path || `/services/${serviceId}`,
+    sort_order: data.sortOrder || data.sort_order || count + 1,
+    is_active: data.isActive !== false
+  });
+  return formatServiceRecord(created);
+}
+
+async function updateServiceInDb(serviceId, data) {
+  const record = await Service.findByPk(serviceId);
+  if (!record) return null;
+
+  const updatePayload = {};
+  if (data.title !== undefined) updatePayload.title = data.title;
+  if (data.tagline !== undefined) updatePayload.tagline = data.tagline;
+  if (data.badge !== undefined) updatePayload.badge = data.badge;
+  if (data.badgeColor !== undefined) updatePayload.badge_color = data.badgeColor;
+  if (data.badge_color !== undefined) updatePayload.badge_color = data.badge_color;
+  if (data.image !== undefined) updatePayload.image = data.image;
+  if (data.lead !== undefined) updatePayload.lead = data.lead;
+  if (data.shortDesc !== undefined) updatePayload.short_desc = data.shortDesc;
+  if (data.short_desc !== undefined) updatePayload.short_desc = data.short_desc;
+  if (data.path !== undefined) updatePayload.path = data.path;
+  if (data.sortOrder !== undefined) updatePayload.sort_order = data.sortOrder;
+  if (data.sort_order !== undefined) updatePayload.sort_order = data.sort_order;
+  if (data.isActive !== undefined) updatePayload.is_active = data.isActive;
+  if (data.is_active !== undefined) updatePayload.is_active = data.is_active;
+
+  if (data.features !== undefined) {
+    updatePayload.features = Array.isArray(data.features) ? JSON.stringify(data.features) : String(data.features);
+  }
+  if (data.bullets !== undefined) {
+    updatePayload.bullets = Array.isArray(data.bullets) ? JSON.stringify(data.bullets) : String(data.bullets);
+  }
+
+  await record.update(updatePayload);
+  return formatServiceRecord(record);
+}
+
+async function deleteServiceInDb(serviceId) {
+  return Service.destroy({ where: { service_id: serviceId } });
+}
+
+async function saveServicesBatchToDb(servicesList) {
+  if (!Array.isArray(servicesList)) return false;
+  for (let i = 0; i < servicesList.length; i++) {
+    const s = servicesList[i];
+    const sId = s.id || s.service_id;
+    if (!sId) continue;
+    const existing = await Service.findByPk(sId);
+    const featuresStr = Array.isArray(s.features) ? JSON.stringify(s.features) : (typeof s.features === 'string' ? s.features : '[]');
+    const bulletsStr = Array.isArray(s.bullets) ? JSON.stringify(s.bullets) : (typeof s.bullets === 'string' ? s.bullets : '[]');
+
+    const payload = {
+      title: s.title,
+      tagline: s.tagline || '',
+      badge: s.badge || 'SPECIALIZED LOGISTICS',
+      badge_color: s.badgeColor || s.badge_color || 'bg-brand-blue-50 text-brand-blue border-brand-blue-200',
+      image: s.image || '/assets/service banner.jpg',
+      lead: s.lead || '',
+      short_desc: s.shortDesc || s.short_desc || s.lead || '',
+      features: featuresStr,
+      bullets: bulletsStr,
+      path: s.path || `/services/${sId}`,
+      sort_order: i + 1,
+      is_active: s.isActive !== false
+    };
+
+    if (existing) {
+      await existing.update(payload);
+    } else {
+      await Service.create({ service_id: sId, ...payload });
+    }
+  }
+  return getAllServicesFromDb();
+}
+
+// Testimonials CRUD Helpers
+async function getAllTestimonialsFromDb() {
+  const records = await Testimonial.findAll({
+    order: [['created_at', 'DESC']]
+  });
+  return records.map((t) => ({
+    id: t.id,
+    name: t.name,
+    role: t.role,
+    company: t.company,
+    rating: t.rating,
+    quote: t.quote,
+    service: t.service,
+    date: t.date,
+    status: t.status,
+    createdAt: t.created_at,
+    updatedAt: t.updated_at
+  }));
+}
+
+async function createTestimonialInDb(data) {
+  const id = data.id || `t-${Date.now()}`;
+  return Testimonial.create({
+    id,
+    name: data.name,
+    role: data.role || data.position || 'Verified Customer',
+    company: data.company || '',
+    rating: Number(data.rating) || 5,
+    quote: data.quote || data.review || '',
+    service: data.service || 'Logistics Service',
+    date: data.date || 'Recent',
+    status: data.status || 'pending'
+  });
+}
+
+async function updateTestimonialInDb(id, data) {
+  const record = await Testimonial.findByPk(id);
+  if (!record) return null;
+  return record.update(data);
+}
+
+async function deleteTestimonialInDb(id) {
+  return Testimonial.destroy({ where: { id } });
+}
+
 module.exports = {
   sequelize,
   Sequelize,
   BannerSetting,
   HeroSlide,
   PageBanner,
+  Service,
+  Testimonial,
   initDb,
   getBannerFromDb,
   saveBannerToDb,
@@ -591,5 +1099,16 @@ module.exports = {
   updatePageBannerInDb,
   createHeroSlideInDb,
   deleteHeroSlideFromDb,
-  DEFAULT_PAGE_BANNERS
+  getAllServicesFromDb,
+  createServiceInDb,
+  updateServiceInDb,
+  deleteServiceInDb,
+  saveServicesBatchToDb,
+  getAllTestimonialsFromDb,
+  createTestimonialInDb,
+  updateTestimonialInDb,
+  deleteTestimonialInDb,
+  DEFAULT_PAGE_BANNERS,
+  DEFAULT_SERVICES,
+  DEFAULT_TESTIMONIALS
 };

@@ -212,56 +212,68 @@ const CAPABILITIES = [
 ];
 
 /* Hero right-side visual: rotating orbit of the six service icons around a hub */
-const OrbitVisual = ({ onPick }) => (
-  <div className="sv-pop relative w-[250px] h-[250px] sm:w-[280px] sm:h-[280px] lg:w-[330px] lg:h-[330px] my-4 mx-auto select-none">
-    <div className="absolute inset-0 rounded-full border-2 border-dashed border-brand-blue/30 sv-slow" aria-hidden="true" />
-    <div className="absolute inset-8 sm:inset-10 rounded-full border border-brand-red/25" aria-hidden="true" />
-    <div className="absolute inset-12 sm:inset-16 rounded-full bg-gradient-to-br from-brand-blue/10 to-brand-red/10 blur-md" aria-hidden="true" />
+/* Hero right-side visual: rotating orbit of the service nodes around a hub */
+const OrbitVisual = ({ services = [], onPick }) => {
+  const displayNodes = services.length ? services.slice(0, 6) : CAPABILITIES;
+  return (
+    <div className="sv-pop relative w-[250px] h-[250px] sm:w-[280px] sm:h-[280px] lg:w-[330px] lg:h-[330px] my-4 mx-auto select-none">
+      <div className="absolute inset-0 rounded-full border-2 border-dashed border-brand-blue/30 sv-slow" aria-hidden="true" />
+      <div className="absolute inset-8 sm:inset-10 rounded-full border border-brand-red/25" aria-hidden="true" />
+      <div className="absolute inset-12 sm:inset-16 rounded-full bg-gradient-to-br from-brand-blue/10 to-brand-red/10 blur-md" aria-hidden="true" />
 
-    {/* spinning wheel with six nodes (icons stay upright) */}
-    <div className="sv-orbit absolute inset-0">
-      {CAPABILITIES.map((c, i) => {
-        const a = i * 60;
-        const Icon = c.icon;
-        return (
-          <div key={c.id} className="absolute inset-0" style={{ transform: `rotate(${a}deg)` }}>
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-              <div style={{ transform: `rotate(${-a}deg)` }}>
-                <div className="sv-counter">
-                  <button
-                    type="button"
-                    onClick={() => onPick(i)}
-                    title={c.short}
-                    aria-label={c.short}
-                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-xl border-2 border-white hover:scale-110 transition-transform cursor-pointer ${
-                      i % 2 === 0 ? 'bg-brand-blue text-white shadow-brand-blue/30' : 'bg-brand-red text-white shadow-brand-red/30'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </button>
+      {/* spinning wheel with nodes */}
+      <div className="sv-orbit absolute inset-0">
+        {displayNodes.map((c, i) => {
+          const a = i * (360 / displayNodes.length);
+          return (
+            <div key={c.id || i} className="absolute inset-0" style={{ transform: `rotate(${a}deg)` }}>
+              <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+                <div style={{ transform: `rotate(${-a}deg)` }}>
+                  <div className="sv-counter">
+                    <button
+                      type="button"
+                      onClick={() => onPick(i)}
+                      title={c.short || c.title}
+                      aria-label={c.short || c.title}
+                      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-xl border-2 border-white hover:scale-110 transition-transform cursor-pointer font-mono font-black text-xs sm:text-sm ${
+                        i % 2 === 0 ? 'bg-brand-blue text-white shadow-brand-blue/30' : 'bg-brand-red text-white shadow-brand-red/30'
+                      }`}
+                    >
+                      <span>{String(i + 1).padStart(2, '0')}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
 
-    {/* hub */}
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="sv-pulse sv-float w-26 h-26 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rounded-full bg-white border border-slate-200 shadow-2xl shadow-brand-blue/25 flex flex-col items-center justify-center text-center">
-        <span className="text-2xl sm:text-3xl lg:text-4xl font-black font-mono text-brand-red leading-none">190+</span>
-        <span className="mt-1 px-2 sm:px-3 text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-slate-700 leading-tight">Countries Delivered</span>
+      {/* hub */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="sv-pulse sv-float w-26 h-26 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rounded-full bg-white border border-slate-200 shadow-2xl shadow-brand-blue/25 flex flex-col items-center justify-center text-center">
+          <span className="text-2xl sm:text-3xl lg:text-4xl font-black font-mono text-brand-red leading-none">190+</span>
+          <span className="mt-1 px-2 sm:px-3 text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-slate-700 leading-tight">Countries Delivered</span>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export const ServicesPage = ({ onOpenQuote }) => {
   const [bannerData, setBannerData] = useState(null);
   const [activeIdx, setActiveIdx] = useState(0);
-  const active = CAPABILITIES[activeIdx];
-  const ActiveIcon = active.icon;
+  const [servicesList, setServicesList] = useState(() => {
+    try {
+      const local = localStorage.getItem('flamingo_admin_data_v1');
+      if (local) {
+        const parsed = JSON.parse(local);
+        if (parsed.services?.length) return parsed.services;
+      }
+    } catch (e) {}
+    return CAPABILITIES;
+  });
+
   const stageRef = useRef(null);
 
   useEffect(() => {
@@ -273,7 +285,30 @@ export const ServicesPage = ({ onOpenQuote }) => {
         }
       })
       .catch(() => {});
+
+    // Fetch live services from MySQL API
+    fetch('http://localhost:5000/api/services')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (json && json.success && Array.isArray(json.services) && json.services.length > 0) {
+          setServicesList(json.services);
+        }
+      })
+      .catch(() => {});
   }, []);
+
+  const effectiveServices = (servicesList && servicesList.length > 0) ? servicesList.map((s, idx) => ({
+    ...s,
+    id: s.id || s.service_id,
+    short: s.short || s.title?.split(' ')[0] + ' ' + (s.title?.split(' ')[1] || ''),
+    badgeColor: s.badgeColor || s.badge_color || 'bg-brand-blue-50 text-brand-blue border-brand-blue-200',
+    lead: s.lead || s.shortDesc || s.short_desc || s.title,
+    tagline: s.tagline || '100% Reliable Delivery',
+    features: (Array.isArray(s.features) && s.features.length) ? s.features : ((Array.isArray(s.bullets) && s.bullets.length) ? s.bullets : ['Standard Logistics Handling']),
+    path: s.path || `/services/${s.id || s.service_id}`
+  })) : CAPABILITIES;
+
+  const active = effectiveServices[Math.min(activeIdx, effectiveServices.length - 1)] || effectiveServices[0];
 
   const handleBannerAction = () => {
     const slug = bannerData?.buttonSlug;
@@ -292,8 +327,8 @@ export const ServicesPage = ({ onOpenQuote }) => {
     setActiveIdx(i);
     if (scroll && stageRef.current) stageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-  const next = () => setActiveIdx((p) => (p + 1) % CAPABILITIES.length);
-  const prev = () => setActiveIdx((p) => (p - 1 + CAPABILITIES.length) % CAPABILITIES.length);
+  const next = () => setActiveIdx((p) => (p + 1) % effectiveServices.length);
+  const prev = () => setActiveIdx((p) => (p - 1 + effectiveServices.length) % effectiveServices.length);
 
   const fallback = DEFAULT_BANNER_DATA?.pageBanners?.services || {};
   const activeBanner = bannerData || fallback;
@@ -369,9 +404,9 @@ export const ServicesPage = ({ onOpenQuote }) => {
               )}
             </div>
 
-            {/* Right: orbit of the six channels (click an icon to jump to that service) */}
+            {/* Right: orbit of the channels */}
             <div className="lg:col-span-5 hidden sm:flex items-center justify-center">
-              <OrbitVisual onPick={(i) => pick(i, true)} />
+              <OrbitVisual services={effectiveServices} onPick={(i) => pick(i, true)} />
             </div>
 
           </div>
@@ -425,32 +460,28 @@ export const ServicesPage = ({ onOpenQuote }) => {
           </p>
         </Reveal>
 
-        {/* tab pills */}
-        <div className="flex items-stretch lg:justify-center gap-3 overflow-x-auto pb-3 -mx-1 px-1">
-          {CAPABILITIES.map((c, i) => {
-            const Icon = c.icon;
+        {/* tab pills - Clean without icons */}
+        <div className="flex items-stretch lg:justify-center gap-3 overflow-x-auto pb-3 -mx-1 px-1 scrollbar-none">
+          {effectiveServices.map((c, i) => {
             const on = i === activeIdx;
             return (
               <button
-                key={c.id}
+                key={c.id || i}
                 type="button"
                 onClick={() => pick(i)}
-                className={`group shrink-0 flex items-center gap-3 pl-2.5 pr-5 py-2.5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
+                className={`group shrink-0 flex items-center gap-2.5 pl-3 pr-5 py-2.5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
                   on
                     ? 'bg-brand-blue-dark border-brand-blue-dark text-white shadow-xl shadow-brand-blue/30 -translate-y-1'
                     : 'bg-white border-slate-200 text-slate-800 hover:border-brand-blue/40 hover:shadow-md'
                 }`}
               >
-                <span className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
-                  on ? 'bg-brand-red text-white' : 'bg-brand-blue-50 text-brand-blue group-hover:bg-brand-blue group-hover:text-white'
+                <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-mono font-black text-xs transition-colors ${
+                  on ? 'bg-brand-red text-white shadow-sm' : 'bg-slate-100 text-slate-600 group-hover:bg-brand-blue group-hover:text-white'
                 }`}>
-                  <Icon className="w-5 h-5" />
+                  {String(i + 1).padStart(2, '0')}
                 </span>
                 <span>
-                  <span className={`block text-[10px] font-mono font-bold tracking-widest ${on ? 'text-brand-red-light' : 'text-slate-400'}`}>
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span className="block text-sm font-bold leading-tight whitespace-nowrap">{c.short}</span>
+                  <span className="block text-xs sm:text-sm font-bold leading-tight whitespace-nowrap">{c.short || c.title}</span>
                 </span>
               </button>
             );
@@ -458,7 +489,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
         </div>
 
         {/* feature stage */}
-        <div key={active.id} className="sv-swap relative rounded-[2rem] bg-white border border-slate-200 shadow-2xl shadow-brand-blue/10 overflow-hidden">
+        <div key={active.id || activeIdx} className="sv-swap relative rounded-[2rem] bg-white border border-slate-200 shadow-2xl shadow-brand-blue/10 overflow-hidden">
           <span className="absolute left-0 top-0 bottom-0 w-1.5 bg-brand-red z-10" aria-hidden="true" />
           <div className="grid grid-cols-1 lg:grid-cols-12">
             {/* image side */}
@@ -473,10 +504,7 @@ export const ServicesPage = ({ onOpenQuote }) => {
                 {String(activeIdx + 1).padStart(2, '0')}
               </span>
               <div className="absolute left-5 right-5 bottom-5 flex items-center gap-3">
-                <div className="w-14 h-14 rounded-2xl bg-brand-red text-white flex items-center justify-center shadow-xl shadow-brand-red/40 shrink-0">
-                  <ActiveIcon className="w-7 h-7" />
-                </div>
-                <span className="text-xs sm:text-sm font-mono font-bold text-white bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-white/25">
+                <span className="text-xs sm:text-sm font-mono font-bold text-white bg-black/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/25 shadow-lg">
                   {active.tagline}
                 </span>
               </div>
