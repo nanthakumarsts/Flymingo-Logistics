@@ -18,6 +18,7 @@ import {
   Check
 } from 'lucide-react';
 import { DragDropUploader } from '../components/DragDropUploader';
+import { SlugInput } from '../components/SlugInput';
 
 const API_BASE = 'http://localhost:5000';
 
@@ -163,14 +164,18 @@ export const HomePageTab = ({ data, onUpdate }) => {
   const openSectorModal = (sector) => {
     setEditingSectorId(sector.id);
     setSectorFormData({
-      ...sector,
-      bullets: sector.bullets ? [...sector.bullets] : []
+      id: sector.id,
+      title: sector.title || '',
+      desc: sector.desc || '',
+      image: sector.image || '',
+      buttonLabel: sector.buttonLabel || 'Request industry rate',
+      buttonSlug: sector.buttonSlug || '/quote'
     });
   };
 
   const saveSectorModal = () => {
     if (!sectorFormData.title?.trim() || !sectorFormData.desc?.trim()) {
-      alert('Sector title and description are required!');
+      alert('Sector heading and subhead are required!');
       return;
     }
     const updatedSectors = home.criticalSectors.map((s) =>
@@ -206,21 +211,76 @@ export const HomePageTab = ({ data, onUpdate }) => {
 
   return (
     <div className="space-y-6 select-none max-w-7xl mx-auto pb-16">
-      {/* Top Action Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-xs">
-        <div>
-          <h1 className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Home Page Content Manager</span>
-            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-brand-blue-50 text-brand-blue border border-brand-blue-100 uppercase tracking-widest">
-              Live Config
+      {/* Top Action Bar (Container Box Removed - Only Pills & Visible Save Button) */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Navigation Sub-Tabs (Pills) */}
+        <div className="flex items-center gap-2 p-1.5 bg-slate-100 rounded-2xl border border-slate-200 overflow-x-auto max-w-full">
+          <button
+            type="button"
+            onClick={() => setActiveTab('ticker')}
+            className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${
+              activeTab === 'ticker'
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+            }`}
+          >
+            <Sparkles className="w-4 h-4 text-brand-red" />
+            <span>Brand Ticker Ribbon</span>
+            <span className="px-1.5 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-600">
+              {effectiveTickerItems.length}
             </span>
-          </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Configure marquee ticker ribbon, operational metrics, 6-step consignment journey, and critical industry sectors
-          </p>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('metrics')}
+            className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${
+              activeTab === 'metrics'
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+            }`}
+          >
+            <BarChart3 className="w-4 h-4 text-brand-blue" />
+            <span>Operational Metrics</span>
+            <span className="px-1.5 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-600">
+              {home.stats?.length || 0}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('steps')}
+            className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${
+              activeTab === 'steps'
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+            }`}
+          >
+            <Truck className="w-4 h-4 text-brand-red" />
+            <span>Pickup To Delivery (6 Steps)</span>
+            <span className="px-1.5 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-600">
+              {home.pickupToDeliverySteps?.length || 6}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('sectors')}
+            className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${
+              activeTab === 'sectors'
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+            }`}
+          >
+            <Boxes className="w-4 h-4 text-brand-blue" />
+            <span>Critical Sectors (6 Industries)</span>
+            <span className="px-1.5 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-600">
+              {home.criticalSectors?.length || 6}
+            </span>
+          </button>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 shrink-0">
           {savedMsg && (
             <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200 flex items-center gap-1.5 animate-fadeIn">
               <CheckCircle2 className="w-3.5 h-3.5" />
@@ -230,79 +290,12 @@ export const HomePageTab = ({ data, onUpdate }) => {
           <button
             onClick={() => handleSaveAll()}
             disabled={isSaving}
-            className="px-5 py-2.5 bg-brand-blue hover:bg-brand-red text-white rounded-xl text-xs font-bold shadow-sm hover:shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="px-5 py-2.5 bg-[#005687] hover:bg-[#ed2926] text-white rounded-xl text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             <span>{isSaving ? 'Saving...' : 'Save All Changes'}</span>
           </button>
         </div>
-      </div>
-
-      {/* Top Navigation Sub-Tabs (Pills) */}
-      <div className="flex items-center gap-2 p-1.5 bg-slate-100 rounded-2xl border border-slate-200 w-fit overflow-x-auto max-w-full">
-        <button
-          type="button"
-          onClick={() => setActiveTab('ticker')}
-          className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${
-            activeTab === 'ticker'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-          }`}
-        >
-          <Sparkles className="w-4 h-4 text-brand-red" />
-          <span>Brand Ticker Ribbon</span>
-          <span className="px-1.5 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-600">
-            {effectiveTickerItems.length}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('metrics')}
-          className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${
-            activeTab === 'metrics'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-          }`}
-        >
-          <BarChart3 className="w-4 h-4 text-brand-blue" />
-          <span>Operational Metrics</span>
-          <span className="px-1.5 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-600">
-            {home.stats?.length || 0}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('steps')}
-          className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${
-            activeTab === 'steps'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-          }`}
-        >
-          <Truck className="w-4 h-4 text-brand-red" />
-          <span>Pickup To Delivery (6 Steps)</span>
-          <span className="px-1.5 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-600">
-            {home.pickupToDeliverySteps?.length || 6}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('sectors')}
-          className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer shrink-0 ${
-            activeTab === 'sectors'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-          }`}
-        >
-          <Boxes className="w-4 h-4 text-brand-blue" />
-          <span>Critical Sectors (6 Industries)</span>
-          <span className="px-1.5 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-600">
-            {home.criticalSectors?.length || 6}
-          </span>
-        </button>
       </div>
 
       {/* ================= TAB 1: BRAND TICKER RIBBON ================= */}
@@ -320,14 +313,25 @@ export const HomePageTab = ({ data, onUpdate }) => {
                   These announcements scroll continuously across the client homepage ribbon.
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={handleAddTickerItem}
-                className="px-4 py-2 bg-slate-900 hover:bg-brand-red text-white rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-2 cursor-pointer"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Add Message</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleAddTickerItem}
+                  className="px-4 py-2 bg-slate-900 hover:bg-[#ed2926] text-white rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Message</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSaveAll()}
+                  disabled={isSaving}
+                  className="px-4 py-2 bg-[#005687] hover:bg-[#ed2926] text-white rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>{isSaving ? 'Saving...' : 'Save Ribbon'}</span>
+                </button>
+              </div>
             </div>
 
             <div className="space-y-3">
@@ -406,7 +410,7 @@ export const HomePageTab = ({ data, onUpdate }) => {
                   <button
                     type="button"
                     onClick={() => openStatModal(st)}
-                    className="w-full py-2 bg-white hover:bg-brand-blue hover:text-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
+                    className="w-full py-2 bg-white hover:bg-[#005687] hover:text-white border border-slate-200 hover:border-[#005687] rounded-xl text-xs font-bold text-slate-700 transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
                   >
                     <Edit3 className="w-3.5 h-3.5" />
                     <span>Edit Metric</span>
@@ -478,7 +482,7 @@ export const HomePageTab = ({ data, onUpdate }) => {
                     <button
                       type="button"
                       onClick={() => openStepModal(idx)}
-                      className="w-full py-2.5 bg-slate-50 hover:bg-brand-red hover:text-white border border-slate-200 hover:border-brand-red text-slate-700 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                      className="w-full py-2.5 bg-slate-50 hover:bg-[#ed2926] hover:text-white border border-slate-200 hover:border-[#ed2926] text-slate-700 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                       <span>Edit Step</span>
@@ -500,24 +504,24 @@ export const HomePageTab = ({ data, onUpdate }) => {
                 Serving Critical Sectors (6 Industry Applications)
               </h2>
               <p className="text-xs text-slate-500">
-                Click "Edit Sector" to modify industry title, tag badge, bullet highlights, and update images with drag & drop uploader
+                Click "Edit Sector" to update heading, subhead, image, and CTA button with navigation slug
               </p>
             </div>
 
-            {/* Box Cards with Drag & Drop Images */}
+            {/* Box Cards with Drag & Drop Images (Only Heading, Subhead, Image, Button with Slug) */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {home.criticalSectors?.map((sec, idx) => (
                 <div
                   key={sec.id || idx}
                   className="bg-white rounded-3xl border border-slate-200 shadow-xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group"
                 >
-                  {/* Card Header & Badge */}
-                  <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-blue-50 text-brand-blue text-xs font-black border border-brand-blue-100">
-                      {sec.tag || 'Sector Focus'}
+                  {/* Card Header */}
+                  <div className="p-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                    <span className="text-xs font-black text-slate-800">
+                      Sector #{idx + 1}
                     </span>
                     <span className="text-[10px] font-mono text-slate-400">
-                      #{idx + 1}
+                      {sec.id}
                     </span>
                   </div>
 
@@ -542,35 +546,31 @@ export const HomePageTab = ({ data, onUpdate }) => {
 
                   {/* Body Content */}
                   <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-base font-extrabold text-slate-900 group-hover:text-brand-blue transition-colors leading-tight">
+                    <div className="space-y-2">
+                      <h3 className="text-base font-extrabold text-slate-900 group-hover:text-[#005687] transition-colors leading-tight">
                         {sec.title}
                       </h3>
-                      <p className="text-xs text-slate-600 leading-relaxed mt-2 line-clamp-3">
+                      <p className="text-xs text-slate-600 leading-relaxed line-clamp-3">
                         {sec.desc}
                       </p>
 
-                      {/* Bullets Preview */}
-                      {sec.bullets && sec.bullets.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 mt-3">
-                          {sec.bullets.map((b, bIdx) => (
-                            <span
-                              key={bIdx}
-                              className="text-[10px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md"
-                            >
-                              • {b}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+                      {/* Button with Slug Info */}
+                      <div className="pt-2 flex items-center justify-between gap-2 text-xs bg-slate-50 px-3 py-2 rounded-xl border border-slate-200">
+                        <span className="font-bold text-slate-800 truncate">
+                          CTA: {sec.buttonLabel || 'Request industry rate'}
+                        </span>
+                        <span className="font-mono text-[10px] font-bold text-[#005687] bg-white px-2 py-0.5 rounded-md border border-slate-200 shrink-0">
+                          {sec.buttonSlug || '/quote'}
+                        </span>
+                      </div>
                     </div>
 
                     {/* ONLY EDIT BUTTON (No Add, No Delete) */}
-                    <div className="pt-4 border-t border-slate-100 mt-4">
+                    <div className="pt-3 border-t border-slate-100 mt-2">
                       <button
                         type="button"
                         onClick={() => openSectorModal(sec)}
-                        className="w-full py-2.5 bg-slate-50 hover:bg-brand-blue hover:text-white border border-slate-200 hover:border-brand-blue text-slate-700 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                        className="w-full py-2.5 bg-slate-50 hover:bg-[#005687] hover:text-white border border-slate-200 hover:border-[#005687] text-slate-700 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
                       >
                         <Edit3 className="w-3.5 h-3.5" />
                         <span>Edit Sector</span>
@@ -718,7 +718,7 @@ export const HomePageTab = ({ data, onUpdate }) => {
               <button
                 type="button"
                 onClick={saveStepModal}
-                className="px-6 py-2.5 rounded-xl bg-brand-red hover:bg-brand-red-dark text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                className="px-6 py-2.5 rounded-xl bg-[#ed2926] hover:bg-[#cc1e1b] text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
               >
                 <CheckCircle2 className="w-4 h-4" />
                 <span>Save Step Changes</span>
@@ -759,37 +759,38 @@ export const HomePageTab = ({ data, onUpdate }) => {
             </div>
 
             <div className="p-6 space-y-5 max-h-[75vh] overflow-y-auto">
-              {/* Sector Title & Tag */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="sm:col-span-2 space-y-1">
-                  <label className="text-xs font-bold text-slate-700">
-                    Sector Title <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={sectorFormData.title}
-                    onChange={(e) =>
-                      setSectorFormData({ ...sectorFormData, title: e.target.value })
-                    }
-                    placeholder="e.g. Marine Shipowners & Vessel Managers"
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blue focus:outline-hidden"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-700">
-                    Tag / Badge
-                  </label>
-                  <input
-                    type="text"
-                    value={sectorFormData.tag}
-                    onChange={(e) =>
-                      setSectorFormData({ ...sectorFormData, tag: e.target.value })
-                    }
-                    placeholder="e.g. Maritime Priority"
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:border-brand-blue focus:outline-hidden"
-                  />
-                </div>
+              {/* Sector Heading */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700">
+                  Sector Heading <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={sectorFormData.title}
+                  onChange={(e) =>
+                    setSectorFormData({ ...sectorFormData, title: e.target.value })
+                  }
+                  placeholder="e.g. Marine Shipowners & Vessel Managers"
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:border-[#005687] focus:outline-hidden"
+                />
+              </div>
+
+              {/* Sector Subhead / Description */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700">
+                  Sector Subhead / Description <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  rows="3"
+                  required
+                  value={sectorFormData.desc}
+                  onChange={(e) =>
+                    setSectorFormData({ ...sectorFormData, desc: e.target.value })
+                  }
+                  placeholder="Key capabilities and service standards for this industrial sector..."
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs leading-relaxed focus:border-[#005687] focus:outline-hidden"
+                />
               </div>
 
               {/* Drag & Drop Image Uploader */}
@@ -800,42 +801,32 @@ export const HomePageTab = ({ data, onUpdate }) => {
                 helpText="Drag & drop sector photo here, or click to browse (JPG, PNG, WebP)"
               />
 
-              {/* Description */}
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-700">
-                  Sector Description <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  rows="3"
-                  required
-                  value={sectorFormData.desc}
-                  onChange={(e) =>
-                    setSectorFormData({ ...sectorFormData, desc: e.target.value })
-                  }
-                  placeholder="Key capabilities and service standards for this industrial sector..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs leading-relaxed focus:border-brand-blue focus:outline-hidden"
-                />
-              </div>
+              {/* Button with Slug */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700">
+                    Button Label <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={sectorFormData.buttonLabel || ''}
+                    onChange={(e) =>
+                      setSectorFormData({ ...sectorFormData, buttonLabel: e.target.value })
+                    }
+                    placeholder="e.g. Request Industry Rate"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold focus:border-[#005687] focus:outline-hidden"
+                  />
+                </div>
 
-              {/* Highlights / Bullets (Optional) */}
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-700">
-                  Key Bullet Highlights (Comma separated)
-                </label>
-                <input
-                  type="text"
-                  value={sectorFormData.bullets?.join(', ') || ''}
-                  onChange={(e) =>
-                    setSectorFormData({
-                      ...sectorFormData,
-                      bullets: e.target.value
-                        .split(',')
-                        .map((b) => b.trim())
-                        .filter(Boolean)
-                    })
+                <SlugInput
+                  label="Button Slug / Link"
+                  required
+                  value={sectorFormData.buttonSlug || ''}
+                  onChange={(val) =>
+                    setSectorFormData({ ...sectorFormData, buttonSlug: val })
                   }
-                  placeholder="e.g. Berth launch boat logistics, Bonded transit clearance, 24/7 Port master access"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:border-brand-blue focus:outline-hidden"
+                  placeholder="/quote"
                 />
               </div>
             </div>
@@ -855,7 +846,7 @@ export const HomePageTab = ({ data, onUpdate }) => {
               <button
                 type="button"
                 onClick={saveSectorModal}
-                className="px-6 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-red text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                className="px-6 py-2.5 rounded-xl bg-[#005687] hover:bg-[#ed2926] text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
               >
                 <CheckCircle2 className="w-4 h-4" />
                 <span>Save Sector Changes</span>
@@ -953,7 +944,7 @@ export const HomePageTab = ({ data, onUpdate }) => {
               <button
                 type="button"
                 onClick={saveStatModal}
-                className="px-6 py-2.5 rounded-xl bg-brand-blue hover:bg-brand-red text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                className="px-6 py-2.5 rounded-xl bg-[#005687] hover:bg-[#ed2926] text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
               >
                 <CheckCircle2 className="w-4 h-4" />
                 <span>Save Metric</span>

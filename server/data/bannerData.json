@@ -175,5 +175,160 @@
       "updatedAt": "2026-10-29T06:43:37.000Z"
     }
   },
-  "updatedAt": "2026-10-29T08:01:01.834Z"
+  "updatedAt": "2026-10-30T05:39:00.649Z",
+  "homeSections": {
+    "tickerItems": [
+      {
+        "id": "1",
+        "text": "ANY SIZE • ANY WEIGHT • ANYWHERE",
+        "isHighlight": true
+      },
+      {
+        "id": "2",
+        "text": "190+ COUNTRIES CONNECTED",
+        "isHighlight": false
+      },
+      {
+        "id": "3",
+        "text": "24/7 SHIP SPARES MARITIME BERTH",
+        "isHighlight": true
+      },
+      {
+        "id": "4",
+        "text": "FREE DOORSTEP PICKUP IN COIMBATORE & CHENNAI",
+        "isHighlight": false
+      },
+      {
+        "id": "5",
+        "text": "ZERO DEMURRAGE PROTOCOL",
+        "isHighlight": true
+      }
+    ],
+    "stats": [
+      {
+        "id": "1",
+        "label": "Packages Delivered",
+        "value": "4,000+",
+        "desc": "Active road, rail & maritime corridors "
+      },
+      {
+        "id": "2",
+        "label": "Countries Covered",
+        "value": "190+",
+        "desc": "Direct international delivery countries"
+      },
+      {
+        "id": "3",
+        "label": "Happy Customers",
+        "value": "101k+",
+        "desc": "Cargo safely delivered on deck & doorstep"
+      },
+      {
+        "id": "4",
+        "label": "Years Of Experience",
+        "value": "10+",
+        "desc": "Decade of trusted maritime & freight expertise"
+      }
+    ],
+    "pickupToDeliverySteps": [
+      {
+        "step": "01",
+        "badge": "Step 1",
+        "title": "End-to-End Packing ",
+        "desc": "Multi-layer industrial grade materials tailored for fragile, moisture-sensitive, and high-value cargo.",
+        "tick1": "Industrial export-grade crating",
+        "tick2": "Moisture-barrier protection seal"
+      },
+      {
+        "step": "02",
+        "title": "Hassle-Free Documentation",
+        "desc": "Expert generation of commercial invoices, certificates of origin, airway bills, and customs forms.",
+        "badge": "Step 2",
+        "tick1": "Direct commercial invoice verification",
+        "tick2": "Consular certification compliance"
+      },
+      {
+        "step": "03",
+        "title": "Seamless Transportation",
+        "desc": "Multimodal air, ocean, rail, and dedicated road fleets synchronized for punctual transit.",
+        "badge": "Step 3",
+        "tick1": "Dedicated air charter connections",
+        "tick2": "Express highway convoy routes"
+      },
+      {
+        "step": "04",
+        "title": "Secure Warehousing",
+        "desc": "Temperature-controlled and bonded storage facilities strategically situated near ports and hubs.",
+        "badge": "Step 4",
+        "tick1": "Bonded seaport transit storage",
+        "tick2": "Climate-controlled warehouse bays"
+      },
+      {
+        "step": "05",
+        "title": "Smart Space Booking",
+        "desc": "Direct allocations with leading airlines and vessel liners ensuring confirmed cargo uplift.",
+        "badge": "Step 5",
+        "tick1": "Zero demurrage priority allocation",
+        "tick2": "Direct ocean & air liner space"
+      },
+      {
+        "step": "06",
+        "title": "End-to-End Tracking",
+        "desc": "Live milestone updates and tracking from initial warehouse pickup all the way to final delivery.",
+        "badge": "Step 6",
+        "tick1": "Real-time satellite GPS tracking",
+        "tick2": "Direct consignee signature delivery"
+      }
+    ],
+    "criticalSectors": [
+      {
+        "id": "marine-sector",
+        "title": "Marine Shipowners & Vessel Managers",
+        "desc": "Outer anchorage berth delivery of critical main engine valves, governors, turbochargers, radar parts, and safety spares under 45 minutes.",
+        "image": "/assets/banner-marine-hd.jpg",
+        "buttonLabel": "Request Industry Rate",
+        "buttonSlug": "/quote"
+      },
+      {
+        "id": "auto-sector",
+        "title": "Automotive & Heavy Engineering",
+        "desc": "Just-in-Time (JIT) delivery of precision casting moulds, CNC machine assemblies, engine blocks, and assembly-line spares.",
+        "image": "/assets/banner-aircargo-hd.jpg",
+        "buttonLabel": "Request Industry Rate",
+        "buttonSlug": "/quote"
+      },
+      {
+        "id": "dg-sector",
+        "title": "Defense, Chemicals & DG Cargo",
+        "desc": "Class 1 through Class 9 hazardous chemicals, lithium battery consignments, flammable solvents, and marine paints certified under IATA/IMO.",
+        "image": "/assets/dg-hazmat-hd.jpg",
+        "buttonLabel": "Request Industry Rate",
+        "buttonSlug": "/quote"
+      },
+      {
+        "id": "pharma-sector",
+        "title": "Pharmaceuticals & Medical Devices",
+        "desc": "Temperature-monitored refrigerated transport for life-saving medicines, medical machinery, surgical kits, and diagnostic reagents.",
+        "image": "/assets/loading.jpg",
+        "buttonLabel": "Request Industry Rate",
+        "buttonSlug": "/quote"
+      },
+      {
+        "id": "nri-sector",
+        "title": "NRI Diaspora & International Students",
+        "desc": "Reliable doorstep shipping of South Indian sweets, homemade spice masalas, student luggage, traditional clothing, and gifts worldwide.",
+        "image": "/assets/banner-courier-hd.jpg",
+        "buttonLabel": "Request Industry Rate",
+        "buttonSlug": "/quote"
+      },
+      {
+        "id": "ecommerce-sector",
+        "title": "Cross-Border E-Commerce & Retail",
+        "desc": "End-to-end B2C and B2B express parcel delivery for Indian merchants selling textiles, handicrafts, jewellery, and books globally.",
+        "image": "/assets/courier.jpg",
+        "buttonLabel": "Request Industry Rate",
+        "buttonSlug": "/quote"
+      }
+    ]
+  }
 }

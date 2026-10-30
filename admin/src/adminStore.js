@@ -237,48 +237,48 @@ export const INITIAL_ADMIN_DATA = {
         title: 'Marine Shipowners & Vessel Managers',
         desc: 'Outer anchorage berth delivery of critical main engine valves, governors, turbochargers, radar parts, and safety spares under 45 minutes.',
         image: '/assets/banner-marine-hd.jpg',
-        tag: 'Maritime Priority',
-        bullets: ['Berth launch boat logistics', 'Bonded transit clearance', '24/7 Port master access']
+        buttonLabel: 'Request Industry Rate',
+        buttonSlug: '/quote'
       },
       {
         id: 'auto-sector',
         title: 'Automotive & Heavy Engineering',
         desc: 'Just-in-Time (JIT) delivery of precision casting moulds, CNC machine assemblies, engine blocks, and assembly-line spares.',
         image: '/assets/banner-aircargo-hd.jpg',
-        tag: 'Industrial Logistics',
-        bullets: ['Zero assembly halt policy', 'Heavy-lift wooden crating', 'Air charter expedite']
+        buttonLabel: 'Request Industry Rate',
+        buttonSlug: '/quote'
       },
       {
         id: 'dg-sector',
         title: 'Defense, Chemicals & DG Cargo',
         desc: 'Class 1 through Class 9 hazardous chemicals, lithium battery consignments, flammable solvents, and marine paints certified under IATA/IMO.',
         image: '/assets/dg-hazmat-hd.jpg',
-        tag: 'Hazardous Compliance',
-        bullets: ['UN-spec container crating', 'DGD certified documentation', 'Trained DG handlers']
+        buttonLabel: 'Request Industry Rate',
+        buttonSlug: '/quote'
       },
       {
         id: 'pharma-sector',
         title: 'Pharmaceuticals & Medical Devices',
         desc: 'Temperature-monitored refrigerated transport for life-saving medicines, medical machinery, surgical kits, and diagnostic reagents.',
         image: '/assets/loading.jpg',
-        tag: 'Life Sciences',
-        bullets: ['Cold-chain integrity', 'Express 2-4 day transit', 'Tamper-evident seals']
+        buttonLabel: 'Request Industry Rate',
+        buttonSlug: '/quote'
       },
       {
         id: 'nri-sector',
         title: 'NRI Diaspora & International Students',
         desc: 'Reliable doorstep shipping of South Indian sweets, homemade spice masalas, student luggage, traditional clothing, and gifts worldwide.',
         image: '/assets/banner-courier-hd.jpg',
-        tag: 'NRI Express Parcels',
-        bullets: ['Free door pickup across TN', 'Specialized food packaging', 'Transparent flat rates']
+        buttonLabel: 'Request Industry Rate',
+        buttonSlug: '/quote'
       },
       {
         id: 'ecommerce-sector',
         title: 'Cross-Border E-Commerce & Retail',
         desc: 'End-to-end B2C and B2B express parcel delivery for Indian merchants selling textiles, handicrafts, jewellery, and books globally.',
         image: '/assets/courier.jpg',
-        tag: 'Cross-Border Trade',
-        bullets: ['Automated tracking APIs', 'Bulk volume discounts', 'Customs duty advisory']
+        buttonLabel: 'Request Industry Rate',
+        buttonSlug: '/quote'
       }
     ]
   },

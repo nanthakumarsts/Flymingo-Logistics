@@ -315,7 +315,8 @@ export const HomePage = ({ onOpenQuote }) => {
             desc: s.desc,
             image: s.image,
             icon: INDUSTRIES_SERVED[idx]?.icon || 'Ship',
-            bullets: s.bullets
+            buttonLabel: s.buttonLabel || 'Request industry rate',
+            buttonSlug: s.buttonSlug || '/quote'
           })));
         }
         if (parsed.testimonials?.length) {
@@ -343,7 +344,8 @@ export const HomePage = ({ onOpenQuote }) => {
                 desc: s.desc,
                 image: s.image,
                 icon: INDUSTRIES_SERVED[idx]?.icon || 'Ship',
-                bullets: s.bullets
+                buttonLabel: s.buttonLabel || 'Request industry rate',
+                buttonSlug: s.buttonSlug || '/quote'
               })));
             }
           }
@@ -968,14 +970,32 @@ export const HomePage = ({ onOpenQuote }) => {
                         </div>
                         <h3 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight text-slate-900">{ind.name}</h3>
                         <p className="text-sm sm:text-base font-bold text-slate-800 leading-relaxed drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)]">{ind.desc}</p>
-                        <button
-                          type="button"
-                          onClick={(e) => { e.stopPropagation(); onOpenQuote(); }}
-                          className="group/btn self-start mt-1 px-6 py-3 bg-brand-red hover:bg-brand-red-dark text-white rounded-full text-xs sm:text-sm font-bold shadow-md shadow-brand-red/25 transition-all cursor-pointer flex items-center gap-2"
-                        >
-                          Request industry rate
-                          <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                        </button>
+                        {ind.buttonSlug && !ind.buttonSlug.startsWith('http') && !ind.buttonSlug.startsWith('tel') && !ind.buttonSlug.startsWith('mailto') && ind.buttonSlug !== '/quote' ? (
+                          <Link
+                            to={ind.buttonSlug}
+                            onClick={(e) => e.stopPropagation()}
+                            className="group/btn self-start mt-1 px-6 py-3 bg-[#ed2926] hover:bg-[#cc1e1b] text-white rounded-full text-xs sm:text-sm font-bold shadow-md shadow-brand-red/25 transition-all cursor-pointer flex items-center gap-2"
+                          >
+                            <span>{ind.buttonLabel || 'Request industry rate'}</span>
+                            <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                          </Link>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (ind.buttonSlug && (ind.buttonSlug.startsWith('http') || ind.buttonSlug.startsWith('tel') || ind.buttonSlug.startsWith('mailto'))) {
+                                window.location.href = ind.buttonSlug;
+                              } else {
+                                onOpenQuote();
+                              }
+                            }}
+                            className="group/btn self-start mt-1 px-6 py-3 bg-[#ed2926] hover:bg-[#cc1e1b] text-white rounded-full text-xs sm:text-sm font-bold shadow-md shadow-brand-red/25 transition-all cursor-pointer flex items-center gap-2"
+                          >
+                            <span>{ind.buttonLabel || 'Request industry rate'}</span>
+                            <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                          </button>
+                        )}
                       </div>
                     </>
                   ) : (
