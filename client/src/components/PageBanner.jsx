@@ -123,7 +123,7 @@ export function PageBanner({
 
   const handleActionClick = () => {
     if (displaySlug) {
-      if (displaySlug.startsWith('#') && onAction) {
+      if ((displaySlug === '/quote' || displaySlug === '#quote' || displaySlug.startsWith('#')) && onAction) {
         onAction();
         return;
       }

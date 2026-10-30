@@ -329,11 +329,11 @@ export const SlidersBannersTab = ({ data, onUpdate }) => {
       </div>
 
       {/* Sub-header text */}
-      <div className="text-xs sm:text-sm text-slate-500 font-medium pl-1">
+      {/* <div className="text-xs sm:text-sm text-slate-500 font-medium pl-1">
         {activeMainTab === 'slides' && 'Manage the animated hero slides shown on the home page header.'}
         {activeMainTab === 'banners' && 'Manage page header banners (title, subtitle, background image) across all subpages.'}
         {activeMainTab === 'video' && 'Configure the global background video rendered across all homepage slides.'}
-      </div>
+      </div> */}
 
       {/* ========================================================= */}
       {/* 2. TAB CONTENT 1: HOME HERO SLIDERS (BOX CARDS - IMAGE 3) */}

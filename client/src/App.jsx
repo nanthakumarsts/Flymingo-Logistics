@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
@@ -18,6 +18,18 @@ import { DangerousGoodsPage } from './pages/DangerousGoodsPage';
 import { CustomsClearancePage } from './pages/CustomsClearancePage';
 import { ContactPage } from './pages/ContactPage';
 
+function GlobalQuoteListener({ onOpenQuote }) {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/quote' || location.hash === '#quote') {
+      onOpenQuote();
+    }
+  }, [location, onOpenQuote]);
+
+  return null;
+}
+
 export function App() {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(undefined);
@@ -30,12 +42,14 @@ export function App() {
   return (
     <Router>
       <ScrollToTop />
+      <GlobalQuoteListener onOpenQuote={() => handleOpenQuote()} />
       <div className="min-h-screen flex flex-col bg-white text-slate-800 font-sans selection:bg-brand-blue selection:text-white">
         <Navbar onOpenQuote={handleOpenQuote} />
 
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<HomePage onOpenQuote={handleOpenQuote} />} />
+            <Route path="/quote" element={<HomePage onOpenQuote={handleOpenQuote} />} />
             <Route path="/about" element={<AboutPage onOpenQuote={handleOpenQuote} />} />
             <Route path="/services" element={<ServicesPage onOpenQuote={handleOpenQuote} />} />
             <Route path="/services/international-courier" element={<InternationalCourierPage onOpenQuote={handleOpenQuote} />} />

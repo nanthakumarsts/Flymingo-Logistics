@@ -256,7 +256,7 @@ export const AboutPage = ({ onOpenQuote }) => {
   const handleBannerAction = () => {
     const slug = bannerData?.buttonSlug;
     if (slug) {
-      if (slug.startsWith('#') && onOpenQuote) {
+      if ((slug === '/quote' || slug === '#quote' || slug.startsWith('#')) && onOpenQuote) {
         onOpenQuote();
         return;
       }

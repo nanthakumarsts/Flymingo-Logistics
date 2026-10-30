@@ -882,7 +882,7 @@ export const HomePage = ({ onOpenQuote }) => {
                     <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
-                <div className="text-[11px] font-mono text-slate-500 tracking-widest uppercase">Auto-cycle &bull; hover to pause</div>
+                
               </div>
             </div>
           </div>
@@ -1051,7 +1051,7 @@ export const HomePage = ({ onOpenQuote }) => {
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
-            <div className="text-xs font-mono text-slate-500 tracking-widest uppercase">Hover or tap a sector to explore</div>
+            
           </div>
         </div>
       </section>
